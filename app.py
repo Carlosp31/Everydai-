@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Inicializa el modelo generativo
 model_img = genai.GenerativeModel("gemini-1.5-flash")
-name = "domain4cookingggg"
+name = "domain4cookin"
 model = genai.GenerativeModel(model_name=f'tunedModels/{name}')
 
 
