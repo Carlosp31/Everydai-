@@ -6,14 +6,14 @@ from PIL import Image
 
 app = Flask(__name__)
 
-# Inicializa el modelo generativo
+# Inicializa los modelos generativos
+model_culinary = genai.GenerativeModel(model_name='tunedModels/domain4cooking')
+model_fashion = genai.GenerativeModel(model_name='tunedModels/domain4fashion')
+model_gym=genai.GenerativeModel(model_name='tunedModels/domain4gym')
 model_img = genai.GenerativeModel("gemini-1.5-flash")
-name = "domain4cookingggg"
-model = genai.GenerativeModel(model_name=f'tunedModels/{name}')
-
 
 # Configura la carpeta para almacenar las imágenes
-UPLOAD_FOLDER = 'uploads'  # Asegúrate de crear esta carpeta
+UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
@@ -23,14 +23,32 @@ def index():
 @app.route('/chat', methods=['POST'])
 def chat():
     user_input = request.json['message']
-    
-    # Interacción con el modelo
-    chat = model.start_chat(
-    history=[
-        {"role": "user", "parts": "el modelo debe actuar como un profesor de culinaria. Recibe una lista de ingredientes y debe proporcionarle al usuario una lista de pasos y guiar al usuario para que efectúe la receta. Solo puede sugerir recetas con los ingredientes que recibe en la lista, únicamente esos."},
-        {"role": "model", "parts": "Bien. Dime los ingredientes, y te sugiriré ingrientes, y te daré los pasos, de acuerdo a ellos. Solo los ingredientes que me digas"},
-    ]
-)
+    selected_model = request.json['model']  # Recibe el modelo seleccionado desde el HTML
+
+    # Selecciona el modelo basado en la entrada del usuario
+    if selected_model == 'culinary':
+        model = model_culinary
+        history = [
+            {"role": "user", "parts": "Eres un profesor de culinaria. Recibe una lista de ingredientes y proporciona una lista de pasos para realizar una receta solo con esos ingredientes."},
+            {"role": "model", "parts": "Bien, dime los ingredientes que tienes y te daré los pasos para preparar una receta."}
+        ]
+    elif selected_model == 'fashion':
+        model = model_fashion
+        history = [
+            {"role": "user", "parts": "Eres un asesor de moda. Recibes una lista de prendas de ropa y recomiendas combinaciones basadas en esas prendas."},
+            {"role": "model", "parts": "Entendido, por favor indícame las prendas y te sugeriré combinaciones."}
+        ]
+    if selected_model == 'Gym':
+        model = model_gym
+        history = [
+            {"role": "user", "parts": "Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos."},
+            {"role": "model", "parts": "Dime qué elementos de gimnasio tienes, y te sugeriré ejercicios para realizar con ellos."}
+        ]
+    else:
+        return jsonify({'response': 'Modelo no encontrado.'}), 400
+
+    # Iniciar chat con el modelo seleccionado
+    chat = model.start_chat(history=history)
     
     # Enviar mensaje al modelo y recibir respuesta
     response = chat.send_message(
@@ -60,10 +78,10 @@ def upload_image():
         image.save(image_path)  # Guarda la imagen en la carpeta de uploads
         image = Image.open(image_path)
         try:
-            # Procesa la imagen
+            # Procesa la imagen con el modelo de imágenes
             response = model_img.generate_content(
                 [
-                    "Act as a culinary master and identify each ingredient you see in the image in detail. Be concise and just print the ingredient list. Do something like: The ingredients: (and insert the list)",
+                    "Actúa como un maestro culinario e identifica los ingredientes en la imagen.",
                     image
                 ],
                 generation_config=genai.types.GenerationConfig(
@@ -75,9 +93,9 @@ def upload_image():
             )
             return jsonify({'response': response.text})
         except Exception as e:
-            return jsonify({'response': f'Error processing the image: {e}'}), 500
+            return jsonify({'response': f'Error procesando la imagen: {e}'}), 500
 
-    return jsonify({'response': 'Image not found.'}), 404
+    return jsonify({'response': 'Imagen no encontrada.'}), 404
 
 if __name__== '__main__':
     if not os.path.exists(UPLOAD_FOLDER):
