@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Inicializa el modelo generativo
 model_img = genai.GenerativeModel("gemini-1.5-flash")
-name = "domain4cookin"
+name = "domain4cookingggg"
 model = genai.GenerativeModel(model_name=f'tunedModels/{name}')
 
 
@@ -83,5 +83,3 @@ if __name__== '__main__':
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)  # Crea la carpeta de uploads si no existe
     app.run(debug=True)
-
-
