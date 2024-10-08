@@ -3,19 +3,21 @@ import google.generativeai as genai
 from werkzeug.utils import secure_filename
 import os
 from PIL import Image
+import serpapi
 
 app = Flask(__name__)
 
 # Inicializa los modelos generativos
-model_culinary = genai.GenerativeModel(model_name='tunedModels/domain4cooking')
-model_fashion = genai.GenerativeModel(model_name='tunedModels/domain4fashion')
-model_gym=genai.GenerativeModel(model_name='tunedModels/domain4gym')
+model_culinary = genai.GenerativeModel(model_name='tunedModels/domain4cookingggg')
+model_fashion = genai.GenerativeModel(model_name='tunedModels/domain4fashiono')
+model_gym=genai.GenerativeModel(model_name='tunedModels/domain4gymo')
 model_img = genai.GenerativeModel("gemini-1.5-flash")
 
 # Configura la carpeta para almacenar las imágenes
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+serpapi_client = serpapi.Client(api_key='cb656c3da30661f068548f710b4c3c9d366b03113cfe068670beb752012f01c1')
 @app.route('/')
 def index():
     return render_template('chat.html')
@@ -38,7 +40,7 @@ def chat():
             {"role": "user", "parts": "Eres un asesor de moda. Recibes una lista de prendas de ropa y recomiendas combinaciones basadas en esas prendas."},
             {"role": "model", "parts": "Entendido, por favor indícame las prendas y te sugeriré combinaciones."}
         ]
-    if selected_model == 'Gym':
+    elif selected_model == 'Gym':
         model = model_gym
         history = [
             {"role": "user", "parts": "Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos."},
@@ -64,7 +66,19 @@ def chat():
     respuesta_texto = response.text  # Obtener la respuesta en texto del modelo
 
     return jsonify({'response': respuesta_texto})
-
+def buscar_recetas_en_serpapi(ingredientes):
+    """Busca recetas en SerpAPI basadas en los ingredientes proporcionados."""
+    try:
+        result = serpapi_client.search(
+            q=f"Recetas con {ingredientes}",
+            engine="google",
+            hl="es",
+            gl="co"
+        )
+        return result.get("recipes_results", [])
+    except Exception as e:
+        return f"Error al buscar en SerpAPI: {e}"
+    
 @app.route('/upload-image', methods=['POST'])
 def upload_image():
     if 'image' not in request.files:
