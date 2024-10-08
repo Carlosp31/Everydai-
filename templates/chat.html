@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Chat with EverydAI</title>
+</head>
+<body>
+    <div class="chat-container">
+        <h1>Chat with EverydAI</h1>
+        <div id="chat-box"></div>
+        <input type="text" id="user-input" placeholder="Chat with us...">
+        <button id="send-button">Send</button>
+        <button id="record-button">Talk</button>
+        <input type="file" id="image-input" accept="image/*">
+        <button id="upload-button">Upload Image</button>
+    </div>
+
+    <script>
+        // Inicializa el reconocimiento de voz
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.continuous = false; // Configura el reconocimiento para que no sea continuo
+        recognition.interimResults = false; // No recibir resultados intermedios
+
+        recognition.onstart = function() {
+            console.log('Escuchando...');
+        };
+
+        recognition.onresult = function(event) {
+            const userInput = event.results[0][0];
+            if (userInput.confidence > 0.5) { // Umbral de confianza
+                document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput.transcript}</div>`;
+                document.getElementById("user-input").value = ''; // Limpia el campo de texto
+
+                // Envía el mensaje al servidor
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: userInput.transcript }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                console.log("Confianza baja, intenta hablar más claro."); // Mensaje informativo
+            }
+        };
+
+        // Evento al hacer clic en el botón de grabar
+        document.getElementById("record-button").onclick = function() {
+            recognition.start(); // Inicia el reconocimiento de voz
+        };
+
+        // Evento al hacer clic en el botón de enviar texto
+        document.getElementById("send-button").onclick = function() {
+            const userInput = document.getElementById("user-input").value;
+            document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
+            document.getElementById("user-input").value = '';
+
+            // Envía el mensaje al servidor
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: userInput }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
+            })
+            .catch(error => console.error('Error:', error));
+        };
+
+        // Evento al hacer clic en el botón de cargar imagen
+        document.getElementById("upload-button").onclick = function() {
+            const imageInput = document.getElementById("image-input");
+            const file = imageInput.files[0];
+
+            if (file) {
+                const formData = new FormData();
+                formData.append('image', file); // Añade la imagen al FormData
+
+                // Envía la imagen al servidor
+                fetch('/upload-image', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                alert("Por favor, selecciona una imagen.");
+            }
+        };
+    </script>
+</body>
+</html>
+
+
+
+
+
