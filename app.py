@@ -7,9 +7,9 @@ from PIL import Image
 app = Flask(__name__)
 
 # Inicializa los modelos generativos
-model_culinary = genai.GenerativeModel(model_name='tunedModels/domain4cooking')
-model_fashion = genai.GenerativeModel(model_name='tunedModels/domain4fashion')
-model_gym=genai.GenerativeModel(model_name='tunedModels/domain4gym')
+model_culinary = genai.GenerativeModel(model_name='tunedModels/domain4cookin')
+model_fashion = genai.GenerativeModel(model_name='tunedModels/domain4fashiont')
+model_gym=genai.GenerativeModel(model_name='tunedModels/domain4gymt')
 model_img = genai.GenerativeModel("gemini-1.5-flash")
 
 # Configura la carpeta para almacenar las imágenes
