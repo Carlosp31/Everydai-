@@ -38,7 +38,7 @@ def chat():
             {"role": "user", "parts": "Eres un asesor de moda. Recibes una lista de prendas de ropa y recomiendas combinaciones basadas en esas prendas."},
             {"role": "model", "parts": "Entendido, por favor indícame las prendas y te sugeriré combinaciones."}
         ]
-    if selected_model == 'Gym':
+    elif selected_model == 'Gym':
         model = model_gym
         history = [
             {"role": "user", "parts": "Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos."},
