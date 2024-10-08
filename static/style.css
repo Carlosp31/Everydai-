@@ -7,12 +7,13 @@ body {
     color: #333;
 }
 
+/* Contenedor principal */
 .chat-container {
     background: white;
     padding: 25px;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    max-width: 600px;
+    max-width: 800px;  /* Cambié el ancho para adaptarse a un estilo más amplio */
     margin: 0 auto;
     border: 1px solid #e0e0e0;
     position: relative;
@@ -31,36 +32,88 @@ body {
     z-index: 1;
 }
 
+/* Historial del chat */
 #chat-box {
-    max-height: 400px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    height: 300px;
     overflow-y: auto;
+    background-color: #f9f9f9;
     margin-bottom: 20px;
-    border: 1px solid #ddd;
-    padding: 15px;
     border-radius: 10px;
-    background-color: #fafafa;
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
-    position: relative;
     z-index: 2;
 }
 
-/* Estilos para los inputs */
-input[type="text"] {
-    width: calc(100% - 120px);
+/* Campo de entrada */
+input[type="text"],
+textarea#input-text {
+    width: calc(100% - 120px);  /* Ajuste para mejor visualización */
+    height: 60px;
     padding: 12px;
-    border-radius: 25px;
-    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
     font-size: 14px;
-    margin-right: 10px;
+    resize: none;
+    border-radius: 25px;
     transition: border-color 0.3s ease;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus,
+textarea#input-text:focus {
     outline: none;
     border-color: #acbb78;
 }
 
-/* Botón de envío */
+/* Botones */
+.controls {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.controls button {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.controls button:hover {
+    background-color: #0056b3;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+/* Slider (si lo necesitas) */
+.slider {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.slider input[type="range"] {
+    width: 100%;
+}
+
+/* Vista de imagen cargada */
+.image-display {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.image-display img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+/* Botón de envío personalizado */
 button {
     background-color: #acbb78;
     border: none;
@@ -76,11 +129,7 @@ button:hover {
     background-color: #8ca35d;
 }
 
-/* Estilos para mejorar la experiencia de usuario */
-button:active {
-    transform: scale(0.95);
-}
-
+/* Experiencia del usuario */
 input[type="text"]:hover {
     border-color: #bbb;
 }
