@@ -11,12 +11,6 @@ model_culinary = genai.GenerativeModel(model_name='tunedModels/domain4cooking')
 model_fashion = genai.GenerativeModel(model_name='tunedModels/domain4fashion')
 model_gym=genai.GenerativeModel(model_name='tunedModels/domain4gym')
 model_img = genai.GenerativeModel("gemini-1.5-flash")
-<<<<<<< HEAD
-name = "domain4cookin"
-model = genai.GenerativeModel(model_name=f'tunedModels/{name}')
-
-=======
->>>>>>> 7a5c5eb313aa795ff373521f8fdf03a4f928b836
 
 # Configura la carpeta para almacenar las imágenes
 UPLOAD_FOLDER = 'uploads'
