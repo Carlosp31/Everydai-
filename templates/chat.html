@@ -97,5 +97,56 @@
             };
         });
     </script>
+       <div id="recetas-box">
+        <h3>Recetas recomendadas:</h3>
+        <ul id="recetas-list"></ul>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const modelSelect = document.getElementById("model-select");  // Selector del modelo
+
+        document.getElementById("send-button").onclick = function() {
+            const userInput = document.getElementById("user-input").value;
+            const selectedModel = modelSelect.value;  // Obtener modelo seleccionado
+
+            if (userInput.trim() !== "") {
+                document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
+                document.getElementById("user-input").value = '';
+
+                // Envía el mensaje y el modelo seleccionado al servidor
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: userInput, model: selectedModel }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Mostrar la respuesta del modelo
+                    document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
+
+                    // Mostrar recetas en el frontend
+                    const recetasList = document.getElementById("recetas-list");
+                    recetasList.innerHTML = '';  // Limpia las recetas previas
+                    if (data.recetas && data.recetas.length > 0) {
+                        data.recetas.forEach(receta => {
+                            const listItem = document.createElement("li");
+                            listItem.innerHTML = `<a href="${receta.link}" target="_blank">${receta.title}</a>`;
+                            recetasList.appendChild(listItem);
+                        });
+                    } else {
+                        recetasList.innerHTML = '<li>No se encontraron recetas.</li>';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                alert("Por favor, ingresa un mensaje.");
+            }
+        };
+    });
+</script>
 </body>
 </html>

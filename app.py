@@ -1,23 +1,36 @@
+import os
 from flask import Flask, render_template, request, jsonify
 import google.generativeai as genai
 from werkzeug.utils import secure_filename
-import os
 from PIL import Image
 import serpapi
+from dotenv import load_dotenv  # Importar dotenv
+
+# Cargar las variables de entorno del archivo .env
+load_dotenv()
 
 app = Flask(__name__)
 
-# Inicializa los modelos generativos
-model_culinary = genai.GenerativeModel(model_name='tunedModels/domain4cookingggg')
-model_fashion = genai.GenerativeModel(model_name='tunedModels/domain4fashiono')
-model_gym=genai.GenerativeModel(model_name='tunedModels/domain4gymo')
-model_img = genai.GenerativeModel("gemini-1.5-flash")
+# Cargar las variables de entorno
+SERPAPI_KEY = os.getenv('SERPAPI_KEY')
+CULINARY_MODEL = os.getenv('CULINARY_MODEL')
+FASHION_MODEL = os.getenv('FASHION_MODEL')
+GYM_MODEL = os.getenv('GYM_MODEL')
+IMG_MODEL = os.getenv('IMG_MODEL')
+
+# Configurar la clave API de SerpAPI
+client = serpapi.Client(api_key=SERPAPI_KEY)
+
+# Inicializar los modelos generativos con las variables de entorno
+model_culinary = genai.GenerativeModel(model_name=CULINARY_MODEL)
+model_fashion = genai.GenerativeModel(model_name=FASHION_MODEL)
+model_gym = genai.GenerativeModel(model_name=GYM_MODEL)
+model_img = genai.GenerativeModel(IMG_MODEL)
 
 # Configura la carpeta para almacenar las imágenes
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-serpapi_client = serpapi.Client(api_key='cb656c3da30661f068548f710b4c3c9d366b03113cfe068670beb752012f01c1')
 @app.route('/')
 def index():
     return render_template('chat.html')
@@ -64,12 +77,16 @@ def chat():
     )
     
     respuesta_texto = response.text  # Obtener la respuesta en texto del modelo
+    
+    # Buscar recetas en SerpAPI basado en el input del usuario
+    recetas = buscar_recetas_en_serpapi(user_input)
 
-    return jsonify({'response': respuesta_texto})
+    # Devolver la respuesta del modelo y las recetas al frontend
+    return jsonify({'response': respuesta_texto, 'recetas': recetas})
+
 def buscar_recetas_en_serpapi(ingredientes):
-    """Busca recetas en SerpAPI basadas en los ingredientes proporcionados."""
     try:
-        result = serpapi_client.search(
+        result = client.search(
             q=f"Recetas con {ingredientes}",
             engine="google",
             hl="es",
@@ -78,7 +95,7 @@ def buscar_recetas_en_serpapi(ingredientes):
         return result.get("recipes_results", [])
     except Exception as e:
         return f"Error al buscar en SerpAPI: {e}"
-    
+
 @app.route('/upload-image', methods=['POST'])
 def upload_image():
     if 'image' not in request.files:
@@ -111,7 +128,7 @@ def upload_image():
 
     return jsonify({'response': 'Imagen no encontrada.'}), 404
 
-if __name__== '__main__':
+if __name__ == '__main__':
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)  # Crea la carpeta de uploads si no existe
     app.run(debug=True)
