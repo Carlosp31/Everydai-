@@ -81,7 +81,7 @@ def chat():
         model = model_culinary
         history = [
             {"role": "user", "parts": "Eres un profesor de culinaria. Recibe una lista de ingredientes y proporciona una lista de pasos para realizar una receta solo con esos ingredientes."},
-            {"role": "model", "parts": "Bien, dime los ingredientes que tienes y te daré los pasos para preparar una receta."}
+            {"role": "model", "parts": "Bien, dime los ingredientes que tienes y te daré el paso a paso, como si fueras principiantes, para preparar una receta."}
         ]
     elif selected_model == 'fashion':
         model = model_fashion
@@ -158,11 +158,24 @@ def upload_image():
         image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         image.save(image_path)  # Guarda la imagen en la carpeta de uploads
         image = Image.open(image_path)
+
         try:
             # Procesa la imagen con el modelo de imágenes
+            selected_model = request.form['model']  # Obtener el modelo seleccionado
+            print(selected_model)
+            if selected_model == 'culinary':
+                prompt = "Actúa como un maestro culinario e identifica los ingredientes en la imagen. Usa menos de 50 letras"
+            elif selected_model == 'fashion':
+                prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen. Usa menos de 50 letras"
+            elif selected_model == 'Gym':
+                prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen. Usa menos de 50 letras"
+            else:
+                return jsonify({'response': 'Modelo no válido.'}), 400
+
+            # Generar contenido a partir de la imagen
             response = model_img.generate_content(
                 [
-                    "Actúa como un maestro culinario e identifica los ingredientes en la imagen.",
+                    prompt,
                     image
                 ],
                 generation_config=genai.types.GenerationConfig(
@@ -172,14 +185,21 @@ def upload_image():
                     temperature=0.7
                 )
             )
-            return jsonify({'response': response.text})
+
+            # Verificar si la respuesta contiene un resultado válido
+            if response and hasattr(response, 'candidates') and response.candidates:
+                return jsonify({'response': response.text})
+            else:
+                return jsonify({'response': 'Error: No se pudo procesar la imagen correctamente.'}), 500
+
         except Exception as e:
             return jsonify({'response': f'Error procesando la imagen: {e}'}), 500
 
     return jsonify({'response': 'Imagen no encontrada.'}), 404
 
+
 if __name__ == '__main__':
     if not os.path.exists(UPLOAD_FOLDER):
-        os.makedirs(UPLOAD_FOLDER)  
-    app.run(debug=True)
+        os.makedirs(UPLOAD_FOLDER)  # Crea la carpeta de uploads si no existe
+    app.run(debug=True, port=3000)
 

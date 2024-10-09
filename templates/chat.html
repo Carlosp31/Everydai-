@@ -160,10 +160,12 @@
             // Evento al hacer clic en el botón de cargar imagen
             document.getElementById("upload-button").onclick = function() {
                 const file = imageInput.files[0];
+                const selectedModel = modelSelect.value;  
 
                 if (file) {
                     const formData = new FormData();
                     formData.append('image', file);
+                    formData.append('model', selectedModel);
 
                     fetch('/upload-image', {
                         method: 'POST',
