@@ -201,5 +201,4 @@ def upload_image():
 if __name__ == '__main__':
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)  # Crea la carpeta de uploads si no existe
-    app.run(debug=True)
-
+    app.run(debug=True, port=3000)
