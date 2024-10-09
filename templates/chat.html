@@ -42,6 +42,12 @@
             const videoPreview = document.getElementById("video-preview");
             const canvas = document.getElementById("canvas");
             const captureButton = document.getElementById("capture-button");
+<<<<<<< HEAD
+
+            document.getElementById("record-button").onclick = function() {
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = 'es-ES';  // Configura el idioma a español
+=======
 
             document.getElementById("record-button").onclick = function() {
                 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
@@ -64,6 +70,94 @@
                     }).catch(function(error) {
                         console.error("Error al acceder a la cámara: ", error);
                     });
+                }
+            };
+
+            captureButton.onclick = function() {
+            const context = canvas.getContext('2d');
+            canvas.width = videoPreview.videoWidth;
+            canvas.height = videoPreview.videoHeight;
+            context.drawImage(videoPreview, 0, 0);
+            const imageData = canvas.toDataURL('image/png');
+            imagePreview.src = imageData;
+            imagePreview.style.display = "block";
+
+            // Detener el stream de video
+            const stream = videoPreview.srcObject;
+            const tracks = stream.getTracks();
+            tracks.forEach(track => track.stop());
+            videoPreview.srcObject = null;
+            videoPreview.style.display = "none";
+            captureButton.style.display = "none";
+
+            // Enviar la imagen al servidor
+            canvas.toBlob(function(blob) {
+                const formData = new FormData();
+                formData.append('image', blob, 'captured-image.png'); // 'captured-image.png' es el nombre del archivo
+
+                fetch('/upload-image', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
+                })
+                .catch(error => console.error('Error:', error));
+            }, 'image/png');
+        };
+
+            // Evento al hacer clic en el botón de enviar texto
+            document.getElementById("send-button").onclick = function() {
+                const userInput = document.getElementById("user-input").value;
+                const selectedModel = modelSelect.value;
+>>>>>>> 88873bb89c0cd02b142df57b6548406216fa0298
+
+                recognition.onresult = function(event) {
+                    const userInput = event.results[0][0].transcript;  // Obtener el texto del reconocimiento
+                    document.getElementById("user-input").value = userInput;  // Mostrarlo en el input
+                };
+
+<<<<<<< HEAD
+                recognition.start();
+            };
+
+            document.getElementById("camera-button").onclick = function() {
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                        videoPreview.srcObject = stream;
+                        videoPreview.style.display = "block";
+                        document.getElementById("capture-button").style.display = "block";
+                    }).catch(function(error) {
+                        console.error("Error al acceder a la cámara: ", error);
+                    });
+=======
+                    fetch('/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ message: userInput, model: selectedModel }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
+                        const recetasList = document.getElementById("recetas-list");
+                        recetasList.innerHTML = ''; 
+                        if (data.recetas && data.recetas.length > 0) {
+                            data.recetas.forEach(receta => {
+                                const listItem = document.createElement("li");
+                                listItem.innerHTML = `<a href="${receta.link}" target="_blank">${receta.title}</a>`;
+                                recetasList.appendChild(listItem);
+                            });
+                        } else {
+                            recetasList.innerHTML = '<li>No se encontraron recetas.</li>';
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                } else {
+                    alert("Por favor, ingresa un mensaje.");
+>>>>>>> 88873bb89c0cd02b142df57b6548406216fa0298
                 }
             };
 
