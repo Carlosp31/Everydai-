@@ -1,10 +1,11 @@
 import os
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file
 import google.generativeai as genai
 from werkzeug.utils import secure_filename
 from PIL import Image
 import serpapi
-from dotenv import load_dotenv  # Importar dotenv
+from dotenv import load_dotenv
+import requests
 
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
@@ -17,6 +18,7 @@ CULINARY_MODEL = os.getenv('CULINARY_MODEL')
 FASHION_MODEL = os.getenv('FASHION_MODEL')
 GYM_MODEL = os.getenv('GYM_MODEL')
 IMG_MODEL = os.getenv('IMG_MODEL')
+ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY')
 
 # Configurar la clave API de SerpAPI
 client = serpapi.Client(api_key=SERPAPI_KEY)
@@ -31,6 +33,40 @@ model_img = genai.GenerativeModel(IMG_MODEL)
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+def sintetizar_voz(texto, api_key):
+    # Directorio temporal para guardar el archivo de audio
+    temp_dir = os.path.join(os.path.expanduser("~"), "AppData", "Local", "Temp")
+    audio_path = os.path.join(temp_dir, "respuesta_audio.mp3")
+
+    # Si el archivo ya existe, elimínalo antes de escribir uno nuevo
+    if os.path.exists(audio_path):
+        os.remove(audio_path)
+
+    url = "https://api.elevenlabs.io/v1/text-to-speech/9BWtsMINqrJLrRacOk9x"  # Cambia YOUR_VOICE_ID por el ID de la voz que quieras usar
+    headers = {
+        'accept': 'audio/mpeg',
+        'xi-api-key': api_key,
+        'Content-Type': 'application/json',
+    }
+    data = {
+        "text": texto,
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+            "stability": 0.5,
+            "similarity_boost": 1
+        }
+    }
+
+    # Solicitud a la API para sintetizar la voz
+    response = requests.post(url, headers=headers, json=data)
+    if response.status_code == 200:
+        # Guardar el archivo de audio en el directorio temporal
+        with open(audio_path, "wb") as f:
+            f.write(response.content)
+        return audio_path
+    else:
+        return None
+
 @app.route('/')
 def index():
     return render_template('chat.html')
@@ -38,9 +74,9 @@ def index():
 @app.route('/chat', methods=['POST'])
 def chat():
     user_input = request.json['message']
-    selected_model = request.json['model']  # Recibe el modelo seleccionado desde el HTML
+    selected_model = request.json['model']
 
-    # Selecciona el modelo basado en la entrada del usuario
+    # Selección del modelo basado en la entrada del usuario
     if selected_model == 'culinary':
         model = model_culinary
         history = [
@@ -77,12 +113,26 @@ def chat():
     )
     
     respuesta_texto = response.text  # Obtener la respuesta en texto del modelo
-    
-    # Buscar recetas en SerpAPI basado en el input del usuario
+
+    # Buscar recetas en SerpAPI (si es necesario)
     recetas = buscar_recetas_en_serpapi(user_input)
 
-    # Devolver la respuesta del modelo y las recetas al frontend
-    return jsonify({'response': respuesta_texto, 'recetas': recetas})
+    # Devolver la respuesta escrita y la de SerpAPI
+    return jsonify({
+        'text_response': respuesta_texto,
+        'recipes': recetas
+    })
+
+@app.route('/synthesize-audio', methods=['POST'])
+def synthesize_audio():
+    text = request.json['text']
+    audio_path = sintetizar_voz(text, ELEVENLABS_API_KEY)
+    
+    if audio_path:
+        return send_file(audio_path, mimetype='audio/mpeg')
+    else:
+        return jsonify({'error': 'Error al sintetizar la voz.'}), 500
+
 
 def buscar_recetas_en_serpapi(ingredientes):
     try:
