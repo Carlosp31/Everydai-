@@ -50,10 +50,10 @@ def sintetizar_voz(texto, api_key):
     }
     data = {
         "text": texto,
+        "model_id": "eleven_multilingual_v2",
         "voice_settings": {
-            "model_id": "eleven_multilingual_v2",
             "stability": 0.5,
-            "similarity_boost": 0.5
+            "similarity_boost": 1
         }
     }
 
