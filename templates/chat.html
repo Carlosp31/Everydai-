@@ -86,8 +86,10 @@
 
             // Enviar la imagen al servidor
             canvas.toBlob(function(blob) {
+                const selectedModel = modelSelect.value;
                 const formData = new FormData();
                 formData.append('image', blob, 'captured-image.png'); // 'captured-image.png' es el nombre del archivo
+                formData.append('model', selectedModel);
 
                 fetch('/upload-image', {
                     method: 'POST',

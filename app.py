@@ -164,11 +164,11 @@ def upload_image():
             selected_model = request.form['model']  # Obtener el modelo seleccionado
             print(selected_model)
             if selected_model == 'culinary':
-                prompt = "Actúa como un maestro culinario e identifica los ingredientes en la imagen. Usa menos de 50 letras"
+                prompt = "Actúa como un maestro culinario e identifica los ingredientes en la imagen. "
             elif selected_model == 'fashion':
-                prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen. Usa menos de 50 letras"
+                prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen."
             elif selected_model == 'Gym':
-                prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen. Usa menos de 50 letras"
+                prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen. "
             else:
                 return jsonify({'response': 'Modelo no válido.'}), 400
 
@@ -181,7 +181,7 @@ def upload_image():
                 generation_config=genai.types.GenerationConfig(
                     candidate_count=1,
                     stop_sequences=["x"],
-                    max_output_tokens=50,
+                    max_output_tokens=70,
                     temperature=0.7
                 )
             )
