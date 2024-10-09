@@ -10,8 +10,6 @@
 <body>
     <div class="chat-container">
         <h1>Chat with EverydAI</h1>
-
-        <!-- Selector de modelo -->
         <label for="model-select">Escoge un modelo:</label>
         <select id="model-select">
             <option value="culinary">Culinario</option>
@@ -25,16 +23,12 @@
         <button id="record-button">Talk</button>
         <input type="file" id="image-input" accept="image/*">
         <button id="upload-button">Upload Image</button>
-
-        <!-- Botón para abrir la cámara -->
         <button id="camera-button">Open Camera</button>
         <button id="capture-button" style="display:none;">Capture</button>
 
-        <!-- Vista previa de la cámara y de la imagen capturada -->
         <video id="video-preview" autoplay style="display:none; width: 300px;"></video>
         <canvas id="canvas" style="display:none;"></canvas>
 
-        <!-- Contenedor para mostrar la imagen cargada -->
         <div id="image-preview-container" style="text-align: center;">
             <img id="image-preview" alt="Your uploaded image will appear here" style="display: none; width: 300px; margin-top: 10px;">
         </div>
@@ -42,46 +36,137 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const modelSelect = document.getElementById("model-select");  // Selector del modelo
+            const modelSelect = document.getElementById("model-select"); 
             const imageInput = document.getElementById("image-input");
             const imagePreview = document.getElementById("image-preview");
+            const videoPreview = document.getElementById("video-preview");
+            const canvas = document.getElementById("canvas");
+            const captureButton = document.getElementById("capture-button");
 
-            // Evento al hacer clic en el botón de enviar texto
-            document.getElementById("send-button").onclick = function() {
-                const userInput = document.getElementById("user-input").value;
-                const selectedModel = modelSelect.value;  // Obtener modelo seleccionado
+            document.getElementById("record-button").onclick = function() {
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = 'es-ES';  // Configura el idioma a español
 
-                if (userInput.trim() !== "") {
-                    document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
-                    document.getElementById("user-input").value = '';
+                recognition.onresult = function(event) {
+                    const userInput = event.results[0][0].transcript;  // Obtener el texto del reconocimiento
+                    document.getElementById("user-input").value = userInput;  // Mostrarlo en el input
+                };
 
-                    // Envía el mensaje y el modelo seleccionado al servidor
-                    fetch('/chat', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ message: userInput, model: selectedModel }),
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
-                    })
-                    .catch(error => console.error('Error:', error));
-                } else {
-                    alert("Por favor, ingresa un mensaje.");
+                recognition.start();
+            };
+
+            document.getElementById("camera-button").onclick = function() {
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                        videoPreview.srcObject = stream;
+                        videoPreview.style.display = "block";
+                        document.getElementById("capture-button").style.display = "block";
+                    }).catch(function(error) {
+                        console.error("Error al acceder a la cámara: ", error);
+                    });
                 }
             };
+
+            captureButton.onclick = function() {
+            const context = canvas.getContext('2d');
+            canvas.width = videoPreview.videoWidth;
+            canvas.height = videoPreview.videoHeight;
+            context.drawImage(videoPreview, 0, 0);
+            const imageData = canvas.toDataURL('image/png');
+            imagePreview.src = imageData;
+            imagePreview.style.display = "block";
+
+            // Detener el stream de video
+            const stream = videoPreview.srcObject;
+            const tracks = stream.getTracks();
+            tracks.forEach(track => track.stop());
+            videoPreview.srcObject = null;
+            videoPreview.style.display = "none";
+            captureButton.style.display = "none";
+
+            // Enviar la imagen al servidor
+            canvas.toBlob(function(blob) {
+                const formData = new FormData();
+                formData.append('image', blob, 'captured-image.png'); // 'captured-image.png' es el nombre del archivo
+
+                fetch('/upload-image', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
+                })
+                .catch(error => console.error('Error:', error));
+            }, 'image/png');
+        };
+
+            // Evento al hacer clic en el botón de enviar texto
+                document.getElementById("send-button").onclick = function() {
+        const userInput = document.getElementById("user-input").value;
+        const selectedModel = modelSelect.value;
+
+        if (userInput.trim() !== "") {
+            document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
+            document.getElementById("user-input").value = '';
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: userInput, model: selectedModel }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar la respuesta de texto y las recetas en el chat
+                document.getElementById("chat-box").innerHTML += `<div>AI: ${data.text_response}</div>`;
+                        const recetasList = document.getElementById("recetas-list");
+                        recetasList.innerHTML = ''; 
+                        if (data.recipes && data.recipes.length > 0) {
+                            data.recipes.forEach(receta => {
+                                const listItem = document.createElement("li");
+                                listItem.innerHTML = `<a href="${receta.link}" target="_blank">${receta.title}</a>`;
+                                recetasList.appendChild(listItem);
+                            });
+                        } else {
+                            recetasList.innerHTML = '<li>No se encontraron recetas.</li>';
+                        }
+                // Enviar texto a sintetizar
+                fetch('/synthesize-audio', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: data.text_response }),
+                })
+                .then(audioResponse => {
+                    if (audioResponse.ok) {
+                        return audioResponse.blob();
+                    }
+                    throw new Error('Error al obtener el audio.');
+                })
+                .then(audioBlob => {
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    const audio = new Audio(audioUrl);
+                    audio.play(); // Reproducir el audio
+                })
+                .catch(error => console.error('Error:', error));
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    };
 
             // Evento al hacer clic en el botón de cargar imagen
             document.getElementById("upload-button").onclick = function() {
                 const file = imageInput.files[0];
+                const selectedModel = modelSelect.value;  
 
                 if (file) {
                     const formData = new FormData();
                     formData.append('image', file);
+                    formData.append('model', selectedModel);
 
-                    // Envía la imagen al servidor
                     fetch('/upload-image', {
                         method: 'POST',
                         body: formData,
@@ -95,7 +180,23 @@
                     alert("Por favor, selecciona una imagen.");
                 }
             };
+
+            // Vista previa de la imagen cargada
+            imageInput.onchange = function() {
+                const file = imageInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = "block";  // Mostrar la vista previa
+                };
+                reader.readAsDataURL(file);
+            };
         });
     </script>
+    
+    <div id="recetas-box">
+        <h3>Recetas recomendadas:</h3>
+        <ul id="recetas-list"></ul>
+    </div>
 </body>
 </html>

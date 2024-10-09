@@ -1,20 +1,71 @@
-from flask import Flask, render_template, request, jsonify
+import os
+from flask import Flask, render_template, request, jsonify, send_file
 import google.generativeai as genai
 from werkzeug.utils import secure_filename
-import os
 from PIL import Image
+import serpapi
+from dotenv import load_dotenv
+import requests
+
+# Cargar las variables de entorno del archivo .env
+load_dotenv()
 
 app = Flask(__name__)
 
-# Inicializa los modelos generativos
-model_culinary = genai.GenerativeModel(model_name='tunedModels/domain4cooking')
-model_fashion = genai.GenerativeModel(model_name='tunedModels/domain4fashion')
-model_gym=genai.GenerativeModel(model_name='tunedModels/domain4gym')
-model_img = genai.GenerativeModel("gemini-1.5-flash")
+# Cargar las variables de entorno
+SERPAPI_KEY = os.getenv('SERPAPI_KEY')
+CULINARY_MODEL = os.getenv('CULINARY_MODEL')
+FASHION_MODEL = os.getenv('FASHION_MODEL')
+GYM_MODEL = os.getenv('GYM_MODEL')
+IMG_MODEL = os.getenv('IMG_MODEL')
+ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY')
+
+# Configurar la clave API de SerpAPI
+client = serpapi.Client(api_key=SERPAPI_KEY)
+
+# Inicializar los modelos generativos con las variables de entorno
+model_culinary = genai.GenerativeModel(model_name=CULINARY_MODEL)
+model_fashion = genai.GenerativeModel(model_name=FASHION_MODEL)
+model_gym = genai.GenerativeModel(model_name=GYM_MODEL)
+model_img = genai.GenerativeModel(IMG_MODEL)
 
 # Configura la carpeta para almacenar las imágenes
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def sintetizar_voz(texto, api_key):
+    # Directorio temporal para guardar el archivo de audio
+    temp_dir = os.path.join(os.path.expanduser("~"), "AppData", "Local", "Temp")
+    audio_path = os.path.join(temp_dir, "respuesta_audio.mp3")
+
+    # Si el archivo ya existe, elimínalo antes de escribir uno nuevo
+    if os.path.exists(audio_path):
+        os.remove(audio_path)
+
+    url = "https://api.elevenlabs.io/v1/text-to-speech/9BWtsMINqrJLrRacOk9x"  # Cambia YOUR_VOICE_ID por el ID de la voz que quieras usar
+    headers = {
+        'accept': 'audio/mpeg',
+        'xi-api-key': api_key,
+        'Content-Type': 'application/json',
+    }
+    data = {
+        "text": texto,
+        "model_id": "eleven_multilingual_v2",
+        "voice_settings": {
+            "stability": 0.5,
+            "similarity_boost": 1
+        }
+    }
+
+    # Solicitud a la API para sintetizar la voz
+    response = requests.post(url, headers=headers, json=data)
+    if response.status_code == 200:
+        # Guardar el archivo de audio en el directorio temporal
+        with open(audio_path, "wb") as f:
+            f.write(response.content)
+        return audio_path
+    else:
+        return None
 
 @app.route('/')
 def index():
@@ -23,14 +74,14 @@ def index():
 @app.route('/chat', methods=['POST'])
 def chat():
     user_input = request.json['message']
-    selected_model = request.json['model']  # Recibe el modelo seleccionado desde el HTML
+    selected_model = request.json['model']
 
-    # Selecciona el modelo basado en la entrada del usuario
+    # Selección del modelo basado en la entrada del usuario
     if selected_model == 'culinary':
         model = model_culinary
         history = [
             {"role": "user", "parts": "Eres un profesor de culinaria. Recibe una lista de ingredientes y proporciona una lista de pasos para realizar una receta solo con esos ingredientes."},
-            {"role": "model", "parts": "Bien, dime los ingredientes que tienes y te daré los pasos para preparar una receta."}
+            {"role": "model", "parts": "Bien, dime los ingredientes que tienes y te daré el paso a paso, como si fueras principiantes, para preparar una receta."}
         ]
     elif selected_model == 'fashion':
         model = model_fashion
@@ -63,7 +114,37 @@ def chat():
     
     respuesta_texto = response.text  # Obtener la respuesta en texto del modelo
 
-    return jsonify({'response': respuesta_texto})
+    # Buscar recetas en SerpAPI (si es necesario)
+    recetas = buscar_recetas_en_serpapi(user_input)
+
+    # Devolver la respuesta escrita y la de SerpAPI
+    return jsonify({
+        'text_response': respuesta_texto,
+        'recipes': recetas
+    })
+
+@app.route('/synthesize-audio', methods=['POST'])
+def synthesize_audio():
+    text = request.json['text']
+    audio_path = sintetizar_voz(text, ELEVENLABS_API_KEY)
+    
+    if audio_path:
+        return send_file(audio_path, mimetype='audio/mpeg')
+    else:
+        return jsonify({'error': 'Error al sintetizar la voz.'}), 500
+
+
+def buscar_recetas_en_serpapi(ingredientes):
+    try:
+        result = client.search(
+            q=f"Recetas con {ingredientes}",
+            engine="google",
+            hl="es",
+            gl="co"
+        )
+        return result.get("recipes_results", [])
+    except Exception as e:
+        return f"Error al buscar en SerpAPI: {e}"
 
 @app.route('/upload-image', methods=['POST'])
 def upload_image():
@@ -77,11 +158,24 @@ def upload_image():
         image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         image.save(image_path)  # Guarda la imagen en la carpeta de uploads
         image = Image.open(image_path)
+
         try:
             # Procesa la imagen con el modelo de imágenes
+            selected_model = request.form['model']  # Obtener el modelo seleccionado
+            print(selected_model)
+            if selected_model == 'culinary':
+                prompt = "Actúa como un maestro culinario e identifica los ingredientes en la imagen. Usa menos de 50 letras"
+            elif selected_model == 'fashion':
+                prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen. Usa menos de 50 letras"
+            elif selected_model == 'Gym':
+                prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen. Usa menos de 50 letras"
+            else:
+                return jsonify({'response': 'Modelo no válido.'}), 400
+
+            # Generar contenido a partir de la imagen
             response = model_img.generate_content(
                 [
-                    "Actúa como un maestro culinario e identifica los ingredientes en la imagen.",
+                    prompt,
                     image
                 ],
                 generation_config=genai.types.GenerationConfig(
@@ -91,13 +185,21 @@ def upload_image():
                     temperature=0.7
                 )
             )
-            return jsonify({'response': response.text})
+
+            # Verificar si la respuesta contiene un resultado válido
+            if response and hasattr(response, 'candidates') and response.candidates:
+                return jsonify({'response': response.text})
+            else:
+                return jsonify({'response': 'Error: No se pudo procesar la imagen correctamente.'}), 500
+
         except Exception as e:
             return jsonify({'response': f'Error procesando la imagen: {e}'}), 500
 
     return jsonify({'response': 'Imagen no encontrada.'}), 404
 
-if __name__== '__main__':
+
+if __name__ == '__main__':
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)  # Crea la carpeta de uploads si no existe
-    app.run(debug=True)
+    app.run(debug=True, port=3000)
+
