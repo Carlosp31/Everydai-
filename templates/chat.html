@@ -102,7 +102,7 @@
         };
 
             // Evento al hacer clic en el botón de enviar texto
-                document.getElementById("send-button").onclick = function() {
+    document.getElementById("send-button").onclick = function() {
         const userInput = document.getElementById("user-input").value;
         const selectedModel = modelSelect.value;
 
@@ -172,6 +172,26 @@
                     .then(response => response.json())
                     .then(data => {
                         document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
+                        fetch('/synthesize-audio', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ text: data.response }),
+                        })
+                        .then(audioResponse => {
+                            if (audioResponse.ok) {
+                                return audioResponse.blob();
+                            }
+                            throw new Error('Error al obtener el audio.');
+                        })
+                        .then(audioBlob => {
+                            const audioUrl = URL.createObjectURL(audioBlob);
+                            const audio = new Audio(audioUrl);
+                            audio.play(); // Reproducir el audio
+                        })
+                        .catch(error => console.error('Error:', error));  
+                          
                     })
                     .catch(error => console.error('Error:', error));
                 } else {
