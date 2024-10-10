@@ -151,7 +151,9 @@ def buscar_resultados_en_serpapi(query, model):
             q=search_query,
             engine="google",
             hl="es",
-            gl="co"
+            gl="co",
+            location_requested="Atlantico,Colombia",
+            location_used="Atlantico,Colombia"
         )
         
         # Para el modelo culinario, usamos 'recipes_results', pero para otros modelos
