@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function() {
             event.preventDefault();
             selectedModel = this.getAttribute('data-value');  // Guardar el valor seleccionado
             alert(`Has seleccionado el modelo: ${selectedModel}`);
-            // Aquí puedes agregar la lógica adicional que necesitas al seleccionar un modelo
         });
     });
 
@@ -138,16 +137,19 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(data => {
                 // Mostrar la respuesta de texto en el chat
                 document.getElementById("chat-box").innerHTML += `<div>AI: ${data.text_response}</div>`;
-                const recetasList = document.getElementById("recetas-list");
-                recetasList.innerHTML = ''; 
+                
+                // Mostrar las recomendaciones en el cuadro de recomendaciones
+                const recommendationsList = document.getElementById("recommendations-list");
+                recommendationsList.innerHTML = '';  // Limpiar la lista existente
+
                 if (data.recipes && data.recipes.length > 0) {
                     data.recipes.forEach(receta => {
                         const listItem = document.createElement("li");
                         listItem.innerHTML = `<a href="${receta.link}" target="_blank">${receta.title}</a>`;
-                        recetasList.appendChild(listItem);
+                        recommendationsList.appendChild(listItem);
                     });
                 } else {
-                    recetasList.innerHTML = '<li>No se encontraron recetas.</li>';
+                    recommendationsList.innerHTML = '<li>No se encontraron recomendaciones.</li>';
                 }
 
                 // Enviar texto a sintetizar
@@ -231,6 +233,7 @@ document.addEventListener("DOMContentLoaded", function() {
         reader.readAsDataURL(file);
     };
 });
+
     </script>
     
 </body>
