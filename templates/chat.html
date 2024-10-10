@@ -7,21 +7,20 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Chat with EverydAI</title>
 </head>
-
 <body>
+    <div id="selected-model-display" class="selected-model-display"></div>
     <div id="recommendations-box" class="recommendations-box">
         <h3>Recommendations:</h3>
         <ul id="recommendations-list"></ul>
     </div>
     <div class="chat-container">
-        <h1 class="main-title">Chat with EverydAI</h1>
-        <!-- Barra lateral con los modelos en lugar del select -->
+        <h1>Chat with EverydAI</h1>
         <div class="sidebar">
-            <p>Escoge un modelo:</p>
-            <div class="sidebar-options">
-                <a href="#" class="option" data-value="culinary">Kitchen</a>
+            <p>Choose a model:</p>
+            <div class="model-select">
+                <a href="#" class="option" data-value="culinary">Culinary</a>
                 <a href="#" class="option" data-value="fashion">Fashion</a>
-                <a href="#" class="option" data-value="gym">Exercise</a>
+                <a href="#" class="option" data-value="Gym">Gym</a>
             </div>
         </div>
 
@@ -44,25 +43,41 @@
 
     <script>
 document.addEventListener("DOMContentLoaded", function() {
+    const modelOptions = document.querySelectorAll('.option');  // Obtener todas las opciones de modelo
     const imageInput = document.getElementById("image-input");
     const imagePreview = document.getElementById("image-preview");
     const videoPreview = document.getElementById("video-preview");
     const canvas = document.getElementById("canvas");
     const captureButton = document.getElementById("capture-button");
     let selectedModel = '';  // Variable para almacenar el modelo seleccionado
+    // Función para mostrar el popup animado
+    function showPopup(message) {
+        const popup = document.getElementById('popup');
+        popup.textContent = message;  // Colocar el mensaje dentro del popup
+        popup.classList.remove('hidden');
+        popup.classList.add('show');
 
-    // Funcionalidad para manejar la selección de modelo desde la barra lateral
-    const modelOptions = document.querySelectorAll('.sidebar-options .option');
-    
+        // Ocultar el popup después de 3 segundos
+        setTimeout(() => {
+            popup.classList.remove('show');
+            popup.classList.add('hidden');
+        }, 3000);
+    }
+
+    // Agregar eventos de clic para cada opción de modelo
     modelOptions.forEach(option => {
         option.addEventListener('click', function(event) {
             event.preventDefault();
             selectedModel = this.getAttribute('data-value');  // Guardar el valor seleccionado
-            alert(`Has seleccionado el modelo: ${selectedModel}`);
+            
+            // Mostrar el popup con la confirmación del modelo
+            showPopup(`You have selected the following model: ${selectedModel}`);
+            // Actualizar el div estático con el modelo seleccionado
+            document.getElementById('selected-model-display').textContent = `Selected model: ${selectedModel}`;
         });
     });
 
-    // Funcionalidad del botón "Talk" para reconocimiento de voz
+
     document.getElementById("record-button").onclick = function() {
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         recognition.lang = 'es-ES';  // Configura el idioma a español
@@ -75,7 +90,6 @@ document.addEventListener("DOMContentLoaded", function() {
         recognition.start();
     };
 
-    // Funcionalidad para abrir la cámara
     document.getElementById("camera-button").onclick = function() {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
@@ -88,7 +102,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
 
-    // Funcionalidad para capturar una imagen desde la cámara
     captureButton.onclick = function() {
         const context = canvas.getContext('2d');
         canvas.width = videoPreview.videoWidth;
@@ -109,7 +122,8 @@ document.addEventListener("DOMContentLoaded", function() {
         // Enviar la imagen al servidor
         canvas.toBlob(function(blob) {
             const formData = new FormData();
-            formData.append('image', blob, 'captured-image.png'); // 'captured-image.png' es el nombre del archivo
+            formData.append('image', blob, 'captured-image.png');  // 'captured-image.png' es el nombre del archivo
+            formData.append('model', selectedModel);  // Enviar el modelo seleccionado
 
             fetch('/upload-image', {
                 method: 'POST',
@@ -118,22 +132,8 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => response.json())
             .then(data => {
                 document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
-                
-                // Mostrar las recomendaciones en el cuadro de recomendaciones
-                const recommendationsList = document.getElementById("recommendations-list");
-                recommendationsList.innerHTML = '';  // Limpiar la lista existente
-
-                if (data.recipes && data.recipes.length > 0) {
-                    data.recipes.forEach(receta => {
-                        const listItem = document.createElement("li");
-                        listItem.innerHTML = `<a href="${receta.link}" target="_blank">${receta.title}</a>`;
-                        recommendationsList.appendChild(listItem);
-                    });
-                } else {
-                    recommendationsList.innerHTML = '<li>No se encontraron recomendaciones.</li>';
-                }
             })
-            .catch(error => console.error('Error al obtener recomendaciones:', error));
+            .catch(error => console.error('Error:', error));
         }, 'image/png');
     };
 
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("send-button").onclick = function() {
         const userInput = document.getElementById("user-input").value;
 
-        if (userInput.trim() !== "") {
+        if (userInput.trim() !== "" && selectedModel !== "") {
             document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
             document.getElementById("user-input").value = '';
 
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message: userInput, model: selectedModel }),  // Usar el modelo seleccionado
+                body: JSON.stringify({ message: userInput, model: selectedModel }),  // Enviar el modelo seleccionado
             })
             .then(response => response.json())
             .then(data => {
@@ -190,19 +190,22 @@ document.addEventListener("DOMContentLoaded", function() {
                     const audio = new Audio(audioUrl);
                     audio.play(); // Reproducir el audio
                 })
-                .catch(error => console.error('Error al obtener el audio:', error));
+                .catch(error => console.error('Error:', error));
             })
             .catch(error => console.error('Error:', error));
+        } else {
+            alert("Por favor selecciona un modelo antes de continuar.");
         }
     };
 
     // Evento al hacer clic en el botón de cargar imagen
     document.getElementById("upload-button").onclick = function() {
-        const file = imageInput.files[0];
+        const file = imageInput.files[0];  
 
-        if (file) {
+        if (file && selectedModel !== "") {
             const formData = new FormData();
             formData.append('image', file);
+            formData.append('model', selectedModel);  // Enviar el modelo seleccionado
 
             fetch('/upload-image', {
                 method: 'POST',
@@ -211,21 +214,6 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => response.json())
             .then(data => {
                 document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
-                
-                // Mostrar las recomendaciones en el cuadro de recomendaciones
-                const recommendationsList = document.getElementById("recommendations-list");
-                recommendationsList.innerHTML = '';  // Limpiar la lista existente
-
-                if (data.recipes && data.recipes.length > 0) {
-                    data.recipes.forEach(receta => {
-                        const listItem = document.createElement("li");
-                        listItem.innerHTML = `<a href="${receta.link}" target="_blank">${receta.title}</a>`;
-                        recommendationsList.appendChild(listItem);
-                    });
-                } else {
-                    recommendationsList.innerHTML = '<li>No se encontraron recomendaciones.</li>';
-                }
-
                 fetch('/synthesize-audio', {
                     method: 'POST',
                     headers: {
@@ -247,9 +235,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 .catch(error => console.error('Error al obtener el audio:', error));  
                     
             })
-            .catch(error => console.error('Error al subir la imagen:', error));
+            .catch(error => console.error('Error al cargar la imagen:', error));
         } else {
-            alert("Por favor, selecciona una imagen.");
+            alert("Por favor selecciona un modelo antes de cargar una imagen.");
         }
     };
 
@@ -266,6 +254,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
     </script>
-
+    <!-- Aquí agregamos el popup -->
+    <div id="popup" class="popup hidden"></div>
 </body>
 </html>

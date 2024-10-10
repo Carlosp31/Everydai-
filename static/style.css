@@ -162,7 +162,7 @@ input[type="text"]:hover {
 }
 
 /* Opciones de la barra lateral */
-.sidebar-options {
+.model-select {
     display: flex;
     flex-direction: column;
 }
@@ -209,7 +209,48 @@ input[type="text"]:hover {
     margin-bottom: 10px;
     font-size: 14px;
 }
+/* Estilo del popup */
+.popup {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);  /* Inicia pequeño */
+    background-color: rgba(0, 128, 255, 0.9);  /* Fondo con transparencia */
+    color: white;  /* Color del texto */
+    padding: 20px 40px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    text-align: center;
+    z-index: 1000;  /* Asegurarse de que esté por encima de otros elementos */
+    opacity: 0;  /* Inicialmente invisible */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-in-out;
+}
 
+/* Clase para mostrar el popup con animación brusca */
+.popup.show {
+    opacity: 1;  /* Hacer visible */
+    transform: translate(-50%, -50%) scale(1.2);  /* Aumentar el tamaño al 120% */
+}
+
+/* Clase para ocultar el popup (invisible) */
+.popup.hidden {
+    opacity: 0;  /* Ocultar */
+    transform: translate(-50%, -50%) scale(0.5);  /* Reducir el tamaño */
+}
+
+.selected-model-display {
+    position: absolute;
+    top: 75px;
+    right: 400px;
+    background-color: rgba(0, 128, 255, 0.9); /* Fondo con color y transparencia */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    z-index: 1000;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
 /* Opciones responsivas */
 @media (max-width: 768px) {
     .sidebar {

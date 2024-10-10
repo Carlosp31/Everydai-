@@ -81,7 +81,7 @@ def chat():
         model = model_culinary
         history = [
             {"role": "user", "parts": "Eres un profesor de culinaria. Recibe una lista de ingredientes y proporciona una lista de pasos para realizar una receta solo con esos ingredientes."},
-            {"role": "model", "parts": "Bien, dime los ingredientes que tienes y te daré los pasos para preparar una receta."}
+            {"role": "model", "parts": "Bien, dime los ingredientes que tienes y te daré el paso a paso, como si fueras principiantes, para preparar una receta."}
         ]
     elif selected_model == 'fashion':
         model = model_fashion
@@ -115,7 +115,7 @@ def chat():
     respuesta_texto = response.text  # Obtener la respuesta en texto del modelo
 
     # Buscar recetas en SerpAPI (si es necesario)
-    recetas = buscar_recetas_en_serpapi(user_input)
+    recetas = buscar_resultados_en_serpapi(user_input, selected_model)
 
     # Devolver la respuesta escrita y la de SerpAPI
     return jsonify({
@@ -134,17 +134,37 @@ def synthesize_audio():
         return jsonify({'error': 'Error al sintetizar la voz.'}), 500
 
 
-def buscar_recetas_en_serpapi(ingredientes):
+def buscar_resultados_en_serpapi(query, model):
     try:
+        # Ajusta la consulta según el modelo seleccionado
+        if model == 'culinary':
+            search_query = f"Recetas con {query}"
+        elif model == 'fashion':
+            search_query = f"Outfits with {query}"
+        elif model == 'Gym':
+            search_query = f"Gym exercises using {query}"
+        else:
+            return f"Modelo {model} no soportado."
+
+        # Realizar la búsqueda en SerpAPI con la consulta modificada
         result = client.search(
-            q=f"Recetas con {ingredientes}",
+            q=search_query,
             engine="google",
             hl="es",
-            gl="co"
+            gl="co",
+            location_requested="Atlantico,Colombia",
+            location_used="Atlantico,Colombia"
         )
-        return result.get("recipes_results", [])
+        
+        # Para el modelo culinario, usamos 'recipes_results', pero para otros modelos
+        # podrían necesitarse diferentes campos en los resultados
+        if model == 'culinary':
+            return result.get("recipes_results", [])
+        else:
+            return result.get("organic_results", [])  # Ajusta esto según las necesidades del modelo
     except Exception as e:
         return f"Error al buscar en SerpAPI: {e}"
+
 
 @app.route('/upload-image', methods=['POST'])
 def upload_image():
@@ -158,27 +178,47 @@ def upload_image():
         image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         image.save(image_path)  # Guarda la imagen en la carpeta de uploads
         image = Image.open(image_path)
+
         try:
             # Procesa la imagen con el modelo de imágenes
+            selected_model = request.form['model']  # Obtener el modelo seleccionado
+            print(selected_model)
+            if selected_model == 'culinary':
+                prompt = "Actúa como un maestro culinario e identifica los ingredientes en la imagen. "
+            elif selected_model == 'fashion':
+                prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen."
+            elif selected_model == 'Gym':
+                prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen. "
+            else:
+                return jsonify({'response': 'Modelo no válido.'}), 400
+
+            # Generar contenido a partir de la imagen
             response = model_img.generate_content(
                 [
-                    "Actúa como un maestro culinario e identifica los ingredientes en la imagen.",
+                    prompt,
                     image
                 ],
                 generation_config=genai.types.GenerationConfig(
                     candidate_count=1,
                     stop_sequences=["x"],
-                    max_output_tokens=50,
+                    max_output_tokens=70,
                     temperature=0.7
                 )
             )
-            return jsonify({'response': response.text})
+
+            # Verificar si la respuesta contiene un resultado válido
+            if response and hasattr(response, 'candidates') and response.candidates:
+                return jsonify({'response': response.text})
+            else:
+                return jsonify({'response': 'Error: No se pudo procesar la imagen correctamente.'}), 500
+
         except Exception as e:
             return jsonify({'response': f'Error procesando la imagen: {e}'}), 500
 
     return jsonify({'response': 'Imagen no encontrada.'}), 404
 
+
 if __name__ == '__main__':
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)  # Crea la carpeta de uploads si no existe
-    app.run(debug=True)
+    app.run(debug=True, port=3000)
