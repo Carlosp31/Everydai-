@@ -12,8 +12,8 @@ body {
     background: white;
     padding: 25px;
     border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    max-width: 800px;  /* Cambié el ancho para adaptarse a un estilo más amplio */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Sombra más suave */
+    max-width: 800px; 
     margin: 0 auto;
     border: 1px solid #e0e0e0;
     position: relative;
@@ -35,34 +35,35 @@ body {
 /* Historial del chat */
 #chat-box {
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 15px; /* Más espacio en el padding */
     height: 300px;
     overflow-y: auto;
     background-color: #f9f9f9;
     margin-bottom: 20px;
     border-radius: 10px;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Más sombra interna */
     z-index: 2;
 }
 
 /* Campo de entrada */
 input[type="text"],
 textarea#input-text {
-    width: calc(100% - 120px);  /* Ajuste para mejor visualización */
+    width: calc(100% - 120px);
     height: 60px;
     padding: 12px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
-    font-size: 14px;
+    font-size: 16px; /* Aumentado para mejorar legibilidad */
     resize: none;
     border-radius: 25px;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
 }
 
 input[type="text"]:focus,
 textarea#input-text:focus {
     outline: none;
-    border-color: #acbb78;
+    border-color: #8ca35d; /* Colores más visibles */
+    box-shadow: 0 0 5px rgba(140, 163, 93, 0.5); /* Efecto glow al hacer foco */
 }
 
 /* Botones */
@@ -74,7 +75,7 @@ textarea#input-text:focus {
 .controls button {
     padding: 10px 15px;
     margin: 5px;
-    background-color: #007bff;
+    background-color: #8ca35d; /* Color más oscuro para mejorar contraste */
     color: white;
     border: none;
     border-radius: 5px;
@@ -83,14 +84,14 @@ textarea#input-text:focus {
 }
 
 .controls button:hover {
-    background-color: #0056b3;
+    background-color: #6e8244;
 }
 
 button:active {
     transform: scale(0.95);
 }
 
-/* Slider (si lo necesitas) */
+/* Slider */
 .slider {
     margin-bottom: 20px;
     text-align: center;
@@ -122,16 +123,102 @@ button {
     font-size: 14px;
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Efectos añadidos */
 }
 
 button:hover {
     background-color: #8ca35d;
+    transform: translateY(-2px); /* Efecto hover con elevación */
 }
 
 /* Experiencia del usuario */
 input[type="text"]:hover {
     border-color: #bbb;
+}
+.main-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilos de la barra lateral */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100%;
+    background-color: #acbb78;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar p {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+/* Opciones de la barra lateral */
+.model-select {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar a {
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 10px;
+    background-color: #8ca35d;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar a:hover {
+    background-color: #6e8244;
+}
+/* Estilos para el cuadro de recomendaciones */
+.recommendations-box {
+    position: absolute;
+    top: 20px;
+    right: 5px; /* Posiciona el cuadro a la derecha */
+    width: 200px;
+    height: 200px;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    border: 1px solid #acbb78; /* Borde para que encaje con el tema */
+}
+
+.recommendations-box h3 {
+    text-align: center;
+    color: #333;
+}
+
+.recommendations-box ul {
+    list-style: none;
+    padding: 0;
+}
+
+.recommendations-box ul li {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* Opciones responsivas */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 150px;
+    }
+    
+    .sidebar a {
+        font-size: 14px;
+    }
 }
 
 /* Responsivo */
