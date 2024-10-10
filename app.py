@@ -115,7 +115,7 @@ def chat():
     respuesta_texto = response.text  # Obtener la respuesta en texto del modelo
 
     # Buscar recetas en SerpAPI (si es necesario)
-    recetas = buscar_recetas_en_serpapi(user_input)
+    recetas = buscar_resultados_en_serpapi(user_input, selected_model)
 
     # Devolver la respuesta escrita y la de SerpAPI
     return jsonify({
@@ -134,17 +134,35 @@ def synthesize_audio():
         return jsonify({'error': 'Error al sintetizar la voz.'}), 500
 
 
-def buscar_recetas_en_serpapi(ingredientes):
+def buscar_resultados_en_serpapi(query, model):
     try:
+        # Ajusta la consulta según el modelo seleccionado
+        if model == 'culinary':
+            search_query = f"Recetas con {query}"
+        elif model == 'fashion':
+            search_query = f"Outfits with {query}"
+        elif model == 'Gym':
+            search_query = f"Gym exercises using {query}"
+        else:
+            return f"Modelo {model} no soportado."
+
+        # Realizar la búsqueda en SerpAPI con la consulta modificada
         result = client.search(
-            q=f"Recetas con {ingredientes}",
+            q=search_query,
             engine="google",
             hl="es",
             gl="co"
         )
-        return result.get("recipes_results", [])
+        
+        # Para el modelo culinario, usamos 'recipes_results', pero para otros modelos
+        # podrían necesitarse diferentes campos en los resultados
+        if model == 'culinary':
+            return result.get("recipes_results", [])
+        else:
+            return result.get("organic_results", [])  # Ajusta esto según las necesidades del modelo
     except Exception as e:
         return f"Error al buscar en SerpAPI: {e}"
+
 
 @app.route('/upload-image', methods=['POST'])
 def upload_image():
