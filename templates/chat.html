@@ -16,7 +16,7 @@
     <div class="chat-container">
         <h1>Chat with EverydAI</h1>
         <div class="sidebar">
-            <p>Choose a model:</p>
+            <p>Choose a domain:</p>
             <div class="model-select">
                 <a href="#" class="option" data-value="culinary">Culinary</a>
                 <a href="#" class="option" data-value="fashion">Fashion</a>
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // Mostrar el popup con la confirmación del modelo
             showPopup(`You have selected the following model: ${selectedModel}`);
             // Actualizar el div estático con el modelo seleccionado
-            document.getElementById('selected-model-display').textContent = `Selected model: ${selectedModel}`;
+            document.getElementById('selected-model-display').textContent = `Domain selected: ${selectedModel}`;
         });
     });
 
@@ -193,9 +193,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 .catch(error => console.error('Error:', error));
             })
             .catch(error => console.error('Error:', error));
-        } else {
-            alert("Por favor selecciona un modelo antes de continuar.");
-        }
+            } else {
+                // En lugar de alert, usamos el popup para mostrar el mensaje
+                showPopup("Please select a domain to continue.");
+            }
     };
 
     // Evento al hacer clic en el botón de cargar imagen
@@ -235,10 +236,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 .catch(error => console.error('Error al obtener el audio:', error));  
                     
             })
-            .catch(error => console.error('Error al cargar la imagen:', error));
-        } else {
-            alert("Por favor selecciona un modelo antes de cargar una imagen.");
-        }
+            .catch(error => console.error('Error:', error));
+            } else {
+                // En lugar de alert, usamos el popup para mostrar el mensaje
+                showPopup("Please select a domain to continue.");
+            }
     };
 
     // Vista previa de la imagen cargada
