@@ -8,6 +8,7 @@
     <title>Chat with EverydAI</title>
 </head>
 <body>
+    <div id="selected-model-display" class="selected-model-display"></div>
     <div id="recommendations-box" class="recommendations-box">
         <h3>Recommendations:</h3>
         <ul id="recommendations-list"></ul>
@@ -15,11 +16,11 @@
     <div class="chat-container">
         <h1>Chat with EverydAI</h1>
         <div class="sidebar">
-            <p>Choose a model:</p>
+            <p>Choose a domain:</p>
             <div class="model-select">
-                <a href="#" class="option" data-value="culinary">Kitchen</a>
+                <a href="#" class="option" data-value="culinary">Culinary</a>
                 <a href="#" class="option" data-value="fashion">Fashion</a>
-                <a href="#" class="option" data-value="Gym">Exercise</a>
+                <a href="#" class="option" data-value="Gym">Gym</a>
             </div>
         </div>
 
@@ -49,13 +50,30 @@ document.addEventListener("DOMContentLoaded", function() {
     const canvas = document.getElementById("canvas");
     const captureButton = document.getElementById("capture-button");
     let selectedModel = '';  // Variable para almacenar el modelo seleccionado
+    // Función para mostrar el popup animado
+    function showPopup(message) {
+        const popup = document.getElementById('popup');
+        popup.textContent = message;  // Colocar el mensaje dentro del popup
+        popup.classList.remove('hidden');
+        popup.classList.add('show');
+
+        // Ocultar el popup después de 3 segundos
+        setTimeout(() => {
+            popup.classList.remove('show');
+            popup.classList.add('hidden');
+        }, 3000);
+    }
 
     // Agregar eventos de clic para cada opción de modelo
     modelOptions.forEach(option => {
         option.addEventListener('click', function(event) {
             event.preventDefault();
             selectedModel = this.getAttribute('data-value');  // Guardar el valor seleccionado
-            alert(`Has seleccionado el modelo: ${selectedModel}`);
+            
+            // Mostrar el popup con la confirmación del modelo
+            showPopup(`You have selected the following model: ${selectedModel}`);
+            // Actualizar el div estático con el modelo seleccionado
+            document.getElementById('selected-model-display').textContent = `Domain selected: ${selectedModel}`;
         });
     });
 
@@ -174,9 +192,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 .catch(error => console.error('Error:', error));
             })
             .catch(error => console.error('Error:', error));
-        } else {
-            alert("Por favor selecciona un modelo antes de continuar.");
-        }
+            } else {
+                // En lugar de alert, usamos el popup para mostrar el mensaje
+                showPopup("Please select a domain to continue.");
+            }
     };
 
     // Evento al hacer clic en el botón de cargar imagen
@@ -216,10 +235,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 .catch(error => console.error('Error al obtener el audio:', error));  
                     
             })
-            .catch(error => console.error('Error al cargar la imagen:', error));
-        } else {
-            alert("Por favor selecciona un modelo antes de cargar una imagen.");
-        }
+            .catch(error => console.error('Error:', error));
+            } else {
+                // En lugar de alert, usamos el popup para mostrar el mensaje
+                showPopup("Please select a domain to continue.");
+            }
     };
 
     // Vista previa de la imagen cargada
@@ -235,6 +255,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
     </script>
-    
+    <!-- Aquí agregamos el popup -->
+    <div id="popup" class="popup hidden"></div>
 </body>
 </html>
