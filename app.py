@@ -1,3 +1,4 @@
+
 import os
 from flask import Flask, render_template, request, jsonify, send_file
 import google.generativeai as genai
@@ -32,6 +33,117 @@ model_img = genai.GenerativeModel(IMG_MODEL)
 # Configura la carpeta para almacenar las imágenes
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+##############---DEF --- CALL FUNCTION -- #######################################3
+# Función para buscar recetas basadas en el input del usuario
+def buscar_recetas(input_usuario: str) -> str:
+    """
+    Procesa el input del usuario solo y exclusivamente si este te pide que le sugieras algún tutorial,
+    una guía, en links o videos. En ese caso, devuelve una sugerencia de búsqueda de recetas basada 
+    en el análisis semántico del input.
+
+    Args:
+        input_usuario (str): El mensaje del usuario solicitando una receta.
+
+    Returns:
+        str: La sugerencia de búsqueda en una frase procesada para la búsqueda.
+    """
+    # Convertir el input a minúsculas para evitar problemas de mayúsculas
+    input_usuario = input_usuario.lower()
+
+    # Verbos que indican que el usuario está buscando un tutorial, guía o video
+    verbos_busqueda = ["busca", "sugiéreme", "muéstrame", "recomiéndame", "necesito", "quiero", "enséñame", "dame", "tutorial", "guía", "link", "video"]
+
+    # Palabras clave relacionadas con recetas
+    palabras_receta = ["receta", "cómo hacer", "paso a paso", "plato", "comida", "preparación", "cocinar"]
+
+    # Verificar si el input del usuario contiene verbos relacionados con tutoriales, guías o videos
+    if any(verbo in input_usuario for verbo in verbos_busqueda) and any(palabra in input_usuario for palabra in palabras_receta):
+        # Separar el input en palabras para encontrar el posible tipo de comida
+        palabras = input_usuario.split()
+
+        # Intentar identificar el ingrediente o tipo de comida a partir del input
+        for i, palabra in enumerate(palabras):
+            if palabra in palabras_receta:  # Si encontramos palabras relacionadas con recetas
+                # Devolver la palabra siguiente como sugerencia
+                if i + 1 < len(palabras):
+                    return palabras[i + 1]  # Retornar la palabra que sigue como sugerencia de búsqueda
+
+        # Si no se encuentra un tipo de comida específico, devolver búsqueda genérica
+        return "recetas variadas"
+
+    # Si no se trata de una búsqueda de tutorial, guía o video, devolver una cadena vacía
+    return ""
+
+
+def serpp(input_usuario, model_type):
+    tool_config = {
+        "function_calling_config": {
+            "mode": "AUTO",  # Dejamos AUTO, pero sin depender de la llamada automática a la función
+        }
+    }
+
+    # Definir el modelo con la función y la configuración de tool_config
+    model = genai.GenerativeModel(model_name='gemini-1.5-flash',
+                                  tools=[buscar_recetas],
+                                  tool_config=tool_config)
+
+    # Iniciar un chat
+    chat = model.start_chat()
+
+    # Enviar un mensaje en español directamente sin esperar que "AUTO" maneje las funciones
+    print(f"Entrada del usuario: {input_usuario}")
+
+    # Llamar manualmente a buscar_recetas para verificar si la entrada amerita una búsqueda
+    sugerencia_busqueda = buscar_recetas(input_usuario)
+
+    # Verificar si hay una sugerencia válida de búsqueda
+    if sugerencia_busqueda:
+        print(f"Buscas recetas de {sugerencia_busqueda}")
+
+        # Aquí pasamos el tipo de modelo ("culinary", "fashion", etc.), en lugar del objeto model
+        recetas = buscar_resultados_en_serpapi(sugerencia_busqueda, model_type)
+        print(f"Recetas: {recetas}")
+        return recetas
+    else:
+        print("El input no parece ser una solicitud de recetas.")
+        return None
+
+# Ajuste de la función para obtener resultados en SerpAPI
+def buscar_resultados_en_serpapi(query, model_type):
+    try:
+        # Ajusta la consulta según el tipo de modelo
+        if model_type == 'culinary':
+            search_query = f"Recetas con {query}"
+        elif model_type == 'fashion':
+            search_query = f"Outfits with {query}"
+        elif model_type == 'gym':
+            search_query = f"Gym exercises using {query}"
+        else:
+            return f"Modelo {model_type} no soportado."
+
+        # Realizar la búsqueda en SerpAPI con la consulta modificada
+        result = client.search(
+            q=search_query,
+            engine="google",
+            hl="es",
+            gl="co",
+            location_requested="Atlantico,Colombia",
+            location_used="Atlantico,Colombia"
+        )
+
+        # Para el modelo culinario, usamos 'recipes_results', pero para otros modelos
+        # podrían necesitarse diferentes campos en los resultados
+        if model_type == 'culinary':
+            return result.get("recipes_results", [])
+        else:
+            return result.get("organic_results", [])  # Ajusta esto según las necesidades del modelo
+    except Exception as e:
+        return f"Error al buscar en SerpAPI: {e}"
+
+
+
+###########################################################3#######3#######3#####
 
 def sintetizar_voz(texto, api_key):
     # Directorio temporal para guardar el archivo de audio
@@ -76,6 +188,8 @@ def chat():
     user_input = request.json['message']
     selected_model = request.json['model']
 
+    
+
     # Selección del modelo basado en la entrada del usuario
     if selected_model == 'culinary':
         model = model_culinary
@@ -115,7 +229,8 @@ def chat():
     respuesta_texto = response.text  # Obtener la respuesta en texto del modelo
 
     # Buscar recetas en SerpAPI (si es necesario)
-    recetas = buscar_resultados_en_serpapi(user_input, selected_model)
+    
+    recetas = serpp(user_input, selected_model)
 
     # Devolver la respuesta escrita y la de SerpAPI
     return jsonify({
@@ -134,36 +249,6 @@ def synthesize_audio():
         return jsonify({'error': 'Error al sintetizar la voz.'}), 500
 
 
-def buscar_resultados_en_serpapi(query, model):
-    try:
-        # Ajusta la consulta según el modelo seleccionado
-        if model == 'culinary':
-            search_query = f"Recetas con {query}"
-        elif model == 'fashion':
-            search_query = f"Outfits with {query}"
-        elif model == 'Gym':
-            search_query = f"Gym exercises using {query}"
-        else:
-            return f"Modelo {model} no soportado."
-
-        # Realizar la búsqueda en SerpAPI con la consulta modificada
-        result = client.search(
-            q=search_query,
-            engine="google",
-            hl="es",
-            gl="co",
-            location_requested="Atlantico,Colombia",
-            location_used="Atlantico,Colombia"
-        )
-        
-        # Para el modelo culinario, usamos 'recipes_results', pero para otros modelos
-        # podrían necesitarse diferentes campos en los resultados
-        if model == 'culinary':
-            return result.get("recipes_results", [])
-        else:
-            return result.get("organic_results", [])  # Ajusta esto según las necesidades del modelo
-    except Exception as e:
-        return f"Error al buscar en SerpAPI: {e}"
 
 
 @app.route('/upload-image', methods=['POST'])
