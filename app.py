@@ -1,18 +1,23 @@
 import os
-from flask import Flask, render_template, request, jsonify, send_file
+from flask import Flask, render_template, request, jsonify, redirect, send_file, url_for, session
 import google.generativeai as genai
 from werkzeug.utils import secure_filename
 from PIL import Image
 import serpapi
 from dotenv import load_dotenv
 import requests
+from google_auth_oauthlib.flow import Flow
+from google.oauth2.credentials import Credentials
+from datetime import datetime, timedelta
 
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
 
 app = Flask(__name__)
+app.secret_key = os.getenv('SECRET_KEY', 'supersecretkey')
 
 # Cargar las variables de entorno
+GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 SERPAPI_KEY = os.getenv('SERPAPI_KEY')
 CULINARY_MODEL = os.getenv('CULINARY_MODEL')
 FASHION_MODEL = os.getenv('FASHION_MODEL')
@@ -22,7 +27,6 @@ ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY')
 
 # Configurar la clave API de SerpAPI
 client = serpapi.Client(api_key=SERPAPI_KEY)
-
 # Inicializar los modelos generativos con las variables de entorno
 model_culinary = genai.GenerativeModel(model_name=CULINARY_MODEL)
 model_fashion = genai.GenerativeModel(model_name=FASHION_MODEL)
@@ -35,7 +39,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def sintetizar_voz(texto, api_key):
     # Directorio temporal para guardar el archivo de audio
-    temp_dir = os.path.join(os.path.expanduser("~"), "AppData", "Local", "Temp")
+    temp_dir = "/tmp"
     audio_path = os.path.join(temp_dir, "respuesta_audio.mp3")
 
     # Si el archivo ya existe, elimínalo antes de escribir uno nuevo
@@ -51,7 +55,7 @@ def sintetizar_voz(texto, api_key):
     data = {
         "text": texto,
         "model_id": "eleven_multilingual_v2",
-        "voice_settings": {
+            "voice_settings": {
             "stability": 0.5,
             "similarity_boost": 1
         }
@@ -67,12 +71,73 @@ def sintetizar_voz(texto, api_key):
     else:
         return None
 
+# Configuración de la API de Google OAuth
+CLIENT_SECRETS_FILE = "client_secret.json"
+SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
+REDIRECT_URI = 'https://everydai.zapto.org/oauth2callback'
+
+# Flujo de autenticación OAuth
+flow = Flow.from_client_secrets_file(
+    CLIENT_SECRETS_FILE,
+    scopes=SCOPES,
+    redirect_uri=REDIRECT_URI
+)
 @app.route('/')
 def index():
-    return render_template('chat.html')
+    # Si el usuario ya está autenticado, redirigirlo al dashboard
+    if 'credentials' in session:
+        return redirect(url_for('dashboard'))
+    
+    # De lo contrario, inicia el flujo de autenticación
+    authorization_url, state = flow.authorization_url(access_type='offline')
+    session['state'] = state
+    return redirect(authorization_url)
 
-@app.route('/chat', methods=['POST'])
+@app.route('/oauth2callback')
+def oauth2callback():
+    # Recuperar el estado almacenado
+    state = session['state']
+    
+    # Completar el flujo OAuth y obtener las credenciales
+    flow.fetch_token(authorization_response=request.url)
+
+    # Guardar las credenciales en la sesión
+    credentials = flow.credentials
+    session['credentials'] = {
+        'token': credentials.token,
+        'refresh_token': credentials.refresh_token,
+        'token_uri': credentials.token_uri,
+        'client_id': credentials.client_id,
+        'client_secret': credentials.client_secret,
+        'scopes': credentials.scopes,
+        'expires_at': credentials.expiry.strftime('%Y-%m-%d %H:%M:%S')
+        }
+
+    # Redirigir al dashboard después de la autenticación exitosa
+    return redirect(url_for('dashboard'))
+
+# Ruta para el dashboard donde se selecciona el dominio
+@app.route('/dashboard')
+def dashboard():
+    # Renderiza la página del dashboard donde el usuario selecciona un dominio
+    return render_template('dashboard.html')
+
+# Ruta para el chatbot que recibe el dominio seleccionado
+@app.route('/chat')
 def chat():
+    domain = request.args.get('domain', '')  # Obtener el dominio desde la URL
+    if domain not in ['culinary', 'fashion', 'gym']:
+        return "Dominio no válido", 400  # Validar el dominio
+
+    # Almacenar el dominio seleccionado en la sesión
+    session['selected_domain'] = domain
+
+    # Renderizar la página del chatbot y pasar el dominio seleccionado
+    return render_template('chat.html', domain=domain)
+
+# Actualización: mensaje inicial en el chat
+@app.route('/chat', methods=['POST'])
+def chat_post():
     user_input = request.json['message']
     selected_model = request.json['model']
 
@@ -80,7 +145,7 @@ def chat():
     if selected_model == 'culinary':
         model = model_culinary
         history = [
-            {"role": "user", "parts": "Eres un profesor de culinaria. Recibe una lista de ingredientes y proporciona una lista de pasos para realizar una receta solo con esos ingredientes."},
+            {"role": "user", "parts": "Eres un profesor de culinaria. Recibe una lista de ingredientes y proporciona una lista de pasos para realizar una receta solo con esos ingre>
             {"role": "model", "parts": "Bien, dime los ingredientes que tienes y te daré el paso a paso, como si fueras principiantes, para preparar una receta."}
         ]
     elif selected_model == 'fashion':
@@ -89,15 +154,14 @@ def chat():
             {"role": "user", "parts": "Eres un asesor de moda. Recibes una lista de prendas de ropa y recomiendas combinaciones basadas en esas prendas."},
             {"role": "model", "parts": "Entendido, por favor indícame las prendas y te sugeriré combinaciones."}
         ]
-    elif selected_model == 'Gym':
+    elif selected_model == 'gym':
         model = model_gym
         history = [
-            {"role": "user", "parts": "Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos."},
+            {"role": "user", "parts": "Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además>
             {"role": "model", "parts": "Dime qué elementos de gimnasio tienes, y te sugeriré ejercicios para realizar con ellos."}
         ]
     else:
         return jsonify({'response': 'Modelo no encontrado.'}), 400
-
     # Iniciar chat con el modelo seleccionado
     chat = model.start_chat(history=history)
     
@@ -107,23 +171,26 @@ def chat():
         generation_config=genai.types.GenerationConfig(
             candidate_count=1,
             stop_sequences=["x"],
-            max_output_tokens=50,
+            max_output_tokens=150,
             temperature=0.7
         )
     )
     
     respuesta_texto = response.text  # Obtener la respuesta en texto del modelo
 
-    # Buscar recetas en SerpAPI (si es necesario)
-    recetas = buscar_recetas_en_serpapi(user_input)
+    # Mensaje inicial al seleccionar el dominio
+    mensaje_inicial = f"Hola, este es el dominio {session.get('selected_domain', 'desconocido')}"
 
-    # Devolver la respuesta escrita y la de SerpAPI
+    # Buscar recetas en SerpAPI (si es necesario)
+    recetas = buscar_resultados_en_serpapi(user_input, selected_model)
+    
+    # Devolver la respuesta escrita, el mensaje inicial y la de SerpAPI
     return jsonify({
         'text_response': respuesta_texto,
+        'mensaje_inicial': mensaje_inicial,
         'recipes': recetas
     })
-
-@app.route('/synthesize-audio', methods=['POST'])
+        @app.route('/synthesize-audio', methods=['POST'])
 def synthesize_audio():
     text = request.json['text']
     audio_path = sintetizar_voz(text, ELEVENLABS_API_KEY)
@@ -133,26 +200,44 @@ def synthesize_audio():
     else:
         return jsonify({'error': 'Error al sintetizar la voz.'}), 500
 
-
-def buscar_recetas_en_serpapi(ingredientes):
+def buscar_resultados_en_serpapi(query, model):
     try:
+        # Ajusta la consulta según el modelo seleccionado
+        if model == 'culinary':
+            search_query = f"Recetas con {query}"
+        elif model == 'fashion':
+            search_query = f"Outfits with {query}"
+        elif model == 'gym':
+            search_query = f"Gym exercises using {query}"
+        else:
+            return f"Modelo {model} no soportado."
+
+        # Realizar la búsqueda en SerpAPI con la consulta modificada
         result = client.search(
-            q=f"Recetas con {ingredientes}",
+            q=search_query,
             engine="google",
             hl="es",
-            gl="co"
+            gl="co",
+            location_requested="Atlantico,Colombia",
+                    location_used="Atlantico,Colombia"
         )
-        return result.get("recipes_results", [])
+
+        # Para el modelo culinario, usamos 'recipes_results', pero para otros modelos
+        # podrían necesitarse diferentes campos en los resultados
+        if model == 'culinary':
+            return result.get("recipes_results", [])
+        else:
+            return result.get("organic_results", [])  # Ajusta esto según las necesidades del modelo
     except Exception as e:
         return f"Error al buscar en SerpAPI: {e}"
 
+# Ruta para subir imagen
 @app.route('/upload-image', methods=['POST'])
 def upload_image():
     if 'image' not in request.files:
         return jsonify({'response': 'No image uploaded.'}), 400
 
     image = request.files['image']
-    
     if image:
         filename = secure_filename(image.filename)
         image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -163,11 +248,11 @@ def upload_image():
             # Procesa la imagen con el modelo de imágenes
             selected_model = request.form['model']  # Obtener el modelo seleccionado
             print(selected_model)
-            if selected_model == 'culinary':
+                    if selected_model == 'culinary':
                 prompt = "Actúa como un maestro culinario e identifica los ingredientes en la imagen. "
             elif selected_model == 'fashion':
                 prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen."
-            elif selected_model == 'Gym':
+            elif selected_model == 'gym':
                 prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen. "
             else:
                 return jsonify({'response': 'Modelo no válido.'}), 400
@@ -191,14 +276,14 @@ def upload_image():
                 return jsonify({'response': response.text})
             else:
                 return jsonify({'response': 'Error: No se pudo procesar la imagen correctamente.'}), 500
-
+        
         except Exception as e:
             return jsonify({'response': f'Error procesando la imagen: {e}'}), 500
 
     return jsonify({'response': 'Imagen no encontrada.'}), 404
 
-
+# Iniciar la aplicación Flask con SSL
 if __name__ == '__main__':
     if not os.path.exists(UPLOAD_FOLDER):
-        os.makedirs(UPLOAD_FOLDER)  # Crea la carpeta de uploads si no existe
-    app.run(debug=True, port=3000)
+        os.makedirs(UPLOAD_FOLDER)
+    app.run(host='0.0.0.0', port=443, ssl_context=('cert.pem', 'key.pem'), debug=True)
