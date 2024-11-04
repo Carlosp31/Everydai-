@@ -8,28 +8,26 @@
     <title>Chat with EverydAI</title>
 </head>
 <body>
+    <!-- Mostrar el modelo seleccionado dinámicamente -->
+    <div id="selected-model-display" class="selected-model-display">
+        <!-- Mostrar el dominio seleccionado -->
+        Hola, este es el dominio {{ domain }} <!-- Utilizando el dominio dinámico pasado desde Flask -->
+    </div>
+
     <div id="recommendations-box" class="recommendations-box">
         <h3>Recommendations:</h3>
         <ul id="recommendations-list"></ul>
     </div>
+
     <div class="chat-container">
         <h1>Chat with EverydAI</h1>
-        <div class="sidebar">
-            <p>Choose a model:</p>
-            <div class="model-select">
-                <a href="#" class="option" data-value="culinary">Kitchen</a>
-                <a href="#" class="option" data-value="fashion">Fashion</a>
-                <a href="#" class="option" data-value="gym">Exercise</a>
-            </div>
-        </div>
-
         <div id="chat-box"></div>
         <input type="text" id="user-input" placeholder="Chat with us...">
         <button id="send-button">Send</button>
-        <button id="record-button">Talk</button>
+        <button id="record-button" style="display:none;">Talk</button> <!-- Ocultar el botón de Talk, ya no es necesario -->
         <input type="file" id="image-input" accept="image/*">
         <button id="upload-button">Upload Image</button>
-        <button id="camera-button">Open Camera</button>
+                <button id="camera-button">Open Camera</button>
         <button id="capture-button" style="display:none;">Capture</button>
 
         <video id="video-preview" autoplay style="display:none; width: 300px;"></video>
@@ -41,200 +39,229 @@
     </div>
 
     <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const modelOptions = document.querySelectorAll('.option');  // Obtener todas las opciones de modelo
-    const imageInput = document.getElementById("image-input");
-    const imagePreview = document.getElementById("image-preview");
-    const videoPreview = document.getElementById("video-preview");
-    const canvas = document.getElementById("canvas");
-    const captureButton = document.getElementById("capture-button");
-    let selectedModel = '';  // Variable para almacenar el modelo seleccionado
+        document.addEventListener("DOMContentLoaded", function() {
+            const modelOptions = document.querySelectorAll('.option');  // Obtener todas las opciones de modelo
+            const imageInput = document.getElementById("image-input");
+            const imagePreview = document.getElementById("image-preview");
+            const videoPreview = document.getElementById("video-preview");
+            const canvas = document.getElementById("canvas");
+            const captureButton = document.getElementById("capture-button");
+            let selectedModel = '{{ domain }}';  // El dominio seleccionado se obtiene desde Flask
+            let isListeningForKeyword = true;  // Variable para manejar si se está esperando la palabra clave
 
-    // Agregar eventos de clic para cada opción de modelo
-    modelOptions.forEach(option => {
-        option.addEventListener('click', function(event) {
-            event.preventDefault();
-            selectedModel = this.getAttribute('data-value');  // Guardar el valor seleccionado
-            alert(`Has seleccionado el modelo: ${selectedModel}`);
-        });
-    });
+            // Función para mostrar el popup animado
+            function showPopup(message) {
+                const popup = document.getElementById('popup');
+                popup.textContent = message;  // Colocar el mensaje dentro del popup
+                popup.classList.remove('hidden');
+                popup.classList.add('show');
+                                // Ocultar el popup después de 3 segundos
+                setTimeout(() => {
+                    popup.classList.remove('show');
+                    popup.classList.add('hidden');
+                }, 3000);
+            }
 
-    document.getElementById("record-button").onclick = function() {
-        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = 'es-ES';  // Configura el idioma a español
+            // Evento para iniciar el reconocimiento de voz automáticamente
+            function startVoiceRecognition() {
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = 'es-ES';  // Configura el idioma a español
 
-        recognition.onresult = function(event) {
-            const userInput = event.results[0][0].transcript;  // Obtener el texto del reconocimiento
-            document.getElementById("user-input").value = userInput;  // Mostrarlo en el input
-        };
+                recognition.onresult = function(event) {
+                    const userInput = event.results[0][0].transcript.toLowerCase();  // Obtener el texto del reconocimiento en minúsculas
 
-        recognition.start();
-    };
+                    if (isListeningForKeyword && userInput.includes("aura")) {
+                        isListeningForKeyword = false;  // Detener la espera de la palabra clave
+                       // showPopup("Palabra clave detectada, puede hablar ahora.");
+                    } else if (!isListeningForKeyword) {
+                        document.getElementById("user-input").value = userInput;  // Mostrar el texto reconocido en el input
+                        sendMessage(userInput);  // Enviar el mensaje automáticamente
+                    }
+                };
 
-    document.getElementById("camera-button").onclick = function() {
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-                videoPreview.srcObject = stream;
-                videoPreview.style.display = "block";
-                document.getElementById("capture-button").style.display = "block";
-            }).catch(function(error) {
-                console.error("Error al acceder a la cámara: ", error);
-            });
-        }
-    };
+                recognition.onend = function() {
+                    recognition.start();  // Reiniciar el reconocimiento después de cada intento
+                };
+            }
 
-    captureButton.onclick = function() {
-        const context = canvas.getContext('2d');
-        canvas.width = videoPreview.videoWidth;
-        canvas.height = videoPreview.videoHeight;
-        context.drawImage(videoPreview, 0, 0);
-        const imageData = canvas.toDataURL('image/png');
-        imagePreview.src = imageData;
-        imagePreview.style.display = "block";
+            // Funcionalidad para enviar mensajes (tanto por texto como por voz)
+            function sendMessage(userInput) {
+                if (userInput.trim() !== "") {
+                    document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
+                    document.getElementById("user-input").value = '';  // Limpiar el input después de enviar
 
-        // Detener el stream de video
-        const stream = videoPreview.srcObject;
-        const tracks = stream.getTracks();
-        tracks.forEach(track => track.stop());
-        videoPreview.srcObject = null;
-        videoPreview.style.display = "none";
-        captureButton.style.display = "none";
+                    fetch('/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ message: userInput, model: selectedModel }),  // Enviar el modelo seleccionado
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Mostrar la respuesta de texto en el chat
+                        document.getElementById("chat-box").innerHTML += `<div>AI: ${data.text_response}</div>`;
 
-        // Enviar la imagen al servidor
-        canvas.toBlob(function(blob) {
-            const formData = new FormData();
-            formData.append('image', blob, 'captured-image.png');  // 'captured-image.png' es el nombre del archivo
-            formData.append('model', selectedModel);  // Enviar el modelo seleccionado
+                        // Mostrar las recomendaciones en el cuadro de recomendaciones
+                        const recommendationsList = document.getElementById("recommendations-list");
+                        recommendationsList.innerHTML = '';  // Limpiar la lista existente
 
-            fetch('/upload-image', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
-            })
-            .catch(error => console.error('Error:', error));
-        }, 'image/png');
-    };
+                        // Verificar si data.recipes es un array antes de recorrerlo
+                        if (Array.isArray(data.recipes)) {
+                            data.recipes.forEach(receta => {
+                                const listItem = document.createElement("li");
 
-    // Evento al hacer clic en el botón de enviar texto
-    document.getElementById("send-button").onclick = function() {
-        const userInput = document.getElementById("user-input").value;
+                                                                                 listItem.innerHTML = `<a href="${receta.link}" target="_blank">${receta.title}</a>`;
+                                recommendationsList.appendChild(listItem);
+                            });
+                        } else {
+                            recommendationsList.innerHTML = '<li>No se encontraron recomendaciones.</li>';
+                        }
 
-        if (userInput.trim() !== "" && selectedModel !== "") {
-            document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
-            document.getElementById("user-input").value = '';
+                        // Enviar texto a sintetizar
+                        fetch('/synthesize-audio', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ text: data.text_response }),
+                        })
+                        .then(audioResponse => {
+                            if (audioResponse.ok) {
+                                return audioResponse.blob();
+                            }
+                            throw new Error('Error al obtener el audio.');
+                        })
+                        .then(audioBlob => {
+                            const audioUrl = URL.createObjectURL(audioBlob);
+                            const audio = new Audio(audioUrl);
+                            audio.play(); // Reproducir el audio
+                        })
+                        .catch(error => console.error('Error:', error));
 
-            fetch('/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ message: userInput, model: selectedModel }),  // Enviar el modelo seleccionado
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Mostrar la respuesta de texto en el chat
-                document.getElementById("chat-box").innerHTML += `<div>AI: ${data.text_response}</div>`;
-                
-                // Mostrar las recomendaciones en el cuadro de recomendaciones
-                const recommendationsList = document.getElementById("recommendations-list");
-                recommendationsList.innerHTML = '';  // Limpiar la lista existente
-
-                if (data.recipes && data.recipes.length > 0) {
-                    data.recipes.forEach(receta => {
-                        const listItem = document.createElement("li");
-                        listItem.innerHTML = `<a href="${receta.link}" target="_blank">${receta.title}</a>`;
-                        recommendationsList.appendChild(listItem);
-                    });
+                        // Después de enviar el mensaje, reiniciar la espera de la palabra clave "aura"
+                                                  isListeningForKeyword = true;
+                        //showPopup("Diga 'aura' para continuar.");
+                    })
+                    .catch(error => console.error('Error:', error));
                 } else {
-                    recommendationsList.innerHTML = '<li>No se encontraron recomendaciones.</li>';
+                    //showPopup("Please select a domain to continue.");
                 }
+            }
 
-                // Enviar texto a sintetizar
-                fetch('/synthesize-audio', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ text: data.text_response }),
-                })
-                .then(audioResponse => {
-                    if (audioResponse.ok) {
-                        return audioResponse.blob();
-                    }
-                    throw new Error('Error al obtener el audio.');
-                })
-                .then(audioBlob => {
-                    const audioUrl = URL.createObjectURL(audioBlob);
-                    const audio = new Audio(audioUrl);
-                    audio.play(); // Reproducir el audio
-                })
-                .catch(error => console.error('Error:', error));
-            })
-            .catch(error => console.error('Error:', error));
-        } else {
-            alert("Por favor selecciona un modelo antes de continuar.");
-        }
-    };
+            // Evento al hacer clic en el botón de enviar texto manualmente
+            document.getElementById("send-button").onclick = function() {
+                const userInput = document.getElementById("user-input").value;
+                sendMessage(userInput);
+            };
 
-    // Evento al hacer clic en el botón de cargar imagen
-    document.getElementById("upload-button").onclick = function() {
-        const file = imageInput.files[0];  
+            // Funcionalidad para abrir la cámara
+            document.getElementById("camera-button").onclick = function() {
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                        videoPreview.srcObject = stream;
+                        videoPreview.style.display = "block";
+                        document.getElementById("capture-button").style.display = "block";
+                    }).catch(function(error) {
+                        console.error("Error al acceder a la cámara: ", error);
+                    });
+                }
+            };
+            // Funcionalidad para capturar imagen de la cámara
+            captureButton.onclick = function() {
+                const context = canvas.getContext('2d');
+                canvas.width = videoPreview.videoWidth;
+                canvas.height = videoPreview.videoHeight;
+                context.drawImage(videoPreview, 0, 0);
+                const imageData = canvas.toDataURL('image/png');
+                imagePreview.src = imageData;
+                imagePreview.style.display = "block";
 
-        if (file && selectedModel !== "") {
-            const formData = new FormData();
-            formData.append('image', file);
-            formData.append('model', selectedModel);  // Enviar el modelo seleccionado
+                // Detener el stream de video
+                const stream = videoPreview.srcObject;
+                const tracks = stream.getTracks();
+                tracks.forEach(track => track.stop());
+                videoPreview.srcObject = null;
+                videoPreview.style.display = "none";
+                captureButton.style.display = "none";
 
-            fetch('/upload-image', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
-                fetch('/synthesize-audio', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ text: data.response }),
-                })
-                .then(audioResponse => {
-                    if (audioResponse.ok) {
-                        return audioResponse.blob();
-                    }
-                    throw new Error('Error al obtener el audio.');
-                })
-                .then(audioBlob => {
-                    const audioUrl = URL.createObjectURL(audioBlob);
-                    const audio = new Audio(audioUrl);
-                    audio.play(); // Reproducir el audio
-                })
-                .catch(error => console.error('Error al obtener el audio:', error));  
-                    
-            })
-            .catch(error => console.error('Error al cargar la imagen:', error));
-        } else {
-            alert("Por favor selecciona un modelo antes de cargar una imagen.");
-        }
-    };
+                // Enviar la imagen capturada al servidor
+                canvas.toBlob(function(blob) {
+                    const formData = new FormData();
+                    formData.append('image', blob, 'captured-image.png');  // 'captured-image.png' es el nombre del archivo
+                    formData.append('model', selectedModel);  // Enviar el modelo seleccionado
 
-    // Vista previa de la imagen cargada
-    imageInput.onchange = function() {
-        const file = imageInput.files[0];
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            imagePreview.src = e.target.result;
-            imagePreview.style.display = "block";  // Mostrar la vista previa
-        };
-        reader.readAsDataURL(file);
-    };
-});
+                    fetch('/upload-image', {
+                        method: 'POST',
+                        body: formData,
+                    })
+                                        .then(response => response.json())
+                    .then(data => {
+                        document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
+                    })
+                    .catch(error => console.error('Error:', error));
+                }, 'image/png');
+            };
 
+            // Evento al hacer clic en el botón de cargar imagen
+            document.getElementById("upload-button").onclick = function() {
+                const file = imageInput.files[0];
+
+                if (file && selectedModel !== "") {
+                    const formData = new FormData();
+                    formData.append('image', file);
+                    formData.append('model', selectedModel);  // Enviar el modelo seleccionado
+
+                    fetch('/upload-image', {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
+                        fetch('/synthesize-audio', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                                            },
+                            body: JSON.stringify({ text: data.response }),
+                        })
+                        .then(audioResponse => {
+                            if (audioResponse.ok) {
+                                return audioResponse.blob();
+                            }
+                            throw new Error('Error al obtener el audio.');
+                        })
+                        .then(audioBlob => {
+                            const audioUrl = URL.createObjectURL(audioBlob);
+                            const audio = new Audio(audioUrl);
+                            audio.play(); // Reproducir el audio
+                        })
+                        .catch(error => console.error('Error al obtener el audio:', error));
+                    })
+                    .catch(error => console.error('Error:', error));
+                } else {
+                    //showPopup("Please select a domain to continue.");
+                }
+            };
+
+            // Vista previa de la imagen cargada
+            imageInput.onchange = function() {
+                const file = imageInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = "block";  // Mostrar la vista previa
+                };
+                reader.readAsDataURL(file);
+            };
+
+            // Iniciar el reconocimiento de voz automáticamente al cargar la página
+            startVoiceRecognition();
+        });
     </script>
-    
+
+    <!-- Aquí agregamos el popup -->
+    <div id="popup" class="popup hidden"></div>
 </body>
 </html>
