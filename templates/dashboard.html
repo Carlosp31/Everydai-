@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to EverydAI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1e1e1e;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;  /* Texto centrado */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 36px;
+            margin-bottom: 40px;
+                      text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Botones más atractivos */
+        .option {
+            background-color: #007acc;
+            color: white;
+            padding: 15px 30px;
+            margin: 20px 0;
+            border-radius: 30px;  /* Borde redondeado */
+            border: none;
+            font-size: 20px;
+            width: 350px;
+            text-decoration: none;  /* Eliminar subrayado */
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);  /* Sombra atractiva */
+        }
+
+        .option:hover {
+            background-color: #005f99;  /* Azul más oscuro al hover */
+            transform: translateY(-5px);  /* Movimiento hacia arriba al pasar el mouse */
+            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);  /* Sombra más fuerte */
+        }
+      
+        .option:active {
+            transform: scale(0.95);  /* Efecto de clic */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to EverydAI, choose a domain to continue</h1>  <!-- Título añadido -->
+        <a href="{{ url_for('chat', domain='culinary') }}" class="option">Culinary</a>
+        <a href="{{ url_for('chat', domain='fashion') }}" class="option">Fashion</a>
+        <a href="{{ url_for('chat', domain='gym') }}" class="option">Gym</a>
+    </div>
+</body>
+</html>
