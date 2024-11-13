@@ -6,9 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Chat with EverydAI</title>
+    <style>
+        /* Aseguramos que el espectro de frecuencias ocupe todo el ancho del área */
+        #frequency-canvas {
+            width: 100%;
+            height: 50px;
+            display: none;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+        .control-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        /* Estilos para el botón de conversación */
+        #microphone-button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-    <div id="selected-model-display" class="selected-model-display"></div>
+    <!-- Mostrar el modelo seleccionado dinámicamente -->
+    <div id="selected-model-display" class="selected-model-display">
+        Hola, este es el dominio {{ domain }}
+    </div>
+
     <div id="recommendations-box" class="recommendations-box">
         <h3>Recommendations:</h3>
         <ul id="recommendations-list"></ul>
@@ -16,23 +40,22 @@
 
     <div class="chat-container">
         <h1>Chat with EverydAI</h1>
-        <div class="sidebar">
-            <p>Choose a domain:</p>
-            <div class="model-select">
-                <a href="#" class="option" data-value="culinary">Culinary</a>
-                <a href="#" class="option" data-value="fashion">Fashion</a>
-                <a href="#" class="option" data-value="Gym">Gym</a>
-            </div>
-        </div>
-
-        <div id="chat-box"></div>
+        <div id="avatar-container" ></div>
+        <div id="chat-box" class="hidden"></div>
         <input type="text" id="user-input" placeholder="Chat with us...">
         <button id="send-button">Send</button>
-        <button id="record-button" style="display:none;">Talk</button> <!-- Ocultar el botón de Talk, ya no es necesario -->
-        <input type="file" id="image-input" accept="image/*">
-        <button id="upload-button">Upload Image</button>
-                <button id="camera-button">Open Camera</button>
-        <button id="capture-button" style="display:none;">Capture</button>
+        
+        <!-- Contenedor para controles, incluyendo el espectro de frecuencia -->
+        <div class="control-container">
+            <button id="microphone-button">Start Conversation</button>
+            <input type="file" id="image-input" accept="image/*">
+            <button id="upload-button">Upload Image</button>
+            <button id="camera-button">Open Camera</button>
+            <button id="capture-button" style="display:none;">Capture</button>
+        </div>
+
+        <!-- Canvas para el espectro de frecuencias -->
+        <canvas id="frequency-canvas"></canvas>
 
         <video id="video-preview" autoplay style="display:none; width: 300px;"></video>
         <canvas id="canvas" style="display:none;"></canvas>
@@ -44,113 +67,171 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const modelOptions = document.querySelectorAll('.option');  // Obtener todas las opciones de modelo
+            const microphoneButton = document.getElementById("microphone-button");
+            const frequencyCanvas = document.getElementById("frequency-canvas");
+            const canvasContext = frequencyCanvas.getContext("2d");
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
             const imageInput = document.getElementById("image-input");
             const imagePreview = document.getElementById("image-preview");
             const videoPreview = document.getElementById("video-preview");
             const canvas = document.getElementById("canvas");
             const captureButton = document.getElementById("capture-button");
-            let selectedModel = '{{ domain }}';  // El dominio seleccionado se obtiene desde Flask
-            let isListeningForKeyword = true;  // Variable para manejar si se está esperando la palabra clave
+            let selectedModel = '{{ domain }}';
+            let recognition;
+            let analyser;
+            let isListening = false;
+            let isBotSpeaking = false; // Variable para saber si el bot está hablando
 
-            // Función para mostrar el popup animado
-            function showPopup(message) {
-                const popup = document.getElementById('popup');
-                popup.textContent = message;  // Colocar el mensaje dentro del popup
-                popup.classList.remove('hidden');
-                popup.classList.add('show');
-                                // Ocultar el popup después de 3 segundos
-                setTimeout(() => {
-                    popup.classList.remove('show');
-                    popup.classList.add('hidden');
-                }, 3000);
-            }
-
-            // Evento para iniciar el reconocimiento de voz automáticamente
+            // Función para iniciar el reconocimiento de voz y el espectro de frecuencias
             function startVoiceRecognition() {
-                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-                recognition.lang = 'es-ES';  // Configura el idioma a español
+                if (!recognition) {
+                    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                    recognition.lang = 'es-ES';
+                    recognition.continuous = false;
+                    recognition.interimResults = false;
+                }
 
                 recognition.onresult = function(event) {
-                    const userInput = event.results[0][0].transcript.toLowerCase();  // Obtener el texto del reconocimiento en minúsculas
-
-                    if (isListeningForKeyword && userInput.includes("aura")) {
-                        isListeningForKeyword = false;  // Detener la espera de la palabra clave
-                       // showPopup("Palabra clave detectada, puede hablar ahora.");
-                    } else if (!isListeningForKeyword) {
-                        document.getElementById("user-input").value = userInput;  // Mostrar el texto reconocido en el input
-                        sendMessage(userInput);  // Enviar el mensaje automáticamente
+                    if (!isBotSpeaking) { // Solo procesar si el bot no está hablando
+                        const userInput = event.results[0][0].transcript;
+                        document.getElementById("user-input").value = userInput;
+                        sendMessage(userInput);
                     }
                 };
 
-                recognition.onend = function() {
-                    recognition.start();  // Reiniciar el reconocimiento después de cada intento
+                recognition.onerror = function(event) {
+                    console.error("Error en el reconocimiento de voz: ", event.error);
                 };
+
+                recognition.onend = function() {
+                    if (isListening && !isBotSpeaking) {
+                        recognition.start(); // Reiniciar reconocimiento si sigue en modo escucha
+                    }
+                };
+
+                recognition.start();
+                startFrequencySpectrum(); // Iniciar el espectro de frecuencias
             }
 
-            // Funcionalidad para enviar mensajes (tanto por texto como por voz)
+            // Evento para iniciar o detener el reconocimiento de voz con el botón de 'Start Conversation'
+            microphoneButton.onclick = function() {
+                if (!isListening) {
+                    isListening = true;
+                    microphoneButton.innerText = "Stop Conversation";
+                    startVoiceRecognition();
+                } else {
+                    isListening = false;
+                    microphoneButton.innerText = "Start Conversation";
+                    if (recognition) {
+                        recognition.stop();
+                    }
+                    stopFrequencySpectrum();
+                }
+            };
+
+            // Función para iniciar el espectro de frecuencias
+            function startFrequencySpectrum() {
+                navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+                    const source = audioContext.createMediaStreamSource(stream);
+                    analyser = audioContext.createAnalyser();
+                    source.connect(analyser);
+                    analyser.fftSize = 256;
+
+                    frequencyCanvas.style.display = "block";
+                    drawFrequencySpectrum();
+                }).catch((error) => {
+                    console.error("Error al acceder al micrófono: ", error);
+                });
+            }
+
+            // Función para detener el espectro de frecuencias
+            function stopFrequencySpectrum() {
+                frequencyCanvas.style.display = "none";
+            }
+
+            // Función para dibujar el espectro de frecuencias
+            function drawFrequencySpectrum() {
+                if (!isListening) return;
+
+                requestAnimationFrame(drawFrequencySpectrum);
+
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                analyser.getByteFrequencyData(dataArray);
+
+                canvasContext.clearRect(0, 0, frequencyCanvas.width, frequencyCanvas.height);
+                const barWidth = (frequencyCanvas.width / bufferLength) * 2.5;
+                let barHeight;
+                let x = 0;
+
+                for (let i = 0; i < bufferLength; i++) {
+                    barHeight = dataArray[i] / 2;
+                    canvasContext.fillStyle = `rgb(${barHeight + 100}, 50, 50)`;
+                    canvasContext.fillRect(x, frequencyCanvas.height - barHeight, barWidth, barHeight);
+                    x += barWidth + 1;
+                }
+            }
+
+            // Función para enviar mensajes (tanto por texto como por voz)
             function sendMessage(userInput) {
                 if (userInput.trim() !== "") {
                     document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
-                    document.getElementById("user-input").value = '';  // Limpiar el input después de enviar
+                    document.getElementById("user-input").value = ''; // Limpiar el input después de enviar
+
+                    // Detener temporalmente el reconocimiento de voz mientras se obtiene la respuesta del bot
+                    if (recognition) recognition.stop();
+                    isBotSpeaking = true;
 
                     fetch('/chat', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ message: userInput, model: selectedModel }),  // Enviar el modelo seleccionado
+                        body: JSON.stringify({ message: userInput, model: selectedModel }),
                     })
                     .then(response => response.json())
                     .then(data => {
-                        // Mostrar la respuesta de texto en el chat
                         document.getElementById("chat-box").innerHTML += `<div>AI: ${data.text_response}</div>`;
-
-                        // Mostrar las recomendaciones en el cuadro de recomendaciones
-                        const recommendationsList = document.getElementById("recommendations-list");
-                        recommendationsList.innerHTML = '';  // Limpiar la lista existente
-
-                        // Verificar si data.recipes es un array antes de recorrerlo
-                        if (Array.isArray(data.recipes)) {
-                            data.recipes.forEach(receta => {
-                                const listItem = document.createElement("li");
-
-                                                                                 listItem.innerHTML = `<a href="${receta.link}" target="_blank">${receta.title}</a>`;
-                                recommendationsList.appendChild(listItem);
-                            });
-                        } else {
-                            recommendationsList.innerHTML = '<li>No se encontraron recomendaciones.</li>';
-                        }
-
-                        // Enviar texto a sintetizar
-                        fetch('/synthesize-audio', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ text: data.text_response }),
-                        })
-                        .then(audioResponse => {
-                            if (audioResponse.ok) {
-                                return audioResponse.blob();
-                            }
-                            throw new Error('Error al obtener el audio.');
-                        })
-                        .then(audioBlob => {
-                            const audioUrl = URL.createObjectURL(audioBlob);
-                            const audio = new Audio(audioUrl);
-                            audio.play(); // Reproducir el audio
-                        })
-                        .catch(error => console.error('Error:', error));
-
-                        // Después de enviar el mensaje, reiniciar la espera de la palabra clave "aura"
-                                                  isListeningForKeyword = true;
-                        //showPopup("Diga 'aura' para continuar.");
+                        speakResponse(data.text_response);
                     })
                     .catch(error => console.error('Error:', error));
-                } else {
-                    //showPopup("Please select a domain to continue.");
                 }
+            }
+
+            // Función para sintetizar y reproducir el audio de la respuesta
+            function speakResponse(responseText) {
+                fetch('/synthesize-audio', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: responseText }),
+                })
+                .then(audioResponse => {
+                    if (audioResponse.ok) {
+                        return audioResponse.blob();
+                    }
+                    throw new Error('Error al obtener el audio.');
+                })
+                .then(audioBlob => {
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    const audio = new Audio(audioUrl);
+
+                    // Evento cuando comienza la reproducción: el bot está hablando
+                    audio.onplay = function() {
+                        isBotSpeaking = true;
+                        if (recognition) recognition.stop(); // Detener el reconocimiento mientras el bot habla
+                    };
+
+                    // Evento cuando termina la reproducción: el bot deja de hablar
+                    audio.onended = function() {
+                        isBotSpeaking = false;
+                        if (isListening) recognition.start(); // Reiniciar reconocimiento si el usuario aún está en modo escucha
+                    };
+
+                    audio.play(); // Reproducir el audio
+                })
+                .catch(error => console.error('Error:', error));
             }
 
             // Evento al hacer clic en el botón de enviar texto manualmente
@@ -171,6 +252,7 @@
                     });
                 }
             };
+
             // Funcionalidad para capturar imagen de la cámara
             captureButton.onclick = function() {
                 const context = canvas.getContext('2d');
@@ -192,16 +274,17 @@
                 // Enviar la imagen capturada al servidor
                 canvas.toBlob(function(blob) {
                     const formData = new FormData();
-                    formData.append('image', blob, 'captured-image.png');  // 'captured-image.png' es el nombre del archivo
-                    formData.append('model', selectedModel);  // Enviar el modelo seleccionado
+                    formData.append('image', blob, 'captured-image.png');
+                    formData.append('model', selectedModel);
 
                     fetch('/upload-image', {
                         method: 'POST',
                         body: formData,
                     })
-                                        .then(response => response.json())
+                    .then(response => response.json())
                     .then(data => {
                         document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
+                        speakResponse(data.response);
                     })
                     .catch(error => console.error('Error:', error));
                 }, 'image/png');
@@ -211,10 +294,10 @@
             document.getElementById("upload-button").onclick = function() {
                 const file = imageInput.files[0];
 
-                if (file && selectedModel !== "") {
+                if (file) {
                     const formData = new FormData();
                     formData.append('image', file);
-                    formData.append('model', selectedModel);  // Enviar el modelo seleccionado
+                    formData.append('model', selectedModel);
 
                     fetch('/upload-image', {
                         method: 'POST',
@@ -223,29 +306,9 @@
                     .then(response => response.json())
                     .then(data => {
                         document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
-                        fetch('/synthesize-audio', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                                            },
-                            body: JSON.stringify({ text: data.response }),
-                        })
-                        .then(audioResponse => {
-                            if (audioResponse.ok) {
-                                return audioResponse.blob();
-                            }
-                            throw new Error('Error al obtener el audio.');
-                        })
-                        .then(audioBlob => {
-                            const audioUrl = URL.createObjectURL(audioBlob);
-                            const audio = new Audio(audioUrl);
-                            audio.play(); // Reproducir el audio
-                        })
-                        .catch(error => console.error('Error al obtener el audio:', error));
+                        speakResponse(data.response);
                     })
                     .catch(error => console.error('Error:', error));
-                } else {
-                    //showPopup("Please select a domain to continue.");
                 }
             };
 
@@ -255,16 +318,109 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     imagePreview.src = e.target.result;
-                    imagePreview.style.display = "block";  // Mostrar la vista previa
+                    imagePreview.style.display = "block";
                 };
                 reader.readAsDataURL(file);
             };
-
-            // Iniciar el reconocimiento de voz automáticamente al cargar la página
-            startVoiceRecognition();
         });
     </script>
+
     <!-- Aquí agregamos el popup -->
     <div id="popup" class="popup hidden"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script>
+        // Crear la escena y la cámara
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(65, 500 / 500, 0.1, 1000);
+        camera.position.set(0, 3.1, 0.9); // Ajustamos la altura para estar a nivel de los ojos del avatar
+        
+        // Configurar el renderizador
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(600, 500);
+        document.getElementById("avatar-container").appendChild(renderer.domElement);
+    
+        // Añadir luces a la escena
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
+        scene.add(ambientLight);
+    
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+        directionalLight.position.set(1, 1, 1).normalize();
+        scene.add(directionalLight);
+    
+        // Obtener el parámetro 'domain' desde la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const domain = urlParams.get('domain');
+    
+        // Definir la ruta del modelo en función del dominio
+        let modelPath;
+        switch (domain) {
+            case 'culinary':
+                modelPath = '{{ url_for("static", filename="models/avatar1.glb") }}';
+                break;
+            case 'fashion':
+                modelPath = '{{ url_for("static", filename="models/avatar3.glb") }}';
+                break;
+            case 'gym':
+                modelPath = '{{ url_for("static", filename="models/avatar2.glb") }}';
+                break;
+            default:
+                console.error('Dominio no reconocido.');
+        }
+    
+        // Cargar el modelo 3D seleccionado
+        const loader = new THREE.GLTFLoader();
+        let model;
+    
+        if (modelPath) {
+            loader.load(modelPath, function(gltf) {
+                model = gltf.scene;
+                scene.add(model);
+    
+                // Asegurarse de que el avatar esté mirando hacia la cámara
+                model.rotation.y = 0;  // Asegura que el modelo esté mirando hacia la cámara desde el inicio
+                model.rotation.x = 0;
+    
+                // Centrar el modelo en la escena (en el centro del div)
+                model.position.set(0, 1.6, 0);  // Coloca el modelo en el origen (0, 0, 0)
+    
+                // Animar el modelo
+                function animate() {
+                    requestAnimationFrame(animate);
+                    renderer.render(scene, camera);
+                }
+                animate();
+            });
+        }
+    
+        // Variables para el control del mouse
+        let isMouseDown = false;
+        let previousMousePosition = { x: 0, y: 0 };
+    
+        // Detectar cuando el mouse se presiona
+        document.addEventListener('mousedown', (event) => {
+            isMouseDown = true;
+            previousMousePosition.x = event.clientX;
+            previousMousePosition.y = event.clientY;
+        });
+    
+        // Detectar cuando el mouse se mueve mientras está presionado
+        document.addEventListener('mousemove', (event) => {
+            if (!isMouseDown || !model) return;
+    
+            const deltaX = event.clientX - previousMousePosition.x;
+            model.rotation.y += deltaX * 0.01;
+    
+            previousMousePosition.x = event.clientX;
+        });
+    
+        // Detectar cuando el mouse se libera
+        document.addEventListener('mouseup', () => {
+            isMouseDown = false;
+        });
+    </script>
+    
+
+    
 </body>
 </html>

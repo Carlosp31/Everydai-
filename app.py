@@ -39,7 +39,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def sintetizar_voz(texto, api_key):
     # Directorio temporal para guardar el archivo de audio
-    temp_dir = "/tmp"
+    temp_dir = os.path.join(os.path.expanduser("~"), "AppData", "Local", "Temp")
     audio_path = os.path.join(temp_dir, "respuesta_audio.mp3")
 
     # Si el archivo ya existe, elimínalo antes de escribir uno nuevo
@@ -55,7 +55,7 @@ def sintetizar_voz(texto, api_key):
     data = {
         "text": texto,
         "model_id": "eleven_multilingual_v2",
-            "voice_settings": {
+        "voice_settings": {
             "stability": 0.5,
             "similarity_boost": 1
         }
