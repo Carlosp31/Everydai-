@@ -136,40 +136,40 @@ def chat_post():
     user_input = request.json['message']
     selected_model = request.json['model']
 
-    # Selección del modelo basado en la entrada del usuario
-    if selected_model == 'culinary':
-        model = model_culinary
-        history = [
-            {"role": "user", "parts": "Eres un profesor de culinaria. Recibe una lista de ingredientes y proporciona una lista de pasos para realizar una receta solo con esos ingredientes."},
-            {"role": "model", "parts": "Bien, dime los ingredientes que tienes y te daré el paso a paso, como si fueras principiantes, para preparar una receta."}
-        ]
-    elif selected_model == 'fashion':
-        model = model_fashion
-        history = [
-            {"role": "user", "parts": "Eres un asesor de moda. Recibes una lista de prendas de ropa y recomiendas combinaciones basadas en esas prendas."},
-            {"role": "model", "parts": "Entendido, por favor indícame las prendas y te sugeriré combinaciones."}
-        ]
-    elif selected_model == 'gym':
-        model = model_gym
-        history = [
-            {"role": "user", "parts": "Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos."},
-            {"role": "model", "parts": "Dime qué elementos de gimnasio tienes, y te sugeriré ejercicios para realizar con ellos."}
-        ]
-    else:
-        return jsonify({'response': 'Modelo no encontrado.'}), 400
-    # Iniciar chat con el modelo seleccionado
-    chat = model.start_chat(history=history)
+    # # Selección del modelo basado en la entrada del usuario
+    # if selected_model == 'culinary':
+    #     model = model_culinary
+    #     history = [
+    #         {"role": "user", "parts": "Eres un profesor de culinaria. Recibe una lista de ingredientes y proporciona una lista de pasos para realizar una receta solo con esos ingredientes."},
+    #         {"role": "model", "parts": "Bien, dime los ingredientes que tienes y te daré el paso a paso, como si fueras principiantes, para preparar una receta."}
+    #     ]
+    # elif selected_model == 'fashion':
+    #     model = model_fashion
+    #     history = [
+    #         {"role": "user", "parts": "Eres un asesor de moda. Recibes una lista de prendas de ropa y recomiendas combinaciones basadas en esas prendas."},
+    #         {"role": "model", "parts": "Entendido, por favor indícame las prendas y te sugeriré combinaciones."}
+    #     ]
+    # elif selected_model == 'gym':
+    #     model = model_gym
+    #     history = [
+    #         {"role": "user", "parts": "Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos."},
+    #         {"role": "model", "parts": "Dime qué elementos de gimnasio tienes, y te sugeriré ejercicios para realizar con ellos."}
+    #     ]
+    # else:
+    #     return jsonify({'response': 'Modelo no encontrado.'}), 400
+    # # Iniciar chat con el modelo seleccionado
+    # chat = model.start_chat(history=history)
     
-    # Enviar mensaje al modelo y recibir respuesta
-    response = chat.send_message(
-        user_input,
-        generation_config=genai.types.GenerationConfig(
-            candidate_count=1,
-            stop_sequences=["x"],
-            max_output_tokens=150,
-            temperature=0.7
-        )
-    )
+    # # Enviar mensaje al modelo y recibir respuesta
+    # response = chat.send_message(
+    #     user_input,
+    #     generation_config=genai.types.GenerationConfig(
+    #         candidate_count=1,
+    #         stop_sequences=["x"],
+    #         max_output_tokens=150,
+    #         temperature=0.7
+    #     )
+    # )
 
 
     ####################################################
@@ -251,7 +251,7 @@ def chat_post():
                 print("No se encontró un mensaje del asistente.")
 
         ####################################################
-    elif selected_model == 'Gym':  
+    elif selected_model == 'gym':  
         client = OpenAI()
         assistant = client.beta.assistants.create(
         name="gym",
