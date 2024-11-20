@@ -71,12 +71,11 @@ def sintetizar_voz(texto, api_key):
     else:
         return None
 
-# Configuración de la API de Google OAuth
+
 CLIENT_SECRETS_FILE = "client_secret.json"
 SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
 REDIRECT_URI = 'https://everydai.zapto.org/oauth2callback'
 
-# Flujo de autenticación OAuth
 
 @app.route('/')
 def dashboard():
