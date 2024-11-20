@@ -1,203 +1,173 @@
 /* Estilos generales */
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to right, #f7f8f8, #acbb78);
+    background: #1e1e1e;  /* Fondo oscuro tipo VSCode */
     margin: 0;
     padding: 20px;
-    color: #333;
+    color: #c9c9c9;  /* Texto gris claro */
 }
 
 /* Contenedor principal */
 .chat-container {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Sombra más suave */
+    background: #252526;  /* Fondo gris oscuro */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: none;  /* Sin sombras */
     max-width: 800px; 
-    margin: 0 auto;
-    border: 1px solid #e0e0e0;
+    margin: 40px auto;  /* Centrado */
+    border: 1px solid #333;  /* Borde oscuro */
     position: relative;
-    overflow: hidden;
+}
+.hidden {
+    display: none;
+}
+#avatar-container {
+    display: flex;          /* Habilita Flexbox */
+    justify-content: center; /* Alinea horizontalmente al centro */
+    align-items: center;    /* Alinea verticalmente al centro */
+    position: relative;     /* Asegura que el contenedor se comporte de forma normal */
 }
 
-.chat-container::before {
-    content: '';
-    position: absolute;
-    top: -100px;
-    left: -100px;
-    width: 200px;
-    height: 200px;
-    background-color: rgba(172, 187, 120, 0.15);
-    border-radius: 50%;
-    z-index: 1;
+#avatar-container canvas {
+    border: 2px solid black;  /* Estilo del canvas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
 }
-
 /* Historial del chat */
 #chat-box {
-    border: 1px solid #ccc;
-    padding: 15px; /* Más espacio en el padding */
+    border: 1px solid #333;  /* Bordes oscuros */
+    padding: 15px;
     height: 300px;
     overflow-y: auto;
-    background-color: #f9f9f9;
+    background-color: #1e1e1e;  /* Fondo igual que el cuerpo */
     margin-bottom: 20px;
-    border-radius: 10px;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Más sombra interna */
-    z-index: 2;
+        border-radius: 10px;
+    color: #d4d4d4;  /* Texto gris claro */
 }
 
 /* Campo de entrada */
 input[type="text"],
 textarea#input-text {
     width: calc(100% - 120px);
-    height: 60px;
+    height: 50px;
     padding: 12px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
-    font-size: 16px; /* Aumentado para mejorar legibilidad */
-    resize: none;
-    border-radius: 25px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+    border: 1px solid #333;
+    background-color: #2c2b2b;  /* Fondo oscuro */
+    color: #d4d4d4;  /* Texto claro */
+    font-size: 14px;
+    border-radius: 5px;
 }
 
 input[type="text"]:focus,
 textarea#input-text:focus {
     outline: none;
-    border-color: #8ca35d; /* Colores más visibles */
-    box-shadow: 0 0 5px rgba(140, 163, 93, 0.5); /* Efecto glow al hacer foco */
+    border-color: #007acc;  /* Azul acento VSCode */
+    box-shadow: 0 0 5px rgba(0, 115, 204, 0.5);  /* Glow sutil */
 }
-
 /* Botones */
-.controls {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
 .controls button {
-    padding: 10px 15px;
+    padding: 10px 20px;
     margin: 5px;
-    background-color: #8ca35d; /* Color más oscuro para mejorar contraste */
+    background-color: #007acc;  /* Azul VSCode */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease;
 }
 
 .controls button:hover {
-    background-color: #6e8244;
+    background-color: #005f99;  /* Azul más oscuro al hover */
 }
 
 button:active {
-    transform: scale(0.95);
-}
-
-/* Slider */
-.slider {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.slider input[type="range"] {
-    width: 100%;
+    transform: scale(0.98);  /* Efecto sutil al hacer clic */
 }
 
 /* Vista de imagen cargada */
-.image-display {
-    text-align: center;
-    margin-top: 20px;
-}
-
 .image-display img {
     max-width: 100%;
     height: auto;
-    border: 1px solid #ccc;
+    border: 1px solid #333;
     margin-top: 10px;
 }
-
-/* Botón de envío personalizado */
-button {
-    background-color: #acbb78;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 25px;
-    font-size: 14px;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Efectos añadidos */
-}
-
-button:hover {
-    background-color: #8ca35d;
-    transform: translateY(-2px); /* Efecto hover con elevación */
-}
-
-/* Experiencia del usuario */
-input[type="text"]:hover {
-    border-color: #bbb;
-}
-.main-title {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Estilos de la barra lateral */
+/* Sidebar */
 .sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 200px;
-    height: 100%;
-    background-color: #acbb78;
+    background-color: #2d2d2d;  /* Gris oscuro */
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    color: #c9c9c9;
+    box-shadow: none;
+    width: 200px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
 }
 
 .sidebar p {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    margin-bottom: 15px;
-    color: #fff;
 }
 
-/* Opciones de la barra lateral */
-.model-select {
-    display: flex;
-    flex-direction: column;
-}
-
+/* Botones en la barra lateral con animaciones */
 .sidebar a {
-    padding: 10px 15px;
+    background-color: #007acc;
     color: white;
     text-decoration: none;
+    padding: 10px;
     margin-bottom: 10px;
-    background-color: #8ca35d;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    display: block;
+    text-align: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;  /* Transición suave de color y tamaño */
+    width: 80%;
+    font-size: 16px;
 }
 
+/* Hover Animation: Cambia el tamaño y el color cuando el usuario pasa el mouse */
 .sidebar a:hover {
-    background-color: #6e8244;
+    background-color: #005f99;
+    transform: scale(1.05);  /* Aumenta el tamaño en 5% */
 }
+
+/* Animación de "rebote" al hacer clic */
+.sidebar a:active {
+    animation: bounce 0.3s ease;  /* Aplica la animación "bounce" al hacer clic */
+}
+
+@keyframes bounce {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);  /* Aumenta el tamaño en 15% */
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
 /* Estilos para el cuadro de recomendaciones */
 .recommendations-box {
     position: absolute;
     top: 20px;
-    right: 5px; /* Posiciona el cuadro a la derecha */
+    right: 15px;
     width: 200px;
     height: 200px;
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
-    border-radius: 15px;
+    background-color:#f2f2f2 ;
+    border-radius: 10px;
     padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
     overflow-y: auto;
-    border: 1px solid #acbb78; /* Borde para que encaje con el tema */
+    border: 1px solid #ccc;
+    color: #333;
 }
-
 .recommendations-box h3 {
     text-align: center;
     color: #333;
+    font-weight: bold;
 }
 
 .recommendations-box ul {
@@ -208,16 +178,81 @@ input[type="text"]:hover {
 .recommendations-box ul li {
     margin-bottom: 10px;
     font-size: 14px;
+    color: #555;
 }
 
-/* Opciones responsivas */
-@media (max-width: 768px) {
-    .sidebar {
-        width: 150px;
+/* Estilo del popup */
+.popup {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    background-color: #007acc;  /* Fondo azul acento */
+    color: white;
+    padding: 20px 40px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    text-align: center;
+        z-index: 1000;
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.popup.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+.popup.hidden {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+}
+
+/* Mostrar el modelo seleccionado */
+.selected-model-display {
+    position: absolute;
+    top: 110px;
+    right: 400px;
+    background-color: #007acc;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    z-index: 1000;
+}
+
+/* Botones azules (sidebar y otros botones) con animaciones */
+button, .controls button, .sidebar a {
+    background-color: #007acc;  /* Azul VSCode */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;  /* Transición suave de color y tamaño */
+}
+
+/* Hover Animation: Cambia el tamaño y el color cuando el usuario pasa el mouse */
+button:hover, .controls button:hover, .sidebar a:hover {
+    background-color: #005f99;  /* Azul más oscuro al hover */
+    transform: scale(1.05);  /* Aumenta el tamaño en 5% */
+}
+
+/* Animación de "rebote" al hacer clic */
+button:active, .controls button:active, .sidebar a:active {
+    animation: bounce 0.3s ease;  /* Aplica la animación "bounce" al hacer clic */
+}
+/* Definición de la animación de "bounce" (rebote) */
+@keyframes bounce {
+    0% {
+        transform: scale(1);
     }
-    
-    .sidebar a {
-        font-size: 14px;
+    50% {
+        transform: scale(1.15);  /* Aumenta el tamaño en 15% */
+    }
+    100% {
+        transform: scale(1);
     }
 }
 
@@ -225,14 +260,20 @@ input[type="text"]:hover {
 @media (max-width: 768px) {
     .chat-container {
         padding: 20px;
+        max-width: 100%;
     }
 
     input[type="text"] {
         width: calc(100% - 90px);
     }
 
-    button {
-        width: 80px;
-        padding: 10px;
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .recommendations-box {
+        position: static;
+        margin-top: 20px;
     }
 }

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to EverydAI</title>
+    <style>
+        /* Fondo negro con animación de gradiente */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(-45deg, #000000, #1e1e1e, #005f99, #000000);
+            background-size: 200% 200%;
+            animation: gradient 10s ease infinite;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(-20px); /* Desplazar hacia arriba desde un valor negativo */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0); /* Volver a su posición original */
+            }
+        }
+
+        /* Animación para el subtítulo */
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px); /* Desplazar hacia la izquierda desde un valor negativo */
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0); /* Volver a su posición original */
+            }
+        }
+
+        /* Aplicar las animaciones */
+        .main-title {
+            color: #ffffff;
+            font-size: 48px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeInUp 1s ease-out forwards; /* Añadir la animación fadeInUp */
+        }
+
+        .sub-title {
+            color: #ffffff;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: fadeInLeft 1s ease-out forwards; /* Añadir la animación fadeInLeft */
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 2s ease forwards;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .main-title {
+            color: #ffffff;
+            font-size: 48px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .sub-title {
+            color: #ffffff;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #avatar-container {
+            width: 600px; /* Tamaño fijo para el contenedor */
+            height: 600px; /* Tamaño fijo para el contenedor */
+            position: absolute;
+            top: 30%; /* Ajusta la posición relativa a la ventana */
+            left: 50%;
+            transform: translateX(-84%) translateY(-90px); /* Centrado horizontal y ajuste vertical */
+        }
+
+        /* Botones con efecto glow organizados horizontalmente */
+        .option-container {
+            display: flex;
+            gap: 70px;
+            margin-top: 400px; /* Ajusta esta distancia para dejar espacio al avatar */
+        }
+
+        .option {
+            background-color: rgba(0, 122, 204, 0.8);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            border: 2px solid transparent;
+            font-size: 20px;
+            width: 150px;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .option:before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 30px;
+            background: linear-gradient(45deg, #007acc, #1e1e1e, #005f99, #1e1e1e);
+            z-index: -1;
+            transition: opacity 0.3s;
+            opacity: 0;
+            animation: glow 5s linear infinite;
+        }
+
+        .option:hover:before {
+            opacity: 1;
+        }
+
+        .option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes glow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        /* Iconos de los botones */
+        .option i {
+            margin-right: 10px;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-title">Welcome to EverydAI</div>
+        <div class="sub-title">Choose a domain to continue</div>
+
+        <!-- Contenedor del modelo 3D -->
+        <div id="avatar-container"></div>
+        
+        <div class="option-container">
+            <a href="{{ url_for('chat', domain='culinary') }}" class="option"><i>🍽️</i> Culinary</a>
+            <a href="{{ url_for('chat', domain='fashion') }}" class="option"><i>👗</i> Fashion</a>
+            <a href="{{ url_for('chat', domain='gym') }}" class="option"><i>🏋️‍♂️</i> Gym</a>
+        </div>
+    </div>
+
+    <!-- Scripts de Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script>
+        // Crear la escena y la cámara
+        const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, 500 / 500, 0.1, 1000);
+    camera.position.z = 2.5; // Colocar la cámara a cierta distancia
+    
+    // Configurar el renderizador
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(1000, 1000);
+    document.getElementById("avatar-container").appendChild(renderer.domElement);
+    
+    // Añadir luces a la escena
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.0); // Aumentar la intensidad de la luz ambiental
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2); // Aumentar la intensidad de la luz direccional
+    directionalLight.position.set(1, 1, 1).normalize();
+    scene.add(directionalLight);
+    
+    // Cargar el modelo 3D
+    // Cargar el primer modelo 3D (avatar1)
+    const loader = new THREE.GLTFLoader();
+    let model1;
+    
+    loader.load('{{ url_for("static", filename="models/avatar3.glb") }}', function(gltf) {
+        model1 = gltf.scene;
+        scene.add(model1);
+    
+        // Asegurarse de que el avatar esté mirando hacia la cámara
+        model1.rotation.y = 0;
+        model1.rotation.x = 0;
+    
+        // Animar el modelo 1
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    });
+    
+    // Cargar el segundo modelo 3D (avatar2)
+    let model2;
+    
+    loader.load('{{ url_for("static", filename="models/avatar2.glb") }}', function(gltf) {
+        model2 = gltf.scene;
+        scene.add(model2);
+    
+        // Posicionar el segundo avatar, por ejemplo, a la derecha del primero
+        model2.position.set(1.2, 0, 0); // Ajusta la posición como desees
+    
+        // Asegurarse de que el avatar esté mirando hacia la cámara
+        model2.rotation.y = 0;
+        model2.rotation.x = 0;
+    });
+
+    // Cargar el tercer modelo 3D (avatar3)
+    let model3;
+    
+    loader.load('{{ url_for("static", filename="models/avatar1.glb") }}', function(gltf) {
+        model3 = gltf.scene;
+        scene.add(model3);
+    
+        // Posicionar el tercer avatar, por ejemplo, a la izquierda del primero
+        model3.position.set(-1.2, 0, 0); // Ajusta la posición a (-2, 0, 0)
+    
+        // Asegurarse de que el avatar esté mirando hacia la cámara
+        model3.rotation.y = 0;
+        model3.rotation.x = 0;
+    });
+
+    // Variables para el control del mouse
+    let isMouseDown = false;
+    let previousMousePosition = { x: 0, y: 0 };
+    
+    // Detectar cuando el mouse se presiona
+    document.addEventListener('mousedown', (event) => {
+        isMouseDown = true;
+        previousMousePosition.x = event.clientX;
+        previousMousePosition.y = event.clientY;
+    });
+    
+    // Detectar cuando el mouse se mueve mientras está presionado
+    document.addEventListener('mousemove', (event) => {
+        if (!isMouseDown) return; // Solo mover si el mouse está presionado
+    
+        // Calcular el movimiento en el eje X y Y
+        const deltaX = event.clientX - previousMousePosition.x;
+        const deltaY = event.clientY - previousMousePosition.y;
+    
+        // Actualizar la rotación de los avatares
+        if (model1) {
+            model1.rotation.y += deltaX * 0.01;
+        }
+        if (model2) {
+            model2.rotation.y += deltaX * 0.01;
+        }
+        if (model3) {
+            model3.rotation.y += deltaX * 0.01;
+        }
+    
+        // Actualizar la posición previa del mouse
+        previousMousePosition.x = event.clientX;
+        previousMousePosition.y = event.clientY;
+    });
+    
+    // Detectar cuando el mouse se libera
+    document.addEventListener('mouseup', () => {
+        isMouseDown = false;
+    });
+    </script>
+</body>
+</html>
+ 
+
+
+
+
+
