@@ -1,4 +1,3 @@
-
 import os
 from flask import Flask, render_template, request, jsonify, send_file
 import google.generativeai as genai
@@ -7,7 +6,7 @@ from PIL import Image
 import serpapi
 from dotenv import load_dotenv
 import requests
-
+from openai import OpenAI
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
 
@@ -33,117 +32,41 @@ model_img = genai.GenerativeModel(IMG_MODEL)
 # Configura la carpeta para almacenar las imágenes
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+##################################################33
+from typing_extensions import override
+from openai import AssistantEventHandler
+ 
+# First, we create a EventHandler class to define
+# how we want to handle the events in the response stream.
 
-##############---DEF --- CALL FUNCTION -- #######################################3
-# Función para buscar recetas basadas en el input del usuario
-def buscar_recetas(input_usuario: str) -> str:
-    """
-    Procesa el input del usuario solo y exclusivamente si este te pide que le sugieras algún tutorial,
-    una guía, en links o videos. En ese caso, devuelve una sugerencia de búsqueda de recetas basada 
-    en el análisis semántico del input.
+class EventHandler(AssistantEventHandler):    
+  @override
+  def on_text_created(self, text) -> None:
+    print(f"\nassistant > ", end="", flush=True)
+      
+  @override
+  def on_text_delta(self, delta, snapshot):
+    print(delta.value, end="", flush=True)
+      
+  def on_tool_call_created(self, tool_call):
+    print(f"\nassistant > {tool_call.type}\n", flush=True)
+  
+  def on_tool_call_delta(self, delta, snapshot):
+    if delta.type == 'code_interpreter':
+      if delta.code_interpreter.input:
+        print(delta.code_interpreter.input, end="", flush=True)
+      if delta.code_interpreter.outputs:
+        print(f"\n\noutput >", flush=True)
+        for output in delta.code_interpreter.outputs:
+          if output.type == "logs":
+            print(f"\n{output.logs}", flush=True)
+ 
+# Then, we use the `stream` SDK helper 
+# with the `EventHandler` class to create the Run 
+# and stream the response.
+####################################################
 
-    Args:
-        input_usuario (str): El mensaje del usuario solicitando una receta.
-
-    Returns:
-        str: La sugerencia de búsqueda en una frase procesada para la búsqueda.
-    """
-    # Convertir el input a minúsculas para evitar problemas de mayúsculas
-    input_usuario = input_usuario.lower()
-
-    # Verbos que indican que el usuario está buscando un tutorial, guía o video
-    verbos_busqueda = ["busca", "sugiéreme", "muéstrame", "recomiéndame", "necesito", "quiero", "enséñame", "dame", "tutorial", "guía", "link", "video"]
-
-    # Palabras clave relacionadas con recetas
-    palabras_receta = ["receta", "cómo hacer", "paso a paso", "plato", "comida", "preparación", "cocinar"]
-
-    # Verificar si el input del usuario contiene verbos relacionados con tutoriales, guías o videos
-    if any(verbo in input_usuario for verbo in verbos_busqueda) and any(palabra in input_usuario for palabra in palabras_receta):
-        # Separar el input en palabras para encontrar el posible tipo de comida
-        palabras = input_usuario.split()
-
-        # Intentar identificar el ingrediente o tipo de comida a partir del input
-        for i, palabra in enumerate(palabras):
-            if palabra in palabras_receta:  # Si encontramos palabras relacionadas con recetas
-                # Devolver la palabra siguiente como sugerencia
-                if i + 1 < len(palabras):
-                    return palabras[i + 1]  # Retornar la palabra que sigue como sugerencia de búsqueda
-
-        # Si no se encuentra un tipo de comida específico, devolver búsqueda genérica
-        return "recetas variadas"
-
-    # Si no se trata de una búsqueda de tutorial, guía o video, devolver una cadena vacía
-    return ""
-
-
-def serpp(input_usuario, model_type):
-    tool_config = {
-        "function_calling_config": {
-            "mode": "AUTO",  # Dejamos AUTO, pero sin depender de la llamada automática a la función
-        }
-    }
-
-    # Definir el modelo con la función y la configuración de tool_config
-    model = genai.GenerativeModel(model_name='gemini-1.5-flash',
-                                  tools=[buscar_recetas],
-                                  tool_config=tool_config)
-
-    # Iniciar un chat
-    chat = model.start_chat()
-
-    # Enviar un mensaje en español directamente sin esperar que "AUTO" maneje las funciones
-    print(f"Entrada del usuario: {input_usuario}")
-
-    # Llamar manualmente a buscar_recetas para verificar si la entrada amerita una búsqueda
-    sugerencia_busqueda = buscar_recetas(input_usuario)
-
-    # Verificar si hay una sugerencia válida de búsqueda
-    if sugerencia_busqueda:
-        print(f"Buscas recetas de {sugerencia_busqueda}")
-
-        # Aquí pasamos el tipo de modelo ("culinary", "fashion", etc.), en lugar del objeto model
-        recetas = buscar_resultados_en_serpapi(sugerencia_busqueda, model_type)
-        print(f"Recetas: {recetas}")
-        return recetas
-    else:
-        print("El input no parece ser una solicitud de recetas.")
-        return None
-
-# Ajuste de la función para obtener resultados en SerpAPI
-def buscar_resultados_en_serpapi(query, model_type):
-    try:
-        # Ajusta la consulta según el tipo de modelo
-        if model_type == 'culinary':
-            search_query = f"Recetas con {query}"
-        elif model_type == 'fashion':
-            search_query = f"Outfits with {query}"
-        elif model_type == 'gym':
-            search_query = f"Gym exercises using {query}"
-        else:
-            return f"Modelo {model_type} no soportado."
-
-        # Realizar la búsqueda en SerpAPI con la consulta modificada
-        result = client.search(
-            q=search_query,
-            engine="google",
-            hl="es",
-            gl="co",
-            location_requested="Atlantico,Colombia",
-            location_used="Atlantico,Colombia"
-        )
-
-        # Para el modelo culinario, usamos 'recipes_results', pero para otros modelos
-        # podrían necesitarse diferentes campos en los resultados
-        if model_type == 'culinary':
-            return result.get("recipes_results", [])
-        else:
-            return result.get("organic_results", [])  # Ajusta esto según las necesidades del modelo
-    except Exception as e:
-        return f"Error al buscar en SerpAPI: {e}"
-
-
-
-###########################################################3#######3#######3#####
+########################################################
 
 def sintetizar_voz(texto, api_key):
     # Directorio temporal para guardar el archivo de audio
@@ -188,8 +111,6 @@ def chat():
     user_input = request.json['message']
     selected_model = request.json['model']
 
-    
-
     # Selección del modelo basado en la entrada del usuario
     if selected_model == 'culinary':
         model = model_culinary
@@ -225,12 +146,132 @@ def chat():
             temperature=0.7
         )
     )
+
+
+    ####################################################
+    if selected_model == 'culinary':  
+        client = OpenAI()
+        assistant = client.beta.assistants.create(
+        name="Cooking",
+        instructions="el modelo debe actuar como un profesor de culinaria. Recibe una lista de ingredientes y debe proporcionarle al usuario una lista de pasos y guiar al usuario para que efectúe la receta. Solo puede sugerir recetas con los ingredientes que recibe en la lista, únicamente esos. A menos que el usuario te pida que le sugieras una receta y que él conseguirá los ingredientes. Tu dominio es solo la culinaria",
+        tools=[{"type": "code_interpreter"}],
+        model="gpt-4o-mini",
+        )
+        thread = client.beta.threads.create()
+
+
+        message = client.beta.threads.messages.create(
+            thread_id=thread.id,
+            role="user",
+            content=user_input
+        )
+
+        run = client.beta.threads.runs.create_and_poll(
+            thread_id=thread.id,
+            assistant_id=assistant.id,
+            instructions="el modelo debe actuar como un profesor de culinaria. Recibe una lista de ingredientes y debe proporcionarle al usuario una lista de pasos y guiar al usuario para que efectúe la receta. Solo puede sugerir recetas con los ingredientes que recibe en la lista, únicamente esos, a menos que el usuario te pida que le sugieras una receta y que él conseguirá los ingredientes. Tu dominio es solo la culinaria"
+        )
+
+        if run.status == 'completed': 
+            messages = client.beta.threads.messages.list(thread_id=thread.id)
+
+            # Filtrar los mensajes del asistente
+            mensajes_asistente = [msg for msg in messages.data if msg.role == 'assistant']
+            print(messages)
+            if mensajes_asistente:
+                # Obtener el último mensaje del asistente
+                ultimo_mensaje = mensajes_asistente[0]  # Accede al último mensaje del asistente
+                for block in ultimo_mensaje.content:
+                    print(f"Assistant: {block.text.value}") 
+                    response= block.text.value# Imprime solo el contenido del último mensaje
+            else:
+                print("No se encontró un mensaje del asistente.")
+
+        ####################################################
+    elif selected_model == 'fashion':  
+        client = OpenAI()
+        assistant = client.beta.assistants.create(
+        name="Fashion",
+        instructions="Eres un asesor de moda. Recibes una lista de prendas de ropa y recomiendas combinaciones basadas en esas prendas.Tu dominio es solo el gym. Tu dominio es solo la moda",
+        tools=[{"type": "code_interpreter"}],
+        model="gpt-4o-mini",
+        )
+        thread = client.beta.threads.create()
+
+
+        message = client.beta.threads.messages.create(
+            thread_id=thread.id,
+            role="user",
+            content=user_input
+        )
+
+        run = client.beta.threads.runs.create_and_poll(
+            thread_id=thread.id,
+            assistant_id=assistant.id,
+            instructions="Eres un asesor de moda. Recibes una lista de prendas de ropa y recomiendas combinaciones basadas en esas prendas. Tu dominio es solo la moda"
+        )
+
+        if run.status == 'completed': 
+            messages = client.beta.threads.messages.list(thread_id=thread.id)
+
+            # Filtrar los mensajes del asistente
+            mensajes_asistente = [msg for msg in messages.data if msg.role == 'assistant']
+            print(messages)
+            if mensajes_asistente:
+                # Obtener el último mensaje del asistente
+                ultimo_mensaje = mensajes_asistente[0]  # Accede al último mensaje del asistente
+                for block in ultimo_mensaje.content:
+                    print(f"Assistant: {block.text.value}") 
+                    response= block.text.value# Imprime solo el contenido del último mensaje
+            else:
+                print("No se encontró un mensaje del asistente.")
+
+        ####################################################
+    elif selected_model == 'Gym':  
+        client = OpenAI()
+        assistant = client.beta.assistants.create(
+        name="gym",
+        instructions="Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos.",
+        tools=[{"type": "code_interpreter"}],
+        model="gpt-4o-mini",
+        )
+        thread = client.beta.threads.create()
+
+
+        message = client.beta.threads.messages.create(
+            thread_id=thread.id,
+            role="user",
+            content=user_input
+        )
+
+        run = client.beta.threads.runs.create_and_poll(
+            thread_id=thread.id,
+            assistant_id=assistant.id,
+            instructions="Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos. Tu dominio es solo el gym"
+        )
+
+        if run.status == 'completed': 
+            messages = client.beta.threads.messages.list(thread_id=thread.id)
+
+            # Filtrar los mensajes del asistente
+            mensajes_asistente = [msg for msg in messages.data if msg.role == 'assistant']
+            print(messages)
+            if mensajes_asistente:
+                # Obtener el último mensaje del asistente
+                ultimo_mensaje = mensajes_asistente[0]  # Accede al último mensaje del asistente
+                for block in ultimo_mensaje.content:
+                    print(f"Assistant: {block.text.value}") 
+                    response= block.text.value# Imprime solo el contenido del último mensaje
+            else:
+                print("No se encontró un mensaje del asistente.")
+    else:
+        return jsonify({'response': 'Modelo no encontrado.'}), 400
     
-    respuesta_texto = response.text  # Obtener la respuesta en texto del modelo
+    respuesta_texto = response  # Obtener la respuesta en texto del modelo
+    print(f"Rxs:{respuesta_texto}")
 
     # Buscar recetas en SerpAPI (si es necesario)
-    
-    recetas = serpp(user_input, selected_model)
+    recetas = buscar_resultados_en_serpapi(user_input, selected_model)
 
     # Devolver la respuesta escrita y la de SerpAPI
     return jsonify({
@@ -249,6 +290,36 @@ def synthesize_audio():
         return jsonify({'error': 'Error al sintetizar la voz.'}), 500
 
 
+def buscar_resultados_en_serpapi(query, model):
+    try:
+        # Ajusta la consulta según el modelo seleccionado
+        if model == 'culinary':
+            search_query = f"Recetas con {query}"
+        elif model == 'fashion':
+            search_query = f"Outfits with {query}"
+        elif model == 'Gym':
+            search_query = f"Gym exercises using {query}"
+        else:
+            return f"Modelo {model} no soportado."
+
+        # Realizar la búsqueda en SerpAPI con la consulta modificada
+        result = client.search(
+            q=search_query,
+            engine="google",
+            hl="es",
+            gl="co",
+            location_requested="Atlantico,Colombia",
+            location_used="Atlantico,Colombia"
+        )
+        
+        # Para el modelo culinario, usamos 'recipes_results', pero para otros modelos
+        # podrían necesitarse diferentes campos en los resultados
+        if model == 'culinary':
+            return result.get("recipes_results", [])
+        else:
+            return result.get("organic_results", [])  # Ajusta esto según las necesidades del modelo
+    except Exception as e:
+        return f"Error al buscar en SerpAPI: {e}"
 
 
 @app.route('/upload-image', methods=['POST'])
