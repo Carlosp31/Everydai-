@@ -365,11 +365,11 @@ def upload_image():
             selected_model = request.form['model']  # Obtener el modelo seleccionado
             print(selected_model)
             if selected_model == 'culinary':
-                prompt = "Actúa como un maestro culinario e identifica los ingredientes en la imagen. "
+                prompt = "Actúa como un maestro culinario e identifica los ingredientes en la imagen. Solo entrega la lista de ingredientes, intenta no extenderte mucho la conversación, lo más concisa posible."
             elif selected_model == 'fashion':
-                prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen."
+                prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen.  Solo entrega la lista de prendas intenta no extenderte mucho la conversación, lo más concisa posible."
             elif selected_model == 'gym':
-                prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen. "
+                prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen.  Solo entrega la lista de ingredientes, intenta no extenderte mucho la conversación, lo más concisa posible."
             else:
                 return jsonify({'response': 'Modelo no válido.'}), 400
 
@@ -389,6 +389,7 @@ def upload_image():
 
             # Verificar si la respuesta contiene un resultado válido
             if response and hasattr(response, 'candidates') and response.candidates:
+                d
                 return jsonify({'response': response.text})
             else:
                 return jsonify({'response': 'Error: No se pudo procesar la imagen correctamente.'}), 500
