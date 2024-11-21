@@ -131,59 +131,79 @@ def chat():
     # Renderizar la página del chatbot y pasar el dominio seleccionado
     return render_template('chat.html', domain=domain)
 
+
+
+
+#######################################################
+# Crear el cliente de OpenAI y el asistente de culinary de manera global
+
+client = OpenAI()
+
+# Definir variables globales
+
+
+##################### Culinario #################################
+global assistant_culinary
+assistant_culinary = client.beta.assistants.create(
+    name="Cooking",
+    instructions="""El modelo debe actuar como un profesor de culinaria. Recibe una lista de ingredientes y debe proporcionarle al usuario una lista de pasos y guiarlo paso a paso para realizar una receta. 
+                    Antes, indícale al usuario la receta que le vas a sugerir y pregúntale si le gustaría esa u otra. Si dice que sí, ve indicando paso por paso, esperando a que el usuario termine un paso y quiera ir al siguiente. 
+                    Solo puedes sugerir recetas con los ingredientes que recibes en la lista, únicamente esos. A menos que el usuario te pida que le sugieras una receta y que él conseguirá los ingredientes. 
+                    Tu dominio es solo la culinaria.""",
+    tools=[{"type": "code_interpreter"}],
+    model="gpt-4o-mini",
+)
+
+# Crear el thread global para culinary (esto solo lo inicializamos una vez)
+global thread_culinary
+thread_culinary = client.beta.threads.create()
+#################################################################
+##################### Fashion #################################
+# Definir variables globales para el dominio de moda
+global assistant_fashion
+assistant_fashion = client.beta.assistants.create(
+    name="Fashion",
+    instructions="""Eres un asesor de moda. Recibes una lista de prendas de ropa y recomiendas combinaciones basadas en esas prendas. 
+                    Tu dominio es solo la moda. Puedes sugerir atuendos para diferentes ocasiones y ayudar con la elección de ropa según las preferencias del usuario.""",
+    tools=[{"type": "code_interpreter"}],
+    model="gpt-4o-mini",
+)
+
+# Crear el thread global para fashion (esto solo lo inicializamos una vez)
+global thread_fashion
+thread_fashion = client.beta.threads.create()
+###################### Gym #################################
+global assistant_gym
+assistant_gym= client.beta.assistants.create(
+    name="gym",
+    instructions="Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos.",
+    tools=[{"type": "code_interpreter"}],
+    model="gpt-4o-mini",
+)
+global thread_gym
+thread_gym = client.beta.threads.create()
+#################################################################
+
+####################################################
 # Actualización: mensaje inicial en el chat
 @app.route('/chat', methods=['POST'])
 def chat_post():
     user_input = request.json['message']
     selected_model = request.json['model']
-
-    # # Selección del modelo basado en la entrada del usuario
-    # if selected_model == 'culinary':
-    #     model = model_culinary
-    #     history = [
-    #         {"role": "user", "parts": "Eres un profesor de culinaria. Recibe una lista de ingredientes y proporciona una lista de pasos para realizar una receta solo con esos ingredientes."},
-    #         {"role": "model", "parts": "Bien, dime los ingredientes que tienes y te daré el paso a paso, como si fueras principiantes, para preparar una receta."}
-    #     ]
-    # elif selected_model == 'fashion':
-    #     model = model_fashion
-    #     history = [
-    #         {"role": "user", "parts": "Eres un asesor de moda. Recibes una lista de prendas de ropa y recomiendas combinaciones basadas en esas prendas."},
-    #         {"role": "model", "parts": "Entendido, por favor indícame las prendas y te sugeriré combinaciones."}
-    #     ]
-    # elif selected_model == 'gym':
-    #     model = model_gym
-    #     history = [
-    #         {"role": "user", "parts": "Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos."},
-    #         {"role": "model", "parts": "Dime qué elementos de gimnasio tienes, y te sugeriré ejercicios para realizar con ellos."}
-    #     ]
-    # else:
-    #     return jsonify({'response': 'Modelo no encontrado.'}), 400
-    # # Iniciar chat con el modelo seleccionado
-    # chat = model.start_chat(history=history)
-    
-    # # Enviar mensaje al modelo y recibir respuesta
-    # response = chat.send_message(
-    #     user_input,
-    #     generation_config=genai.types.GenerationConfig(
-    #         candidate_count=1,
-    #         stop_sequences=["x"],
-    #         max_output_tokens=150,
-    #         temperature=0.7
-    #     )
-    # )
-
+    client = OpenAI()
 
     ####################################################
     if selected_model == 'culinary':  
-        client = OpenAI()
-        assistant_culinary = client.beta.assistants.create(
-        name="Cooking",
-        instructions="el modelo debe actuar como un profesor de culinaria. Recibe una lista de ingredientes y debe proporcionarle al usuario una lista de pasos y guia al usuario para que efectúe la receta. Antes, indicale al usuario la receta que le vas a sugerir y preguntale si le gustaria esa u otra; si dice que sí ve indicando paso por paso, esperando a que el usuario termine un paso y quiera ir al siguiente. Solo puedes sugerir recetas con los ingredientes que recibe en la lista, únicamente esos. A menos que el usuario te pida que le sugieras una receta y que él conseguirá los ingredientes. Tu dominio es solo la culinaria",
-        tools=[{"type": "code_interpreter"}],
-        model="gpt-4o-mini",
-        )
-        thread_culinary = client.beta.threads.create()
-
+        #################### GLOBAL ##################################
+        # client = OpenAI()
+        # assistant_culinary = client.beta.assistants.create(
+        # name="Cooking",
+        # instructions="el modelo debe actuar como un profesor de culinaria. Recibe una lista de ingredientes y debe proporcionarle al usuario una lista de pasos y guia al usuario para que efectúe la receta. Antes, indicale al usuario la receta que le vas a sugerir y preguntale si le gustaria esa u otra; si dice que sí ve indicando paso por paso, esperando a que el usuario termine un paso y quiera ir al siguiente. Solo puedes sugerir recetas con los ingredientes que recibe en la lista, únicamente esos. A menos que el usuario te pida que le sugieras una receta y que él conseguirá los ingredientes. Tu dominio es solo la culinaria",
+        # tools=[{"type": "code_interpreter"}],
+        # model="gpt-4o-mini",
+        # )
+        # thread_culinary = client.beta.threads.create()
+        ########################################################
 
         message = client.beta.threads.messages.create(
             thread_id=thread_culinary.id,
@@ -229,15 +249,15 @@ def chat_post():
         ####################################################
     elif selected_model == 'fashion':  
         ########GLOBAL################3
-        client = OpenAI()
-        assistant_fashion = client.beta.assistants.create(
-        name="Fashion",
-        instructions="Eres un asesor de moda. Recibes una lista de prendas de ropa y recomiendas combinaciones basadas en esas prendas.Tu dominio es solo el gym. Tu dominio es solo la moda",
-        tools=[{"type": "code_interpreter"}],
-        model="gpt-4o-mini",
-        )
-        thread_fashion = client.beta.threads.create()
-        ########GLOABAL#################
+        # client = OpenAI()
+        # assistant_fashion = client.beta.assistants.create(
+        # name="Fashion",
+        # instructions="Eres un asesor de moda. Recibes una lista de prendas de ropa y recomiendas combinaciones basadas en esas prendas.Tu dominio es solo el gym. Tu dominio es solo la moda",
+        # tools=[{"type": "code_interpreter"}],
+        # model="gpt-4o-mini",
+        # )
+        # thread_fashion = client.beta.threads.create()
+        ##################################
 
         message = client.beta.threads.messages.create(
             thread_id=thread_fashion.id,
@@ -268,15 +288,16 @@ def chat_post():
 
         ####################################################
     elif selected_model == 'gym':  
-        client = OpenAI()
-        assistant_gym= client.beta.assistants.create(
-            name="gym",
-            instructions="Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos.",
-            tools=[{"type": "code_interpreter"}],
-            model="gpt-4o-mini",
-        )
-        thread_gym = client.beta.threads.create()
-
+        #################### GLOBAL ##################################
+        # client = OpenAI()
+        # assistant_gym= client.beta.assistants.create(
+        #     name="gym",
+        #     instructions="Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos.",
+        #     tools=[{"type": "code_interpreter"}],
+        #     model="gpt-4o-mini",
+        # )
+        # thread_gym = client.beta.threads.create()
+        ############################################################
 
         message = client.beta.threads.messages.create(
             thread_id=thread_gym.id,
