@@ -220,7 +220,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ text: responseText }),
+                    body: JSON.stringify({ text: responseText, modelo: selectedModel}),
                 })
                 .then(audioResponse => {
                     if (audioResponse.ok) return audioResponse.blob();
