@@ -194,7 +194,21 @@ def chat_post():
         run = client.beta.threads.runs.create_and_poll(
             thread_id=thread.id,
             assistant_id=assistant.id,
-            instructions="el modelo debe actuar como un profesor de culinaria. Recibe una lista de ingredientes y debe proporcionarle al usuario una lista de pasos y guiar al usuario para que efectúe la receta. Solo puede sugerir recetas con los ingredientes que recibe en la lista, únicamente esos, a menos que el usuario te pida que le sugieras una receta y que él conseguirá los ingredientes. Tu dominio es solo la culinaria"
+            instructions="""
+                El modelo debe actuar como un profesor de culinaria. 
+                Recibe una lista de ingredientes y debe proporcionarle al usuario una lista de pasos 
+                y guiar al usuario para que efectúe la receta. 
+                
+                Antes, indicale al usuario la receta que le vas a sugerir 
+                y preguntale si le gustaría esa u otra. 
+                Si dice que sí, ve indicando paso por paso, esperando a que el usuario termine un paso 
+                y quiera ir al siguiente; si dice que no, sugierele otra en base a los ingredientes que te habia mostrado.
+                
+                Solo puedes sugerir recetas con los ingredientes que recibiste en la lista, únicamente esos. 
+                A menos que el usuario te pida que le sugieras una receta y que él conseguirá los ingredientes. 
+                
+                Tu dominio es solo la culinaria.
+            """
         )
 
         if run.status == 'completed': 
@@ -357,18 +371,18 @@ def upload_image():
     if image:
         filename = secure_filename(image.filename)
         image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        image.save(image_path)  # Guarda la imagen en la carpeta de uploads
-        image = Image.open(image_path)
+        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+        image.save(image_path)
 
         try:
             # Procesa la imagen con el modelo de imágenes
-            selected_model = request.form['model']
+            selected_model = request.form.get('model', '').strip()
             if selected_model == 'culinary':
-                prompt = "Actúa como un maestro culinario e identifica los ingredientes en la imagen."
+                prompt = "Actúa como un maestro culinario e identifica los ingredientes en la imagen. Solo quiero la lista de ingredientes, trata de no extender mucho la conversación. Sé conciso."
             elif selected_model == 'fashion':
-                prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen."
+                prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen. Solo quiero la lista de prendas, trata de no extender mucho la conversación. Sé conciso."
             elif selected_model == 'gym':
-                prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen."
+                prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen. Solo quiero la lista de elementos, trata de no extender mucho la conversación. Sé conciso."
             else:
                 return jsonify({'response': 'Modelo no válido.'}), 400
 
@@ -376,7 +390,7 @@ def upload_image():
             response = model_img.generate_content(
                 [
                     prompt,
-                    image
+                    Image.open(image_path)
                 ],
                 generation_config=genai.types.GenerationConfig(
                     candidate_count=1,
@@ -386,29 +400,40 @@ def upload_image():
                 )
             )
 
-            if response and hasattr(response, 'candidates') and response.candidates:
-                generated_text = response.candidates[0].text  # Obtén el texto generado
+            # Extraer el texto generado desde response
+            print(f"Response completo: {response}")
+            if response and hasattr(response, 'candidates') and len(response.candidates) > 0:
+                candidate = response.candidates[0]
+                parts = getattr(candidate.content, 'parts', [])
+                if parts and len(parts) > 0:
+                    generated_text = parts[0].text  # Extraer el texto desde 'parts'
+                    print(f"Texto generado: {generated_text}")
 
-                # Llama al endpoint /chat con el texto generado
-                chat_payload = {
-                    "message": generated_text,
-                    "model": selected_model
-                }
-                chat_response = requests.post(
-                    'http://127.0.0.1:80/chat',  # Cambia la URL si tu servidor Flask está en otro puerto o dominio
-                    json=chat_payload
-                )
-                print(chat_response)
-                if chat_response.status_code == 200:
-                    return jsonify(chat_response.json())
+                    # Llama al endpoint /chat con el texto generado
+                    chat_payload = {
+                        "message": generated_text,
+                        "model": selected_model
+                    }
+                    chat_response = requests.post(
+                        'http://127.0.0.1:80/chat',
+                        json=chat_payload,
+                        timeout=15
+                    )
+                    chat_response_json = chat_response.json()
+
+                    if chat_response.status_code == 200:
+                        print(f"chat_response.json(): {chat_response.json()}")
+                        return jsonify({'response': chat_response_json.get('text_response')})
+                    else:
+                        return jsonify({'response': f'Error al procesar en /chat: {chat_response.text}'}), chat_response.status_code
                 else:
-                    return jsonify({'response': 'Error al procesar la solicitud en el endpoint /chat.'}), chat_response.status_code
-
+                    return jsonify({'response': 'Error: No se encontró texto generado en la respuesta del modelo.'}), 500
             else:
-                return jsonify({'response': 'Error: No se pudo procesar la imagen correctamente.'}), 500
+                return jsonify({'response': 'Error: Respuesta del modelo incompleta o malformada.'}), 500
 
         except Exception as e:
-            return jsonify({'response': f'Error procesando la imagen: {e}'}), 500
+            print(f"Error procesando la imagen: {e}")
+            return jsonify({'response': f'Error procesando la imagen: {str(e)}'}), 500
 
     return jsonify({'response': 'Imagen no encontrada.'}), 404
 
