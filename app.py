@@ -176,24 +176,24 @@ def chat_post():
     ####################################################
     if selected_model == 'culinary':  
         client = OpenAI()
-        assistant = client.beta.assistants.create(
+        assistant_culinary = client.beta.assistants.create(
         name="Cooking",
         instructions="el modelo debe actuar como un profesor de culinaria. Recibe una lista de ingredientes y debe proporcionarle al usuario una lista de pasos y guia al usuario para que efectúe la receta. Antes, indicale al usuario la receta que le vas a sugerir y preguntale si le gustaria esa u otra; si dice que sí ve indicando paso por paso, esperando a que el usuario termine un paso y quiera ir al siguiente. Solo puedes sugerir recetas con los ingredientes que recibe en la lista, únicamente esos. A menos que el usuario te pida que le sugieras una receta y que él conseguirá los ingredientes. Tu dominio es solo la culinaria",
         tools=[{"type": "code_interpreter"}],
         model="gpt-4o-mini",
         )
-        thread = client.beta.threads.create()
+        thread_culinary = client.beta.threads.create()
 
 
         message = client.beta.threads.messages.create(
-            thread_id=thread.id,
+            thread_id=thread_culinary.id,
             role="user",
             content=user_input
         )
 
         run = client.beta.threads.runs.create_and_poll(
-            thread_id=thread.id,
-            assistant_id=assistant.id,
+            thread_id=thread_culinary.id,
+            assistant_id=assistant_culinary.id,
             instructions="""
                 El modelo debe actuar como un profesor de culinaria. 
                 Recibe una lista de ingredientes y debe proporcionarle al usuario una lista de pasos 
@@ -212,7 +212,7 @@ def chat_post():
         )
 
         if run.status == 'completed': 
-            messages = client.beta.threads.messages.list(thread_id=thread.id)
+            messages = client.beta.threads.messages.list(thread_id=thread_culinary.id)
 
             # Filtrar los mensajes del asistente
             mensajes_asistente = [msg for msg in messages.data if msg.role == 'assistant']
@@ -228,30 +228,31 @@ def chat_post():
 
         ####################################################
     elif selected_model == 'fashion':  
+        ########GLOBAL################3
         client = OpenAI()
-        assistant = client.beta.assistants.create(
+        assistant_fashion = client.beta.assistants.create(
         name="Fashion",
         instructions="Eres un asesor de moda. Recibes una lista de prendas de ropa y recomiendas combinaciones basadas en esas prendas.Tu dominio es solo el gym. Tu dominio es solo la moda",
         tools=[{"type": "code_interpreter"}],
         model="gpt-4o-mini",
         )
-        thread = client.beta.threads.create()
-
+        thread_fashion = client.beta.threads.create()
+        ########GLOABAL#################
 
         message = client.beta.threads.messages.create(
-            thread_id=thread.id,
+            thread_id=thread_fashion.id,
             role="user",
             content=user_input
         )
 
         run = client.beta.threads.runs.create_and_poll(
-            thread_id=thread.id,
-            assistant_id=assistant.id,
+            thread_id=thread_fashion.id,
+            assistant_id=assistant_fashion.id,
             instructions="Eres un asesor de moda. Recibes una lista de prendas de ropa y recomiendas combinaciones basadas en esas prendas. Tu dominio es solo la moda"
         )
 
         if run.status == 'completed': 
-            messages = client.beta.threads.messages.list(thread_id=thread.id)
+            messages = client.beta.threads.messages.list(thread_id=thread_fashion.id)
 
             # Filtrar los mensajes del asistente
             mensajes_asistente = [msg for msg in messages.data if msg.role == 'assistant']
@@ -268,29 +269,29 @@ def chat_post():
         ####################################################
     elif selected_model == 'gym':  
         client = OpenAI()
-        assistant = client.beta.assistants.create(
-        name="gym",
-        instructions="Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos.",
-        tools=[{"type": "code_interpreter"}],
-        model="gpt-4o-mini",
+        assistant_gym= client.beta.assistants.create(
+            name="gym",
+            instructions="Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos.",
+            tools=[{"type": "code_interpreter"}],
+            model="gpt-4o-mini",
         )
-        thread = client.beta.threads.create()
+        thread_gym = client.beta.threads.create()
 
 
         message = client.beta.threads.messages.create(
-            thread_id=thread.id,
+            thread_id=thread_gym.id,
             role="user",
             content=user_input
         )
 
         run = client.beta.threads.runs.create_and_poll(
-            thread_id=thread.id,
-            assistant_id=assistant.id,
+            thread_id=thread_gym.id,
+            assistant_id=assistant_gym.id,
             instructions="Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos. Tu dominio es solo el gym"
         )
 
         if run.status == 'completed': 
-            messages = client.beta.threads.messages.list(thread_id=thread.id)
+            messages = client.beta.threads.messages.list(thread_id=thread_gym.id)
 
             # Filtrar los mensajes del asistente
             mensajes_asistente = [msg for msg in messages.data if msg.role == 'assistant']
