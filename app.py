@@ -9,6 +9,7 @@ import requests
 from openai import OpenAI
 from google.oauth2.credentials import Credentials
 from datetime import datetime, timedelta
+import requests  # Asegúrate de importar la biblioteca requests
 
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
@@ -177,7 +178,7 @@ def chat_post():
         client = OpenAI()
         assistant = client.beta.assistants.create(
         name="Cooking",
-        instructions="el modelo debe actuar como un profesor de culinaria. Recibe una lista de ingredientes y debe proporcionarle al usuario una lista de pasos y guiar al usuario para que efectúe la receta. Solo puede sugerir recetas con los ingredientes que recibe en la lista, únicamente esos. A menos que el usuario te pida que le sugieras una receta y que él conseguirá los ingredientes. Tu dominio es solo la culinaria",
+        instructions="el modelo debe actuar como un profesor de culinaria. Recibe una lista de ingredientes y debe proporcionarle al usuario una lista de pasos y guia al usuario para que efectúe la receta. Antes, indicale al usuario la receta que le vas a sugerir y preguntale si le gustaria esa u otra; si dice que sí ve indicando paso por paso, esperando a que el usuario termine un paso y quiera ir al siguiente. Solo puedes sugerir recetas con los ingredientes que recibe en la lista, únicamente esos. A menos que el usuario te pida que le sugieras una receta y que él conseguirá los ingredientes. Tu dominio es solo la culinaria",
         tools=[{"type": "code_interpreter"}],
         model="gpt-4o-mini",
         )
@@ -347,7 +348,6 @@ def buscar_resultados_en_serpapi(query, model):
     except Exception as e:
         return f"Error al buscar en SerpAPI: {e}"
 
-# Ruta para subir imagen
 @app.route('/upload-image', methods=['POST'])
 def upload_image():
     if 'image' not in request.files:
@@ -362,14 +362,13 @@ def upload_image():
 
         try:
             # Procesa la imagen con el modelo de imágenes
-            selected_model = request.form['model']  # Obtener el modelo seleccionado
-            print(selected_model)
+            selected_model = request.form['model']
             if selected_model == 'culinary':
-                prompt = "Actúa como un maestro culinario e identifica los ingredientes en la imagen. Solo entrega la lista de ingredientes, intenta no extenderte mucho la conversación, lo más concisa posible."
+                prompt = "Actúa como un maestro culinario e identifica los ingredientes en la imagen."
             elif selected_model == 'fashion':
-                prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen.  Solo entrega la lista de prendas intenta no extenderte mucho la conversación, lo más concisa posible."
+                prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen."
             elif selected_model == 'gym':
-                prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen.  Solo entrega la lista de ingredientes, intenta no extenderte mucho la conversación, lo más concisa posible."
+                prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen."
             else:
                 return jsonify({'response': 'Modelo no válido.'}), 400
 
@@ -387,17 +386,32 @@ def upload_image():
                 )
             )
 
-            # Verificar si la respuesta contiene un resultado válido
             if response and hasattr(response, 'candidates') and response.candidates:
-                d
-                return jsonify({'response': response.text})
+                generated_text = response.candidates[0].text  # Obtén el texto generado
+
+                # Llama al endpoint /chat con el texto generado
+                chat_payload = {
+                    "message": generated_text,
+                    "model": selected_model
+                }
+                chat_response = requests.post(
+                    'http://127.0.0.1:80/chat',  # Cambia la URL si tu servidor Flask está en otro puerto o dominio
+                    json=chat_payload
+                )
+                print(chat_response)
+                if chat_response.status_code == 200:
+                    return jsonify(chat_response.json())
+                else:
+                    return jsonify({'response': 'Error al procesar la solicitud en el endpoint /chat.'}), chat_response.status_code
+
             else:
                 return jsonify({'response': 'Error: No se pudo procesar la imagen correctamente.'}), 500
-        
+
         except Exception as e:
             return jsonify({'response': f'Error procesando la imagen: {e}'}), 500
 
     return jsonify({'response': 'Imagen no encontrada.'}), 404
+
 
 # Iniciar la aplicación Flask con SSL
 if __name__ == '__main__':
