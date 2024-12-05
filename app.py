@@ -73,20 +73,16 @@ class EventHandler(AssistantEventHandler):
 
 ########################################################
 
-def sintetizar_voz(texto, api_key, modelo):
+def sintetizar_voz(texto, api_key):
     # Directorio temporal para guardar el archivo de audio
     temp_dir = os.path.join(os.path.expanduser("~"), "AppData", "Local", "Temp")
     audio_path = os.path.join(temp_dir, "respuesta_audio.mp3")
-    voz_mujer = "9BWtsMINqrJLrRacOk9x"
-    voz_hombre = "CwhRBWXzGAHq8TQ4Fs17"
+
     # Si el archivo ya existe, elimínalo antes de escribir uno nuevo
     if os.path.exists(audio_path):
         os.remove(audio_path)
-    if (modelo == "gym"): 
-     voz = voz_hombre
-    else:
-     voz = voz_mujer
-    url = "https://api.elevenlabs.io/v1/text-to-speech/" + voz   # Cambia YOUR_VOICE_ID por el ID de la voz que quieras usar
+
+    url = "https://api.elevenlabs.io/v1/text-to-speech/9BWtsMINqrJLrRacOk9x"  # Cambia YOUR_VOICE_ID por el ID de la voz que quieras usar
     headers = {
         'accept': 'audio/mpeg',
         'xi-api-key': api_key,
@@ -349,8 +345,8 @@ def chat_post():
 @app.route('/synthesize-audio', methods=['POST'])
 def synthesize_audio():
     text = request.json['text']
-    modelo = request.json['modelo']
-    audio_path = sintetizar_voz(text, ELEVENLABS_API_KEY, modelo)
+
+    audio_path = sintetizar_voz(text, ELEVENLABS_API_KEY)
     
     if audio_path:
         return send_file(audio_path, mimetype='audio/mpeg')
@@ -411,7 +407,7 @@ def upload_image():
             elif selected_model == 'fashion':
                 prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen. Solo quiero la lista de prendas, trata de no extender mucho la conversación. Sé conciso y damelo en formato de lista."
             elif selected_model == 'gym':
-                prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen." #Trata de no extender mucho la conversación. Sé conciso y damelo en formato de lista."
+                prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen. Solo quiero la lista de elementos, trata de no extender mucho la conversación. Sé conciso y damelo en formato de lista."
             else:
                 return jsonify({'response': 'Modelo no válido.'}), 400
 
