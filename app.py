@@ -445,7 +445,7 @@ def upload_image():
                     chat_response = requests.post(
                         'http://127.0.0.1:80/chat',
                         json=chat_payload,
-                        timeout=15
+                        timeout=20
                     )
                     chat_response_json = chat_response.json()
 
