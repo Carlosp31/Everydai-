@@ -27,7 +27,7 @@ IMG_MODEL = os.getenv('IMG_MODEL')
 ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY')
 
 # Configurar la clave API de SerpAPI
-client = serpapi.Client(api_key=SERPAPI_KEY)
+client_serpapi = serpapi.Client(api_key=SERPAPI_KEY)
 # Inicializar los modelos generativos con las variables de entorno
 model_culinary = genai.GenerativeModel(model_name=CULINARY_MODEL)
 model_fashion = genai.GenerativeModel(model_name=FASHION_MODEL)
@@ -236,7 +236,6 @@ def chat_post():
 
             # Filtrar los mensajes del asistente
             mensajes_asistente = [msg for msg in messages.data if msg.role == 'assistant']
-            print(messages)
             if mensajes_asistente:
                 # Obtener el último mensaje del asistente
                 ultimo_mensaje = mensajes_asistente[0]  # Accede al último mensaje del asistente
@@ -329,7 +328,7 @@ def chat_post():
         return jsonify({'response': 'Modelo no encontrado.'}), 400
     
     respuesta_texto = response  # Obtener la respuesta en texto del modelo
-    print(f"Rxs:{respuesta_texto}")
+
 
     # Mensaje inicial al seleccionar el dominio
     mensaje_inicial = f"Hola, este es el dominio {session.get('selected_domain', 'desconocido')}"
@@ -346,6 +345,7 @@ def chat_post():
 @app.route('/synthesize-audio', methods=['POST'])
 def synthesize_audio():
     text = request.json['text']
+
     audio_path = sintetizar_voz(text, ELEVENLABS_API_KEY)
     
     if audio_path:
@@ -354,6 +354,7 @@ def synthesize_audio():
         return jsonify({'error': 'Error al sintetizar la voz.'}), 500
 
 def buscar_resultados_en_serpapi(query, model):
+
     try:
         # Ajusta la consulta según el modelo seleccionado
         if model == 'culinary':
@@ -366,7 +367,7 @@ def buscar_resultados_en_serpapi(query, model):
             return f"Modelo {model} no soportado."
 
         # Realizar la búsqueda en SerpAPI con la consulta modificada
-        result = client.search(
+        result = client_serpapi.search(
             q=search_query,
             engine="google",
             hl="es",
@@ -377,9 +378,11 @@ def buscar_resultados_en_serpapi(query, model):
 
         # Para el modelo culinario, usamos 'recipes_results', pero para otros modelos
         # podrían necesitarse diferentes campos en los resultados
+        
         if model == 'culinary':
             return result.get("recipes_results", [])
         else:
+
             return result.get("organic_results", [])  # Ajusta esto según las necesidades del modelo
     except Exception as e:
         return f"Error al buscar en SerpAPI: {e}"
@@ -400,11 +403,11 @@ def upload_image():
             # Procesa la imagen con el modelo de imágenes
             selected_model = request.form.get('model', '').strip()
             if selected_model == 'culinary':
-                prompt = "Actúa como un maestro culinario e identifica los ingredientes en la imagen. Solo quiero la lista de ingredientes, trata de no extender mucho la conversación. Sé conciso."
+                prompt = "Actúa como un maestro culinario e identifica los ingredientes en la imagen. Solo quiero la lista de ingredientes, trata de no extender mucho la conversación. Sé conciso y damelo en formato de lista."
             elif selected_model == 'fashion':
-                prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen. Solo quiero la lista de prendas, trata de no extender mucho la conversación. Sé conciso."
+                prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen. Solo quiero la lista de prendas, trata de no extender mucho la conversación. Sé conciso y damelo en formato de lista."
             elif selected_model == 'gym':
-                prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen. Solo quiero la lista de elementos, trata de no extender mucho la conversación. Sé conciso."
+                prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen. Solo quiero la lista de elementos, trata de no extender mucho la conversación. Sé conciso y damelo en formato de lista."
             else:
                 return jsonify({'response': 'Modelo no válido.'}), 400
 
@@ -422,14 +425,13 @@ def upload_image():
                 )
             )
 
-            # Extraer el texto generado desde response
-            print(f"Response completo: {response}")
+
             if response and hasattr(response, 'candidates') and len(response.candidates) > 0:
                 candidate = response.candidates[0]
                 parts = getattr(candidate.content, 'parts', [])
                 if parts and len(parts) > 0:
                     generated_text = parts[0].text  # Extraer el texto desde 'parts'
-                    print(f"Texto generado: {generated_text}")
+                    print(f"Identifación de elementos en la imagen: {generated_text}")
 
                     # Llama al endpoint /chat con el texto generado
                     chat_payload = {
@@ -444,7 +446,6 @@ def upload_image():
                     chat_response_json = chat_response.json()
 
                     if chat_response.status_code == 200:
-                        print(f"chat_response.json(): {chat_response.json()}")
                         return jsonify({'response': chat_response_json.get('text_response')})
                     else:
                         return jsonify({'response': f'Error al procesar en /chat: {chat_response.text}'}), chat_response.status_code
