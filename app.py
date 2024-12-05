@@ -73,16 +73,20 @@ class EventHandler(AssistantEventHandler):
 
 ########################################################
 
-def sintetizar_voz(texto, api_key):
+def sintetizar_voz(texto, api_key, modelo):
     # Directorio temporal para guardar el archivo de audio
     temp_dir = os.path.join(os.path.expanduser("~"), "AppData", "Local", "Temp")
     audio_path = os.path.join(temp_dir, "respuesta_audio.mp3")
-
+    voz_mujer = "9BWtsMINqrJLrRacOk9x"
+    voz_hombre = "CwhRBWXzGAHq8TQ4Fs17"
     # Si el archivo ya existe, elimínalo antes de escribir uno nuevo
     if os.path.exists(audio_path):
         os.remove(audio_path)
-
-    url = "https://api.elevenlabs.io/v1/text-to-speech/9BWtsMINqrJLrRacOk9x"  # Cambia YOUR_VOICE_ID por el ID de la voz que quieras usar
+    if (modelo == "gym"): 
+     voz = voz_hombre
+    else:
+     voz = voz_mujer
+    url = "https://api.elevenlabs.io/v1/text-to-speech/" + voz   # Cambia YOUR_VOICE_ID por el ID de la voz que quieras usar
     headers = {
         'accept': 'audio/mpeg',
         'xi-api-key': api_key,
@@ -345,8 +349,13 @@ def chat_post():
 @app.route('/synthesize-audio', methods=['POST'])
 def synthesize_audio():
     text = request.json['text']
+<<<<<<< HEAD
 
     audio_path = sintetizar_voz(text, ELEVENLABS_API_KEY)
+=======
+    modelo = request.json['modelo']
+    audio_path = sintetizar_voz(text, ELEVENLABS_API_KEY, modelo)
+>>>>>>> 8a56bdd409ecb185bdb12861f565469990b06501
     
     if audio_path:
         return send_file(audio_path, mimetype='audio/mpeg')
