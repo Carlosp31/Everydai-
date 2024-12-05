@@ -349,13 +349,8 @@ def chat_post():
 @app.route('/synthesize-audio', methods=['POST'])
 def synthesize_audio():
     text = request.json['text']
-<<<<<<< HEAD
-
-    audio_path = sintetizar_voz(text, ELEVENLABS_API_KEY)
-=======
     modelo = request.json['modelo']
     audio_path = sintetizar_voz(text, ELEVENLABS_API_KEY, modelo)
->>>>>>> 8a56bdd409ecb185bdb12861f565469990b06501
     
     if audio_path:
         return send_file(audio_path, mimetype='audio/mpeg')
