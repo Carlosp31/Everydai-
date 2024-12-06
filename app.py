@@ -67,6 +67,9 @@ class EventHandler(AssistantEventHandler):
         for output in delta.code_interpreter.outputs:
           if output.type == "logs":
             print(f"\n{output.logs}", flush=True)
+            print("Test runner")
+ 
+
  
 # Then, we use the `stream` SDK helper 
 # with the `EventHandler` class to create the Run 
