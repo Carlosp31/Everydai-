@@ -13,6 +13,7 @@ import requests  # Asegúrate de importar la biblioteca requests
 import modules.voice as voice
 import modules.images as images
 import modules.chat as chats
+import platform
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
 
@@ -135,4 +136,14 @@ def handle_image():
 if __name__ == '__main__':
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
-    app.run(host='0.0.0.0', port=80)
+    
+    # Detectar el sistema operativo
+    current_os = platform.system()
+    if current_os == 'Linux':
+        port = 5000
+    elif current_os == 'Windows':
+        port = 80
+    else:
+        raise ValueError("Sistema operativo no soportado. Usa Linux o Windows.")
+
+    app.run(host='0.0.0.0', port=port)
