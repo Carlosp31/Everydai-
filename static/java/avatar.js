@@ -24,13 +24,13 @@
         let modelPath;
         switch (domain) {
             case 'culinary':
-                modelPath = '{{ url_for("static", filename="models/avatar1.glb") }}';
+                modelPath = "{{ url_for('static', filename='models/avatar1.glb') }}";
                 break;
             case 'fashion':
-                modelPath = '{{ url_for("static", filename="models/avatar3.glb") }}';
+                modelPath = "{{ url_for('static', filename='models/avatar2.glb') }}";
                 break;
             case 'gym':
-                modelPath = '{{ url_for("static", filename="models/avatar2.glb") }}';
+                modelPath = "{{ url_for('static', filename='models/avatar3.glb') }}";
                 break;
             default:
                 console.error('Dominio no reconocido.');
