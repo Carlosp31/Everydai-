@@ -11,6 +11,7 @@ from google.oauth2.credentials import Credentials
 from datetime import datetime, timedelta
 import requests  # Asegúrate de importar la biblioteca requests
 # Cargar las variables de entorno del archivo .env
+import tempfile
 load_dotenv()
 
 app = Flask(__name__)
