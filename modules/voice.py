@@ -42,19 +42,28 @@ from openai import AssistantEventHandler
 
 
 def sintetizar_voz(texto, api_key, modelo):
-    # Directorio temporal para guardar el archivo de audio
-    temp_dir = os.path.join(os.path.expanduser("~"), "AppData", "Local", "Temp")
+    # Detectar el sistema operativo y establecer el directorio temporal
+    if os.name == "nt":  # Windows
+        temp_dir = os.path.join(os.path.expanduser("~"), "AppData", "Local", "Temp")
+    else:  # Linux/Mac
+        temp_dir = tempfile.gettempdir()
+    
+    # Ruta del archivo de audio en el directorio temporal
     audio_path = os.path.join(temp_dir, "respuesta_audio.mp3")
+    
+    # Configuración de las voces
     voz_mujer = "9BWtsMINqrJLrRacOk9x"
     voz_hombre = "CwhRBWXzGAHq8TQ4Fs17"
-    # Si el archivo ya existe, elimínalo antes de escribir uno nuevo
+    
+    # Eliminar el archivo existente si ya está creado
     if os.path.exists(audio_path):
         os.remove(audio_path)
-    if (modelo == "gym"): 
-     voz = voz_hombre
-    else:
-     voz = voz_mujer
-    url = "https://api.elevenlabs.io/v1/text-to-speech/" + voz   # Cambia YOUR_VOICE_ID por el ID de la voz que quieras usar
+    
+    # Selección del modelo de voz
+    voz = voz_hombre if modelo == "gym" else voz_mujer
+    
+    # URL de la API
+    url = "https://api.elevenlabs.io/v1/text-to-speech/" + voz
     headers = {
         'accept': 'audio/mpeg',
         'xi-api-key': api_key,
