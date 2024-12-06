@@ -11,6 +11,8 @@ from google.oauth2.credentials import Credentials
 from datetime import datetime, timedelta
 import requests  # Asegúrate de importar la biblioteca requests
 import modules.voice as voice
+import platform
+import requests
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
 
@@ -86,14 +88,22 @@ def upload_image():
                 if parts and len(parts) > 0:
                     generated_text = parts[0].text  # Extraer el texto desde 'parts'
                     print(f"Identifación de elementos en la imagen: {generated_text}")
-
+                    # Determinar el sistema operativo
+                    os_type = platform.system()
                     # Llama al endpoint /chat con el texto generado
                     chat_payload = {
                         "message": generated_text,
                         "model": selected_model
                     }
+                    # Configurar URL según el sistema operativo
+                    if os_type == "Windows":
+                        url = 'http://127.0.0.1:80/chat'
+                    elif os_type == "Linux":
+                        url = 'http://127.0.0.1:5000/chat'
+                    else:
+                        raise OSError(f"Sistema operativo no soportado: {os_type}")
                     chat_response = requests.post(
-                        'http://127.0.0.1:80/chat',
+                        url,
                         json=chat_payload,
                         timeout=20
                     )
