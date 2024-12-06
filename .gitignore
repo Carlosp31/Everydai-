@@ -1,5 +1,4 @@
 client_secret.json
-venv/
 .env
 Gemini_models__.ipynb
 Gemini_models_.ipynb
