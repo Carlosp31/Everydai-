@@ -12,4 +12,4 @@ jobs:
       - name: Copy .env
         run: cp ~/varnen/.env .
       - name: Copy venv
-        run: cp ~/varnen/venv ~/
+        run: cp ~/varnen/venv ~/.
