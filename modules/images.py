@@ -99,7 +99,7 @@ def upload_image():
                     if os_type == "Windows":
                         url = 'http://127.0.0.1:80/chat'
                     elif os_type == "Linux":
-                        url = 'https://127.0.0.1:8443/chat'
+                        url = 'https://127.0.0.1:443/chat'
                     else:
                         raise OSError(f"Sistema operativo no soportado: {os_type}")
                     chat_response = requests.post(
