@@ -8,11 +8,16 @@
     <title>Chat with EverydAI</title>
 </head>
 <body>
+    <button class ="redirect-button" onclick="redirectToRealidad()">Explorar</button>
+
+
+
+
     <!-- Mostrar el modelo seleccionado dinámicamente -->
     <div id="selected-model-display" class="selected-model-display">
         Hola, este es el dominio {{ domain }}
     </div>
-
+    
     <div id="recommendations-box" class="recommendations-box">
         <h3>Recommendations:</h3>
         <ul id="recommendations-list"></ul>
@@ -46,6 +51,10 @@
     </div>
 
     <script>
+
+        function redirectToRealidad() {
+            window.location.href = "/realidad";
+        }
         document.addEventListener("DOMContentLoaded", function() {
             const microphoneButton = document.getElementById("microphone-button");
             const frequencyCanvas = document.getElementById("frequency-canvas");

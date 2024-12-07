@@ -16,7 +16,8 @@ import modules.chat as chats
 import platform
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
-
+cert_file = '/etc/letsencrypt/live/everydai.ddns.net/fullchain.pem'
+key_file = '/etc/letsencrypt/live/everydai.ddns.net/privkey.pem'
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'supersecretkey')
 
@@ -84,6 +85,9 @@ class EventHandler(AssistantEventHandler):
 CLIENT_SECRETS_FILE = "client_secret.json"
 SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
 REDIRECT_URI = 'https://everydai.zapto.org/oauth2callback'
+@app.route('/realidad')
+def realidad():
+    return render_template('realidad.html')
 
 
 @app.route('/')
@@ -103,7 +107,6 @@ def chat():
 
     # Renderizar la página del chatbot y pasar el dominio seleccionado
     return render_template('chat.html', domain=domain)
-
 
 
 
@@ -132,18 +135,19 @@ def handle_image():
     return images.upload_image()
 
 
-# Iniciar la aplicación Flask con SSL
 if __name__ == '__main__':
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
-    
+
     # Detectar el sistema operativo
     current_os = platform.system()
     if current_os == 'Linux':
-        port = 5000
+        port = 443
+        ssl_context = (cert_file, key_file)  # Usar SSL en Linux
     elif current_os == 'Windows':
         port = 80
+        ssl_context = None  # No usar SSL en Windows
     else:
         raise ValueError("Sistema operativo no soportado. Usa Linux o Windows.")
 
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, ssl_context=ssl_context)
