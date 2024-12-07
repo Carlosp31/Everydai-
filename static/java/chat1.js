@@ -205,6 +205,7 @@ fetch('/chat', {
         sendMessage(userInput);
     };
 
+    
     // Funcionalidad para abrir la cámara
     document.getElementById("camera-button").onclick = function() {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -271,9 +272,11 @@ fetch('/chat', {
             .then(response => response.json())
             .then(data => {
                 document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
+                toastr.success("Success uploading image");
                 speakResponse(data.response);
             })
             .catch(error => console.error('Error:', error));
+            toastr.error("Error uploading image");
         }
     };
 

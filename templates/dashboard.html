@@ -3,169 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to EverydA</title>
-    <style>
-        /* Fondo negro con animación de gradiente */
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(-45deg, #000000, #1e1e1e, #005f99, #000000);
-            background-size: 200% 200%;
-            animation: gradient 10s ease infinite;
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            text-align: center;
-        }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(-20px); /* Desplazar hacia arriba desde un valor negativo */
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0); /* Volver a su posición original */
-            }
-        }
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dash.css') }}">
+    <title>Welcome to EverydAI</title>
 
-        /* Animación para el subtítulo */
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-20px); /* Desplazar hacia la izquierda desde un valor negativo */
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0); /* Volver a su posición original */
-            }
-        }
-
-        /* Aplicar las animaciones */
-        .main-title {
-            color: #ffffff;
-            font-size: 48px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            animation: fadeInUp 1s ease-out forwards; /* Añadir la animación fadeInUp */
-        }
-
-        .sub-title {
-            color: #ffffff;
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            animation: fadeInLeft 1s ease-out forwards; /* Añadir la animación fadeInLeft */
-        }
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: fadeIn 2s ease forwards;
-            position: relative;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .main-title {
-            color: #ffffff;
-            font-size: 48px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .sub-title {
-            color: #ffffff;
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        #avatar-container {
-            width: 600px; /* Tamaño fijo para el contenedor */
-            height: 600px; /* Tamaño fijo para el contenedor */
-            position: absolute;
-            top: 30%; /* Ajusta la posición relativa a la ventana */
-            left: 50%;
-            transform: translateX(-84%) translateY(-90px); /* Centrado horizontal y ajuste vertical */
-        }
-
-        /* Botones con efecto glow organizados horizontalmente */
-        .option-container {
-            display: flex;
-            gap: 70px;
-            margin-top: 400px; /* Ajusta esta distancia para dejar espacio al avatar */
-        }
-
-        .option {
-            background-color: rgba(0, 122, 204, 0.8);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 30px;
-            border: 2px solid transparent;
-            font-size: 20px;
-            width: 150px;
-            text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
-
-        .option:before {
-            content: "";
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 30px;
-            background: linear-gradient(45deg, #007acc, #1e1e1e, #005f99, #1e1e1e);
-            z-index: -1;
-            transition: opacity 0.3s;
-            opacity: 0;
-            animation: glow 5s linear infinite;
-        }
-
-        .option:hover:before {
-            opacity: 1;
-        }
-
-        .option:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        @keyframes glow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
-
-        /* Iconos de los botones */
-        .option i {
-            margin-right: 10px;
-            color: #ffffff;
-        }
-    </style>
 </head>
 <body>
+    <button id="openModalButton">User Guide</button>
     <div class="container">
+        
         <div class="main-title">Welcome to EverydAI</div>
         <div class="sub-title">Choose a domain to continue</div>
 
@@ -177,12 +22,31 @@
             <a href="{{ url_for('chat', domain='fashion') }}" class="option"><i>👗</i> Fashion</a>
             <a href="{{ url_for('chat', domain='gym') }}" class="option"><i>🏋️‍♂️</i> Gym</a>
         </div>
-    </div>
+       
 
     <!-- Scripts de Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
+document.getElementById('openModalButton').addEventListener('click', function() {
+    Swal.fire({
+        title: 'User Guide',
+        html: `
+            <p>Welcome to EverydAI user guide. Here you can:</p>
+            <ul>
+                <li>Select the domain for your daily activities.</li>
+                <li>Talk with the avatars to receive help on your daily tasks.</li>
+                <li>Receive information based on the elements you share to our avatars.</li>
+            </ul>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Close'
+    });
+});
+
+
         // Crear la escena y la cámara
         const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, 500 / 500, 0.1, 1000);
@@ -286,6 +150,9 @@
         previousMousePosition.x = event.clientX;
         previousMousePosition.y = event.clientY;
     });
+
+
+
     
     // Detectar cuando el mouse se libera
     document.addEventListener('mouseup', () => {
