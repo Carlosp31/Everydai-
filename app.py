@@ -85,6 +85,9 @@ class EventHandler(AssistantEventHandler):
 CLIENT_SECRETS_FILE = "client_secret.json"
 SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
 REDIRECT_URI = 'https://everydai.zapto.org/oauth2callback'
+@app.route('/realidad')
+def realidad():
+    return render_template('realidad.html')
 
 
 @app.route('/')
@@ -104,7 +107,6 @@ def chat():
 
     # Renderizar la página del chatbot y pasar el dominio seleccionado
     return render_template('chat.html', domain=domain)
-
 
 
 

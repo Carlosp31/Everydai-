@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Object Detection</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+    }
+    video {
+      border: 1px solid #ccc;
+      max-width: 90%;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Real-Time Object Detection</h1>
+  <video id="webcam" autoplay playsinline width="640" height="480"></video>
+  <canvas id="overlay"></canvas>
+  <script>
+    // Variables
+    const video = document.getElementById('webcam');
+    const canvas = document.getElementById('overlay');
+    const ctx = canvas.getContext('2d');
+
+    // Initialize Camera
+    async function setupCamera() {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { width: 640, height: 480 },
+      });
+      video.srcObject = stream;
+      return new Promise((resolve) => {
+        video.onloadedmetadata = () => {
+          resolve(video);
+        };
+      });
+    }
+
+    // Load and Run Object Detection
+    async function runObjectDetection() {
+      const model = await cocoSsd.load(); // Load pre-trained model
+      console.log('Model loaded!');
+
+      // Adjust canvas to match video dimensions
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      async function detectFrame() {
+        const predictions = await model.detect(video);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        predictions.forEach((prediction) => {
+          const [x, y, width, height] = prediction.bbox;
+          ctx.strokeStyle = '#00FF00';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(x, y, width, height);
+          ctx.fillStyle = '#00FF00';
+          ctx.font = '16px Arial';
+          ctx.fillText(
+            `${prediction.class} (${Math.round(prediction.score * 100)}%)`,
+            x,
+            y > 10 ? y - 5 : 10
+          );
+        });
+
+        requestAnimationFrame(detectFrame);
+      }
+
+      detectFrame();
+    }
+
+    // Main
+    async function main() {
+      await setupCamera();
+      video.play();
+      runObjectDetection();
+    }
+
+    main();
+  </script>
+</body>
+</html>
