@@ -140,7 +140,7 @@ if __name__ == '__main__':
     # Detectar el sistema operativo
     current_os = platform.system()
     if current_os == 'Linux':
-        port = 8443
+        port = 443
         ssl_context = (cert_file, key_file)  # Usar SSL en Linux
     elif current_os == 'Windows':
         port = 80
