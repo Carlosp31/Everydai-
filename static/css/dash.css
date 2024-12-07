@@ -155,3 +155,44 @@
             margin-right: 10px;
             color: #ffffff;
         }
+        #openModalButton {
+            position: fixed;   
+            right: 20px;        
+            top: 20px;          
+            z-index: 1000;     
+            padding: 10px 20px;
+            margin: 0;
+            background: linear-gradient(45deg, #007bff, #00c6ff); /* Gradiente atractivo */
+            border: none;
+            border-radius: 8px; /* Bordes redondeados */
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+            transition: all 0.3s ease; /* Transición suave para efectos */
+        }
+    
+        /* Efecto al pasar el mouse por encima */
+        #openModalButton:hover {
+            background: linear-gradient(45deg, #00c6ff, #007bff); /* Invertir gradiente */
+            transform: scale(1.1); /* Agrandar ligeramente */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3); /* Aumentar sombra */
+        }
+    
+        /* Efecto de animación inicial al cargar */
+        @keyframes buttonEntry {
+            from {
+                opacity: 0;
+                transform: translateY(-20px); /* Mover desde arriba */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0); /* Llegar a su posición original */
+            }
+        }
+    
+        /* Aplicar animación al botón */
+        #openModalButton {
+            animation: buttonEntry 1s ease-out;
+        }

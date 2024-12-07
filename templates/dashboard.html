@@ -8,7 +8,9 @@
 
 </head>
 <body>
+    <button id="openModalButton">User Guide</button>
     <div class="container">
+        
         <div class="main-title">Welcome to EverydAI</div>
         <div class="sub-title">Choose a domain to continue</div>
 
@@ -20,12 +22,31 @@
             <a href="{{ url_for('chat', domain='fashion') }}" class="option"><i>👗</i> Fashion</a>
             <a href="{{ url_for('chat', domain='gym') }}" class="option"><i>🏋️‍♂️</i> Gym</a>
         </div>
-    </div>
+       
 
     <!-- Scripts de Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
+document.getElementById('openModalButton').addEventListener('click', function() {
+    Swal.fire({
+        title: 'User Guide',
+        html: `
+            <p>Welcome to EverydAI user guide. Here you can:</p>
+            <ul>
+                <li>Select the domain for your daily activities.</li>
+                <li>Talk with the avatars to receive help on your daily tasks.</li>
+                <li>Receive information based on the elements you share to our avatars.</li>
+            </ul>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Close'
+    });
+});
+
+
         // Crear la escena y la cámara
         const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, 500 / 500, 0.1, 1000);
@@ -129,6 +150,9 @@
         previousMousePosition.x = event.clientX;
         previousMousePosition.y = event.clientY;
     });
+
+
+
     
     // Detectar cuando el mouse se libera
     document.addEventListener('mouseup', () => {
