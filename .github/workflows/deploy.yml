@@ -16,12 +16,7 @@ jobs:
       - name: everydai
         run: sudo pm2 restart SERVER
         
-  deploy_oscar:
-    runs-on: oscar
-    steps:
-      - uses: actions/checkout@v2
-      - name: Copy .env
-        run: cp ~/varnen/.env .
+
 
         
         
