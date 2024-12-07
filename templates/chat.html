@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <title>Chat with EverydAI</title>
 </head>
 <body>
@@ -15,7 +17,7 @@
 
     <!-- Mostrar el modelo seleccionado dinámicamente -->
     <div id="selected-model-display" class="selected-model-display">
-        Hola, este es el dominio {{ domain }}
+        {{ domain }}
     </div>
     
     <div id="recommendations-box" class="recommendations-box">
