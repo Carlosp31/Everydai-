@@ -58,7 +58,28 @@ textarea#input-text {
     font-size: 14px;
     border-radius: 5px;
 }
+.redirect-button {
+    position: absolute;
+    left: 0; /* Pegado a la pared izquierda */
+    top: 50%; /* Centrado verticalmente */
+    width: 50px; /* Botón angosto */
+    height: 150px; /* Botón largo verticalmente */
+    background-color: #ff5733;
+    color: white;
+    font-size: 14px; /* Texto más pequeño */
+    writing-mode: vertical-rl; /* Texto vertical */
+    text-align: center;
+    border: none;
+    border-radius: 0; /* Quita bordes redondeados para un estilo más simple */
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease-in-out;
+}
 
+.redirect-button:hover {
+    background-color: #c44128;
+}
 input[type="text"]:focus,
 textarea#input-text:focus {
     outline: none;
