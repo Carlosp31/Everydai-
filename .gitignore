@@ -1,6 +1,8 @@
 client_secret.json
 .env
+venv/
 Gemini_models__.ipynb
 Gemini_models_.ipynb
 Gemini_models.ipynb
-notebook.ipyn
+notebook.ipynb
+prueba_aut.py

@@ -16,5 +16,8 @@ jobs:
       - name: everydai
         run: sudo pm2 restart SERVER
         
+
+
+        
         
 
