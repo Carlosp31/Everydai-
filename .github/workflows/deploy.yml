@@ -22,6 +22,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Copy .env
         run: cp ~/varnen/.env .
+      - name: copy venv
+        run: cp -r ~/varnen/venv . 
 
         
         
