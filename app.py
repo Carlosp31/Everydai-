@@ -84,9 +84,9 @@ class EventHandler(AssistantEventHandler):
 
 
 
-CLIENT_SECRETS_FILE = "client_secret.json"
+CLIENT_SECRETS_FILE = "client_secret_web.json"
 SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
-REDIRECT_URI = 'https://everydai.zapto.org/oauth2callback'
+REDIRECT_URI = 'https://everydai.ddns.net/oauth2callback'
 
 
 @app.route('/realidad')
