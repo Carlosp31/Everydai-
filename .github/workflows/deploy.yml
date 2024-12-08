@@ -11,6 +11,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Copy .env
         run: cp ~/varnen/.env .
+      - name: Copy client_secret
+        run: cp ~/varnen/client_secret_web.json .
       - name: copy venv
         run: cp -r ~/varnen/venv . 
       - name: everydai
