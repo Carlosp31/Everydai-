@@ -14,6 +14,8 @@ import modules.voice as voice
 import modules.images as images
 import modules.chat as chats
 import platform
+from google_auth_oauthlib.flow import Flow
+
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
 cert_file = '/etc/letsencrypt/live/everydai.ddns.net/fullchain.pem'
@@ -85,14 +87,52 @@ class EventHandler(AssistantEventHandler):
 CLIENT_SECRETS_FILE = "client_secret.json"
 SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
 REDIRECT_URI = 'https://everydai.zapto.org/oauth2callback'
+
+
 @app.route('/realidad')
 def realidad():
     return render_template('realidad.html')
 
-
+flow = Flow.from_client_secrets_file(
+    CLIENT_SECRETS_FILE,
+    scopes=SCOPES,
+    redirect_uri=REDIRECT_URI
+)
 @app.route('/')
 def dashboard():
+    current_os = platform.system()
+    if current_os == 'Linux':
+       if 'credentials' in session:
+        # Si el usuario está autenticado, redirigirlo al dashboard
+        return render_template('dashboard.html')
+       else:
+              # Iniciar el flujo de autenticación si no está autenticado
+        authorization_url, state = flow.authorization_url(access_type='offline')
+        session['state'] = state
+        return redirect(authorization_url)
+    else: 
     # Renderiza la página del dashboard donde el usuario selecciona un dominio
+      return render_template('dashboard.html')
+    
+# Ruta de callback OAuth2
+@app.route('/oauth2callback')    
+def oauth2callback():
+    state = session['state']
+    flow.fetch_token(authorization_response=request.url)
+    
+    # Guardar las credenciales en la sesión
+    credentials = flow.credentials
+    session['credentials'] = {
+        'token': credentials.token,
+        'refresh_token': credentials.refresh_token,
+        'token_uri': credentials.token_uri,
+        'client_id': credentials.client_id,
+        'client_secret': credentials.client_secret,
+       'scopes': credentials.scopes,
+         'expires_at': credentials.expiry.strftime('%Y-%m-%d %H:%M:%S')
+    }
+    
+    # Redirigir al dashboard
     return render_template('dashboard.html')
 
 # Ruta para el chatbot que recibe el dominio seleccionado
