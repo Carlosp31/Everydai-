@@ -15,7 +15,8 @@ import modules.images as images
 import modules.chat as chats
 import platform
 from google_auth_oauthlib.flow import Flow
-
+from typing_extensions import override
+from openai import AssistantEventHandler
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
 cert_file = '/etc/letsencrypt/live/everydai.ddns.net/fullchain.pem'
@@ -44,8 +45,7 @@ model_img = genai.GenerativeModel(IMG_MODEL)
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 ##################################################33
-from typing_extensions import override
-from openai import AssistantEventHandler
+
  
 # First, we create a EventHandler class to define
 # how we want to handle the events in the response stream.
