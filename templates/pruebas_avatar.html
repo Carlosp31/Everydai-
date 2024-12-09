@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manipular Morph Targets con Voz</title>
+    <style>
+        body { margin: 0; display: flex; flex-direction: column; align-items: center; }
+        canvas { display: block; }
+        #morphTargetNames { color: white; font-size: 16px; position: absolute; top: 20px; left: 20px; }
+        
+        /* Estilos del menú de morph targets */
+        #menuContainer {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+            max-height: 80vh; /* Limitar la altura del menú al 80% de la altura de la ventana */
+            overflow-y: auto; /* Activar barra de desplazamiento vertical si es necesario */
+            width: 300px; /* Ancho fijo para el menú */
+        }
+
+        .menu {
+            margin-bottom: 20px; /* Espacio entre menús de morph targets */
+        }
+
+        .menu h3 {
+            margin-bottom: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        .menu label {
+            display: block;
+            margin: 5px 0;
+            color: white;
+        }
+
+        .menu input {
+            width: 100%; /* Ajustar el ancho del slider al 100% del contenedor */
+        }
+
+        /* Barra de desplazamiento personalizada */
+        #menuContainer::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #menuContainer::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
+        }
+
+        #menuContainer::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Estilos para el botón de micrófono */
+        #micButton {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            background-color: #ff6347;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #micButton:active {
+            background-color: #d94c35;
+        }
+
+        /* Estilos para mostrar el volumen */
+        #volumeDisplay {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Incluir Three.js desde su CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    
+    <script>
+        // Escena, cámara y renderizador
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        let avatar;
+        let morphTargets = {}; // Objeto para guardar los morph targets y sus sliders
+        let wolfHeadMesh; // Variable para el mesh específico de Wolf3D_Head
+        let mixer; // AnimationMixer
+        let animationActions = {}; // Guardará las animaciones por nombre
+        let activeAction; // Animación activa
+        let modelPath;
+        let animationpath;
+        // Cargar el archivo GLB
+        modelPath = '{{ url_for("static", filename="models/avatar1.glb") }}';
+        animationpath = '{{ url_for("static", filename="animations/animations1.glb") }}';
+        const loader = new THREE.GLTFLoader();
+        loader.load(
+            modelPath, // Reemplaza con el nombre de tu archivo .glb
+            function(gltf) {
+                avatar = gltf.scene;
+                scene.add(avatar);
+                avatar.position.set(0, -1, 0); // Ajusta la posición del avatar si es necesario
+
+                // Recorrer todos los meshes y sus morph targets
+                avatar.traverse(function(child) {
+                    if (child.isMesh && child.morphTargetDictionary) {
+                        console.log('Morph targets encontrados en:', child.name, child.morphTargetDictionary);
+                        
+                        // Si encontramos el mesh Wolf3D_Head, lo guardamos
+                        if (child.name === "Wolf3D_Head") {
+                            wolfHeadMesh = child;
+                        }
+                        
+                        // Crear el menú para cada mesh con morph targets
+                        createMorphTargetMenu(child.name, child.morphTargetDictionary);
+                    }
+                });
+                loadAnimations();
+            },
+            undefined,
+            function(error) {
+                console.error('Error al cargar el modelo:', error);
+            }
+        );
+        function loadAnimations() {
+        loader.load(
+            'animations1.glb',
+            function (gltf) {
+                const animations = gltf.animations; // Extraer los clips de animación
+                mixer = new THREE.AnimationMixer(avatar); // Vincular el mixer al avatar
+
+                animations.forEach((clip) => {
+                    const action = mixer.clipAction(clip);
+                    animationActions[clip.name] = action; // Guardar la acción por su nombre
+                });
+
+                createAnimationMenu(); // Crear menú para seleccionar animaciones
+            },
+            undefined,
+            function (error) {
+                console.error('Error al cargar las animaciones:', error);
+            }
+        );
+    }
+
+    // Crear menú para seleccionar animaciones
+    function createAnimationMenu() {
+        const menuContainer2 = document.getElementById('menuContainer2');
+
+        const animationMenu = document.createElement('div');
+        animationMenu.className = 'menu';
+        menuContainer2.appendChild(animationMenu);
+
+        const menuTitle = document.createElement('h3');
+        menuTitle.innerText = 'Animaciones';
+        animationMenu.appendChild(menuTitle);
+
+        Object.keys(animationActions).forEach((animationName) => {
+            const button = document.createElement('button');
+            button.innerText = animationName;
+            button.onclick = () => playAnimation(animationName);
+            animationMenu.appendChild(button);
+        });
+    }
+
+    // Reproducir animación seleccionada
+    function playAnimation(animationName) {
+        if (activeAction) {
+            activeAction.stop(); // Detener la animación activa actual
+        }
+        activeAction = animationActions[animationName];
+        activeAction.reset().play(); // Reiniciar y reproducir la nueva animación
+    }
+
+
+        // Crear el menú de morph targets con sliders
+        function createMorphTargetMenu(meshName, morphTargetDictionary) {
+            const menuContainer = document.getElementById('menuContainer');
+            
+            const menu = document.createElement('div');
+            menu.className = 'menu';
+            menuContainer.appendChild(menu);
+
+            const meshTitle = document.createElement('h3');
+            meshTitle.innerText = meshName; // Mostrar el nombre del mesh
+            menu.appendChild(meshTitle);
+
+            Object.keys(morphTargetDictionary).forEach(targetName => {
+                const label = document.createElement('label');
+                label.innerText = targetName;
+                menu.appendChild(label);
+
+                const slider = document.createElement('input');
+                slider.type = 'range';
+                slider.min = 0;
+                slider.max = 1;
+                slider.step = 0.01;
+                slider.value = 0; // Valor inicial
+                slider.addEventListener('input', () => {
+                    updateMorphTarget(meshName, targetName, parseFloat(slider.value)); // Actualizar el morph target al cambiar el slider
+                });
+
+                morphTargets[targetName] = slider; // Guardar el slider
+                menu.appendChild(slider);
+            });
+        }
+
+        // Actualizar el valor del morph target en el mesh correspondiente
+        function updateMorphTarget(meshName, targetName, value) {
+            const mesh = avatar.getObjectByName(meshName); // Buscar el mesh por su nombre
+            if (mesh && mesh.morphTargetDictionary[targetName] !== undefined) {
+                const targetIndex = mesh.morphTargetDictionary[targetName];
+                mesh.morphTargetInfluences[targetIndex] = value;
+            }
+        }
+
+        // Configuración de la cámara y luz
+        camera.position.z = 2;
+        const light = new THREE.DirectionalLight(0xffffff, 3);
+        light.position.set(1, 1, 1).normalize();
+        scene.add(light);
+
+        // Agregar controles de cámara con el mouse (OrbitControls)
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true; // Habilitar amortiguación para un movimiento más suave
+        controls.dampingFactor = 0.25; // Factor de amortiguación
+        controls.screenSpacePanning = false; // Desactivar el paneo en el espacio de la pantalla
+
+        // Función para activar el reconocimiento de voz
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'es-ES';
+        recognition.continuous = true;
+        recognition.interimResults = true;
+
+        recognition.onstart = function() {
+            console.log("Reconocimiento de voz iniciado");
+        };
+
+        recognition.onerror = function(event) {
+            console.error("Error de reconocimiento: ", event.error);
+        };
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[event.resultIndex][0].transcript;
+            console.log("Palabra detectada: ", transcript);
+
+            // Asegurarse de que tenemos el mesh de Wolf3D_Head y que tiene un morph target llamado jawOpen
+            if (wolfHeadMesh && wolfHeadMesh.morphTargetDictionary["jawOpen"] !== undefined) {
+                // Ajustar el morph target 'jawOpen' basado en el volumen de la voz
+                let volume = getMicrophoneVolume();
+                let jawOpenValue =  volume*4 // Ajustar el jawOpen en función del volumen (volumen máximo 1)
+
+                // Si el volumen está por debajo de un umbral, ponemos jawOpen a 0
+
+                updateMorphTarget("Wolf3D_Head", "jawOpen", jawOpenValue);
+                const volumeThreshold = 0.01;
+                if (volume < volumeThreshold) {
+                    jawOpenValue = 0; // Cerrar la boca si el volumen es bajo
+                }
+                // Mostrar el volumen en la interfaz
+                document.getElementById('volumeDisplay').innerText = `Volumen: ${volume}%`;
+            }
+        };
+
+        // Configuración del botón de micrófono
+        let isRecording = false;
+
+        const micButton = document.createElement('button');
+        micButton.id = 'micButton';
+        micButton.innerText = '🎤 Iniciar reconocimiento de voz';
+        document.body.appendChild(micButton);
+
+        micButton.onclick = function() {
+            if (isRecording) {
+                recognition.stop();
+                micButton.innerText = '🎤 Iniciar reconocimiento de voz';
+            } else {
+                recognition.start();
+                micButton.innerText = '🛑 Detener reconocimiento de voz';
+            }
+            isRecording = !isRecording;
+        };
+
+        // Función para obtener el volumen del micrófono
+        let audioContext, analyser, microphone;
+
+        function getMicrophoneVolume() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(function(stream) {
+                        microphone = audioContext.createMediaStreamSource(stream);
+                        microphone.connect(analyser);
+                        analyser.fftSize = 256;
+                    });
+            }
+            let bufferLength = analyser.frequencyBinCount;
+            let dataArray = new Uint8Array(bufferLength);
+            analyser.getByteFrequencyData(dataArray);
+
+            let sum = 0;
+            for (let i = 0; i < bufferLength; i++) {
+                sum += dataArray[i];
+            }
+            let average = sum / bufferLength;
+            return average / 255; // Devuelve el volumen normalizado
+        }
+
+        // Función de renderizado
+        function animate() {
+            requestAnimationFrame(animate);
+                    // Actualizar el mixer para las animaciones
+        if (mixer) {
+            mixer.update(0.01); // Ajusta este valor según el tiempo por frame
+        }
+
+        controls.update();
+        renderer.render(scene, camera);
+        }
+
+        animate();
+    </script>
+
+    <!-- Contenedor para los sliders -->
+    <div id="menuContainer"></div>
+    <div id="menuContainer2"></div>
+    <!-- Contenedor para mostrar el volumen -->
+    <div id="volumeDisplay"></div>
+</body>
+</html>
