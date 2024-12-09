@@ -334,6 +334,14 @@
                     })
                     .then(response => response.json())
                     .then(data => {
+                            // Muestra la alerta SweetAlert2
+                            Swal.fire({
+                            title: 'Success!',
+                            text: 'Image uploaded successfully',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+
                         document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
                         speakResponse(data.response);
                     })
