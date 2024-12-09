@@ -95,6 +95,11 @@ REDIRECT_URI = 'https://everydai.ddns.net/oauth2callback'
 def realidad():
     return render_template('realidad.html')
 
+@app.route('/pruebas')
+def pruebas():
+    return render_template('pruebas_avatar.html')
+
+
 flow = Flow.from_client_secrets_file(
     CLIENT_SECRETS_FILE,
     scopes=SCOPES,
