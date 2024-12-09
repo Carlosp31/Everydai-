@@ -141,7 +141,7 @@
         );
         function loadAnimations() {
         loader.load(
-            'animations1.glb',
+            animationpath,
             function (gltf) {
                 const animations = gltf.animations; // Extraer los clips de animación
                 mixer = new THREE.AnimationMixer(avatar); // Vincular el mixer al avatar
