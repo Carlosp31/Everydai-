@@ -82,9 +82,11 @@ class EventHandler(AssistantEventHandler):
 
 ########################################################
 
-
-
-CLIENT_SECRETS_FILE = "client_secret_web.json"
+current_os = platform.system()
+if current_os == 'Linux':
+ CLIENT_SECRETS_FILE = "client_secret_web.json"
+else:
+  CLIENT_SECRETS_FILE = "client_secret.json" 
 SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
 REDIRECT_URI = 'https://everydai.ddns.net/oauth2callback'
 
