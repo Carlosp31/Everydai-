@@ -143,10 +143,18 @@
         loader.load(
             animationpath,
             function (gltf) {
+                
                 const animations = gltf.animations; // Extraer los clips de animación
                 mixer = new THREE.AnimationMixer(avatar); // Vincular el mixer al avatar
+                
 
                 animations.forEach((clip) => {
+                    clip.tracks = clip.tracks.filter((track) => {
+                    return !track.name.includes('position'); // Ignora canales de posición
+                });
+
+
+
                     const action = mixer.clipAction(clip);
                     animationActions[clip.name] = action; // Guardar la acción por su nombre
                 });
