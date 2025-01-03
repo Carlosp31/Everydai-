@@ -1,31 +1,52 @@
 /* Estilos generales */
 body {
     font-family: 'Poppins', sans-serif;
-    background: #1e1e1e;  /* Fondo oscuro tipo VSCode */
     margin: 0;
     padding: 20px;
-    color: #c9c9c9;  /* Texto gris claro */
+    color: #c9c9c9; /* Texto gris claro */
+    background: linear-gradient(-45deg, #000000, #1e1e1e, #005f99, #000000);
+    background-size: 200% 200%;
+    animation: gradient 10s ease infinite;
 }
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 
 /* Contenedor principal */
 .chat-container {
-    background: #252526;  /* Fondo gris oscuro */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Alinea horizontalmente al centro */
+    justify-content: center; /* Alinea verticalmente */
+    background: linear-gradient(-45deg, #000000, #1e1e1e, #005f99, #000000);
+    background-size: 200% 200%;
+    animation: gradient 10s ease infinite;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: none;  /* Sin sombras */
-    max-width: 800px; 
-    margin: 40px auto;  /* Centrado */
-    border: 1px solid #333;  /* Borde oscuro */
+    box-shadow: none;
+    max-width: 800px;
+    margin: 40px auto; /* Centrado horizontal */
+    border: 1px solid #333;
     position: relative;
 }
+
 .hidden {
     display: none;
 }
 #avatar-container {
-    display: flex;          /* Habilita Flexbox */
-    justify-content: center; /* Alinea horizontalmente al centro */
-    align-items: center;    /* Alinea verticalmente al centro */
-    position: relative;     /* Asegura que el contenedor se comporte de forma normal */
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    background: transparent; /* Fondo transparente para heredar el gradiente */
+    width: 100%; /* Asegúrate de que ocupe todo el espacio disponible */
+    max-width: 600px; /* Tamaño máximo */
+    padding: 20px; /* Espaciado interno */
+    border: 1px solid #005f99; /* Opcional: para destacar */
+    border-radius: 10px;
 }
 
 #avatar-container canvas {
@@ -233,14 +254,19 @@ button:active {
 .selected-model-display {
     position: absolute;
     top: 110px;
-    right: 400px;
-    background-color: #007acc;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    z-index: 1000;
+    right: 400px; /* Misma ubicación inicial */
+    background-color: transparent; /* Fondo transparente */
+    color: #d4d4d4; /* Color de texto similar a "Chat with EverydAI" */
+    font-size: 2rem; /* Ajusta el tamaño del texto */
+    font-weight: bold; /* Negrita */
+    text-transform: capitalize; /* Capitalización similar */
+    letter-spacing: 1px; /* Espaciado entre letras */
+    padding: 0; /* Sin espacio adicional */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Sombra para dar profundidad */
+    z-index: 1000; /* Mantén la prioridad sobre otros elementos */
+    text-align: center; /* Centrar texto si el espacio lo permite */
 }
+
 
 /* Botones azules (sidebar y otros botones) con animaciones */
 button, .controls button, .sidebar a {
