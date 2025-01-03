@@ -231,7 +231,8 @@
 
                         const event = new CustomEvent('audio-level', { detail: { amplitude: avgAmplitude / 255 } });
                         window.dispatchEvent(event);
-
+                        const event2 = new CustomEvent('hablar');
+                        window.dispatchEvent(event2);
                         if (!audio.paused && !audio.ended) {
                             requestAnimationFrame(emitAudioLevels);
                         }
@@ -367,6 +368,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <script>
+        let animations
         let mixer; // AnimationMixer
         let animationActions = {}; // Guardará las animaciones por nombre
         let activeAction; // Animación activa
@@ -430,24 +432,47 @@
             }
             loadAnimations()
         });
-        function loadAnimations() {
+        
+        // Asegurarse de que el avatar esté mirando hacia la cámara
+        model.rotation.y = 0;  // Asegura que el modelo esté mirando hacia la cámara desde el inicio
+        model.rotation.x = 0;
+    
+        // Centrar el modelo en la escena (en el centro del div)
+        model.position.set(0, 1.6, 0);  // Coloca el modelo en el origen (0, 0, 0)
+        
+        // Animar el modelo
+        function animate() {
+            requestAnimationFrame(animate);
+            if (mixer) {
+
+                mixer.update(0.01); // Actualizar el mixer
+            }
+            renderer.render(scene, camera);
+        }
+        animate();
+    });
+
+    function loadAnimations() {
     loader.load(
         animationpath,
         function (gltf) {
-            const animations = gltf.animations; // Extraer los clips de animación
+            animations = gltf.animations; // Extraer los clips de animación
             mixer = new THREE.AnimationMixer(model); // Vincular el mixer al avatar
             
             animations.forEach((clip) => {
                 clip.tracks = clip.tracks.filter((track) => {
                     return !track.name.includes('position'); // Ignora canales de posición
                 });
-
+               
                 const action = mixer.clipAction(clip);
                 animationActions[clip.name] = action; // Guardar la acción por su nombre
             });
 
-            // Reproducir la primera animación de forma continua
-            playAnimationOnce(animations[2].name); // Reproducir la primera animación
+
+
+            playAnimationLoop(animations[2].name);
+
+
         },
         undefined,
         function (error) {
@@ -471,34 +496,14 @@ function playAnimationOnce(animationName) {
 
     activeAction = animationActions[animationName];
     activeAction.reset().play(); // Reiniciar y reproducir la nueva animación
-
-    // Agregar un listener para detener la animación después de que termine
-    activeAction.clampWhenFinished = true; // Evitar que la animación se repita
     activeAction.setLoop(THREE.LoopOnce, 1); // Asegurarse de que la animación se ejecute solo una vez
 }
-        
-        // Asegurarse de que el avatar esté mirando hacia la cámara
-        model.rotation.y = 0;  // Asegura que el modelo esté mirando hacia la cámara desde el inicio
-        model.rotation.x = 0;
-    
-        // Centrar el modelo en la escena (en el centro del div)
-        model.position.set(0, 1.6, 0);  // Coloca el modelo en el origen (0, 0, 0)
-        
-        // Animar el modelo
-        function animate() {
-            requestAnimationFrame(animate);
-            if (mixer) {
 
-                mixer.update(0.01); // Actualizar el mixer
-            }
-            renderer.render(scene, camera);
-        }
-        animate();
-    });
-    
+
+
+
     window.addEventListener('audio-level', (event) => {
         const amplitude = event.detail.amplitude;
-
         if (jawOpenTarget !== null && model) {
             model.traverse((child) => {
                 if (child.isMesh && child.name === 'Wolf3D_Head') {
@@ -508,6 +513,11 @@ function playAnimationOnce(animationName) {
         }
     });
 }
+
+
+
+
+
 
     
         // Variables para el control del mouse
