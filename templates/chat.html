@@ -8,6 +8,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
     <title>Chat with EverydAI</title>
 </head>
 <body>
@@ -21,11 +23,12 @@
         <h3>Recommendations:</h3>
         <ul id="recommendations-list"></ul>
     </div>
+    <button id="download-button">Download Conversation</button>
 
     <div class="chat-container">
         <h1>Chat with EverydAI</h1>
         <div id="avatar-container" >
-            <div id="subtitulos-container">Subtítulos aquí</div>
+            <div id="subtitulos-container"></div>
         </div>
         <div id="chat-box" class="hidden"></div>
         <input type="text" id="user-input" placeholder="Chat with us...">
@@ -395,6 +398,47 @@
                 };
                 reader.readAsDataURL(file);
             };
+            document.getElementById("download-button").onclick = function() {
+            const chatBox = document.getElementById("chat-box");
+
+            if (!chatBox || chatBox.children.length === 0) {
+                alert("No hay conversaciones disponibles para descargar.");
+                return;
+            }
+
+            const conversationText = Array.from(chatBox.children)
+                .map(child => child.textContent.trim())
+                .join("\n\n");
+
+            // Verificar si hay texto para generar el PDF
+            if (!conversationText) {
+                alert("No hay contenido para generar el archivo PDF.");
+                return;
+            }
+
+            try {
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF();
+
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const margin = 10;
+                const maxLineWidth = pageWidth - margin * 2;
+
+                pdf.setFont("Helvetica", "normal");
+                pdf.setFontSize(12);
+
+                const textLines = pdf.splitTextToSize(conversationText, maxLineWidth);
+                pdf.text(textLines, margin, margin + 10);
+
+                // Descargar el archivo
+                pdf.save("conversation.pdf");
+            } catch (error) {
+                console.error("Error al generar el PDF:", error);
+                alert("Ocurrió un error al generar el archivo PDF. Verifica la consola para más detalles.");
+            }
+        };
+
+
         });
     </script>
 
