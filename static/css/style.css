@@ -38,6 +38,7 @@ body {
     display: none;
 }
 #avatar-container {
+    position: relative;
     display: flex;
     justify-content: center; /* Centrado horizontal */
     align-items: center; /* Centrado vertical */
@@ -45,15 +46,10 @@ body {
     width: 100%; /* Asegúrate de que ocupe todo el espacio disponible */
     max-width: 600px; /* Tamaño máximo */
     padding: 20px; /* Espaciado interno */
-    border: 1px solid #005f99; /* Opcional: para destacar */
     border-radius: 10px;
 }
 
-#avatar-container canvas {
-    border: 2px solid black;  /* Estilo del canvas */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-}
+
 /* Historial del chat */
 #chat-box {
     border: 1px solid #333;  /* Bordes oscuros */
@@ -342,3 +338,46 @@ button:active, .controls button:active, .sidebar a:active {
     padding: 10px 20px;
     font-size: 16px;
 }
+
+#subtitulos-container {
+    position: absolute; /* Asegura el posicionamiento sobre el avatar */
+    top: 30px; /* Ajusta la altura para colocarlo encima del avatar */
+    left: 50%; /* Centra horizontalmente en relación con el contenedor */
+    transform: translateX(-50%); /* Corrige el centrado perfecto */
+    padding: 10px;
+    color: #fff; /* Texto blanco */
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 80%; /* Aumenta el ancho al 80% del contenedor padre */
+    max-width: 600px; /* Define un ancho máximo en píxeles */
+}
+
+/* Animación de parpadeo */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Animación de escala */
+@keyframes scale {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Aplica la animación al contenedor */
+#subtitulos-container.animate {
+    animation: blink 1s infinite, scale 1s infinite; /* Parpadeo + escala */
+}
+
+/* Responsivo para subtítulos */
+@media (max-width: 768px) {
+    #subtitulos-container {
+        font-size: 14px;
+        padding: 10px;
+        width: 100%; /* Ajusta al ancho completo en pantallas pequeñas */
+    }
+}
+

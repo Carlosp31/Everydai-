@@ -24,7 +24,9 @@
 
     <div class="chat-container">
         <h1>Chat with EverydAI</h1>
-        <div id="avatar-container" ></div>
+        <div id="avatar-container" >
+            <div id="subtitulos-container">Subtítulos aquí</div>
+        </div>
         <div id="chat-box" class="hidden"></div>
         <input type="text" id="user-input" placeholder="Chat with us...">
         <button id="send-button">Send</button>
@@ -203,6 +205,15 @@
 
             // Función para sintetizar y reproducir el audio de la respuesta
             function speakResponse(responseText) {
+                const subtitulosContainer = document.getElementById("subtitulos-container");
+                if (!subtitulosContainer) {
+                    console.error("El contenedor de subtítulos no existe.");
+                    return;
+                }
+                    // Mostrar subtítulos
+                //subtitulosContainer.textContent = responseText;
+                //subtitulosContainer.style.display = "block";
+
                 fetch('/synthesize-audio', {
                     method: 'POST',
                     headers: {
@@ -231,29 +242,55 @@
 
                         const event = new CustomEvent('audio-level', { detail: { amplitude: avgAmplitude / 255 } });
                         window.dispatchEvent(event);
-                        const event2 = new CustomEvent('hablar');
-                        window.dispatchEvent(event2);
                         if (!audio.paused && !audio.ended) {
                             requestAnimationFrame(emitAudioLevels);
                         }
                     }
 
                     audio.onplay = function() {
+                        const event2 = new CustomEvent('hablar');
+                        window.dispatchEvent(event2);
                         isBotSpeaking = true;
                         emitAudioLevels();
                         if (recognition) recognition.stop(); 
+                        mostrarSubtitulosProgresivos(responseText, audio.duration, subtitulosContainer);
                     };
 
                     audio.onended = function() {
+                        const event3 = new CustomEvent('parar');
+                        window.dispatchEvent(event3);
                         isBotSpeaking = false;
                         if (isListening) recognition.start();
                         const event = new CustomEvent('audio-level', { detail: { amplitude: 0 } });
                         window.dispatchEvent(event);
+                        subtitulosContainer.style.display = "none"; 
                     };
 
                     audio.play();
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Error:', error);
+                    subtitulosContainer.style.display = "none"; // Ocultar subtítulos en caso de error
+                });
+            }
+            // Función para mostrar subtítulos progresivamente
+            function mostrarSubtitulosProgresivos(textoCompleto, duracionAudio, contenedor) {
+                const palabras = textoCompleto.split(" ");
+                const tiempoPorPalabra = duracionAudio / palabras.length;
+
+                contenedor.textContent = ""; // Limpia los subtítulos previos
+                contenedor.style.display = "block";
+
+                let indice = 0;
+
+                const intervalo = setInterval(() => {
+                    if (indice < palabras.length) {
+                        contenedor.textContent += palabras[indice] + " "; // Añade palabra actual
+                        indice++;
+                    } else {
+                        clearInterval(intervalo); // Detén el intervalo cuando terminen las palabras
+                    }
+                }, tiempoPorPalabra * 50001); // Convierte el tiempo por palabra a milisegundos
             }
 
             // Evento al hacer clic en el botón de enviar texto manualmente
@@ -430,9 +467,8 @@
                     child.morphTargetInfluences[jawOpenTarget] = 0; // 1 representa la apertura total de la mandíbula
                 }
             }
-            loadAnimations()
         });
-        
+        loadAnimations()
         // Asegurarse de que el avatar esté mirando hacia la cámara
         model.rotation.y = 0;  // Asegura que el modelo esté mirando hacia la cámara desde el inicio
         model.rotation.x = 0;
@@ -467,12 +503,6 @@
                 const action = mixer.clipAction(clip);
                 animationActions[clip.name] = action; // Guardar la acción por su nombre
             });
-
-
-
-            playAnimationLoop(animations[2].name);
-
-
         },
         undefined,
         function (error) {
@@ -493,14 +523,19 @@ function playAnimationOnce(animationName) {
     if (activeAction) {
         activeAction.stop(); // Detener la animación activa actual
     }
-
     activeAction = animationActions[animationName];
     activeAction.reset().play(); // Reiniciar y reproducir la nueva animación
     activeAction.setLoop(THREE.LoopOnce, 1); // Asegurarse de que la animación se ejecute solo una vez
 }
 
-
-
+window.addEventListener('hablar', () => {
+    playAnimationLoop(animations[0].name);
+});
+window.addEventListener('parar', () => {
+    if (activeAction) {
+        activeAction.stop(); // Detener la animación activa actual
+    }
+});
 
     window.addEventListener('audio-level', (event) => {
         const amplitude = event.detail.amplitude;
