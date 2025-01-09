@@ -209,7 +209,6 @@
             // Función para sintetizar y reproducir el audio de la respuesta
             function speakResponse(responseText) {
                 const subtitulosContainer = document.getElementById("subtitulos-container");
-                console.log("Texto para subtítulos:", responseText);
                 if (!subtitulosContainer) {
                     console.error("El contenedor de subtítulos no existe.");
                     return;
@@ -246,13 +245,14 @@
 
                         const event = new CustomEvent('audio-level', { detail: { amplitude: avgAmplitude / 255 } });
                         window.dispatchEvent(event);
-
                         if (!audio.paused && !audio.ended) {
                             requestAnimationFrame(emitAudioLevels);
                         }
                     }
 
                     audio.onplay = function() {
+                        const event2 = new CustomEvent('hablar');
+                        window.dispatchEvent(event2);
                         isBotSpeaking = true;
                         emitAudioLevels();
                         if (recognition) recognition.stop(); 
@@ -260,6 +260,8 @@
                     };
 
                     audio.onended = function() {
+                        const event3 = new CustomEvent('parar');
+                        window.dispatchEvent(event3);
                         isBotSpeaking = false;
                         if (isListening) recognition.start();
                         const event = new CustomEvent('audio-level', { detail: { amplitude: 0 } });
@@ -447,6 +449,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <script>
+        let animations
+        let mixer; // AnimationMixer
+        let animationActions = {}; // Guardará las animaciones por nombre
+        let activeAction; // Animación activa
+        let animationpath;
+        // Cargar el archivo GLB
+        
         // Crear la escena y la cámara
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(65, 500 / 500, 0.1, 1000);
@@ -474,12 +483,15 @@
         switch (domain) {
             case 'culinary':
                 modelPath = '{{ url_for("static", filename="models/avatar1.glb") }}';
+                animationpath = '{{ url_for("static", filename="animations/animationschef.glb") }}';
                 break;
             case 'fashion':
                 modelPath = '{{ url_for("static", filename="models/avatar3.glb") }}';
+                animationpath = '{{ url_for("static", filename="animations/animationsfashion.glb") }}';
                 break;
             case 'gym':
                 modelPath = '{{ url_for("static", filename="models/avatar2.glb") }}';
+                animationpath = '{{ url_for("static", filename="animations/animationsgym.glb") }}';
                 break;
             default:
                 console.error('Dominio no reconocido.');
@@ -503,6 +515,7 @@
                 }
             }
         });
+        loadAnimations()
         
         // Asegurarse de que el avatar esté mirando hacia la cámara
         model.rotation.y = 0;  // Asegura que el modelo esté mirando hacia la cámara desde el inicio
@@ -514,14 +527,68 @@
         // Animar el modelo
         function animate() {
             requestAnimationFrame(animate);
+            if (mixer) {
+
+                mixer.update(0.01); // Actualizar el mixer
+            }
             renderer.render(scene, camera);
         }
         animate();
     });
-    
+
+    function loadAnimations() {
+    loader.load(
+        animationpath,
+        function (gltf) {
+            animations = gltf.animations; // Extraer los clips de animación
+            mixer = new THREE.AnimationMixer(model); // Vincular el mixer al avatar
+            
+            animations.forEach((clip) => {
+                clip.tracks = clip.tracks.filter((track) => {
+                    return !track.name.includes('position'); // Ignora canales de posición
+                });
+               
+                const action = mixer.clipAction(clip);
+                animationActions[clip.name] = action; // Guardar la acción por su nombre
+            });
+            playAnimationOnce("salute");
+        },
+        
+        undefined,
+        function (error) {
+            console.error('Error al cargar las animaciones:', error);
+        } 
+    );   
+    }
+
+// Reproducir animación seleccionada en bucle
+function playAnimationLoop(animationName) {
+    if (activeAction) {
+        activeAction.stop(); // Detener la animación activa actual
+    }
+    activeAction = animationActions[animationName];
+    activeAction.reset().play(); // Reiniciar y reproducir la nueva animación
+}
+function playAnimationOnce(animationName) {
+    if (activeAction) {
+        activeAction.stop(); // Detener la animación activa actual
+    }
+    activeAction = animationActions[animationName];
+    activeAction.reset().play(); // Reiniciar y reproducir la nueva animación
+    activeAction.setLoop(THREE.LoopOnce, 1); // Asegurarse de que la animación se ejecute solo una vez
+}
+
+window.addEventListener('hablar', () => {
+    playAnimationLoop("talking");
+});
+window.addEventListener('parar', () => {
+    if (activeAction) {
+        activeAction.stop(); // Detener la animación activa actual
+    }
+});
+
     window.addEventListener('audio-level', (event) => {
         const amplitude = event.detail.amplitude;
-
         if (jawOpenTarget !== null && model) {
             model.traverse((child) => {
                 if (child.isMesh && child.name === 'Wolf3D_Head') {
@@ -531,6 +598,11 @@
         }
     });
 }
+
+
+
+
+
 
     
         // Variables para el control del mouse
