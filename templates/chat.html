@@ -455,7 +455,7 @@
         let activeAction; // Animación activa
         let animationpath;
         // Cargar el archivo GLB
-        animationpath = '{{ url_for("static", filename="animations/animations1.glb") }}';
+        
         // Crear la escena y la cámara
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(65, 500 / 500, 0.1, 1000);
@@ -483,12 +483,15 @@
         switch (domain) {
             case 'culinary':
                 modelPath = '{{ url_for("static", filename="models/avatar1.glb") }}';
+                animationpath = '{{ url_for("static", filename="animations/animationschef.glb") }}';
                 break;
             case 'fashion':
                 modelPath = '{{ url_for("static", filename="models/avatar3.glb") }}';
+                animationpath = '{{ url_for("static", filename="animations/animationsfashion.glb") }}';
                 break;
             case 'gym':
                 modelPath = '{{ url_for("static", filename="models/avatar2.glb") }}';
+                animationpath = '{{ url_for("static", filename="animations/animationsgym.glb") }}';
                 break;
             default:
                 console.error('Dominio no reconocido.');
@@ -513,6 +516,7 @@
             }
         });
         loadAnimations()
+        
         // Asegurarse de que el avatar esté mirando hacia la cámara
         model.rotation.y = 0;  // Asegura que el modelo esté mirando hacia la cámara desde el inicio
         model.rotation.x = 0;
@@ -547,13 +551,15 @@
                 const action = mixer.clipAction(clip);
                 animationActions[clip.name] = action; // Guardar la acción por su nombre
             });
+            playAnimationOnce("salute");
         },
+        
         undefined,
         function (error) {
             console.error('Error al cargar las animaciones:', error);
-        }
-    );
-}
+        } 
+    );   
+    }
 
 // Reproducir animación seleccionada en bucle
 function playAnimationLoop(animationName) {
@@ -573,7 +579,7 @@ function playAnimationOnce(animationName) {
 }
 
 window.addEventListener('hablar', () => {
-    playAnimationLoop(animations[0].name);
+    playAnimationLoop("talking");
 });
 window.addEventListener('parar', () => {
     if (activeAction) {
