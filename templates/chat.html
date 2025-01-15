@@ -551,7 +551,8 @@
                 const action = mixer.clipAction(clip);
                 animationActions[clip.name] = action; // Guardar la acción por su nombre
             });
-            playAnimationOnce("salute");
+            playAnimationSequence("salute", "pose")
+            
         },
         
         undefined,
@@ -560,21 +561,58 @@
         } 
     );   
     }
-
-// Reproducir animación seleccionada en bucle
-function playAnimationLoop(animationName) {
+    function playAnimationSequence(firstAnimationName, secondAnimationName) {
+    // Detener y desvanecer cualquier animación activa
     if (activeAction) {
-        activeAction.stop(); // Detener la animación activa actual
+        activeAction.fadeOut(0.5); // Transición suave al detener la animación actual
     }
-    activeAction = animationActions[animationName];
-    activeAction.reset().play(); // Reiniciar y reproducir la nueva animación
+
+    // Configurar la primera animación
+    const firstAction = animationActions[firstAnimationName];
+    firstAction.reset();
+    firstAction.setLoop(THREE.LoopOnce); // Primera animación solo una vez
+    firstAction.clampWhenFinished = true; // Mantener el último fotograma
+
+    // Configurar la segunda animación
+    const secondAction = animationActions[secondAnimationName];
+    secondAction.reset();
+    secondAction.setLoop(THREE.LoopRepeat); // Segunda animación en bucle
+
+    // Reproducir la primera animación
+    activeAction = firstAction;
+    firstAction.fadeIn(0.5).play();
+
+    // Listener para cambiar a la segunda animación al finalizar la primera
+    mixer.addEventListener('finished', (event) => {
+        if (event.action === firstAction) {
+            activeAction.fadeOut(0.5); // Desvanecer la primera animación
+            activeAction = secondAction;
+            secondAction.fadeIn(0.5).play(); // Activar la segunda animación
+        }
+    });
+}
+
+function playAnimationLoop(animationName) {
+    // Detener cualquier animación activa (incluidas las de playAnimationSequence)
+    if (activeAction) {
+        activeAction.fadeOut(0.5); // Transición suave al detener
+    }
+
+    // Configurar y reproducir la nueva animación
+    const loopAction = animationActions[animationName];
+    loopAction.reset();
+    loopAction.setLoop(THREE.LoopRepeat); // Repetir en bucle
+    activeAction = loopAction;
+    loopAction.fadeIn(0.5).play();
 }
 function playAnimationOnce(animationName) {
     if (activeAction) {
         activeAction.stop(); // Detener la animación activa actual
     }
     activeAction = animationActions[animationName];
-    activeAction.reset().play(); // Reiniciar y reproducir la nueva animación
+    activeAction.reset();
+    activeAction.fadeIn(1);
+    activeAction.play(); // Reiniciar y reproducir la nueva animación
     activeAction.setLoop(THREE.LoopOnce, 1); // Asegurarse de que la animación se ejecute solo una vez
 }
 
@@ -582,9 +620,7 @@ window.addEventListener('hablar', () => {
     playAnimationLoop("talking");
 });
 window.addEventListener('parar', () => {
-    if (activeAction) {
-        activeAction.stop(); // Detener la animación activa actual
-    }
+    playAnimationLoop("pose")
 });
 
     window.addEventListener('audio-level', (event) => {
