@@ -84,7 +84,13 @@ class EventHandler(AssistantEventHandler):
 
 current_os = platform.system()
 if current_os == 'Linux':
- CLIENT_SECRETS_FILE = "client_secret_web.json"
+    # Verificar cuál archivo de secretos usar
+    if os.path.exists("client_secret_web.json"):
+        CLIENT_SECRETS_FILE = "client_secret_web.json"
+    else:
+        print("Advertencia: 'client_secret_web.json' no encontrado. Usando 'client_secret.json'.")
+        CLIENT_SECRETS_FILE = "client_secret.json"
+
 else:
   CLIENT_SECRETS_FILE = "client_secret.json" 
 SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
@@ -111,19 +117,24 @@ flow = Flow.from_client_secrets_file(
 )
 @app.route('/')
 def dashboard():
-    current_os = platform.system()
+    # Verificar si está en Linux y el archivo de secretos es "client_secret.json"
+    if current_os == 'Linux' and CLIENT_SECRETS_FILE == "client_secret.json":
+        print("Sin autenticación requerida en Linux con 'client_secret.json'.")
+        return render_template('dashboard.html')  # Renderizar directamente el dashboard
+
+    # Flujo normal para Linux con autenticación requerida
     if current_os == 'Linux':
-       if 'credentials' in session:
-        # Si el usuario está autenticado, redirigirlo al dashboard
-        return render_template('dashboard.html')
-       else:
-              # Iniciar el flujo de autenticación si no está autenticado
-        authorization_url, state = flow.authorization_url(access_type='offline')
-        session['state'] = state
-        return redirect(authorization_url)
-    else: 
-    # Renderiza la página del dashboard donde el usuario selecciona un dominio
-      return render_template('dashboard.html')
+        if 'credentials' in session:
+            # Si el usuario ya está autenticado, redirigir al dashboard
+            return render_template('dashboard.html')
+        else:
+            # Iniciar el flujo de autenticación si no está autenticado
+            authorization_url, state = flow.authorization_url(access_type='offline')
+            session['state'] = state
+            return redirect(authorization_url)
+
+    # Para otros sistemas operativos, renderizar el dashboard directamente
+    return render_template('dashboard.html')
     
 # Ruta de callback OAuth2
 @app.route('/oauth2callback')    
@@ -187,18 +198,32 @@ def handle_image():
 
 
 if __name__ == '__main__':
+    # Crear el directorio de carga si no existe
     if not os.path.exists(UPLOAD_FOLDER):
-        os.makedirs(UPLOAD_FOLDER)
+        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-    # Detectar el sistema operativo
-    current_os = platform.system()
-    if current_os == 'Linux':
-        port = 443
-        ssl_context = (cert_file, key_file)  # Usar SSL en Linux
-    elif current_os == 'Windows':
+    # Configuración del puerto y SSL
+    try:
+        if current_os == 'Linux':
+            port = 443
+            if os.path.exists(cert_file) and os.path.exists(key_file):
+                ssl_context = (cert_file, key_file)  # Usar SSL si los certificados están disponibles
+            else:
+                print("Advertencia: No se encontraron los certificados SSL. Ejecutando sin SSL.")
+                ssl_context = None
+                port = 80  # Cambiar al puerto 80 si no se usa SSL
+        elif current_os == 'Windows':
+            port = 80
+            ssl_context = None  # No usar SSL en Windows
+        else:
+            raise ValueError("Sistema operativo no soportado. Usa Linux o Windows.")
+    except Exception as e:
+        print(f"Error al configurar SSL: {e}")
         port = 80
-        ssl_context = None  # No usar SSL en Windows
-    else:
-        raise ValueError("Sistema operativo no soportado. Usa Linux o Windows.")
+        ssl_context = None
 
+    # Información sobre la configuración
+    print(f"Ejecutando en {current_os}, puerto: {port}, SSL: {'Habilitado' if ssl_context else 'Deshabilitado'}")
+
+    # Iniciar la aplicación Flask
     app.run(host='0.0.0.0', port=port, ssl_context=ssl_context)
