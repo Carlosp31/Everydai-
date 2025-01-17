@@ -18,6 +18,10 @@ from google_auth_oauthlib.flow import Flow
 from typing_extensions import override
 from openai import AssistantEventHandler
 # Cargar las variables de entorno del archivo .env
+
+
+
+
 load_dotenv()
 cert_file = '/etc/letsencrypt/live/everydai.ddns.net/fullchain.pem'
 key_file = '/etc/letsencrypt/live/everydai.ddns.net/privkey.pem'
