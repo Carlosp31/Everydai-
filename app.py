@@ -21,6 +21,7 @@ from openai import AssistantEventHandler
 
 
 
+
 load_dotenv()
 cert_file = '/etc/letsencrypt/live/everydai.ddns.net/fullchain.pem'
 key_file = '/etc/letsencrypt/live/everydai.ddns.net/privkey.pem'
