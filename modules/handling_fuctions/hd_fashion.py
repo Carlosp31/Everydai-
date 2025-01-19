@@ -2,7 +2,7 @@ import os
 import modules.Function_calling.busquedas as busquedas
 import json
 
-def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
+def hd_fashion(user_input, client, thread_idf, assistant_idf, run):
     response_2= None
     # Define the list to store tool outputs
     tool_outputs = []
@@ -10,10 +10,10 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
     # Loop through each tool in the required action section
     for tool in run.required_action.submit_tool_outputs.tool_calls:
         print("He entrado a Loop")
-        if tool.function.name == "buscar_resultados_en_serpapi_culinary":
+        if tool.function.name == "buscar_resultados_en_serpapi_fashion":
             tool_outputs.append({
                 "tool_call_id": tool.id,
-                "output": "Aquí tienes una lista de recetas"
+                "output": "Aquí tienes una lista de tu busqueda"
             })
             print("He entrado a call serpapi")
             # Acceder al primer tool_call en required_action.submit_tool_outputs
@@ -29,9 +29,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
 
             # Si necesitas el modelo:
             model = arguments_dict.get("model", "Modelo no encontrado")
-            response_2 = busquedas.buscar_resultados_en_serpapi_culinary(query, model)
-
-
+            response_2 = busquedas.buscar_resultados_en_serpapi_fashion(query, model)
 
         elif tool.function.name == "get_rain_probability":
             tool_outputs.append({
