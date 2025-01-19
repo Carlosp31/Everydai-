@@ -14,6 +14,9 @@ import modules.voice as voice
 import modules.images as images
 import modules.serpapi as serpapii
 import modules.handling_fuctions.hd_culinary as hd_culinary
+import modules.handling_fuctions.hd_gym as hd_gym
+import modules.handling_fuctions.hd_fashion as hd_fashion
+
 
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
@@ -105,7 +108,7 @@ def chat_response(model, user_input, client, thread_idf, assistant_idf):
        if model=="culinary":
             response, response_2 = hd_culinary.hd_culinary(user_input, client, thread_idf, assistant_idf, run)
        elif model=="gym":
-            response, response_2 = hd_culinary.hd_culinary(user_input, client, thread_idf, assistant_idf, run)
+            response, response_2 = hd_gym.hd_gym(user_input, client, thread_idf, assistant_idf, run)
        elif model=="fashion":
-            response, response_2 = hd_culinary.hd_culinary(user_input, client, thread_idf, assistant_idf, run)
+            response, response_2 = hd_fashion.hd_fashion(user_input, client, thread_idf, assistant_idf, run)
        return response, response_2
