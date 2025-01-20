@@ -13,7 +13,11 @@ import requests  # Asegúrate de importar la biblioteca requests
 import modules.voice as voice
 import modules.images as images
 import modules.serpapi as serpapii
-import modules.domains as domains
+import modules.handling_fuctions.hd_culinary as hd_culinary
+import modules.handling_fuctions.hd_gym as hd_gym
+import modules.handling_fuctions.hd_fashion as hd_fashion
+
+
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
 
@@ -69,65 +73,42 @@ class EventHandler(AssistantEventHandler):
           if output.type == "logs":
             print(f"\n{output.logs}", flush=True)
 
-client = OpenAI()
-
-# Definir variables globales
 
 
-##################### Culinario #################################
-global assistant_culinary
-assistant_culinary_id= "asst_zOGNCMFiaD5IP0u4u4t8dOpX"
 
-# Crear el thread global para culinary (esto solo lo inicializamos una vez)
-global thread_culinary
-thread_culinary = client.beta.threads.create()
-#################################################################
-##################### Fashion #################################
-# Definir variables globales para el dominio de moda
-global assistant_fashion
-assistant_fashion_id = "asst_gu3wmqxmAklNSMU28Vhis4Mq"
+def chat_response(model, user_input, client, thread_idf, assistant_idf):
+    response_2= None ##Esto guarda la respuesta de serpapi, sino hay es None
+    message = client.beta.threads.messages.create(
+    thread_id=thread_idf,
+    role="user",
+    content=user_input
+    )
 
-# Crear el thread global para fashion (esto solo lo inicializamos una vez)
-global thread_fashion
-thread_fashion = client.beta.threads.create()
-###################### Gym #################################
-global assistant_gym
-assistant_gym_id= "asst_jcySDtiW2FMg3yw9KHypnq9X"
-global thread_gym
-thread_gym = client.beta.threads.create()
+    run = client.beta.threads.runs.create_and_poll(
+        thread_id=thread_idf,
+        assistant_id= assistant_idf
 
-def chat_post():
-    user_input = request.json['message']
-    selected_model = request.json['model']
-    client = OpenAI()
-    
-    
-    ####################################################
-    if selected_model == 'culinary':  
-        response, response_2 = domains.chat_response(selected_model, user_input, client, thread_idf=thread_culinary.id, assistant_idf =assistant_culinary_id)
+    )
+    print(f"Estado del assistant: {run.status}")
+    if run.status == 'completed': 
+        messages = client.beta.threads.messages.list(thread_id=thread_idf)
 
-    elif selected_model == 'fashion':  
-        response, response_2 = domains.chat_response(selected_model, user_input, client, thread_idf=thread_fashion.id, assistant_idf =assistant_fashion_id)
-        ####################################################
-    elif selected_model == 'gym':  
-        response, response_2  = domains.chat_response(selected_model, user_input, client, thread_idf=thread_gym.id, assistant_idf =assistant_gym_id)
-
-    else:
-        return jsonify({'response': 'Modelo no encontrado.'}), 400
-    # print("Response is:")
-    # print(response)
-    # respuesta_texto = response  # Obtener la respuesta en texto del modelo
-
-
-    # # Mensaje inicial al seleccionar el dominio
-    mensaje_inicial = f"Hola, este es el dominio {session.get('selected_domain', 'desconocido')}"
-
-    # # Buscar recetas en SerpAPI (si es necesario)
-    # recetas = serpapii.buscar_resultados_en_serpapi(user_input, selected_model)
-    
-    # Devolver la respuesta escrita, el mensaje inicial y la de SerpAPI
-    return jsonify({
-        'text_response': response,
-        'mensaje_inicial': mensaje_inicial,
-        'recipes': response_2
-    })
+        # Filtrar los mensajes del asistente
+        mensajes_asistente = [msg for msg in messages.data if msg.role == 'assistant']
+        if mensajes_asistente:
+            # Obtener el último mensaje del asistente
+            ultimo_mensaje = mensajes_asistente[0]  # Accede al último mensaje del asistente
+            for block in ultimo_mensaje.content:
+                print(f"Assistant: {block.text.value}") 
+                response= block.text.value# Imprime solo el contenido del último mensaje
+                return response, response_2
+        else:
+            print("No se encontró un mensaje del asistente.")
+    elif run.status == "requires_action":
+       if model=="culinary":
+            response, response_2 = hd_culinary.hd_culinary(user_input, client, thread_idf, assistant_idf, run)
+       elif model=="gym":
+            response, response_2 = hd_gym.hd_gym(user_input, client, thread_idf, assistant_idf, run)
+       elif model=="fashion":
+            response, response_2 = hd_fashion.hd_fashion(user_input, client, thread_idf, assistant_idf, run)
+       return response, response_2
