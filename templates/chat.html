@@ -585,9 +585,9 @@
     // Listener para cambiar a la segunda animación al finalizar la primera
     mixer.addEventListener('finished', (event) => {
         if (event.action === firstAction) {
-            activeAction.fadeOut(0.5); // Desvanecer la primera animación
+            activeAction.fadeOut(1); // Desvanecer la primera animación
             activeAction = secondAction;
-            secondAction.fadeIn(0.5).play(); // Activar la segunda animación
+            secondAction.fadeIn(1).play(); // Activar la segunda animación
         }
     });
 }
