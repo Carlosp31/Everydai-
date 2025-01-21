@@ -28,7 +28,12 @@
     <div class="chat-container">
         <h1>Chat with EverydAI</h1>
         <div id="avatar-container" >
-            <div id="subtitulos-container"></div>
+            <div id="subtitulos-container"> </div>
+            <div class="dots" id="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
         </div>
         <div id="chat-box" class="hidden"></div>
         <input type="text" id="user-input" placeholder="Chat with us...">
@@ -57,7 +62,7 @@
     <script>
 
         function redirectToRealidad() {
-            window.location.href = "/realidad";
+            window.location.href = "/realidadpro";
         }
         document.addEventListener("DOMContentLoaded", function() {
             const microphoneButton = document.getElementById("microphone-button");
@@ -89,6 +94,7 @@
                         const userInput = event.results[0][0].transcript;
                         document.getElementById("user-input").value = userInput;
                         sendMessage(userInput);
+                        dots.style.opacity = 1; // Mostrar los puntos
                     }
                 };
 
@@ -295,13 +301,20 @@
                     }
                 }, tiempoPorPalabra * 50001); // Convierte el tiempo por palabra a milisegundos
             }
-
+            const dots = document.getElementById("dots");
             // Evento al hacer clic en el botón de enviar texto manualmente
             document.getElementById("send-button").onclick = function() {
-                const userInput = document.getElementById("user-input").value;
-                sendMessage(userInput);
-            };
-
+    const userInput = document.getElementById("user-input").value.trim(); // Elimina espacios en blanco
+    if (userInput) { // Si el input no está vacío
+        sendMessage(userInput);
+        
+        // Cambiar la opacidad de los puntos
+        const dots = document.getElementById("dots");
+        dots.style.opacity = 1; // Mostrar los puntos
+    } else {
+        alert("Please enter a message before sending.");
+    }
+};
             // Funcionalidad para abrir la cámara
             document.getElementById("camera-button").onclick = function() {
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -368,7 +381,7 @@
                     const formData = new FormData();
                     formData.append('image', file);
                     formData.append('model', selectedModel);
-
+                    dots.style.opacity = 1; // Mostrar los puntos
                     fetch('/upload-image', {
                         method: 'POST',
                         body: formData,
@@ -617,6 +630,7 @@ function playAnimationOnce(animationName) {
 }
 
 window.addEventListener('hablar', () => {
+    dots.style.opacity = 0;
     playAnimationLoop("talking");
 });
 
