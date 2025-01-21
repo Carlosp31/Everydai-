@@ -467,10 +467,10 @@
         document.getElementById("avatar-container").appendChild(renderer.domElement);
     
         // Añadir luces a la escena
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
         scene.add(ambientLight);
     
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.3);
         directionalLight.position.set(1, 1, 1).normalize();
         scene.add(directionalLight);
     
@@ -585,9 +585,9 @@
     // Listener para cambiar a la segunda animación al finalizar la primera
     mixer.addEventListener('finished', (event) => {
         if (event.action === firstAction) {
-            activeAction.fadeOut(0.5); // Desvanecer la primera animación
+            activeAction.fadeOut(0.6); // Desvanecer la primera animación
             activeAction = secondAction;
-            secondAction.fadeIn(0.5).play(); // Activar la segunda animación
+            secondAction.fadeIn(0.6).play(); // Activar la segunda animación
         }
     });
 }
