@@ -650,7 +650,53 @@ window.addEventListener('parar', () => {
         }
     });
 }
+// Función para realizar la animación de parpadeo
+function blink(model, duration = 0.2) {
+  const targets = ['eyeBlinkLeft', 'eyeBlinkRight'];
+  
+  // Animar los morphTargets de 0 a 1 (cerrar los ojos)
+  targets.forEach(target => {
+    gsap.to(avatar.morphTargetInfluences[avatar.morphTargetDictionary[target]], {
+      value: 1,
+      duration: duration,
+      onComplete: () => {
+        // Animar los morphTargets de 1 a 0 (abrir los ojos)
+        gsap.to(avatar.morphTargetInfluences[avatar.morphTargetDictionary[target]], {
+          value: 0,
+          duration: duration
+        });
+      }
+    });
+  });
+}
 
+// Función para iniciar el parpadeo aleatorio
+function startRandomBlinking(avatar, minInterval = 3, maxInterval = 7) {
+  function randomBlink() {
+    // Iniciar el parpadeo
+    blink(avatar);
+
+    // Calcular el próximo intervalo aleatorio
+    const nextInterval = Math.random() * (maxInterval - minInterval) + minInterval;
+
+    // Programar el próximo parpadeo
+    setTimeout(randomBlink, nextInterval * 1000);
+  }
+
+  randomBlink();
+}
+
+// Ejemplo de uso
+const avatar = {
+  morphTargetDictionary: {
+    eyeBlinkLeft: 0,
+    eyeBlinkRight: 1,
+  },
+  morphTargetInfluences: [0, 0] // Inicialmente ambos valores son 0
+};
+
+// Iniciar el parpadeo aleatorio
+startRandomBlinking(avatar);
 
 
 
