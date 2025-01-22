@@ -169,7 +169,7 @@ loader.load('{{ url_for("static", filename="models/avatar1.glb") }}', function(g
         animations3 = gltf.animations;
 
         // Buscar la animación llamada "pose" (o la animación que deseas aplicar)
-        const fashionAnimation = animations3.find(animation => animation.name === "pose");
+        const fashionAnimation = animations3.find(animation => animation.name === "dash_pose");
 
         if (fashionAnimation) {
             // Eliminar las pistas de posición de la animación
