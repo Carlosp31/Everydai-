@@ -13,7 +13,7 @@
     <title>Chat with EverydAI</title>
 </head>
 <body>
-    <button class ="redirect-button" onclick="redirectToRealidad()">Explorar</button>
+    <button class ="redirect-button" onclick="redirectToRealidad()">Scan</button>
     <!-- Mostrar el modelo seleccionado dinámicamente -->
     <div id="selected-model-display" class="selected-model-display">
         {{ domain }}
@@ -461,6 +461,7 @@
     <div id="popup" class="popup hidden"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
         let animations
         let mixer; // AnimationMixer
@@ -527,6 +528,7 @@
                     child.morphTargetInfluences[jawOpenTarget] = 0; // 1 representa la apertura total de la mandíbula
                 }
             }
+            
         });
         loadAnimations()
         
@@ -547,6 +549,7 @@
             renderer.render(scene, camera);
         }
         animate();
+        
     });
 
     function loadAnimations() {
@@ -649,8 +652,53 @@ window.addEventListener('parar', () => {
             });
         }
     });
+
+
+// Función para realizar el parpadeo
+function blink() {
+    model.traverse((child) => {
+        if (child.isMesh && child.name === 'Wolf3D_Head') {
+  let blinkProgress = 0;
+  let direction = 1; // 1 para cerrar el ojo, -1 para abrirlo
+  const blinkSpeed = 0.1; // Velocidad del parpadeo
+  
+  function animateBlink() {
+    blinkProgress += direction * blinkSpeed;
+    if (blinkProgress >= 1) {
+      direction = -1; // Cambiar dirección para abrir el ojo
+    } else if (blinkProgress <= 0) {
+      cancelAnimationFrame(animateBlinkId); // Finalizar la animación
+      return;
+    }
+    // Actualizar los morphTargets
+    child.morphTargetInfluences[child.morphTargetDictionary['eyeBlinkLeft']] = blinkProgress;
+    child.morphTargetInfluences[child.morphTargetDictionary['eyeBlinkRight']] = blinkProgress;
+
+    // Continuar la animación
+    animateBlinkId = requestAnimationFrame(animateBlink);
+  }
+
+  let animateBlinkId = requestAnimationFrame(animateBlink);
+        }
+});
 }
 
+// Función para iniciar parpadeos aleatorios
+function startRandomBlinks() {
+  function scheduleNextBlink() {
+    const randomDelay = Math.random() * 3000 + 2000; // Entre 2 y 5 segundos
+    setTimeout(() => {
+      blink();
+      scheduleNextBlink(); // Planificar el siguiente parpadeo
+    }, randomDelay);
+  }
+
+  scheduleNextBlink(); // Iniciar el primer parpadeo
+}
+
+// Iniciar parpadeos aleatorios
+startRandomBlinks();
+}
 
 
 
