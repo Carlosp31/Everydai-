@@ -47,117 +47,179 @@ document.getElementById('openModalButton').addEventListener('click', function() 
 });
 
 
-        // Crear la escena y la cámara
-        const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, 500 / 500, 0.1, 1000);
-    camera.position.z = 2.5; // Colocar la cámara a cierta distancia
-    
-    // Configurar el renderizador
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(1000, 1000);
-    document.getElementById("avatar-container").appendChild(renderer.domElement);
-    
-    // Añadir luces a la escena
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.0); // Aumentar la intensidad de la luz ambiental
-    scene.add(ambientLight);
+// Crear la escena y la cámara
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, 500 / 500, 0.1, 1000);
+camera.position.z = 2.5; // Colocar la cámara a cierta distancia
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2); // Aumentar la intensidad de la luz direccional
-    directionalLight.position.set(1, 1, 1).normalize();
-    scene.add(directionalLight);
-    
-    // Cargar el modelo 3D
-    // Cargar el primer modelo 3D (avatar1)
-    const loader = new THREE.GLTFLoader();
-    let model1;
-    
-    loader.load('{{ url_for("static", filename="models/avatar3.glb") }}', function(gltf) {
-        model1 = gltf.scene;
-        scene.add(model1);
-    
-        // Asegurarse de que el avatar esté mirando hacia la cámara
-        model1.rotation.y = 0;
-        model1.rotation.x = 0;
-    
-        // Animar el modelo 1
+// Configurar el renderizador
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setSize(1000, 1000);
+document.getElementById("avatar-container").appendChild(renderer.domElement);
+
+// Añadir luces a la escena
+const ambientLight = new THREE.AmbientLight(0xffffff, 1.5); // Aumentar la intensidad de la luz ambiental
+scene.add(ambientLight);
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2); // Aumentar la intensidad de la luz direccional
+directionalLight.position.set(1, 1, 1).normalize();
+scene.add(directionalLight);
+
+// Cargar el primer modelo 3D (avatar1) - avatar en la escena
+const loader = new THREE.GLTFLoader();
+let model1;
+
+loader.load('{{ url_for("static", filename="models/avatar3.glb") }}', function(gltf) {
+    model1 = gltf.scene;
+    scene.add(model1);
+    model1.position.set(0, 0, 0);
+    // Asegurarse de que el avatar esté mirando hacia la cámara
+    model1.rotation.y = 0;
+    model1.rotation.x = 0;
+
+    // Animar el modelo 1
+    function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+    }
+    animate();
+
+
+// Cargar la animación desde animationschef.glb para avatar1
+let animations1;
+const animationLoader1 = new THREE.GLTFLoader();
+animationLoader1.load('{{ url_for("static", filename="animations/animationsfashion.glb") }}', function(gltf) {
+    animations1 = gltf.animations;
+
+    // Buscar la animación llamada "pose"
+    const poseAnimation = animations1.find(animation => animation.name === "pose");
+
+    if (poseAnimation) {
+        // Eliminar las pistas de posición de la animación
+        poseAnimation.tracks = poseAnimation.tracks.filter(track => !track.name.includes('.position'));
+
+        // Crear un Action de animación y reproducirla
+        const mixer = new THREE.AnimationMixer(model1);  // Usamos model1 porque es el que tiene el avatar
+        const action = mixer.clipAction(poseAnimation);
+        action.fadeIn(0.5).play();
+
+        // Animar la escena con la animación
         function animate() {
             requestAnimationFrame(animate);
+            mixer.update(0.01);  // Actualizar la animación
             renderer.render(scene, camera);
         }
         animate();
-    });
-    
-    // Cargar el segundo modelo 3D (avatar2)
-    let model2;
-    
-    loader.load('{{ url_for("static", filename="models/avatar2.glb") }}', function(gltf) {
-        model2 = gltf.scene;
-        scene.add(model2);
-    
-        // Posicionar el segundo avatar, por ejemplo, a la derecha del primero
-        model2.position.set(1.2, 0, 0); // Ajusta la posición como desees
-    
-        // Asegurarse de que el avatar esté mirando hacia la cámara
-        model2.rotation.y = 0;
-        model2.rotation.x = 0;
-    });
+    }
+});
+});
+// Cargar el segundo modelo 3D (avatar2) y su animación (animationsgym.glb)
+let model2;
 
-    // Cargar el tercer modelo 3D (avatar3)
-    let model3;
-    
-    loader.load('{{ url_for("static", filename="models/avatar1.glb") }}', function(gltf) {
-        model3 = gltf.scene;
-        scene.add(model3);
-    
-        // Posicionar el tercer avatar, por ejemplo, a la izquierda del primero
-        model3.position.set(-1.2, 0, 0); // Ajusta la posición a (-2, 0, 0)
-    
-        // Asegurarse de que el avatar esté mirando hacia la cámara
-        model3.rotation.y = 0;
-        model3.rotation.x = 0;
-    });
+loader.load('{{ url_for("static", filename="models/avatar2.glb") }}', function(gltf) {
+    model2 = gltf.scene;
+    scene.add(model2);
+    model2.position.set(1.2, 0, 0);
+    model2.rotation.y = 0;
+    model2.rotation.x = 0;
 
-    // Variables para el control del mouse
-    let isMouseDown = false;
-    let previousMousePosition = { x: 0, y: 0 };
-    
-    // Detectar cuando el mouse se presiona
-    document.addEventListener('mousedown', (event) => {
-        isMouseDown = true;
-        previousMousePosition.x = event.clientX;
-        previousMousePosition.y = event.clientY;
-    });
-    
-    // Detectar cuando el mouse se mueve mientras está presionado
-    document.addEventListener('mousemove', (event) => {
-        if (!isMouseDown) return; // Solo mover si el mouse está presionado
-    
-        // Calcular el movimiento en el eje X y Y
-        const deltaX = event.clientX - previousMousePosition.x;
-        const deltaY = event.clientY - previousMousePosition.y;
-    
-        // Actualizar la rotación de los avatares
-        if (model1) {
-            model1.rotation.y += deltaX * 0.01;
+    // Cargar la animación desde animationsgym.glb
+    let animations2;
+    const animationLoader2 = new THREE.GLTFLoader();
+    animationLoader2.load('{{ url_for("static", filename="animations/animationsgym.glb") }}', function(gltf) {
+        animations2 = gltf.animations;
+
+        // Buscar la animación llamada "pose" (o la animación que deseas aplicar)
+        const gymAnimation = animations2.find(animation => animation.name === "pose");
+
+        if (gymAnimation) {
+            // Eliminar las pistas de posición de la animación
+            gymAnimation.tracks = gymAnimation.tracks.filter(track => !track.name.includes('.position'));
+
+            // Crear un Action de animación y reproducirla
+            const mixer = new THREE.AnimationMixer(model2);  // Usamos model2 porque es el avatar2
+            const action = mixer.clipAction(gymAnimation);
+            action.fadeIn(0.5).play();
+
+            // Animar la escena con la animación
+            function animate() {
+                requestAnimationFrame(animate);
+                mixer.update(0.01);  // Actualizar la animación
+                renderer.render(scene, camera);
+            }
+            animate();
         }
-        if (model2) {
-            model2.rotation.y += deltaX * 0.01;
-        }
-        if (model3) {
-            model3.rotation.y += deltaX * 0.01;
-        }
-    
-        // Actualizar la posición previa del mouse
-        previousMousePosition.x = event.clientX;
-        previousMousePosition.y = event.clientY;
     });
+});
 
+// Cargar el tercer modelo 3D (avatar3) y su animación (animationsfashion.glb)
+let model3;
 
+loader.load('{{ url_for("static", filename="models/avatar1.glb") }}', function(gltf) {
+    model3 = gltf.scene;
+    scene.add(model3);
+    model3.position.set(-1.2, 0, 0);
+    model3.rotation.y = 0;
+    model3.rotation.x = 0;
 
-    
-    // Detectar cuando el mouse se libera
-    document.addEventListener('mouseup', () => {
-        isMouseDown = false;
+    // Cargar la animación desde animationsfashion.glb
+    let animations3;
+    const animationLoader3 = new THREE.GLTFLoader();
+    animationLoader3.load('{{ url_for("static", filename="animations/animationschef.glb") }}', function(gltf) {
+        animations3 = gltf.animations;
+
+        // Buscar la animación llamada "pose" (o la animación que deseas aplicar)
+        const fashionAnimation = animations3.find(animation => animation.name === "dash_pose");
+
+        if (fashionAnimation) {
+            // Eliminar las pistas de posición de la animación
+            fashionAnimation.tracks = fashionAnimation.tracks.filter(track => !track.name.includes('.position'));
+
+            // Crear un Action de animación y reproducirla
+            const mixer = new THREE.AnimationMixer(model3);  // Usamos model3 porque es el avatar3
+            const action = mixer.clipAction(fashionAnimation);
+            action.fadeIn(0.5).play();
+
+            // Animar la escena con la animación
+            function animate() {
+                requestAnimationFrame(animate);
+                mixer.update(0.01);  // Actualizar la animación
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
     });
+});
+
+// Variables para el control del mouse
+let isMouseDown = false;
+let previousMousePosition = { x: 0, y: 0 };
+
+document.addEventListener('mousedown', (event) => {
+    isMouseDown = true;
+    previousMousePosition.x = event.clientX;
+    previousMousePosition.y = event.clientY;
+});
+
+document.addEventListener('mousemove', (event) => {
+    if (!isMouseDown) return;
+
+    const deltaX = event.clientX - previousMousePosition.x;
+    const deltaY = event.clientY - previousMousePosition.y;
+
+    if (model1) model1.rotation.y += deltaX * 0.01;
+    if (model2) model2.rotation.y += deltaX * 0.01;
+    if (model3) model3.rotation.y += deltaX * 0.01;
+
+    previousMousePosition.x = event.clientX;
+    previousMousePosition.y = event.clientY;
+});
+
+document.addEventListener('mouseup', () => {
+    isMouseDown = false;
+});
+
+
     </script>
 </body>
 </html>

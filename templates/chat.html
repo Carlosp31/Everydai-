@@ -13,7 +13,7 @@
     <title>Chat with EverydAI</title>
 </head>
 <body>
-    <button class ="redirect-button" onclick="redirectToRealidad()">Explorar</button>
+    <button class ="redirect-button" onclick="redirectToRealidad()">Scan</button>
     <!-- Mostrar el modelo seleccionado dinámicamente -->
     <div id="selected-model-display" class="selected-model-display">
         {{ domain }}
@@ -28,7 +28,12 @@
     <div class="chat-container">
         <h1>Chat with EverydAI</h1>
         <div id="avatar-container" >
-            <div id="subtitulos-container"></div>
+            <div id="subtitulos-container"> </div>
+            <div class="dots" id="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
         </div>
         <div id="chat-box" class="hidden"></div>
         <input type="text" id="user-input" placeholder="Chat with us...">
@@ -57,7 +62,7 @@
     <script>
 
         function redirectToRealidad() {
-            window.location.href = "/realidad";
+            window.location.href = "/realidadpro";
         }
         document.addEventListener("DOMContentLoaded", function() {
             const microphoneButton = document.getElementById("microphone-button");
@@ -89,6 +94,9 @@
                         const userInput = event.results[0][0].transcript;
                         document.getElementById("user-input").value = userInput;
                         sendMessage(userInput);
+                        dots.style.opacity = 1; // Mostrar los puntos
+                        const event5 = new CustomEvent('pensar');
+                        window.dispatchEvent(event5);
                     }
                 };
 
@@ -295,13 +303,22 @@
                     }
                 }, tiempoPorPalabra * 50001); // Convierte el tiempo por palabra a milisegundos
             }
-
+            const dots = document.getElementById("dots");
             // Evento al hacer clic en el botón de enviar texto manualmente
             document.getElementById("send-button").onclick = function() {
-                const userInput = document.getElementById("user-input").value;
-                sendMessage(userInput);
-            };
-
+    const userInput = document.getElementById("user-input").value.trim(); // Elimina espacios en blanco
+    if (userInput) { // Si el input no está vacío
+        sendMessage(userInput);
+        
+        // Cambiar la opacidad de los puntos
+        const dots = document.getElementById("dots");
+        const event3 = new CustomEvent('pensar');
+        window.dispatchEvent(event3);
+        dots.style.opacity = 1; // Mostrar los puntos
+    } else {
+        alert("Please enter a message before sending.");
+    }
+};
             // Funcionalidad para abrir la cámara
             document.getElementById("camera-button").onclick = function() {
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -368,7 +385,9 @@
                     const formData = new FormData();
                     formData.append('image', file);
                     formData.append('model', selectedModel);
-
+                    dots.style.opacity = 1; // Mostrar los puntos
+                    const event4 = new CustomEvent('pensar');
+                    window.dispatchEvent(event4);
                     fetch('/upload-image', {
                         method: 'POST',
                         body: formData,
@@ -448,6 +467,7 @@
     <div id="popup" class="popup hidden"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
         let animations
         let mixer; // AnimationMixer
@@ -467,10 +487,10 @@
         document.getElementById("avatar-container").appendChild(renderer.domElement);
     
         // Añadir luces a la escena
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
         scene.add(ambientLight);
     
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.3);
         directionalLight.position.set(1, 1, 1).normalize();
         scene.add(directionalLight);
     
@@ -514,6 +534,7 @@
                     child.morphTargetInfluences[jawOpenTarget] = 0; // 1 representa la apertura total de la mandíbula
                 }
             }
+            
         });
         loadAnimations()
         
@@ -534,6 +555,7 @@
             renderer.render(scene, camera);
         }
         animate();
+        
     });
 
     function loadAnimations() {
@@ -551,7 +573,8 @@
                 const action = mixer.clipAction(clip);
                 animationActions[clip.name] = action; // Guardar la acción por su nombre
             });
-            playAnimationOnce("salute");
+            playAnimationSequence("salute", "pose")
+            
         },
         
         undefined,
@@ -560,31 +583,74 @@
         } 
     );   
     }
-
-// Reproducir animación seleccionada en bucle
-function playAnimationLoop(animationName) {
+    function playAnimationSequence(firstAnimationName, secondAnimationName) {
+    // Detener y desvanecer cualquier animación activa
     if (activeAction) {
-        activeAction.stop(); // Detener la animación activa actual
+        activeAction.fadeOut(0.5); // Transición suave al detener la animación actual
     }
-    activeAction = animationActions[animationName];
-    activeAction.reset().play(); // Reiniciar y reproducir la nueva animación
+
+    // Configurar la primera animación
+    const firstAction = animationActions[firstAnimationName];
+    firstAction.reset();
+    firstAction.setLoop(THREE.LoopOnce); // Primera animación solo una vez
+    firstAction.timeScale = 0.8 // Ajustar la velocidad de reproducción
+    firstAction.clampWhenFinished = true; // Mantener el último fotograma
+
+    // Configurar la segunda animación
+    const secondAction = animationActions[secondAnimationName];
+    secondAction.reset();
+    secondAction.setLoop(THREE.LoopRepeat); // Segunda animación en bucle
+
+    // Reproducir la primera animación
+    activeAction = firstAction;
+    firstAction.fadeIn(0.5).play();
+
+    // Listener para cambiar a la segunda animación al finalizar la primera
+    mixer.addEventListener('finished', (event) => {
+        if (event.action === firstAction) {
+            activeAction.fadeOut(0.8); // Desvanecer la primera animación
+            activeAction = secondAction;
+            secondAction.fadeIn(0.6).play(); // Activar la segunda animación
+        }
+    });
+}
+
+function playAnimationLoop(animationName, speed) {
+    // Detener cualquier animación activa (incluidas las de playAnimationSequence)
+    if (activeAction) {
+        activeAction.fadeOut(0.5); // Transición suave al detener
+    }
+
+    // Configurar y reproducir la nueva animación
+    const loopAction = animationActions[animationName];
+    loopAction.reset();
+    loopAction.setLoop(THREE.LoopRepeat); // Repetir en bucle
+    loopAction.timeScale = speed; // Ajustar la velocidad de reproducción
+    activeAction = loopAction;
+    loopAction.fadeIn(0.5).play();
 }
 function playAnimationOnce(animationName) {
     if (activeAction) {
         activeAction.stop(); // Detener la animación activa actual
     }
     activeAction = animationActions[animationName];
-    activeAction.reset().play(); // Reiniciar y reproducir la nueva animación
+    activeAction.reset();
+    activeAction.fadeIn(1);
+    activeAction.play(); // Reiniciar y reproducir la nueva animación
     activeAction.setLoop(THREE.LoopOnce, 1); // Asegurarse de que la animación se ejecute solo una vez
 }
 
 window.addEventListener('hablar', () => {
-    playAnimationLoop("talking");
+    dots.style.opacity = 0;
+    playAnimationLoop("talking", 1);
 });
+window.addEventListener('pensar', () => {
+
+    playAnimationLoop("thinking", 0.5);
+});
+
 window.addEventListener('parar', () => {
-    if (activeAction) {
-        activeAction.stop(); // Detener la animación activa actual
-    }
+    playAnimationLoop("pose")
 });
 
     window.addEventListener('audio-level', (event) => {
@@ -597,8 +663,53 @@ window.addEventListener('parar', () => {
             });
         }
     });
+
+
+// Función para realizar el parpadeo
+function blink() {
+    model.traverse((child) => {
+        if (child.isMesh && child.name === 'Wolf3D_Head') {
+  let blinkProgress = 0;
+  let direction = 1; // 1 para cerrar el ojo, -1 para abrirlo
+  const blinkSpeed = 0.1; // Velocidad del parpadeo
+  
+  function animateBlink() {
+    blinkProgress += direction * blinkSpeed;
+    if (blinkProgress >= 1) {
+      direction = -1; // Cambiar dirección para abrir el ojo
+    } else if (blinkProgress <= 0) {
+      cancelAnimationFrame(animateBlinkId); // Finalizar la animación
+      return;
+    }
+    // Actualizar los morphTargets
+    child.morphTargetInfluences[child.morphTargetDictionary['eyeBlinkLeft']] = blinkProgress;
+    child.morphTargetInfluences[child.morphTargetDictionary['eyeBlinkRight']] = blinkProgress;
+
+    // Continuar la animación
+    animateBlinkId = requestAnimationFrame(animateBlink);
+  }
+
+  let animateBlinkId = requestAnimationFrame(animateBlink);
+        }
+});
 }
 
+// Función para iniciar parpadeos aleatorios
+function startRandomBlinks() {
+  function scheduleNextBlink() {
+    const randomDelay = Math.random() * 3000 + 2000; // Entre 2 y 5 segundos
+    setTimeout(() => {
+      blink();
+      scheduleNextBlink(); // Planificar el siguiente parpadeo
+    }, randomDelay);
+  }
+
+  scheduleNextBlink(); // Iniciar el primer parpadeo
+}
+
+// Iniciar parpadeos aleatorios
+startRandomBlinks();
+}
 
 
 
