@@ -35,10 +35,6 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
 
 
         elif tool.function.name == "buscar_producto_culinary":
-            tool_outputs.append({
-                "tool_call_id": tool.id,
-                "output": "busqueda exitosa"
-            })
 
             # Acceder al primer tool_call en required_action.submit_tool_outputs
             tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
@@ -52,6 +48,10 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             producto = arguments_dict.get("producto", "Valor no encontrado")
             print (f"producto a buscar: {producto}")
             response_2  = webscrp.web_culinary(producto)
+            tool_outputs.append({
+                "tool_call_id": tool.id,
+                "output": json.dumps(response_2)
+            })
         print(run.status)
 
     print(tool_outputs)
