@@ -13,6 +13,7 @@ import requests  # Asegúrate de importar la biblioteca requests
 import modules.voice as voice
 import modules.images as images
 import modules.serpapi as serpapii
+import modules.domains as domains
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
 
@@ -99,138 +100,34 @@ def chat_post():
     user_input = request.json['message']
     selected_model = request.json['model']
     client = OpenAI()
-
+    
+    
     ####################################################
     if selected_model == 'culinary':  
-        #################### GLOBAL ##################################
-        # client = OpenAI()
-        # assistant_culinary = client.beta.assistants.create(
-        # name="Cooking",
-        # instructions="el modelo debe actuar como un profesor de culinaria. Recibe una lista de ingredientes y debe proporcionarle al usuario una lista de pasos y guia al usuario para que efectúe la receta. Antes, indicale al usuario la receta que le vas a sugerir y preguntale si le gustaria esa u otra; si dice que sí ve indicando paso por paso, esperando a que el usuario termine un paso y quiera ir al siguiente. Solo puedes sugerir recetas con los ingredientes que recibe en la lista, únicamente esos. A menos que el usuario te pida que le sugieras una receta y que él conseguirá los ingredientes. Tu dominio es solo la culinaria",
-        # tools=[{"type": "code_interpreter"}],
-        # model="gpt-4o-mini",
-        # )
-        # thread_culinary = client.beta.threads.create()
-        ########################################################
+        response, response_2 = domains.chat_response(selected_model, user_input, client, thread_idf=thread_culinary.id, assistant_idf =assistant_culinary_id)
 
-        message = client.beta.threads.messages.create(
-            thread_id=thread_culinary.id,
-            role="user",
-            content=user_input
-        )
-
-        run = client.beta.threads.runs.create_and_poll(
-            thread_id=thread_culinary.id,
-            assistant_id=assistant_culinary_id
-
-        )
-
-        if run.status == 'completed': 
-            messages = client.beta.threads.messages.list(thread_id=thread_culinary.id)
-
-            # Filtrar los mensajes del asistente
-            mensajes_asistente = [msg for msg in messages.data if msg.role == 'assistant']
-            if mensajes_asistente:
-                # Obtener el último mensaje del asistente
-                ultimo_mensaje = mensajes_asistente[0]  # Accede al último mensaje del asistente
-                for block in ultimo_mensaje.content:
-                    print(f"Assistant: {block.text.value}") 
-                    response= block.text.value# Imprime solo el contenido del último mensaje
-            else:
-                print("No se encontró un mensaje del asistente.")
-
-        ####################################################
     elif selected_model == 'fashion':  
-        ########GLOBAL################3
-        # client = OpenAI()
-        # assistant_fashion = client.beta.assistants.create(
-        # name="Fashion",
-        # instructions="Eres un asesor de moda. Recibes una lista de prendas de ropa y recomiendas combinaciones basadas en esas prendas.Tu dominio es solo el gym. Tu dominio es solo la moda",
-        # tools=[{"type": "code_interpreter"}],
-        # model="gpt-4o-mini",
-        # )
-        # thread_fashion = client.beta.threads.create()
-        ##################################
-
-        message = client.beta.threads.messages.create(
-            thread_id=thread_fashion.id,
-            role="user",
-            content=user_input
-        )
-
-        run = client.beta.threads.runs.create_and_poll(
-            thread_id=thread_fashion.id,
-            assistant_id=assistant_fashion_id   
-        )
-
-        if run.status == 'completed': 
-            messages = client.beta.threads.messages.list(thread_id=thread_fashion.id)
-
-            # Filtrar los mensajes del asistente
-            mensajes_asistente = [msg for msg in messages.data if msg.role == 'assistant']
-            print(messages)
-            if mensajes_asistente:
-                # Obtener el último mensaje del asistente
-                ultimo_mensaje = mensajes_asistente[0]  # Accede al último mensaje del asistente
-                for block in ultimo_mensaje.content:
-                    print(f"Assistant: {block.text.value}") 
-                    response= block.text.value# Imprime solo el contenido del último mensaje
-            else:
-                print("No se encontró un mensaje del asistente.")
-
+        response, response_2 = domains.chat_response(selected_model, user_input, client, thread_idf=thread_fashion.id, assistant_idf =assistant_fashion_id)
         ####################################################
     elif selected_model == 'gym':  
-        #################### GLOBAL ##################################
-        # client = OpenAI()
-        # assistant_gym= client.beta.assistants.create(
-        #     name="gym",
-        #     instructions="Eres un entrenador personal. Recibe una lista de elementos de gimnasio y sugiere ejercicios que se pueden realizar con esos elementos. Además, si el usuario lo desea, sugiere ejercicios para trabajar grupos musculares específicos.",
-        #     tools=[{"type": "code_interpreter"}],
-        #     model="gpt-4o-mini",
-        # )
-        # thread_gym = client.beta.threads.create()
-        ############################################################
+        response, response_2  = domains.chat_response(selected_model, user_input, client, thread_idf=thread_gym.id, assistant_idf =assistant_gym_id)
 
-        message = client.beta.threads.messages.create(
-            thread_id=thread_gym.id,
-            role="user",
-            content=user_input
-        )
-
-        run = client.beta.threads.runs.create_and_poll(
-            thread_id=thread_gym.id,
-            assistant_id=assistant_gym_id,
-        )
-
-        if run.status == 'completed': 
-            messages = client.beta.threads.messages.list(thread_id=thread_gym.id)
-
-            # Filtrar los mensajes del asistente
-            mensajes_asistente = [msg for msg in messages.data if msg.role == 'assistant']
-            print(messages)
-            if mensajes_asistente:
-                # Obtener el último mensaje del asistente
-                ultimo_mensaje = mensajes_asistente[0]  # Accede al último mensaje del asistente
-                for block in ultimo_mensaje.content:
-                    print(f"Assistant: {block.text.value}") 
-                    response= block.text.value# Imprime solo el contenido del último mensaje
-            else:
-                print("No se encontró un mensaje del asistente.")
     else:
         return jsonify({'response': 'Modelo no encontrado.'}), 400
-    
-    respuesta_texto = response  # Obtener la respuesta en texto del modelo
+    # print("Response is:")
+    # print(response)
+    # respuesta_texto = response  # Obtener la respuesta en texto del modelo
 
 
-    # Mensaje inicial al seleccionar el dominio
+    # # Mensaje inicial al seleccionar el dominio
     mensaje_inicial = f"Hola, este es el dominio {session.get('selected_domain', 'desconocido')}"
 
-    # Buscar recetas en SerpAPI (si es necesario)
-    recetas = serpapii.buscar_resultados_en_serpapi(user_input, selected_model)
+    # # Buscar recetas en SerpAPI (si es necesario)
+    # recetas = serpapii.buscar_resultados_en_serpapi(user_input, selected_model)
     
     # Devolver la respuesta escrita, el mensaje inicial y la de SerpAPI
     return jsonify({
-        'text_response': respuesta_texto,
+        'text_response': response,
         'mensaje_inicial': mensaje_inicial,
-        'recipes': recetas
+        'recipes': response_2
     })

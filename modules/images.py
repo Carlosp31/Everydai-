@@ -105,7 +105,7 @@ def upload_image():
                     chat_response = requests.post(
                         url,
                         json=chat_payload,
-                        timeout=20
+                        timeout=60
                     )
                     chat_response_json = chat_response.json()
 

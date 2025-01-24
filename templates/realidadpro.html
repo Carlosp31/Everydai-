@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teachable Machine Object Labels</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js/aframe/build/aframe-ar.js"></script>
     <style>
         #webcam-container {
             position: relative;
@@ -33,6 +36,19 @@
     </style>
 </head>
 <body>
+    <a-scene embedded arjs="debugUIEnabled: false" vr-mode-ui="enabled: false">
+        <!-- Cámara AR -->
+        <a-camera position="0 0 0" look-controls="enabled: false">
+            <a-entity id="detectedList" position="0 0 -3">
+                <!-- Fondo dinámico para la lista de objetos detectados -->
+                <a-plane id="background" position="0.5 0 0" width="1" height="0.1" color="blue" opacity="0.5"></a-plane>
+            </a-entity>
+        </a-camera>
+        <!-- Los marcadores AR no son necesarios si usas la cámara -->
+        <a-marker-camera preset="hiro"></a-marker-camera>
+    </a-scene>
+
+
     <div>Teachable Machine Object Detection</div>
     <button type="button" onclick="init()">Start</button>
     <div id="webcam-container"></div>
@@ -46,7 +62,6 @@
         let model, webcam, maxPredictions;
         const previousPositions = {};
         const detectedObjects = new Set();  // Almacena los objetos detectados
-
 
         async function init() {
             const modelURL = URL + "model.json";
@@ -83,8 +98,9 @@
                 oldLabels[0].remove();
             }
 
-            // Referencia al contenedor de la lista
-            const detectionList = document.getElementById("detection-list");
+            // Referencia al contenedor de la lista en AR
+            const detectionList = document.getElementById("detectedList");
+
             for (let i = 0; i < maxPredictions; i++) {
                 const detectedClass = prediction[i].className;
 
@@ -94,34 +110,29 @@
                 }
 
                 if (prediction[i].probability > 0.7) {
-                    detectedObjects.add(detectedClass);
+    detectedObjects.add(detectedClass);
 
-                    // Crear etiquetas visuales
-                    const label = document.createElement("div");
-                    label.className = "label";
-                    label.innerHTML = `${detectedClass} (${(prediction[i].probability * 100).toFixed(1)}%)`;
+    // Crear una nueva etiqueta para AR
+    const listItem = document.createElement("a-text");
+    listItem.setAttribute("value", `Detected: ${detectedClass}`);
 
-                    const currentX = Math.random() * (640 - 100);
-                    const currentY = Math.random() * (480 - 20);
+    const initialOffset = 0.5; // Altura inicial para el primer objeto
+    const yOffset = initialOffset - 0.1 * detectedObjects.size;
+    listItem.setAttribute("position", `0.5 ${yOffset} 0`); 
 
-                    const previousPosition = previousPositions[detectedClass] || { x: currentX, y: currentY };
-                    const smoothedX = previousPosition.x * 0.8 + currentX * 0.2;
-                    const smoothedY = previousPosition.y * 0.8 + currentY * 0.2;
-
-                    previousPositions[detectedClass] = { x: smoothedX, y: smoothedY };
-
-                    label.style.left = `${smoothedX}px`;
-                    label.style.top = `${smoothedY}px`;
-
-                    container.appendChild(label);
-
-                    // Agregar a la lista de detección
-                    const listItem = document.createElement("li");
-                    listItem.textContent = `Detected: ${detectedClass}`;
-                    detectionList.appendChild(listItem);
-                }
+    listItem.setAttribute("scale", "0.3 0.3 0.3");
+    detectionList.appendChild(listItem);
+}
             }
+                        // Actualizar el tamaño del rectángulo azul
+            const listSize = detectedObjects.size;
+            const newHeight = Math.max(0.1, 0.1 + listSize * 0.1); // Ajustar altura basado en el tamaño de la lista
+            background.setAttribute("height", newHeight);
+            background.setAttribute("position", `0.7 ${0.5 - newHeight / 2} 0`);
         }
+
+        // Inicializar la aplicación
+        init();
     </script>
 </body>
 </html>
