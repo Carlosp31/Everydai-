@@ -51,7 +51,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             # Ejemplo: Si quieres extraer el valor del 'query'
             producto = arguments_dict.get("producto", "Valor no encontrado")
             print (f"producto a buscar: {producto}")
-            webscrp.web_culinary(producto)
+            response_2  = webscrp.web_culinary(producto)
         print(run.status)
 
     print(tool_outputs)
