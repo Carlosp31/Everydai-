@@ -34,18 +34,6 @@ def guardar_en_json(producto):
     print(f"Producto guardado: {producto}")
 
 
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.keys import Keys
-import time
-import json
-from webdriver_manager.chrome import ChromeDriverManager
-
 def web_culinary(producto):
     print("Ejecutando Main")
 
@@ -78,7 +66,7 @@ def web_culinary(producto):
 
         ### EXTRAER INFORMACIÓN DE LOS PRIMEROS TRES PRODUCTOS ###
         productos = driver.find_elements(By.CLASS_NAME, "vtex-product-summary-2-x-productBrand")
-        
+
         # Iterar sobre los primeros tres productos
         for i in range(min(3, len(productos))):  # Asegura que solo se iteren los primeros tres productos
             try:
@@ -90,10 +78,15 @@ def web_culinary(producto):
                 full_price = price_container.text.strip()
                 print(f"Precio concatenado: {full_price}")
 
+                # Obtener la imagen del producto
+                imagen = driver.find_elements(By.CSS_SELECTOR, "img.vtex-product-summary-2-x-imageNormal")[i]
+                imagen_src = imagen.get_attribute("src")  # URL de la imagen
+
                 # Crear un diccionario con la información del producto
                 producto_info = {
                     "nombre": producto_nombre,
-                    "precio": full_price
+                    "precio": full_price,
+                    "imagen_url": imagen_src
                 }
 
                 # Agregar el producto a la lista
@@ -108,8 +101,6 @@ def web_culinary(producto):
 
     except TimeoutException:
         print("No se encontró el campo de búsqueda o hubo un problema cargando la página.")
-        return []  # En caso de error, devolver una lista vacía
-
     finally:
         driver.quit()
         print("Navegador cerrado.")
