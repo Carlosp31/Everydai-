@@ -92,7 +92,6 @@ def chat_response(model, user_input, client, thread_idf, assistant_idf):
     print(f"Estado del assistant: {run.status}")
     if run.status == 'completed': 
         messages = client.beta.threads.messages.list(thread_id=thread_idf)
-
         # Filtrar los mensajes del asistente
         mensajes_asistente = [msg for msg in messages.data if msg.role == 'assistant']
         if mensajes_asistente:
