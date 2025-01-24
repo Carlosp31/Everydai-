@@ -1,24 +1,15 @@
-from selenium.webdriver import Chrome
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-
-
-from selenium.webdriver.support import expected_conditions as EC   
-from selenium.webdriver.support.ui import WebDriverWait as Wait 
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import WebDriverException
 import time
-
 import json
-import os
+from webdriver_manager.chrome import ChromeDriverManager
 
-from selenium.webdriver.chrome.options import Options
-import tempfile
 
 def guardar_en_json(producto):
     """
@@ -42,87 +33,84 @@ def guardar_en_json(producto):
 
     print(f"Producto guardado: {producto}")
 
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.keys import Keys
+import time
+import json
+from webdriver_manager.chrome import ChromeDriverManager
+
 def web_culinary(producto):
     print("Ejecutando Main")
 
-    print("Ejecutando Main")
+    # Configuración para el modo headless
+    options = Options()
+    options.add_argument("--headless")  # Ejecuta el navegador sin interfaz gráfica
+    options.add_argument("--disable-gpu")  # Deshabilita la GPU para mejorar la compatibilidad
+    options.add_argument("--no-sandbox")  # Evita problemas en sistemas Linux
+    options.add_argument("--disable-dev-shm-usage")  # Optimiza para entornos de bajo rendimiento
+    options.add_argument("--disable-extensions")  # Deshabilita extensiones para evitar conflictos
 
-    # Crear un directorio temporal para datos del usuario
-    temp_dir = tempfile.mkdtemp()
-
-    # Configurar opciones de Chrome
-    chrome_options = Options()
-    chrome_options.add_argument(f"--user-data-dir={temp_dir}")  # Usar un directorio temporal único
-    chrome_options.add_argument("--start-maximized")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")  # Para evitar problemas de memoria compartida
-    chrome_options.add_argument("--headless")  # Opcional: Ejecutar en modo sin interfaz gráfica
-
-    # Inicializar ChromeDriver
+    # Iniciar el controlador de Chrome con las opciones
     service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=chrome_options)
-
+    driver = webdriver.Chrome(service=service, options=options)
     driver.get("https://www.olimpica.com/supermercado")
-    
+    time.sleep(2)
+
+    productos_lista = []  # Lista donde se almacenarán los productos extraídos
+
     try:
-        ### REALIZAR BÚSQUEDA DEL ELEMENTO ###
-        # Espera explícita para encontrar el elemento por el placeholder
+        ### REALIZAR BÚSQUEDA DEL PRODUCTO ###
+        print("Abriendo página de Olímpica...")
         busqueda = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, '//*[@placeholder="Busca por nombre, categoría…"]'))
         )
         busqueda.send_keys(producto)
         busqueda.send_keys(Keys.RETURN)  # Simula la tecla Enter
         print("Texto enviado correctamente al campo de búsqueda.")
-        time.sleep(5)
+        time.sleep(2)
 
-        ### SELECCIONAR PRODUCTO Y EXTRAER INFORMACIÓN ###
-        print("Por favor, selecciona manualmente un producto en la página web...")
+        ### EXTRAER INFORMACIÓN DE LOS PRIMEROS TRES PRODUCTOS ###
+        productos = driver.find_elements(By.CLASS_NAME, "vtex-product-summary-2-x-productBrand")
         
-        # Inyectar un script de JavaScript para capturar clics en los elementos
-        script = """
-        document.addEventListener('click', function(event) {
-            let selectedElement = event.target.closest('.vtex-product-summary-2-x-container'); // Ajusta la clase según la estructura de la página
-            if (selectedElement) {
-                let productName = selectedElement.querySelector('.vtex-product-summary-2-x-productNameContainer').innerText; // Nombre del producto
-                let productPrice = selectedElement.querySelector('.vtex-product-price-1-x-sellingPrice span').innerText; // Precio del producto
-                window.selectedProductData = {
-                    name: productName,
-                    price: productPrice
-                };
-                alert('Producto seleccionado: ' + productName + '\\nPrecio: ' + productPrice);  // Mostrar alerta con el texto seleccionado
-            }
-            event.preventDefault(); // Evitar cualquier comportamiento adicional del clic
-        }, true);
-        """
-        driver.execute_script(script)
-        time.sleep(1)
-        # Esperar hasta que el usuario seleccione un producto
-        selected_product = None
-        while not selected_product:
+        # Iterar sobre los primeros tres productos
+        for i in range(min(3, len(productos))):  # Asegura que solo se iteren los primeros tres productos
             try:
-                selected_product = driver.execute_script("return window.selectedProductData;")
-                if selected_product:
-                    print(f"Producto seleccionado: {selected_product['name']}")
-                    print(f"Precio: {selected_product['price']}")
-                    guardar_en_json(selected_product)
-                    time.sleep(1)
-                    driver.execute_script("window.selectedProductData = null;")  # Reiniciar la variable global
-                    break
+                producto_nombre = productos[i].text
+                print(f"Nombre del producto {i + 1}: {producto_nombre}")
+
+                # Obtener el precio del producto
+                price_container = driver.find_elements(By.CLASS_NAME, "olimpica-dinamic-flags-0-x-currencyContainer")[i]
+                full_price = price_container.text.strip()
+                print(f"Precio concatenado: {full_price}")
+
+                # Crear un diccionario con la información del producto
+                producto_info = {
+                    "nombre": producto_nombre,
+                    "precio": full_price
+                }
+
+                # Agregar el producto a la lista
+                productos_lista.append(producto_info)
+
             except Exception as e:
-                print("Esperando selección del producto...")
-            except WebDriverException as e:
-                print(f"Error en Selenium: {e}")
-                
-        time.sleep(1)
-        # Continuar con el resto del código
-        print("Continuando con el resto del código...")
+                print(f"No se pudo extraer información del producto {i + 1}.")
+                print(e)
+
+        print("Extracción completada.")
+        return productos_lista  # Devolver la lista de productos extraídos
 
     except TimeoutException:
-        print("No se encontró el campo de búsqueda.")
+        print("No se encontró el campo de búsqueda o hubo un problema cargando la página.")
+        return []  # En caso de error, devolver una lista vacía
+
     finally:
         driver.quit()
+        print("Navegador cerrado.")
 
-
-
-# web_culinary(producto= "salsa de tomate")
