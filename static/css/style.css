@@ -186,8 +186,7 @@ button:active {
     }
 }
 
-/* RECOMMENTADION BOX /////////////////////////////
- ///////////////////////////// /////////////////////////////
+/* RECOMMENDATION BOX /////////////////////////////
 /* Estilos para el cuadro de recomendaciones */
 .recommendations-box {
     position: absolute;
@@ -223,23 +222,36 @@ button:active {
     list-style: none;
     padding: 0;
     margin-top: 10px; /* Añadir espacio para que las recomendaciones no toquen el título */
+    height: 100%; /* Usamos todo el espacio disponible en el contenedor */
+    overflow-y: auto; /* Permitimos desplazamiento si la lista es más larga */
 }
 
+/* Estilo de los elementos de la lista */
 .recommendations-box ul li {
     margin-bottom: 10px;
     font-size: 14px;
     color: #555;
-    display: none; /* Ocultar las recomendaciones por defecto */
+    display: flex; /* Usamos flexbox para organizar la imagen y el texto */
+    align-items: center; /* Alinea la imagen y el texto */
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
-/* Mostrar las primeras recomendaciones cuando la caja esté colapsada */
-.recommendations-box:not(.expanded) ul li:nth-child(-n+3) {
-    display: block;
+/* Estilo de los productos con nombre y precio */
+.producto-con-precio {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Asegura que la imagen y el texto se distribuyan bien */
 }
 
-/* Mostrar las recomendaciones cuando la caja esté expandida */
-.recommendations-box.expanded ul li {
-    display: block;
+/* Estilo de las imágenes dentro de los productos */
+.producto-imagen {
+    width: 50px; /* Tamaño pequeño de la imagen */
+    height: 50px;
+    object-fit: contain;
+    margin-right: 10px; /* Separación entre la imagen y el texto */
 }
 
 /* Estilo para el contenedor de la flecha */
@@ -268,6 +280,7 @@ button:active {
 .arrow.up {
     transform: rotate(-135deg); /* Flecha hacia arriba cuando se expande */
 }
+
 
 /*//////////////////////////// /////////////////////////////
  ///////////////////////////// /////////////////////////////
