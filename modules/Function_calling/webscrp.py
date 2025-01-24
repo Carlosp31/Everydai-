@@ -1,38 +1,14 @@
-from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.keys import Keys
-import time
-import json
 from webdriver_manager.chrome import ChromeDriverManager
-
-
-def guardar_en_json(producto):
-    """
-    Guarda el producto en un archivo JSON. Si el archivo no existe, lo crea.
-    """
-    archivo_json = "productos.json"
-    try:
-        # Intentar abrir el archivo y cargar los datos existentes
-        with open(archivo_json, "r", encoding="utf-8") as file:
-            productos = json.load(file)
-    except (FileNotFoundError, json.JSONDecodeError):
-        # Si no existe el archivo o está vacío, inicializar una lista vacía
-        productos = []
-
-    # Agregar el nuevo producto a la lista
-    productos.append(producto)
-
-    # Guardar la lista actualizada en el archivo
-    with open(archivo_json, "w", encoding="utf-8") as file:
-        json.dump(productos, file, indent=4, ensure_ascii=False)
-
-    print(f"Producto guardado: {producto}")
-
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import TimeoutException
+import time
 
 def web_culinary(producto):
     print("Ejecutando Main")
@@ -49,21 +25,26 @@ def web_culinary(producto):
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
     driver.get("https://www.olimpica.com/supermercado")
-    time.sleep(2)
 
     productos_lista = []  # Lista donde se almacenarán los productos extraídos
 
     try:
         ### REALIZAR BÚSQUEDA DEL PRODUCTO ###
         print("Abriendo página de Olímpica...")
+        
+        # Espera activa para que el campo de búsqueda esté disponible
         busqueda = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, '//*[@placeholder="Busca por nombre, categoría…"]'))
         )
         busqueda.send_keys(producto)
         busqueda.send_keys(Keys.RETURN)  # Simula la tecla Enter
         print("Texto enviado correctamente al campo de búsqueda.")
-        time.sleep(2)
-
+        
+        # Espera a que los resultados se carguen (ajusta el tiempo si es necesario)
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "vtex-product-summary-2-x-productBrand"))
+        )
+        time.sleep(5)
         ### EXTRAER INFORMACIÓN DE LOS PRIMEROS TRES PRODUCTOS ###
         productos = driver.find_elements(By.CLASS_NAME, "vtex-product-summary-2-x-productBrand")
 
@@ -104,4 +85,3 @@ def web_culinary(producto):
     finally:
         driver.quit()
         print("Navegador cerrado.")
-
