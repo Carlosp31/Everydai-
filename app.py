@@ -94,7 +94,7 @@ if current_os == 'Linux':
 else:
   CLIENT_SECRETS_FILE = "client_secret.json" 
 SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
-REDIRECT_URI = 'https://everydai.ddns.net/oauth2callback'
+REDIRECT_URI = 'https://everyd-ai.ddns.net/oauth2callback'
 
 
 @app.route('/realidad')
