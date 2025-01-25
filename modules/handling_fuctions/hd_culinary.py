@@ -1,5 +1,6 @@
 import os
 import modules.Function_calling.busquedas as busquedas
+import modules.Function_calling.webscrp as webscrp
 import json
 
 def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
@@ -33,10 +34,23 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
 
 
 
-        elif tool.function.name == "get_rain_probability":
+        elif tool.function.name == "buscar_producto_culinary":
+
+            # Acceder al primer tool_call en required_action.submit_tool_outputs
+            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+                        # Extrae los arguments de la función, que están en formato string JSON
+            arguments_str = tool_call.function.arguments
+            
+            # Convierte el string JSON de los arguments en un diccionario
+            arguments_dict = json.loads(arguments_str)
+
+            # Ejemplo: Si quieres extraer el valor del 'query'
+            producto = arguments_dict.get("producto", "Valor no encontrado")
+            print (f"producto a buscar: {producto}")
+            response_2  = webscrp.web_culinary(producto)
             tool_outputs.append({
                 "tool_call_id": tool.id,
-                "output": "0.06"
+                "output": json.dumps(response_2)
             })
         print(run.status)
 
