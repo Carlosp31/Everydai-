@@ -188,8 +188,6 @@ def synthesize_audio():
     modelo = request.json['modelo']
     audio_path = voice.sintetizar_voz(text, ELEVENLABS_API_KEY, modelo)
     
-
-    
     if audio_path:
         return send_file(audio_path, mimetype='audio/mpeg')
     else:
