@@ -1,124 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-time Object Detection with YOLOv8l</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis"></script>
-    <style>
-        video {
-            width: 100%;
-            height: auto;
-            border: 1px solid #ccc;
-        }
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-Time Object Detection</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      position: relative;
+      width: 640px;
+      height: 480px;
+    }
+    video, canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    video {
+      z-index: 1;
+    }
+    canvas {
+      z-index: 2;
+    }
+  </style>
 </head>
 <body>
-    <h1>Real-time Object Detection</h1>
-    <video id="video" autoplay playsinline></video>
-    <canvas id="canvas"></canvas>
+  <h1>Real-Time Object Detection</h1>
+  <div class="container">
+    <video id="webcam" autoplay playsinline></video>
+    <canvas id="overlay"></canvas>
+  </div>
+  <script>
+    const video = document.getElementById('webcam');
+    const canvas = document.getElementById('overlay');
+    const ctx = canvas.getContext('2d');
 
-    <script>
-        const modelPath = "{{ url_for('static', filename='real_models/best_web_model/model.json') }}"; // Ruta al modelo
-        let model, video, canvas, ctx;
-
-        // Función para cargar el modelo
-        async function loadModel() {
-            model = await tf.loadGraphModel(modelPath);
-            console.log("Modelo cargado correctamente.");
-            startCamera();
-        }
-
-        // Función para acceder a la cámara
-        async function startCamera() {
-            video = document.getElementById('video');
-            canvas = document.getElementById('canvas');
-            ctx = canvas.getContext('2d');
-
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            video.srcObject = stream;
-
-            video.onloadedmetadata = () => {
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                detectFrame();
-            };
-        }
-
-// Función para realizar la detección de objetos en cada frame
-async function detectFrame() {
-    tf.engine().startScope();
-
-    // Hacer la predicción sobre el frame actual
-    let input = tf.browser.fromPixels(video);
-
-    // Redimensionar la imagen a 640x640
-    input = tf.image.resizeBilinear(input, [640, 640]);
-
-    // Obtener la predicción del modelo usando execute() en lugar de executeAsync()
-    const prediction = model.execute(input.expandDims(0));
-
-    // Depurar la estructura de la predicción
-    console.log(prediction);  // Esto te ayudará a entender la estructura de la salida
-
-    // Dibujar las predicciones en el canvas
-    drawPredictions(prediction);
-
-    tf.engine().endScope();
-    requestAnimationFrame(detectFrame);
-}
-
-        // Función para dibujar las predicciones en el canvas
-        function drawPredictions(prediction) {
-    // Convertir el tensor a un array para manipularlo
-    const predArray = prediction.arraySync();
-
-    // Mostrar la estructura del tensor para depurar
-    console.log(predArray);
-
-    // Acceder a las predicciones (las cajas, clases y puntuaciones)
-    const boxes = predArray[0];  // Extraer las cajas (pueden estar en un formato [xmin, ymin, xmax, ymax])
-    const classIds = boxes.slice(0, 36);  // Extraer los IDs de las clases
-    const scores = boxes.slice(36);  // Las puntuaciones
-
-    // Limpiar el canvas antes de dibujar las nuevas predicciones
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Dibujar cada caja si la puntuación es mayor a un umbral (por ejemplo, 0.5)
-    for (let i = 0; i < boxes.length; i++) {
-        const box = boxes[i];
-        const [ymin, xmin, ymax, xmax] = box;  // Coordenadas de la caja [ymin, xmin, ymax, xmax]
-        const score = scores[i];
-
-        // Dibujar la caja solo si la puntuación es significativa
-        if (score > 0.5) {
-            const className = classNames[classIds[i]];  // Nombre de la clase basado en el ID
-
-            // Dibujar el cuadro delimitador en el canvas
-            ctx.beginPath();
-            ctx.rect(xmin * canvas.width, ymin * canvas.height, (xmax - xmin) * canvas.width, (ymax - ymin) * canvas.height);
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = 'red';
-            ctx.fillStyle = 'red';
-            ctx.stroke();
-
-            // Dibujar el nombre de la clase y la puntuación
-            ctx.font = '20px Arial';
-            ctx.fillText(`${className} ${Math.round(score * 100)}%`, xmin * canvas.width, ymin * canvas.height);
-        }
+    async function setupCamera() {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { width: 640, height: 480 },
+      });
+      video.srcObject = stream;
+      return new Promise((resolve) => {
+        video.onloadedmetadata = () => {
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          resolve(video);
+        };
+      });
     }
+
+    async function detectFrame() {
+  const predictions = await model.detect(video);
+  console.log(predictions);  // Agrega esta línea para inspeccionar el contenido de predictions
+  if (!Array.isArray(predictions)) {
+    console.error('Predictions is not an array:', predictions);
+    return;  // Detén la ejecución si no es un arreglo
+  }
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  predictions.forEach((prediction) => {
+    const [x, y, width, height] = prediction.bbox;
+    ctx.strokeStyle = '#00FF00';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, width, height);
+    ctx.fillStyle = '#00FF00';
+    ctx.font = '16px Arial';
+    ctx.fillText(
+      `${prediction.class} (${Math.round(prediction.score * 100)}%)`,
+      x,
+      y > 10 ? y - 5 : 10
+    );
+  });
+
+  requestAnimationFrame(detectFrame);
 }
 
-        // Cargar el modelo y comenzar la detección
-        loadModel();
-    </script>
+    async function main() {
+      await setupCamera();
+      video.play();
+      const model = await tf.loadGraphModel('/static/real_models/best_web_model/model.json');
+
+      console.log('Modelo cargado correctamente.');
+      detectFrame(model);
+    }
+
+    main();
+  </script>
 </body>
 </html>
