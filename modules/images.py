@@ -99,7 +99,7 @@ def upload_image():
                     if os_type == "Windows":
                         url = 'http://127.0.0.1:80/chat'
                     elif os_type == "Linux":
-                        url = 'https://everydai.ddns.net:443/chat'
+                        url = 'https://everyd-ai.ddns.net:443/chat'
                     else:
                         raise OSError(f"Sistema operativo no soportado: {os_type}")
                     chat_response = requests.post(
