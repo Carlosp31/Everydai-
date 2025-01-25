@@ -9,7 +9,6 @@ from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import TimeoutException
 import time
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
 def web_culinary(producto):
     print("Ejecutando Main")
@@ -45,29 +44,35 @@ def web_culinary(producto):
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, "vtex-product-summary-2-x-productBrand"))
         )
-        time.sleep(3)
+        time.sleep(5)
         ### EXTRAER INFORMACIÓN DE LOS PRIMEROS TRES PRODUCTOS ###
-        # Extraer información de los productos
         productos = driver.find_elements(By.CLASS_NAME, "vtex-product-summary-2-x-productBrand")
-        precios = driver.find_elements(By.CLASS_NAME, "olimpica-dinamic-flags-0-x-currencyContainer")
-        imagenes = driver.find_elements(By.CSS_SELECTOR, "img.vtex-product-summary-2-x-imageNormal")
 
-        for i in range(min(3, len(productos))):
+        # Iterar sobre los primeros tres productos
+        for i in range(min(3, len(productos))):  # Asegura que solo se iteren los primeros tres productos
             try:
                 producto_nombre = productos[i].text
-                producto_precio = precios[i].text.strip()
-                imagen_src = imagenes[i].get_attribute("src")
 
+                # Obtener el precio del producto
+                price_container = driver.find_elements(By.CLASS_NAME, "olimpica-dinamic-flags-0-x-currencyContainer")[i]
+                full_price = price_container.text.strip()
+                # Obtener la imagen del producto
+                imagen = driver.find_elements(By.CSS_SELECTOR, "img.vtex-product-summary-2-x-imageNormal")[i]
+                imagen_src = imagen.get_attribute("src")  # URL de la imagen
+
+                # Crear un diccionario con la información del producto
                 producto_info = {
                     "nombre": producto_nombre,
-                    "precio": producto_precio,
+                    "precio": full_price,
                     "imagen_url": imagen_src
                 }
+
+                # Agregar el producto a la lista
                 productos_lista.append(producto_info)
 
-            except (NoSuchElementException, IndexError) as e:
-                print(f"Error al extraer datos del producto {i + 1}: {e}")
-
+            except Exception as e:
+                print(f"No se pudo extraer información del producto {i + 1}.")
+                print(e)
 
         print("Extracción completada.")
         print(productos_lista)
@@ -78,4 +83,4 @@ def web_culinary(producto):
     finally:
         driver.quit()
         print("Navegador cerrado.")
-
+web_culinary("salsa de tomate")
