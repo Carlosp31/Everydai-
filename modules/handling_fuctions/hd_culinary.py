@@ -50,7 +50,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             response_2  = webscrp.web_culinary(producto)
             tool_outputs.append({
                 "tool_call_id": tool.id,
-                "output": "He encontrado algunos productos relacionados con tus busquedas"#json.dumps(response_2)
+                "output": "He encontrado algunos productos relacionados con tus busquedas. " #json.dumps(response_2)
             })
         print(run.status)
 
