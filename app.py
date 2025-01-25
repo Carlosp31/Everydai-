@@ -104,6 +104,9 @@ def realidad():
 @app.route('/realidadpro')
 def realidadpro():
     return render_template('realidadpro.html')
+@app.route('/realidadpro2')
+def realidadpro2():
+    return render_template('realidadpro2.html')
 
 @app.route('/pruebas')
 def pruebas():
@@ -155,7 +158,7 @@ def oauth2callback():
     }
     
     # Redirigir al dashboard
-    return render_template('dashboard.html')
+    return redirect('/')
 
 # Ruta para el chatbot que recibe el dominio seleccionado
 @app.route('/chat')
