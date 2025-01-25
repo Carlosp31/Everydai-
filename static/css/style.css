@@ -186,39 +186,104 @@ button:active {
     }
 }
 
-
+/* RECOMMENDATION BOX /////////////////////////////
 /* Estilos para el cuadro de recomendaciones */
 .recommendations-box {
     position: absolute;
     top: 20px;
     right: 15px;
-    width: 200px;
-    height: 200px;
-    background-color:#f2f2f2 ;
+    width: 300px;
+    height: 150px; /* Reducido inicialmente */
+    background-color: #f2f2f2;
     border-radius: 10px;
     padding: 15px;
     box-shadow: none;
     overflow-y: auto;
     border: 1px solid #ccc;
     color: #333;
+    transition: height 0.3s ease;  /* Transición para el cambio de tamaño */
+    overflow: hidden; /* Ocultar el contenido cuando se colapsa */
 }
+
+/* Estilo para cuando el cuadro está expandido */
+.recommendations-box.expanded {
+    height: 600px;  /* Ajusta el tamaño cuando está expandido */
+}
+
+/* Estilo para el encabezado */
 .recommendations-box h3 {
     text-align: center;
     color: #333;
     font-weight: bold;
 }
 
+/* Estilo para la lista de recomendaciones */
 .recommendations-box ul {
     list-style: none;
     padding: 0;
+    margin-top: 10px; /* Añadir espacio para que las recomendaciones no toquen el título */
+    height: 100%; /* Usamos todo el espacio disponible en el contenedor */
+    overflow-y: auto; /* Permitimos desplazamiento si la lista es más larga */
 }
 
+/* Estilo de los elementos de la lista */
 .recommendations-box ul li {
     margin-bottom: 10px;
     font-size: 14px;
     color: #555;
+    display: flex; /* Usamos flexbox para organizar la imagen y el texto */
+    align-items: center; /* Alinea la imagen y el texto */
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
+/* Estilo de los productos con nombre y precio */
+.producto-con-precio {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Asegura que la imagen y el texto se distribuyan bien */
+}
+
+/* Estilo de las imágenes dentro de los productos */
+.producto-imagen {
+    width: 50px; /* Tamaño pequeño de la imagen */
+    height: 50px;
+    object-fit: contain;
+    margin-right: 10px; /* Separación entre la imagen y el texto */
+}
+
+/* Estilo para el contenedor de la flecha */
+.arrow-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+/* Estilo de la flecha */
+.arrow {
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 4px;
+    margin: -7px 0 0px 7px;
+    vertical-align: middle;
+}
+
+.arrow.down {
+    transform: rotate(45deg); /* Flecha hacia abajo */
+}
+
+.arrow.up {
+    transform: rotate(-135deg); /* Flecha hacia arriba cuando se expande */
+}
+
+
+/*//////////////////////////// /////////////////////////////
+ ///////////////////////////// /////////////////////////////
 /* Estilo del popup */
 .popup {
     position: fixed;
