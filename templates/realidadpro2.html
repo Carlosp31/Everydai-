@@ -1,102 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Real-Time Object Detection</title>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      position: relative;
-      width: 640px;
-      height: 480px;
-    }
-    video, canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    video {
-      z-index: 1;
-    }
-    canvas {
-      z-index: 2;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Detection</title>
+    <style>
+        /* Establecemos un contenedor para centrar el video y el canvas */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        #video-container {
+            position: relative;
+            width: 640px;
+            height: 480px;
+        }
+
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script>
+        async function sendFrameToBackend(frame) {
+            const response = await fetch('/process_frame', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ image: frame })
+            });
+            const data = await response.json();
+            drawBoundingBoxes(data.bounding_boxes);
+        }
+
+        function drawBoundingBoxes(boundingBoxes) {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Limpiar el canvas antes de dibujar nuevas cajas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            boundingBoxes.forEach(box => {
+                ctx.beginPath();
+                ctx.rect(box.x, box.y, box.width, box.height);
+                ctx.strokeStyle = 'red';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                // Dibujar el nombre de la clase detectada
+                ctx.font = '16px Arial';
+                ctx.fillStyle = 'red';
+                ctx.fillText(box.class_name, box.x, box.y - 10); // Mostrar la clase encima del bounding box
+            });
+        }
+
+        async function captureFrame() {
+            const videoElement = document.getElementById('video');
+            const canvas = document.createElement('canvas');
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+            canvas.getContext('2d').drawImage(videoElement, 0, 0);
+            const image = canvas.toDataURL('image/jpeg');
+
+            sendFrameToBackend(image);
+        }
+
+        window.onload = () => {
+            const videoElement = document.getElementById('video');
+            navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+                videoElement.srcObject = stream;
+                videoElement.play();
+
+                setInterval(captureFrame, 1000); // Capture every 1000ms (1 second)
+            });
+        }
+    </script>
 </head>
 <body>
-  <h1>Real-Time Object Detection</h1>
-  <div class="container">
-    <video id="webcam" autoplay playsinline></video>
-    <canvas id="overlay"></canvas>
-  </div>
-  <script>
-    const video = document.getElementById('webcam');
-    const canvas = document.getElementById('overlay');
-    const ctx = canvas.getContext('2d');
-
-    async function setupCamera() {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: 640, height: 480 },
-      });
-      video.srcObject = stream;
-      return new Promise((resolve) => {
-        video.onloadedmetadata = () => {
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-          resolve(video);
-        };
-      });
-    }
-
-    async function detectFrame() {
-  const predictions = await model.detect(video);
-  console.log(predictions);  // Agrega esta línea para inspeccionar el contenido de predictions
-  if (!Array.isArray(predictions)) {
-    console.error('Predictions is not an array:', predictions);
-    return;  // Detén la ejecución si no es un arreglo
-  }
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  predictions.forEach((prediction) => {
-    const [x, y, width, height] = prediction.bbox;
-    ctx.strokeStyle = '#00FF00';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(x, y, width, height);
-    ctx.fillStyle = '#00FF00';
-    ctx.font = '16px Arial';
-    ctx.fillText(
-      `${prediction.class} (${Math.round(prediction.score * 100)}%)`,
-      x,
-      y > 10 ? y - 5 : 10
-    );
-  });
-
-  requestAnimationFrame(detectFrame);
-}
-
-    async function main() {
-      await setupCamera();
-      video.play();
-      const model = await tf.loadGraphModel('/static/real_models/best_web_model/model.json');
-
-      console.log('Modelo cargado correctamente.');
-      detectFrame(model);
-    }
-
-    main();
-  </script>
+    <div id="video-container">
+        <video id="video" autoplay></video>
+        <canvas id="canvas" width="640" height="480"></canvas>
+    </div>
 </body>
 </html>
+
+
