@@ -19,7 +19,6 @@ from google_auth_oauthlib.flow import Flow
 from typing_extensions import override
 from openai import AssistantEventHandler
 from ultralytics import YOLO  # Importa la librería YOLOv8
-import numpy as np
 
 
 # Cargar las variables de entorno del archivo .env
