@@ -33,7 +33,7 @@ def web_culinary(producto):
         print("Abriendo página de Olímpica...")
         
         # Espera activa para que el campo de búsqueda esté disponible
-        busqueda = WebDriverWait(driver, 10).until(
+        busqueda = WebDriverWait(driver, 50).until(
             EC.presence_of_element_located((By.XPATH, '//*[@placeholder="Busca por nombre, categoría…"]'))
         )
         busqueda.send_keys(producto)
@@ -41,7 +41,7 @@ def web_culinary(producto):
         print("Texto enviado correctamente al campo de búsqueda.")
         
         # Espera a que los resultados se carguen (ajusta el tiempo si es necesario)
-        WebDriverWait(driver, 10).until(
+        WebDriverWait(driver, 50).until(
             EC.presence_of_element_located((By.CLASS_NAME, "vtex-product-summary-2-x-productBrand"))
         )
         time.sleep(10)
@@ -52,10 +52,13 @@ def web_culinary(producto):
         for i in range(min(3, len(productos))):  # Asegura que solo se iteren los primeros tres productos
             try:
                 producto_nombre = productos[i].text
+                print(f"Nombre del producto {i + 1}: {producto_nombre}")
 
                 # Obtener el precio del producto
                 price_container = driver.find_elements(By.CLASS_NAME, "olimpica-dinamic-flags-0-x-currencyContainer")[i]
                 full_price = price_container.text.strip()
+                print(f"Precio concatenado: {full_price}")
+
                 # Obtener la imagen del producto
                 imagen = driver.find_elements(By.CSS_SELECTOR, "img.vtex-product-summary-2-x-imageNormal")[i]
                 imagen_src = imagen.get_attribute("src")  # URL de la imagen
@@ -75,7 +78,6 @@ def web_culinary(producto):
                 print(e)
 
         print("Extracción completada.")
-        print(productos_lista)
         return productos_lista  # Devolver la lista de productos extraídos
 
     except TimeoutException:
@@ -83,4 +85,3 @@ def web_culinary(producto):
     finally:
         driver.quit()
         print("Navegador cerrado.")
-web_culinary("salsa de tomate")
