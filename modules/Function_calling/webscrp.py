@@ -33,7 +33,7 @@ def web_culinary(producto):
         print("Abriendo página de Olímpica...")
         
         # Espera activa para que el campo de búsqueda esté disponible
-        busqueda = WebDriverWait(driver, 10).until(
+        busqueda = WebDriverWait(driver, 50).until(
             EC.presence_of_element_located((By.XPATH, '//*[@placeholder="Busca por nombre, categoría…"]'))
         )
         busqueda.send_keys(producto)
@@ -41,7 +41,7 @@ def web_culinary(producto):
         print("Texto enviado correctamente al campo de búsqueda.")
         
         # Espera a que los resultados se carguen (ajusta el tiempo si es necesario)
-        WebDriverWait(driver, 10).until(
+        WebDriverWait(driver, 50).until(
             EC.presence_of_element_located((By.CLASS_NAME, "vtex-product-summary-2-x-productBrand"))
         )
         time.sleep(10)
