@@ -9,8 +9,6 @@ jobs:
     runs-on: carlos
     steps:
       - uses: actions/checkout@v2
-      - name: Copy .env
-        run: cp ~/varnen/.env .
       - name: Copy client_secret
         run: cp ~/varnen/client_secret_web.json .
       - name: everydai

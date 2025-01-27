@@ -13,10 +13,14 @@ import requests  # Asegúrate de importar la biblioteca requests
 import modules.voice as voice
 import modules.images as images
 import modules.chat as chats
+import modules.computer_vision as cp
 import platform
 from google_auth_oauthlib.flow import Flow
 from typing_extensions import override
 from openai import AssistantEventHandler
+from ultralytics import YOLO  # Importa la librería YOLOv8
+
+
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
 cert_file = '/etc/letsencrypt/live/everyd-ai.ddns.net/fullchain.pem'
@@ -198,6 +202,12 @@ def synthesize_audio():
 @app.route('/upload-image', methods=['POST'])
 def handle_image():
     return images.upload_image()
+
+cv_model = YOLO('static/real_models/culinary.pt')  # Ruta del modelo en tu carpeta
+
+@app.route('/process_frame', methods=['POST'])
+def process_frame():
+   return cp.process_frame(cv_model)
 
 
 if __name__ == '__main__':
