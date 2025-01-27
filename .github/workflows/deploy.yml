@@ -13,6 +13,8 @@ jobs:
         run: cp ~/varnen/client_secret_web.json .
       - name: Create venv
         run: python3 -m venv venv
+      - name: Activate venv
+        run: source venv/bin/activate
       - name: Install requierements
         run: pip install -r requirements.txt
       - name: everydai
