@@ -13,8 +13,6 @@ jobs:
         run: cp ~/varnen/.env .
       - name: Copy client_secret
         run: cp ~/varnen/client_secret_web.json .
-      - name: copy venv
-        run: cp -r ~/varnen/venv . 
       - name: everydai
         run: sudo pm2 restart SERVER
         
