@@ -44,7 +44,7 @@ def web_culinary(producto):
         WebDriverWait(driver, 50).until(
             EC.presence_of_element_located((By.CLASS_NAME, "vtex-product-summary-2-x-productBrand"))
         )
-        time.sleep(10)
+        time.sleep(50)
         ### EXTRAER INFORMACIÓN DE LOS PRIMEROS TRES PRODUCTOS ###
         productos = driver.find_elements(By.CLASS_NAME, "vtex-product-summary-2-x-productBrand")
 
