@@ -14,7 +14,10 @@ jobs:
       - name: Copy client_secret
         run: cp ~/varnen/client_secret_web.json .
       - name: Install requierements
-        run: sudo pip install --break-system-packages -r requirements.txt
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
       - name: everydai
         run: sudo pm2 restart SERVER
         
