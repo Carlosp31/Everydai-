@@ -9,18 +9,15 @@ jobs:
     runs-on: carlos
     steps:
       - uses: actions/checkout@v2
+      - name: Copy .env
+        run: cp ~/varnen/.env .
       - name: Copy client_secret
         run: cp ~/varnen/client_secret_web.json .
-      - name: Create venv
-        run: python3 -m venv venv
-      - name: Activate venv
-        run: source venv/bin/activate
-      - name: Install requierements
-        run: pip install --break-system-packages -r requirements.txt
-      - name: Show site-packages path
+      - name: Create venv, install req
         run: |
-          source venv/bin/activate
-          python -c "import site; print(site.getsitepackages())"
+        python3 -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
       - name: everydai
         run: sudo pm2 restart SERVER
         
