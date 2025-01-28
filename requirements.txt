@@ -100,7 +100,6 @@ tzdata==2025.1
 ultralytics==8.3.68
 ultralytics-thop==2.0.14
 uritemplate==4.1.1
-urllib3==2.2.3
 webdriver-manager==4.0.2
 websocket-client==1.8.0
 Werkzeug==3.0.4
