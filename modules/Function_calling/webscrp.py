@@ -41,7 +41,7 @@ def web_culinary(producto):
         print("Texto enviado correctamente al campo de búsqueda.")
         
         # Espera a que los resultados se carguen (ajusta el tiempo si es necesario)
-        WebDriverWait(driver, 48).until(
+        WebDriverWait(driver, 49).until(
             EC.presence_of_element_located((By.CLASS_NAME, "vtex-product-summary-2-x-productBrand"))
         )
         time.sleep(50)
