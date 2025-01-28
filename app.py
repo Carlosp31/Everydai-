@@ -22,8 +22,8 @@ from openai import AssistantEventHandler
 
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
-cert_file = '/etc/letsencrypt/live/everyd-ai.ddns.net/fullchain.pem'
-key_file = '/etc/letsencrypt/live/everyd-ai.ddns.net/privkey.pem'
+cert_file = '/etc/letsencrypt/live/everydai.ddns.net/fullchain.pem'
+key_file = '/etc/letsencrypt/live/everydai.ddns.net/privkey.pem'
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'supersecretkey')
 
@@ -97,7 +97,7 @@ if current_os == 'Linux':
 else:
   CLIENT_SECRETS_FILE = "client_secret.json" 
 SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
-REDIRECT_URI = 'https://everyd-ai.ddns.net/oauth2callback'
+REDIRECT_URI = 'https://everydai.ddns.net/oauth2callback'
 
 
 @app.route('/realidad')
