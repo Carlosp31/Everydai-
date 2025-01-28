@@ -18,7 +18,6 @@ import platform
 from google_auth_oauthlib.flow import Flow
 from typing_extensions import override
 from openai import AssistantEventHandler
-from ultralytics import YOLO  # Importa la librería YOLOv8
 
 
 # Cargar las variables de entorno del archivo .env
@@ -203,11 +202,11 @@ def synthesize_audio():
 def handle_image():
     return images.upload_image()
 
-cv_model = YOLO('static/real_models/culinary.pt')  # Ruta del modelo en tu carpeta
+
 
 @app.route('/process_frame', methods=['POST'])
 def process_frame():
-   return cp.process_frame(cv_model)
+   return cp.process_frame()
 
 
 if __name__ == '__main__':

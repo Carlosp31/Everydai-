@@ -7,6 +7,7 @@ import cv2
 import torch
 from PIL import Image
 from flask import  request, jsonify
+cv_model = YOLO('static/real_models/culinary.pt')  # Ruta del modelo en tu carpeta
 def decode_image(data):
     # Decodificar imagen base64
     img_data = base64.b64decode(data.split(',')[1])
@@ -50,7 +51,7 @@ class_names_dict = {
     31: 'turmeric'
 }
 
-def process_frame(model):
+def process_frame():
     data = request.json
     image_data = data['image']
     
@@ -58,7 +59,7 @@ def process_frame(model):
     image = decode_image(image_data)
 
     # Realizar la predicción usando el modelo YOLOv8
-    results = model(image)  # Esto es la inferencia, puedes enviar la imagen directamente
+    results = cv_model(image)  # Esto es la inferencia, puedes enviar la imagen directamente
 
     # Extraer las cajas delimitadoras, clases y confidencias
     boxes = []
