@@ -198,6 +198,7 @@ def synthesize_audio():
 
 
 
+
 @app.route('/upload-image', methods=['POST'])
 def handle_image():
     return images.upload_image()
