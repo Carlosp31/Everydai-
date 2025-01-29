@@ -106,13 +106,14 @@ textarea#input-text:focus {
 /* Botones */
 .controls button {
     padding: 10px 20px;
-    margin: 5px;
+    margin: 10px;
     background-color: #007acc;  /* Azul VSCode */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    gap: 10px;
 }
 
 .controls button:hover {
@@ -308,8 +309,9 @@ button, .controls button, .sidebar a {
     color: white;
     border: none;
     padding: 10px 20px;
+    padding-bottom: 10px;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.2s ease;  /* Transición suave de color y tamaño */
 }
@@ -369,12 +371,12 @@ button:active, .controls button:active, .sidebar a:active {
 .control-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
 }
 /* Estilos para el botón de conversación */
 #microphone-button {
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 13px;
 }
 
 #subtitulos-container {
@@ -392,6 +394,27 @@ button:active, .controls button:active, .sidebar a:active {
     max-width: 600px; /* Define un ancho máximo en píxeles */
 }
 
+/* Ocultamos el input file original */
+#image-input {
+    display: none;
+  }
+  
+  /* Estilo para el nuevo botón que simula el input */
+  #image-input-label {
+    background-color: #007acc;  /* Azul VSCode */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;  /* Transición suave de color y tamaño */
+  }
+  
+  #image-input-label:hover {
+    background-color: #007acc; /* Color de fondo cuando el mouse pasa por encima */
+  }
+  
 /* Animación de parpadeo */
 @keyframes blink {
     0%, 100% { opacity: 1; }
@@ -418,4 +441,3 @@ button:active, .controls button:active, .sidebar a:active {
         width: 100%; /* Ajusta al ancho completo en pantallas pequeñas */
     }
 }
-
