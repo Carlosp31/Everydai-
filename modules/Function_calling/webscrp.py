@@ -49,7 +49,7 @@ def web_culinary(producto):
         productos = driver.find_elements(By.CLASS_NAME, "vtex-product-summary-2-x-productBrand")
 
         # Iterar sobre los primeros tres productos
-        for i in range(min(3, len(productos))):  # Asegura que solo se iteren los primeros tres productos
+        for i in range(min(5, len(productos))):  # Asegura que solo se iteren los primeros tres productos
             try:
                 producto_nombre = productos[i].text
                 print(f"Nombre del producto {i + 1}: {producto_nombre}")
