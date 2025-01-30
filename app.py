@@ -13,10 +13,13 @@ import requests  # Asegúrate de importar la biblioteca requests
 import modules.voice as voice
 import modules.images as images
 import modules.chat as chats
+import modules.computer_vision as cp
 import platform
 from google_auth_oauthlib.flow import Flow
 from typing_extensions import override
 from openai import AssistantEventHandler
+
+
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
 cert_file = '/etc/letsencrypt/live/everydai.ddns.net/fullchain.pem'
@@ -104,6 +107,9 @@ def realidad():
 @app.route('/realidadpro')
 def realidadpro():
     return render_template('realidadpro.html')
+@app.route('/realidadpro2')
+def realidadpro2():
+    return render_template('realidadpro2.html')
 
 @app.route('/pruebas')
 def pruebas():
@@ -155,7 +161,7 @@ def oauth2callback():
     }
     
     # Redirigir al dashboard
-    return render_template('dashboard.html')
+    return redirect('/')
 
 # Ruta para el chatbot que recibe el dominio seleccionado
 @app.route('/chat')
@@ -192,9 +198,16 @@ def synthesize_audio():
 
 
 
+
 @app.route('/upload-image', methods=['POST'])
 def handle_image():
     return images.upload_image()
+
+
+
+@app.route('/process_frame', methods=['POST'])
+def process_frame():
+   return cp.process_frame()
 
 
 if __name__ == '__main__':
