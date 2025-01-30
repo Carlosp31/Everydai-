@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy_carlos:
-    runs-on: carlosp
+    runs-on: carlos
     steps:
       - uses: actions/checkout@v2
       - name: Copy .env
@@ -17,9 +17,4 @@ jobs:
         run: cp -r ~/varnen/venv . 
       - name: everydai
         run: sudo pm2 restart SERVER
-        
-
-
-        
-        
 

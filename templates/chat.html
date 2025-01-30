@@ -20,7 +20,12 @@
     </div>
     
     <div id="recommendations-box" class="recommendations-box">
-        <h3>Recommendations:</h3>
+        <div class="header">
+            <h3>Recommendations:</h3>
+            <div id="toggle-arrow" class="arrow-container">
+                <div class="arrow down"></div> <!-- Flecha personalizada -->
+            </div>
+        </div>
         <ul id="recommendations-list"></ul>
     </div>
     <button id="download-button">Download Conversation</button>
@@ -62,7 +67,7 @@
             <img id="image-preview" alt="Your uploaded image will appear here" style="display: none; width: 300px; margin-top: 10px;">
         </div>
     </div>
-
+    <script src="../static/java/recommendations.js"></script>
     <script>
 
         function redirectToRealidad() {
@@ -203,16 +208,49 @@
             const recommendationsList = document.getElementById("recommendations-list");
             recommendationsList.innerHTML = '';  // Limpiar la lista existente
 
-            // Verificar si data.recipes es un array antes de recorrerlo
-            if (Array.isArray(data.recipes)) {
-                data.recipes.forEach(receta => {
-                    const listItem = document.createElement("li");
-                    listItem.innerHTML = `<a href="${receta.link}" target="_blank">${receta.title}</a>`;
-                    recommendationsList.appendChild(listItem);
-                });
-            } else {
-                recommendationsList.innerHTML = '<li>No se encontraron recomendaciones.</li>';
-            }
+        // Verificar si data.recipes es un array antes de recorrerlo
+        if (Array.isArray(data.recipes)) {
+            data.recipes.forEach(item => {
+                const listItem = document.createElement("li");
+
+                // Verificamos si el objeto tiene las llaves 'nombre' y 'precio'
+                if (item.nombre && item.precio) {
+                    // Si tiene 'nombre' y 'precio', mostramos el producto
+                    listItem.innerHTML = `<div class="producto">
+                                            <span class="producto-nombre">${item.nombre}</span> - 
+                                            <span class="producto-precio">${item.precio}</span>
+                                        </div>`;
+
+                    // Verificamos si también tiene la URL de la imagen
+                    if (item.imagen_url) {
+                        // Crear un elemento de imagen y asignarle la URL
+                        const imgElement = document.createElement("img");
+                        imgElement.src = item.imagen_url;
+                        imgElement.alt = item.nombre;
+                        imgElement.classList.add("producto-imagen");  // Añadir clase CSS
+
+                        // Añadir la miniatura de la imagen al `listItem`
+                        listItem.prepend(imgElement);  // Insertamos la imagen antes del texto
+                    }
+
+                    // Agregar una clase para dar estilo a los productos con nombre y precio
+                    listItem.classList.add("producto-con-precio");
+                } else if (item.link && item.title) {
+                    // Si tiene 'link' y 'title', mostramos la receta
+                    listItem.innerHTML = `<a href="${item.link}" target="_blank">${item.title}</a>`;
+                } else {
+                    // Si no tiene 'nombre' y 'precio' ni 'link' y 'title', mostramos un mensaje por defecto
+                    listItem.innerHTML = "Información no válida";
+                }
+
+                // Añadir cada item a la lista de recomendaciones
+                recommendationsList.appendChild(listItem);
+            });
+        } else {
+            recommendationsList.innerHTML = '<li>No se encontraron recomendaciones.</li>';
+        }
+
+
         })
         .catch(error => console.error('Error:', error));
     }
