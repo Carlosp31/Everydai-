@@ -7,7 +7,6 @@ import cv2
 import torch
 from PIL import Image
 from flask import  request, jsonify
-cv_model = YOLO('static/real_models/culinary.pt')  # Ruta del modelo en tu carpeta
 def decode_image(data):
     # Decodificar imagen base64
     img_data = base64.b64decode(data.split(',')[1])
@@ -15,46 +14,70 @@ def decode_image(data):
     return np.array(image)
 
 
+    
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-class_names_dict = {
-    0: 'bay_leaves',
-    1: 'beef',
-    2: 'bell_pepper',
-    3: 'cabbage',
-    4: 'carrot',
-    5: 'cauliflower',
-    6: 'chicken',
-    7: 'chickpeas',
-    8: 'coriander',
-    9: 'cucumber',
-    10: 'egg',
-    11: 'eggplant',
-    12: 'fish',
-    13: 'garlic',
-    14: 'ginger',
-    15: 'green_chili_pepper',
-    16: 'green_onion',
-    17: 'kumquat',
-    18: 'lemon',
-    19: 'mutton',
-    20: 'okra',
-    21: 'onion',
-    22: 'pork',
-    23: 'potato',
-    24: 'pumpkin',
-    25: 'radish',
-    26: 'salt',
-    27: 'shrimp',
-    28: 'small_pepper',
-    29: 'tofu',
-    30: 'tomato',
-    31: 'turmeric'
-}
+
 
 def process_frame():
     data = request.json
     image_data = data['image']
-    
+    domain = data['domain']
+    if domain == "fashion":
+        cv_model = YOLO('static/real_models/fashion.pt')
+        class_names_dict = {
+            0: 'belt',  
+            1: 'blazer', 
+            2: 'dress ' ,
+            3: 'flannel' , 
+            4: 'glasses'  ,
+            5: 'hat'  ,
+            6: 'jacket',  
+            7: 'pants ' ,
+            8: 'scarf'  ,
+            9: 'shoes'  ,
+            10: 'short'  ,
+            11: 'skirt'  ,
+            12: 'sweater' , 
+            13: 't-shirt'  ,
+            14: 'watch'  
+        }
+
+    if domain == "culinary":
+        cv_model = YOLO('static/real_models/culinary.pt')  # Ruta del modelo en tu carpeta
+        class_names_dict = {
+            0: 'bay_leaves',
+            1: 'beef',
+            2: 'bell_pepper',
+            3: 'cabbage',
+            4: 'carrot',
+            5: 'cauliflower',
+            6: 'chicken',
+            7: 'chickpeas',
+            8: 'coriander',
+            9: 'cucumber',
+            10: 'egg',
+            11: 'eggplant',
+            12: 'fish',
+            13: 'garlic',
+            14: 'ginger',
+            15: 'green_chili_pepper',
+            16: 'green_onion',
+            17: 'kumquat',
+            18: 'lemon',
+            19: 'mutton',
+            20: 'okra',
+            21: 'onion',
+            22: 'pork',
+            23: 'potato',
+            24: 'pumpkin',
+            25: 'radish',
+            26: 'salt',
+            27: 'shrimp',
+            28: 'small_pepper',
+            29: 'tofu',
+            30: 'tomato',
+            31: 'turmeric'
+        }
     # Decodificar la imagen
     image = decode_image(image_data)
 

@@ -67,7 +67,9 @@
     <script>
 
         function redirectToRealidad() {
-            window.location.href = "/realidadpro";
+            let selectedModel = '{{ domain }}';
+
+            window.location.href = `/realidadpro2?domain=${encodeURIComponent(selectedModel)}`;
         }
         document.addEventListener("DOMContentLoaded", function() {
             const microphoneButton = document.getElementById("microphone-button");
