@@ -33,17 +33,24 @@
         }
     </style>
     <script>
-        async function sendFrameToBackend(frame) {
-            const response = await fetch('/process_frame', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ image: frame })
-            });
-            const data = await response.json();
-            drawBoundingBoxes(data.bounding_boxes);
-        }
+        const params = new URLSearchParams(window.location.search);
+const domain = params.get("domain");
+console.log(domain); // Aquí puedes usarlo en la nueva página
+async function sendFrameToBackend(frame) {
+    const response = await fetch('/process_frame', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+            image: frame, 
+            domain: domain // Agregamos domain al JSON
+        })
+    });
+
+    const data = await response.json();
+    drawBoundingBoxes(data.bounding_boxes);
+}
 
         function drawBoundingBoxes(boundingBoxes) {
             const canvas = document.getElementById('canvas');
