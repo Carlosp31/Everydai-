@@ -42,16 +42,20 @@
         </div>
         <div id="chat-box" class="hidden"></div>
         <input type="text" id="user-input" placeholder="Chat with us...">
-        <button id="send-button">Send</button>
         
         <!-- Contenedor para controles, incluyendo el espectro de frecuencia -->
         <div class="control-container">
             <button id="microphone-button">Start Conversation</button>
-            <input type="file" id="image-input" accept="image/*">
+            <!-- Input file oculto -->
+            <!-- Botón que activa el input -->
+            <label for="image-input" id="image-input-label">Select Image</label>
             <button id="upload-button">Upload Image</button>
             <button id="camera-button">Open Camera</button>
+            <button id="send-button">Send</button>
             <button id="capture-button" style="display:none;">Capture</button>
+
         </div>
+        <input type="file" id="image-input" accept="image/*">
 
         <!-- Canvas para el espectro de frecuencias -->
         <canvas id="frequency-canvas"></canvas>
