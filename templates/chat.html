@@ -15,10 +15,6 @@
 <body>
     <button class ="redirect-button" onclick="redirectToRealidad()">Scan</button>
     <!-- Mostrar el modelo seleccionado dinámicamente -->
-    <div id="selected-model-display" class="selected-model-display">
-        {{ domain }}
-    </div>
-    
     <div id="recommendations-box" class="recommendations-box">
         <div class="header">
             <h3>Recommendations:</h3>
@@ -32,28 +28,26 @@
 
     <div class="chat-container">
         <h1>Chat with EverydAI</h1>
-        <div id="avatar-container" >
-            <div id="subtitulos-container"> </div>
+        <div id="selected-model-display" class="selected-model-display">
+            {{ domain }} <!-- Aquí se mostrará el modelo seleccionado -->
+        </div>
+        <div id="avatar-container">
+            <div id="subtitulos-container"></div>
             <div class="dots" id="dots">
                 <span></span>
                 <span></span>
                 <span></span>
-              </div>
+            </div>
         </div>
         <div id="chat-box" class="hidden"></div>
         <input type="text" id="user-input" placeholder="Chat with us...">
-        
-        <!-- Contenedor para controles, incluyendo el espectro de frecuencia -->
         <div class="control-container">
             <button id="microphone-button">Start Conversation</button>
-            <!-- Input file oculto -->
-            <!-- Botón que activa el input -->
             <label for="image-input" id="image-input-label">Select Image</label>
             <button id="upload-button">Upload Image</button>
             <button id="camera-button">Open Camera</button>
             <button id="send-button">Send</button>
             <button id="capture-button" style="display:none;">Capture</button>
-
         </div>
         <input type="file" id="image-input" accept="image/*">
 
@@ -71,7 +65,9 @@
     <script>
 
         function redirectToRealidad() {
-            window.location.href = "/realidadpro";
+            let selectedModel = '{{ domain }}';
+
+            window.location.href = `/realidadpro2?domain=${encodeURIComponent(selectedModel)}`;
         }
         document.addEventListener("DOMContentLoaded", function() {
             const microphoneButton = document.getElementById("microphone-button");
@@ -462,44 +458,63 @@
                 reader.readAsDataURL(file);
             };
             document.getElementById("download-button").onclick = function() {
-            const chatBox = document.getElementById("chat-box");
+    const chatBox = document.getElementById("chat-box");
+    const recommendationsList = document.getElementById("recommendations-list");
 
-            if (!chatBox || chatBox.children.length === 0) {
-                alert("No hay conversaciones disponibles para descargar.");
-                return;
+    if (!chatBox || chatBox.children.length === 0) {
+        alert("No hay conversaciones disponibles para descargar.");
+        return;
+    }
+
+    // Obtener el texto de la conversación
+    const conversationText = Array.from(chatBox.children)
+        .map(child => child.textContent.trim())
+        .join("\n\n");
+
+    // Obtener el texto de las recomendaciones
+    const recommendationsText = Array.from(recommendationsList.children)
+        .map(child => {
+            if (child.querySelector('a')) {
+                // Si es un enlace, obtener el texto y la URL
+                const link = child.querySelector('a');
+                return `${link.textContent}: ${link.href}`;
+            } else {
+                // Si no es un enlace, obtener el texto normal
+                return child.textContent.trim();
             }
+        })
+        .join("\n\n");
 
-            const conversationText = Array.from(chatBox.children)
-                .map(child => child.textContent.trim())
-                .join("\n\n");
+    // Combinar el texto de la conversación y las recomendaciones
+    const fullText = `Conversación:\n${conversationText}\n\nRecomendaciones:\n${recommendationsText}`;
 
-            // Verificar si hay texto para generar el PDF
-            if (!conversationText) {
-                alert("No hay contenido para generar el archivo PDF.");
-                return;
-            }
+    // Verificar si hay texto para generar el PDF
+    if (!fullText) {
+        alert("No hay contenido para generar el archivo PDF.");
+        return;
+    }
 
-            try {
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF();
+    try {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
 
-                const pageWidth = pdf.internal.pageSize.getWidth();
-                const margin = 10;
-                const maxLineWidth = pageWidth - margin * 2;
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const margin = 10;
+        const maxLineWidth = pageWidth - margin * 2;
 
-                pdf.setFont("Helvetica", "normal");
-                pdf.setFontSize(12);
+        pdf.setFont("Helvetica", "normal");
+        pdf.setFontSize(12);
 
-                const textLines = pdf.splitTextToSize(conversationText, maxLineWidth);
-                pdf.text(textLines, margin, margin + 10);
+        const textLines = pdf.splitTextToSize(fullText, maxLineWidth);
+        pdf.text(textLines, margin, margin + 10);
 
-                // Descargar el archivo
-                pdf.save("conversation.pdf");
-            } catch (error) {
-                console.error("Error al generar el PDF:", error);
-                alert("Ocurrió un error al generar el archivo PDF. Verifica la consola para más detalles.");
-            }
-        };
+        // Descargar el archivo
+        pdf.save("conversation_and_recommendations.pdf");
+    } catch (error) {
+        console.error("Error al generar el PDF:", error);
+        alert("Ocurrió un error al generar el archivo PDF. Verifica la consola para más detalles.");
+    }
+};
 
 
         });
