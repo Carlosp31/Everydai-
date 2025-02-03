@@ -58,7 +58,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
     <script type="text/javascript">
         const URL = "{{ url_for('static', filename='real_models/') }}";
-
+        const params = new URLSearchParams(window.location.search);
+const domain = params.get("domain");
+console.log(domain); // Aquí puedes usarlo en la nueva página
         let model, webcam, maxPredictions;
         const previousPositions = {};
         const detectedObjects = new Set();  // Almacena los objetos detectados
