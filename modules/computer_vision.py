@@ -23,7 +23,7 @@ def process_frame():
     image_data = data['image']
     domain = data['domain']
     if domain == "fashion":
-        cv_model = YOLO('static/real_models/fashion.pt')
+        cv_model = YOLO('static/real_models/fashion2.pt')
         class_names_dict = {
             0: 'belt',  
             1: 'blazer', 
