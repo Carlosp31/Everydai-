@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Object Detection</title>
     <style>
-        /* Establecemos un contenedor para centrar el video y el canvas */
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -21,6 +21,7 @@
             height: 480px;
         }
 
+
         #canvas {
             position: absolute;
             top: 0;
@@ -31,45 +32,61 @@
             width: 100%;
             height: 100%;
         }
+        .button-container {
+            position: absolute;
+            bottom: 10%;
+            
+        }
+
+        .button-container button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .button-container button:hover {
+            background-color: #0056b3;
+        }
     </style>
     <script>
+        let detectionInterval;
         const params = new URLSearchParams(window.location.search);
-const domain = params.get("domain");
-console.log(domain); // Aquí puedes usarlo en la nueva página
-async function sendFrameToBackend(frame) {
-    const response = await fetch('/process_frame', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-            image: frame, 
-            domain: domain // Agregamos domain al JSON
-        })
-    });
+        const domain = params.get("domain");
+        console.log(domain);
 
-    const data = await response.json();
-    drawBoundingBoxes(data.bounding_boxes);
-}
+        async function sendFrameToBackend(frame) {
+            const response = await fetch('/process_frame', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    image: frame, 
+                    domain: domain
+                })
+            });
+            const data = await response.json();
+            drawBoundingBoxes(data.bounding_boxes);
+        }
 
         function drawBoundingBoxes(boundingBoxes) {
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
-
-            // Limpiar el canvas antes de dibujar nuevas cajas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
             boundingBoxes.forEach(box => {
                 ctx.beginPath();
                 ctx.rect(box.x, box.y, box.width, box.height);
                 ctx.strokeStyle = 'red';
                 ctx.lineWidth = 3;
                 ctx.stroke();
-
-                // Dibujar el nombre de la clase detectada
                 ctx.font = '16px Arial';
                 ctx.fillStyle = 'red';
-                ctx.fillText(box.class_name, box.x, box.y - 10); // Mostrar la clase encima del bounding box
+                ctx.fillText(box.class_name, box.x, box.y - 10);
             });
         }
 
@@ -80,8 +97,18 @@ async function sendFrameToBackend(frame) {
             canvas.height = videoElement.videoHeight;
             canvas.getContext('2d').drawImage(videoElement, 0, 0);
             const image = canvas.toDataURL('image/jpeg');
-
             sendFrameToBackend(image);
+        }
+
+        function startDetection() {
+            if (!detectionInterval) {
+                detectionInterval = setInterval(captureFrame, 1000);
+            }
+        }
+
+        function stopDetection() {
+            clearInterval(detectionInterval);
+            detectionInterval = null;
         }
 
         window.onload = () => {
@@ -89,8 +116,6 @@ async function sendFrameToBackend(frame) {
             navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
                 videoElement.srcObject = stream;
                 videoElement.play();
-
-                setInterval(captureFrame, 1000); // Capture every 1000ms (1 second)
             });
         }
     </script>
@@ -98,9 +123,14 @@ async function sendFrameToBackend(frame) {
 <body>
     <div id="video-container">
         <video id="video" autoplay></video>
-        <canvas id="canvas" width="640" height="480"></canvas>
+        <canvas id="canvas" width="800" height="600"></canvas>
     </div>
+        <div class="button-container">
+            <button onclick="startDetection()">Iniciar Detección</button>
+            <button onclick="stopDetection()">Detener Detección</button>
+        </div>
 </body>
 </html>
+
 
 
