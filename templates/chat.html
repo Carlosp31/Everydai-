@@ -15,10 +15,6 @@
 <body>
     <button class ="redirect-button" onclick="redirectToRealidad()">Scan</button>
     <!-- Mostrar el modelo seleccionado dinámicamente -->
-    <div id="selected-model-display" class="selected-model-display">
-        {{ domain }}
-    </div>
-    
     <div id="recommendations-box" class="recommendations-box">
         <div class="header">
             <h3>Recommendations:</h3>
@@ -32,28 +28,26 @@
 
     <div class="chat-container">
         <h1>Chat with EverydAI</h1>
-        <div id="avatar-container" >
-            <div id="subtitulos-container"> </div>
+        <div id="selected-model-display" class="selected-model-display">
+            {{ domain }} <!-- Aquí se mostrará el modelo seleccionado -->
+        </div>
+        <div id="avatar-container">
+            <div id="subtitulos-container"></div>
             <div class="dots" id="dots">
                 <span></span>
                 <span></span>
                 <span></span>
-              </div>
+            </div>
         </div>
         <div id="chat-box" class="hidden"></div>
         <input type="text" id="user-input" placeholder="Chat with us...">
-        
-        <!-- Contenedor para controles, incluyendo el espectro de frecuencia -->
         <div class="control-container">
             <button id="microphone-button">Start Conversation</button>
-            <!-- Input file oculto -->
-            <!-- Botón que activa el input -->
             <label for="image-input" id="image-input-label">Select Image</label>
             <button id="upload-button">Upload Image</button>
             <button id="camera-button">Open Camera</button>
             <button id="send-button">Send</button>
             <button id="capture-button" style="display:none;">Capture</button>
-
         </div>
         <input type="file" id="image-input" accept="image/*">
 

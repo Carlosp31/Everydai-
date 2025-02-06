@@ -20,18 +20,19 @@ body {
 .chat-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Alinea horizontalmente al centro */
-    justify-content: center; /* Alinea verticalmente */
+    align-items: center;
+    justify-content: center;
     background: linear-gradient(-45deg, #000000, #1e1e1e, #005f99, #000000);
     background-size: 200% 200%;
     animation: gradient 10s ease infinite;
     padding: 30px;
     border-radius: 10px;
     box-shadow: none;
-    max-width: 800px;
-    margin: 40px auto; /* Centrado horizontal */
+    max-width: 700px;
+    margin: 40px auto;
     border: 1px solid #333;
     position: relative;
+    overflow: hidden; /* Evitar que los hijos se salgan del contenedor */
 }
 
 .hidden {
@@ -352,21 +353,25 @@ button:active {
 
 /* Mostrar el modelo seleccionado */
 .selected-model-display {
-    position: absolute;
-    top: 110px;
-    right: 400px; /* Misma ubicación inicial */
-    background-color: transparent; /* Fondo transparente */
-    color: #d4d4d4; /* Color de texto similar a "Chat with EverydAI" */
-    font-size: 2rem; /* Ajusta el tamaño del texto */
-    font-weight: bold; /* Negrita */
-    text-transform: capitalize; /* Capitalización similar */
-    letter-spacing: 1px; /* Espaciado entre letras */
-    padding: 0; /* Sin espacio adicional */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Sombra para dar profundidad */
-    z-index: 1000; /* Mantén la prioridad sobre otros elementos */
-    text-align: center; /* Centrar texto si el espacio lo permite */
+    position: relative; /* Cambiar a relativo */
+    top: 0; /* Reiniciar la posicón */
+    right: 0; /* Reiniciar la posición */
+    background-color: transparent;
+    color: #d4d4d4;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    padding: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    text-align: center;
+    margin-top: 10px; /* Espaciado superior */
+    white-space: nowrap; /* Evitar saltos de línea */
+    overflow: hidden; /* Ocultar el texto que desborda */
+    text-overflow: ellipsis; /* Mostrar puntos suspensivos si el texto es demasiado largo */
+    max-width: 100%; /* Limitar el ancho al contenedor padre */
 }
-
 
 /* Botones azules (sidebar y otros botones) con animaciones */
 button, .controls button, .sidebar a {
