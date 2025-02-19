@@ -1,76 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Object Detection</title>
+    <title>Detección en Tiempo Real</title>
     <style>
-        /* Establecemos un contenedor para centrar el video y el canvas */
         body {
+            font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 20px;
         }
-
         #video-container {
+            flex: 1;
             position: relative;
-            width: 640px;
-            height: 480px;
         }
-
+        #video {
+            width: 100%;
+            max-width: 640px;
+            border: 2px solid black;
+        }
         #canvas {
             position: absolute;
             top: 0;
             left: 0;
         }
-
-        video {
-            width: 100%;
-            height: 100%;
+        #detections-log {
+            width: 300px;
+            max-height: 500px;
+            overflow-y: auto;
+            border: 2px solid black;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        button {
+            display: block;
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
         }
     </style>
-    <script>
-        const params = new URLSearchParams(window.location.search);
-const domain = params.get("domain");
-console.log(domain); // Aquí puedes usarlo en la nueva página
-async function sendFrameToBackend(frame) {
-    const response = await fetch('/process_frame', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-            image: frame, 
-            domain: domain // Agregamos domain al JSON
-        })
-    });
+</head>
+<body>
 
-    const data = await response.json();
-    drawBoundingBoxes(data.bounding_boxes);
-}
+    <div id="video-container">
+        <video id="video" autoplay></video>
+        <canvas id="canvas"></canvas>
+        <button onclick="startDetection()">Iniciar Detección</button>
+        <button onclick="stopDetection()">Detener Detección</button>
+        <button onclick="sendDetectionsToServer()">Enviar Detecciones</button>
+    </div>
+
+    <div id="detections-log">
+        <h3>Detecciones</h3>
+        <ul id="detections-list"></ul>
+    </div>
+
+    <script>
+        let detectionInterval;
+        let detectedClasses = new Set(); // Guarda solo los nombres de las clases detectadas
+
+        const params = new URLSearchParams(window.location.search);
+        const domain = params.get("domain");
+
+        async function sendFrameToBackend(frame) {
+            const response = await fetch('/process_frame', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ image: frame, domain: domain })
+            });
+            const data = await response.json();
+            drawBoundingBoxes(data.bounding_boxes);
+            saveDetections(data.bounding_boxes);
+        }
 
         function drawBoundingBoxes(boundingBoxes) {
             const canvas = document.getElementById('canvas');
+            const video = document.getElementById('video');
             const ctx = canvas.getContext('2d');
-
-            // Limpiar el canvas antes de dibujar nuevas cajas
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
             boundingBoxes.forEach(box => {
                 ctx.beginPath();
                 ctx.rect(box.x, box.y, box.width, box.height);
                 ctx.strokeStyle = 'red';
                 ctx.lineWidth = 3;
                 ctx.stroke();
-
-                // Dibujar el nombre de la clase detectada
                 ctx.font = '16px Arial';
                 ctx.fillStyle = 'red';
-                ctx.fillText(box.class_name, box.x, box.y - 10); // Mostrar la clase encima del bounding box
+                ctx.fillText(box.class_name, box.x, box.y - 10);
             });
+        }
+        function saveDetections(boundingBoxes) {
+    let batchDetected = new Set(); // Guarda objetos únicos en el envío actual
+
+    boundingBoxes.forEach(box => {
+        if (!detectedClasses.has(box.class_name) || batchDetected.has(box.class_name)) { 
+            detectedClasses.add(box.class_name); // Agregar al histórico
+            batchDetected.add(box.class_name); // Agregar al batch del frame actual
+            updateDetectionList(box.class_name);
+        }
+    });
+}
+        function updateDetectionList(objectName) {
+            const ul = document.getElementById("detections-list");
+            const li = document.createElement("li");
+            li.textContent = objectName;
+            ul.appendChild(li);
         }
 
         async function captureFrame() {
@@ -80,27 +119,128 @@ async function sendFrameToBackend(frame) {
             canvas.height = videoElement.videoHeight;
             canvas.getContext('2d').drawImage(videoElement, 0, 0);
             const image = canvas.toDataURL('image/jpeg');
-
             sendFrameToBackend(image);
         }
 
+        function startDetection() {
+            if (!detectionInterval) {
+                detectedClasses.clear(); // Limpiar detecciones previas
+                document.getElementById("detections-list").innerHTML = "";
+                detectionInterval = setInterval(captureFrame, 1000);
+            }
+        }
+
+        function stopDetection() {
+            if (detectionInterval) {
+                clearInterval(detectionInterval);
+                detectionInterval = null;
+            }
+        }
+
+        async function sendDetectionsToServer() {
+    if (detectedClasses.size === 0) {
+        alert("No hay detecciones para enviar.");
+        return;
+    }
+
+    // Convertir los valores en objetos con el formato requerido
+    let message = Array.from(detectedClasses).map(item => ({
+        type: "text",
+        text: item
+    }));
+    try {
+        fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message: message, model: domain }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            speakResponse(data.text_response);
+        })
+            } catch (error) {
+                alert("⚠️ Error en la solicitud.");
+                console.error("⚠️ Error en la solicitud:", error);
+            }
+        }
+        function speakResponse(responseText) {
+                fetch('/synthesize-audio', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: responseText, modelo: domain  }),
+                })
+                .then(audioResponse => {
+                    if (audioResponse.ok) return audioResponse.blob();
+                    throw new Error('Error al obtener el audio.');
+                })
+                .then(audioBlob => {
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    const audio = new Audio(audioUrl);
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const analyser = audioContext.createAnalyser();
+                    const source = audioContext.createMediaElementSource(audio);
+                    source.connect(analyser);
+                    analyser.connect(audioContext.destination);
+
+                    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+                    function emitAudioLevels() {
+                        analyser.getByteFrequencyData(dataArray);
+                        const avgAmplitude = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+
+                        const event = new CustomEvent('audio-level', { detail: { amplitude: avgAmplitude / 255 } });
+                        window.dispatchEvent(event);
+                        if (!audio.paused && !audio.ended) {
+                            requestAnimationFrame(emitAudioLevels);
+                        }
+                    }
+
+                    audio.onplay = function() {
+                        const event2 = new CustomEvent('hablar');
+                        window.dispatchEvent(event2);
+                        isBotSpeaking = true;
+                        emitAudioLevels();
+                        if (recognition) recognition.stop(); 
+                        mostrarSubtitulosProgresivos(responseText, audio.duration, subtitulosContainer);
+                    };
+
+                    audio.onended = function() {
+                        const event3 = new CustomEvent('parar');
+                        window.dispatchEvent(event3);
+                        isBotSpeaking = false;
+                        if (isListening) recognition.start();
+                        const event = new CustomEvent('audio-level', { detail: { amplitude: 0 } });
+                        window.dispatchEvent(event);
+                        subtitulosContainer.style.display = "none"; 
+                    };
+
+                    audio.play();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    subtitulosContainer.style.display = "none"; // Ocultar subtítulos en caso de error
+                });
+            }
         window.onload = () => {
             const videoElement = document.getElementById('video');
             navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
                 videoElement.srcObject = stream;
                 videoElement.play();
-
-                setInterval(captureFrame, 1000); // Capture every 1000ms (1 second)
             });
-        }
+        };
     </script>
-</head>
-<body>
-    <div id="video-container">
-        <video id="video" autoplay></video>
-        <canvas id="canvas" width="640" height="480"></canvas>
-    </div>
+
 </body>
 </html>
+
+
+
+
+
+
 
 
