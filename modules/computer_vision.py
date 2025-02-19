@@ -104,5 +104,4 @@ def process_frame():
                     'class_name': class_name
                 })
 
-    # Devolver las cajas detectadas en formato JSON
     return jsonify({'bounding_boxes': boxes})
