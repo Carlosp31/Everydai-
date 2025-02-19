@@ -207,7 +207,6 @@ def handle_image():
 
 @app.route('/process_frame', methods=['POST'])
 def process_frame():
-   domain = request.args.get('domain')  # Obtener el dominio desde la URL
    return cp.process_frame()
 
 
