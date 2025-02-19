@@ -164,6 +164,7 @@ def pruebas():
 
 if current_os == 'Linux' and CLIENT_SECRETS_FILE == "client_secret_wmaicol.json":
    REDIRECT_URI='https://localhost/oauth2callback'
+   SCOPES = ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile", "openid"]
    
 flow = Flow.from_client_secrets_file(
     CLIENT_SECRETS_FILE,
@@ -179,14 +180,50 @@ def dashboard():
 
     # Flujo normal para Linux con autenticación requerida
     elif current_os == 'Linux':
-        if 'credentials' in session:
-            # Si el usuario ya está autenticado, redirigir al dashboard
-            return render_template('dashboard.html')
-        else:
-            # Iniciar el flujo de autenticación si no está autenticado
-            authorization_url, state = flow.authorization_url(access_type='offline')
+        ssl_context=('cert.pem', 'key.pem')
+        if 'credentials' not in session:
+            # Crear el flujo de autorización
+            flow = Flow.from_client_secrets_file(
+                CLIENT_SECRETS_FILE,
+                scopes=SCOPES,
+                redirect_uri=REDIRECT_URI
+            )
+
+            # Generar la URL de autorización
+            authorization_url, state = flow.authorization_url(prompt='consent')
+
+            # Guardar el estado en la sesión para verificarlo después
             session['state'] = state
+
             return redirect(authorization_url)
+            
+        credentials = Credentials.from_authorized_user_info(session['credentials'])
+
+        # Hacer la solicitud a la API de Google para obtener la información del perfil
+        response = requests.get(
+            'https://www.googleapis.com/oauth2/v2/userinfo',
+            headers={'Authorization': f'Bearer {credentials.token}'}
+        )
+        
+        # Convertir la respuesta JSON a un diccionario
+        user_info = response.json()
+        print("Datos recibidos de Google:", user_info)
+
+
+        # Verificar si el usuario ya existe en la base de datos
+        existing_user = Usuario.query.filter_by(provider_id=user_info['id']).first()
+        if not existing_user:
+            # Si el usuario no existe, crear uno nuevo
+            new_user = Usuario(
+                provider='google',
+                provider_id=user_info['id'],
+                name=user_info['name'],
+                email=user_info['email'],
+                profile_pic=user_info['picture']
+            )
+            db.session.add(new_user)
+            db.session.commit()
+
 
     # Para otros sistemas operativos, renderizar el dashboard directamente
     return render_template('dashboard.html')
@@ -194,14 +231,22 @@ def dashboard():
 # Ruta de callback OAuth2
 @app.route('/oauth2callback')    
 def oauth2callback():
+    # Recuperar el estado de la sesión
     state = session['state']
+
+    # Crear el flujo de autorización y obtener el token
+    flow = Flow.from_client_secrets_file(
+        CLIENT_SECRETS_FILE,
+        scopes=SCOPES,
+        redirect_uri=url_for('oauth2callback', _external=True)
+    )
+
+    # Obtener el token de acceso
     flow.fetch_token(authorization_response=request.url)
-    
-    # Guardar las credenciales en la sesión
+
+    # Almacenar las credenciales en la sesión
     credentials = flow.credentials
     session['credentials'] = credentials_to_dict(credentials)
-
-    # Redirigir al dashboard
     return redirect('/')
 
 # Ruta para el chatbot que recibe el dominio seleccionado
