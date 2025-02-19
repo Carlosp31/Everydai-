@@ -20,6 +20,13 @@ from typing_extensions import override
 from openai import AssistantEventHandler
 
 
+#### Librerias de base de datos ###############
+from flask_sqlalchemy import SQLAlchemy
+
+
+
+################################################
+
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
 cert_file = '/etc/letsencrypt/live/everydai.ddns.net/fullchain.pem'
@@ -27,6 +34,44 @@ key_file = '/etc/letsencrypt/live/everydai.ddns.net/privkey.pem'
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'supersecretkey')
 
+
+
+##################
+# Configuración de la base de datos MySQL
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:1004362482@localhost/flask_auth'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Desactiva la advertencia de modificación de objetos
+
+# Inicializar la base de datos
+db = SQLAlchemy(app)
+
+# Definir el modelo de la tabla 'users' según la estructura de tu base de datos
+class Usuario(db.Model):
+    __tablename__ = 'users'
+
+    id = db.Column(db.Integer, primary_key=True)
+    provider = db.Column(db.String(50), nullable=False)
+    provider_id = db.Column(db.String(255), unique=True, nullable=False)
+    name = db.Column(db.String(100))
+    email = db.Column(db.String(100), unique=True)
+    profile_pic = db.Column(db.String(255))
+    created_at = db.Column(db.TIMESTAMP, default=db.func.current_timestamp())
+
+    def __repr__(self):
+        return f'<Usuario {self.name}>'
+
+# Función para convertir las credenciales en un diccionario para almacenarlas en la sesión
+def credentials_to_dict(credentials):
+    """Convierte las credenciales en un diccionario para almacenarlas en la sesión."""
+    return {
+        'token': credentials.token,
+        'refresh_token': credentials.refresh_token,
+        'token_uri': credentials.token_uri,
+        'client_id': credentials.client_id,
+        'client_secret': credentials.client_secret,
+        'scopes': credentials.scopes
+    }
+
+#################
 # Cargar las variables de entorno
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 SERPAPI_KEY = os.getenv('SERPAPI_KEY')
@@ -90,6 +135,8 @@ if current_os == 'Linux':
     # Verificar cuál archivo de secretos usar
     if os.path.exists("client_secret_web.json"):
         CLIENT_SECRETS_FILE = "client_secret_web.json"
+    elif os.path.exists("client_secret_wmaicol.json"):
+        CLIENT_SECRETS_FILE = "client_secret_wmaicol.json"
     else:
         print("Advertencia: 'client_secret_web.json' no encontrado. Usando 'client_secret.json'.")
         CLIENT_SECRETS_FILE = "client_secret.json"
@@ -115,7 +162,9 @@ def realidadpro2():
 def pruebas():
     return render_template('pruebas_avatar.html')
 
-
+if current_os == 'Linux' and CLIENT_SECRETS_FILE == "client_secret_wmaicol.json":
+   REDIRECT_URI='https://localhost/oauth2callback'
+   
 flow = Flow.from_client_secrets_file(
     CLIENT_SECRETS_FILE,
     scopes=SCOPES,
@@ -129,7 +178,7 @@ def dashboard():
         return render_template('dashboard.html')  # Renderizar directamente el dashboard
 
     # Flujo normal para Linux con autenticación requerida
-    if current_os == 'Linux':
+    elif current_os == 'Linux':
         if 'credentials' in session:
             # Si el usuario ya está autenticado, redirigir al dashboard
             return render_template('dashboard.html')
@@ -150,16 +199,8 @@ def oauth2callback():
     
     # Guardar las credenciales en la sesión
     credentials = flow.credentials
-    session['credentials'] = {
-        'token': credentials.token,
-        'refresh_token': credentials.refresh_token,
-        'token_uri': credentials.token_uri,
-        'client_id': credentials.client_id,
-        'client_secret': credentials.client_secret,
-       'scopes': credentials.scopes,
-         'expires_at': credentials.expiry.strftime('%Y-%m-%d %H:%M:%S')
-    }
-    
+    session['credentials'] = credentials_to_dict(credentials)
+
     # Redirigir al dashboard
     return redirect('/')
 
@@ -207,7 +248,6 @@ def handle_image():
 
 @app.route('/process_frame', methods=['POST'])
 def process_frame():
-   domain = request.args.get('domain')  # Obtener el dominio desde la URL
    return cp.process_frame()
 
 
@@ -218,7 +258,10 @@ if __name__ == '__main__':
 
     # Configuración del puerto y SSL
     try:
-        if current_os == 'Linux':
+        if current_os == 'Linux' and CLIENT_SECRETS_FILE == "client_secret_wmaicol.json":
+            port = 443
+            ssl_context=('cert.pem', 'key.pem')
+        elif current_os == 'Linux':
             port = 443
             if os.path.exists(cert_file) and os.path.exists(key_file):
                 ssl_context = (cert_file, key_file)  # Usar SSL si los certificados están disponibles
