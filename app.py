@@ -143,7 +143,8 @@ if current_os == 'Linux':
 
 else:
   CLIENT_SECRETS_FILE = "client_secret.json" 
-SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
+#SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
+SCOPES = ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile", "openid"]
 REDIRECT_URI = 'https://everydai.ddns.net/oauth2callback'
 
 
