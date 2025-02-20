@@ -3,12 +3,17 @@ const cartButton = document.getElementById("cart-button");
 const cartDropdown = document.getElementById("cart-dropdown");
 const cartItemsList = document.getElementById("cart-items");
 
-// Función para añadir items al carrito
+// ✅ Función para añadir items al carrito y enviarlos al backend
 window.addToCart = function(item) {
-    cart.push(item);
-    updateCartDropdown();
+    cart.push(item);  // Añadir al carrito en el frontend
+    updateCartDropdown();  // Actualizar la interfaz
+
+    // Enviar el item al backend para guardarlo en la base de datos
+    const domainId = 1; // ⚠️ Asegúrate de obtener el dominio correcto
+    sendCartToBackend(domainId, item);
 };
 
+// ✅ Función para actualizar la visualización del carrito en el frontend
 function updateCartDropdown() {
     cartItemsList.innerHTML = ''; // Limpiar el contenido actual
 
@@ -30,66 +35,52 @@ function updateCartDropdown() {
     });
 }
 
-// Toggle del desplegable del carrito
+// ✅ Toggle del desplegable del carrito
 cartButton.onclick = function() {
     cartDropdown.style.display = cartDropdown.style.display === 'none' ? 'block' : 'none';
 };
 
-
-
+// ✅ Función para cargar el carrito desde la base de datos
 function loadCart(domainId) {
-    fetch(`/get_cart?domain_id=${domainId}`)
+    fetch(`/get_shopping_list?domain_id=${domainId}`)
     .then(response => response.json())
     .then(data => {
-        console.log("Carrito cargado:", data.items);
+        if (data.error) {
+            console.error("Error al obtener la lista de compras:", data.error);
+            return;
+        }
+
+        cart.length = 0; // Vaciar el carrito local
+        cart.push(...data.items); // Cargar los items desde la base de datos
+        updateCartDropdown(); // Refrescar la interfaz
     })
     .catch(error => console.error("Error al cargar el carrito:", error));
 }
 
-
-
-function sendCartToBackend(domainId, item) {
+function sendCartToBackend(domainName, item) {
     fetch('/add_to_cart', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            domain_id: domainId,
-            item: item
+        body: JSON.stringify({ 
+            domain_name: domainName, // Enviar domain_name en lugar de domain_id
+            item: item 
         })
     })
+
     .then(response => response.json())
     .then(data => {
-        console.log("Carrito actualizado:", data);
+        if (data.error) {
+            console.error("Error al añadir al carrito:", data.error);
+        } else {
+            console.log("Carrito actualizado en la base de datos:", data.items);
+        }
     })
     .catch(error => console.error("Error al enviar carrito:", error));
 }
 
-// Ejemplo: Añadir una manzana al carrito del usuario autenticado
-const domainId = 1;  // Identificador del dominio en el que trabaja el usuario
-const newItem = { nombre: "Manzana", precio: 2000 };
-
-sendCartToBackend(domainId, newItem);
-
-
+// ✅ Cargar el carrito al iniciar la página
 document.addEventListener("DOMContentLoaded", function () {
-    fetch("/get_shopping_list")
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                console.error("Error al obtener la lista de compras:", data.error);
-                return;
-            }
-
-            const cartContainer = document.getElementById("cart-items"); // Ajusta este ID según tu HTML
-
-            data.items.forEach(item => {
-                const itemElement = document.createElement("div");
-                itemElement.classList.add("cart-item");
-                itemElement.innerHTML = `
-                    <p>${item.nombre} - $${item.precio}</p>
-                `;
-                cartContainer.appendChild(itemElement);
-            });
-        })
-        .catch(error => console.error("Error al cargar el carrito:", error));
+    const domainId = 1; // ⚠️ Asegúrate de obtener el dominio correcto
+    loadCart(domainId);
 });
+

@@ -19,7 +19,7 @@ from google_auth_oauthlib.flow import Flow
 from typing_extensions import override
 from openai import AssistantEventHandler
 
-
+from sqlalchemy.exc import SQLAlchemyError
 #### Librerias de base de datos ###############
 from flask_sqlalchemy import SQLAlchemy
 
@@ -44,51 +44,79 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Desactiva la advertencia
 # Inicializar la base de datos
 db = SQLAlchemy(app)
 
-# Definir el modelo de la tabla 'users' según la estructura de tu base de datos
 class ShoppingList(db.Model):
-    __tablename__ = 'shopping_lists'
+    __tablename__ = "shopping_lists"  # Nombre correcto de la tabla
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    provider_id = db.Column(db.String(255), db.ForeignKey('users.provider_id'), nullable=False)  # Relación con Users
-    domain_id = db.Column(db.Integer, nullable=False)  # Dominio en el que se usa la lista
-    name = db.Column(db.String(100), nullable=False, default="Mi Lista")
-    items = db.Column(db.JSON, nullable=True, default=[])
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    id = db.Column(db.Integer, primary_key=True)
+    provider_id = db.Column(db.String(255), db.ForeignKey("users.provider_id"), nullable=False)
+    domain_name = db.Column(db.String(50), db.ForeignKey("domains.domain_name"), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
+    items = db.Column(db.JSON, nullable=False, default=[])  # Por defecto, una lista vacía
+    created_at = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp())
 
     @classmethod
-    def get_or_create(cls, provider_id, domain_id):
+    def get_or_create(cls, provider_id, domain_name):
         """Busca la lista de compras del usuario o la crea si no existe"""
-        shopping_list = cls.query.filter_by(provider_id=provider_id, domain_id=domain_id).first()
+        shopping_list = cls.query.filter_by(provider_id=provider_id, domain_name=domain_name).first()
         if not shopping_list:
-            shopping_list = cls(provider_id=provider_id, domain_id=domain_id, items=[])
+            shopping_list = cls(provider_id=provider_id, domain_name=domain_name, items=[])
             db.session.add(shopping_list)
             db.session.commit()
         return shopping_list
+    
+    
+
+    @classmethod
+    def get_or_create(cls, provider_id, domain_name):
+        try:
+            shopping_list = cls.query.filter_by(provider_id=provider_id, domain_name=domain_name).first()
+            
+            if not shopping_list:
+                shopping_list = cls(provider_id=provider_id, domain_name=domain_name, items=[])
+                db.session.add(shopping_list)
+
+            db.session.commit()
+            return shopping_list
+        
+        except SQLAlchemyError as e:
+            db.session.rollback()  # Deshacer cambios en caso de error
+            print(f"Error en get_or_create: {e}")  # Mostrar el error en consola
+            return None  # O manejarlo de otra forma
 
     def add_item(self, new_item):
         """Añadir un nuevo ítem sin sobrescribir la lista"""
-        if not self.items:
-            self.items = []
-        self.items.append(new_item)
+        items_list = self.items if self.items else []  # Si es None, inicializar como lista vacía
+        items_list.append(new_item)  
+        self.items = items_list  # Asignar la lista actualizada
         db.session.commit()
+
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
     if 'provider_id' not in session:
         return jsonify({"error": "Usuario no autenticado"}), 401
 
-    provider_id = session['provider_id']  # Tomar el usuario autenticado
+    provider_id = session['provider_id']
     data = request.json
-    domain_id = data.get('domain_id')
+    domain_name = data.get('domain_name')  # Cambia de domain_id a domain_name
     item = data.get('item')
 
-    if not domain_id or not item:
+    if not domain_name or not item:
         return jsonify({"error": "Faltan datos"}), 400
 
-    # Buscar o crear la lista de compras del usuario autenticado
-    shopping_list = ShoppingList.get_or_create(provider_id, domain_id)
-    shopping_list.add_item(item)
+    # Buscar o crear la lista de compras
+    shopping_list = ShoppingList.get_or_create(provider_id, domain_name)
 
-    return jsonify({"message": "Ítem agregado", "items": shopping_list.items})
+    # Añadir el nuevo ítem al carrito
+    if not isinstance(shopping_list.items, list):  # Asegurar que es una lista
+        shopping_list.items = []
+
+    shopping_list.items.append(item)
+    db.session.commit()
+
+    return jsonify({"items": shopping_list.items})
+
+
+
 class Usuario(db.Model):
     __tablename__ = 'users'
 
@@ -192,7 +220,7 @@ if current_os == 'Linux':
 else:
   CLIENT_SECRETS_FILE = "client_secret.json" 
 #SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
-SCOPES = ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile", "openid"]
+SCOPES = ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile", "openid", "https://www.googleapis.com/auth/cloud-platform"  ]
 REDIRECT_URI = 'https://everydai.ddns.net/oauth2callback'
 
 
@@ -282,21 +310,18 @@ def get_shopping_list():
         return jsonify({"error": "Usuario no autenticado"}), 401
 
     provider_id = session['provider_id']
-    selected_domain = session.get('selected_domain')
+    selected_domain = session.get('selected_domain')  # Dominio seleccionado
 
+    if not selected_domain:
+        return jsonify({"error": "No se ha seleccionado un dominio"}), 400
 
+    # Buscar la lista de compras del usuario en ese dominio
+    shopping_list = ShoppingList.query.filter_by(provider_id=provider_id, domain_name=selected_domain).first()
 
-    print("🔍 Provider ID en sesión:", provider_id)
-    print("🔍 Domain ID en sesión (convertido):", selected_domain)
+    if not shopping_list:
+        return jsonify({"items": []})  # Si no tiene lista, devolvemos vacío
 
-    shopping_list = ShoppingList.query.filter_by(provider_id=provider_id, domain_id=selected_domain).first()
-
-    if shopping_list is None:
-        print("❌ No se encontró lista de compras para el usuario.")
-        return jsonify({"items": []})  # Devolver lista vacía en lugar de error
-
-    print("✅ Lista de compras encontrada:", shopping_list.items)
-    return jsonify({"items": shopping_list.items})
+    return jsonify({"items": shopping_list.items if shopping_list.items else []}), 200
 
 
 
