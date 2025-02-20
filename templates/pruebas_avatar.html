@@ -352,5 +352,25 @@
     <div id="menuContainer2"></div>
     <!-- Contenedor para mostrar el volumen -->
     <div id="volumeDisplay"></div>
+    <!-- Botón para hacer log de los morph targets -->
+<button id="logMorphTargetsButton" style="position: absolute; top: 60px; right: 20px; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    📋 Log Morph Targets
+</button>
+
+<script>
+    // Función para registrar los valores actuales de los morph targets
+    function logMorphTargets() {
+        let morphValues = {};
+
+        Object.keys(morphTargets).forEach(targetName => {
+            morphValues[targetName] = parseFloat(morphTargets[targetName].value);
+        });
+
+        console.log("Valores actuales de los Morph Targets:", morphValues);
+    }
+
+    // Asignar la función al botón
+    document.getElementById('logMorphTargetsButton').addEventListener('click', logMorphTargets);
+</script>
 </body>
 </html>
