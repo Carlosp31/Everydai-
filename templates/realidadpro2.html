@@ -51,6 +51,7 @@
         <button onclick="startDetection()">Iniciar Detección</button>
         <button onclick="stopDetection()">Detener Detección</button>
         <button onclick="sendDetectionsToServer()">Enviar Detecciones</button>
+        <button id="microphone-button">Start Conversation</button>
     </div>
 
     <div id="detections-log">
@@ -59,6 +60,7 @@
     </div>
 
     <script>
+        const microphoneButton = document.getElementById("microphone-button");
         let detectionInterval;
         let detectedClasses = new Set(); // Guarda solo los nombres de las clases detectadas
 
@@ -149,22 +151,25 @@
         text: item
     }));
     try {
-        fetch('/chat', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ message: message, model: domain }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            speakResponse(data.text_response);
-        })
+        sendMessage(message)
             } catch (error) {
                 alert("⚠️ Error en la solicitud.");
                 console.error("⚠️ Error en la solicitud:", error);
             }
         }
+        function sendMessage(userInput) {
+        fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message: userInput, model: domain }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            speakResponse(data.text_response);
+        })
+    }
         function speakResponse(responseText) {
                 fetch('/synthesize-audio', {
                     method: 'POST',
@@ -188,43 +193,71 @@
 
                     const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-                    function emitAudioLevels() {
-                        analyser.getByteFrequencyData(dataArray);
-                        const avgAmplitude = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
-
-                        const event = new CustomEvent('audio-level', { detail: { amplitude: avgAmplitude / 255 } });
-                        window.dispatchEvent(event);
-                        if (!audio.paused && !audio.ended) {
-                            requestAnimationFrame(emitAudioLevels);
-                        }
-                    }
 
                     audio.onplay = function() {
-                        const event2 = new CustomEvent('hablar');
-                        window.dispatchEvent(event2);
                         isBotSpeaking = true;
-                        emitAudioLevels();
+
                         if (recognition) recognition.stop(); 
-                        mostrarSubtitulosProgresivos(responseText, audio.duration, subtitulosContainer);
                     };
 
                     audio.onended = function() {
-                        const event3 = new CustomEvent('parar');
-                        window.dispatchEvent(event3);
                         isBotSpeaking = false;
                         if (isListening) recognition.start();
-                        const event = new CustomEvent('audio-level', { detail: { amplitude: 0 } });
-                        window.dispatchEvent(event);
-                        subtitulosContainer.style.display = "none"; 
                     };
 
                     audio.play();
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    subtitulosContainer.style.display = "none"; // Ocultar subtítulos en caso de error
                 });
             }
+            let recognition;
+            let isListening = false;
+                    let isBotSpeaking = false; // Variable para saber si el bot está hablando
+                    function startVoiceRecognition() {
+                if (!recognition) {
+                    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                    recognition.lang = 'es-ES';
+                    recognition.continuous = false;
+                    recognition.interimResults = false;
+                }
+
+                recognition.onresult = function(event) {
+                    if (!isBotSpeaking) { // Solo procesar si el bot no está hablando
+                        const userInput = event.results[0][0].transcript;
+                        sendMessage(userInput);
+                    }
+                };
+
+                recognition.onerror = function(event) {
+                    console.error("Error en el reconocimiento de voz: ", event.error);
+                };
+
+                recognition.onend = function() {
+                    if (isListening && !isBotSpeaking) {
+                        recognition.start(); // Reiniciar reconocimiento si sigue en modo escucha
+                    }
+                };
+
+                recognition.start();
+
+            }
+
+            // Evento para iniciar o detener el reconocimiento de voz con el botón de 'Start Conversation'
+            microphoneButton.onclick = function() {
+                if (!isListening) {
+                    isListening = true;
+                    microphoneButton.innerText = "Stop Conversation";
+                    startVoiceRecognition();
+                } else {
+                    isListening = false;
+                    microphoneButton.innerText = "Start Conversation";
+                    if (recognition) {
+                        recognition.stop();
+                    }
+
+                }
+            };
         window.onload = () => {
             const videoElement = document.getElementById('video');
             navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
