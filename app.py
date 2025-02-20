@@ -45,6 +45,50 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Desactiva la advertencia
 db = SQLAlchemy(app)
 
 # Definir el modelo de la tabla 'users' según la estructura de tu base de datos
+class ShoppingList(db.Model):
+    __tablename__ = 'shopping_lists'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    provider_id = db.Column(db.String(255), db.ForeignKey('users.provider_id'), nullable=False)  # Relación con Users
+    domain_id = db.Column(db.Integer, nullable=False)  # Dominio en el que se usa la lista
+    name = db.Column(db.String(100), nullable=False, default="Mi Lista")
+    items = db.Column(db.JSON, nullable=True, default=[])
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    @classmethod
+    def get_or_create(cls, provider_id, domain_id):
+        """Busca la lista de compras del usuario o la crea si no existe"""
+        shopping_list = cls.query.filter_by(provider_id=provider_id, domain_id=domain_id).first()
+        if not shopping_list:
+            shopping_list = cls(provider_id=provider_id, domain_id=domain_id, items=[])
+            db.session.add(shopping_list)
+            db.session.commit()
+        return shopping_list
+
+    def add_item(self, new_item):
+        """Añadir un nuevo ítem sin sobrescribir la lista"""
+        if not self.items:
+            self.items = []
+        self.items.append(new_item)
+        db.session.commit()
+@app.route('/add_to_cart', methods=['POST'])
+def add_to_cart():
+    if 'provider_id' not in session:
+        return jsonify({"error": "Usuario no autenticado"}), 401
+
+    provider_id = session['provider_id']  # Tomar el usuario autenticado
+    data = request.json
+    domain_id = data.get('domain_id')
+    item = data.get('item')
+
+    if not domain_id or not item:
+        return jsonify({"error": "Faltan datos"}), 400
+
+    # Buscar o crear la lista de compras del usuario autenticado
+    shopping_list = ShoppingList.get_or_create(provider_id, domain_id)
+    shopping_list.add_item(item)
+
+    return jsonify({"message": "Ítem agregado", "items": shopping_list.items})
 class Usuario(db.Model):
     __tablename__ = 'users'
 
@@ -70,6 +114,10 @@ def credentials_to_dict(credentials):
         'client_secret': credentials.client_secret,
         'scopes': credentials.scopes
     }
+
+@app.route('/debug_session', methods=['GET'])
+def debug_session():
+    return jsonify(dict(session))  # Devuelve toda la sesión para verificar su contenido
 
 #################
 # Cargar las variables de entorno
@@ -210,7 +258,7 @@ def dashboard():
         user_info = response.json()
         print("Datos recibidos de Google:", user_info)
 
-
+        session['provider_id'] = user_info['id']  # Guardar provider_id en sesión
         # Verificar si el usuario ya existe en la base de datos
         existing_user = Usuario.query.filter_by(provider_id=user_info['id']).first()
         if not existing_user:
@@ -228,7 +276,30 @@ def dashboard():
 
     # Para otros sistemas operativos, renderizar el dashboard directamente
     return render_template('dashboard.html')
-    
+@app.route('/get_shopping_list', methods=['GET'])
+def get_shopping_list():
+    if 'provider_id' not in session:
+        return jsonify({"error": "Usuario no autenticado"}), 401
+
+    provider_id = session['provider_id']
+    selected_domain = session.get('selected_domain')
+
+
+
+    print("🔍 Provider ID en sesión:", provider_id)
+    print("🔍 Domain ID en sesión (convertido):", selected_domain)
+
+    shopping_list = ShoppingList.query.filter_by(provider_id=provider_id, domain_id=selected_domain).first()
+
+    if shopping_list is None:
+        print("❌ No se encontró lista de compras para el usuario.")
+        return jsonify({"items": []})  # Devolver lista vacía en lugar de error
+
+    print("✅ Lista de compras encontrada:", shopping_list.items)
+    return jsonify({"items": shopping_list.items})
+
+
+
 # Ruta de callback OAuth2
 @app.route('/oauth2callback')    
 def oauth2callback():
