@@ -89,12 +89,9 @@
     <canvas id="canvas"></canvas>
 </div>
 <div class="buttons-container">
-    <button onclick="startDetection()">Iniciar Detección</button>
-    <button onclick="stopDetection()">Detener Detección</button>
-    <button onclick="sendDetectionsToServer()">Enviar Detecciones</button>
-    <button id="microphone-button">Start Conversation</button>
-    <button onclick="toggleCamera()">Cambiar Cámara</button>
-
+    <button onclick="startDetection()">Start</button>
+    <button onclick="stopDetection()">stop</button>
+    <button id="microphone-button">Talk</button>
 </div>
 <div id="detections-log">
     <h3>Detecciones</h3>
@@ -179,10 +176,7 @@
                 clearInterval(detectionInterval);
                 detectionInterval = null;
             }
-        }
-
-        async function sendDetectionsToServer() {
-    if (detectedClasses.size === 0) {
+            if (detectedClasses.size === 0) {
         alert("No hay detecciones para enviar.");
         return;
     }
@@ -301,11 +295,6 @@
                 }
             };
             let useBackCamera = true;
-
-function toggleCamera() {
-    useBackCamera = !useBackCamera;
-    startCamera();
-}
 
 function startCamera() {
     const videoElement = document.getElementById('video');
