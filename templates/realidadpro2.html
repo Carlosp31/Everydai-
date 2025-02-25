@@ -93,6 +93,8 @@
     <button onclick="stopDetection()">Detener Detección</button>
     <button onclick="sendDetectionsToServer()">Enviar Detecciones</button>
     <button id="microphone-button">Start Conversation</button>
+    <button onclick="toggleCamera()">Cambiar Cámara</button>
+
 </div>
 <div id="detections-log">
     <h3>Detecciones</h3>
@@ -298,13 +300,30 @@
 
                 }
             };
-        window.onload = () => {
-            const videoElement = document.getElementById('video');
-            navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-                videoElement.srcObject = stream;
-                videoElement.play();
-            });
-        };
+            let useBackCamera = true;
+
+function toggleCamera() {
+    useBackCamera = !useBackCamera;
+    startCamera();
+}
+
+function startCamera() {
+    const videoElement = document.getElementById('video');
+    const constraints = {
+        video: { facingMode: useBackCamera ? "environment" : "user" }
+    };
+
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then(stream => {
+            videoElement.srcObject = stream;
+        })
+        .catch(error => {
+            console.error("Error al acceder a la cámara:", error);
+        });
+}
+
+// Llamar a la función al cargar la página
+window.onload = startCamera;
     </script>
 
 </body>
