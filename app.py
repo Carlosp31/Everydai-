@@ -37,9 +37,11 @@ app.secret_key = os.getenv('SECRET_KEY', 'supersecretkey')
 
 
 ##################
-# Configuración de la base de datos MySQL
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:1004362482@localhost/flask_auth'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Desactiva la advertencia de modificación de objetos
+load_dotenv()
+
+# Configurar la conexión a la base de datos usando variables de entorno
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqlconnector://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Desactivar advertencias
 
 # Inicializar la base de datos
 db = SQLAlchemy(app)
@@ -70,7 +72,7 @@ class ShoppingList(db.Model):
     def get_or_create(cls, provider_id, domain_name):
         try:
             shopping_list = cls.query.filter_by(provider_id=provider_id, domain_name=domain_name).first()
-            
+            print(f"Shpping list: {shopping_list}")
             if not shopping_list:
                 shopping_list = cls(provider_id=provider_id, domain_name=domain_name, items=[])
                 db.session.add(shopping_list)
@@ -99,6 +101,8 @@ def add_to_cart():
     data = request.json
     domain_name = data.get('domain_name')  # Cambia de domain_id a domain_name
     item = data.get('item')
+    print(f"data: {data}")
+    print(f"item: {item}")
 
     if not domain_name or not item:
         return jsonify({"error": "Faltan datos"}), 400
@@ -120,7 +124,8 @@ def add_to_cart():
 class Usuario(db.Model):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db
+    .Integer, primary_key=True)
     provider = db.Column(db.String(50), nullable=False)
     provider_id = db.Column(db.String(255), unique=True, nullable=False)
     name = db.Column(db.String(100))
