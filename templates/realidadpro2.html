@@ -1,91 +1,104 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detección en Tiempo Real</title>
-    <style>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin: 20px;
+        height: auto;
+        background: linear-gradient(-45deg, #000000, #1e1e1e, #005f99, #000000);
+        background-size: 200% 200%;
+        animation: gradient 10s ease infinite;
+    }
+    @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    #video-container {
+        flex: 1;
+        position: relative;
+        max-width: 640px;
+        width: 100%;
+        text-align: center;
+    }
+    #video {
+        width: 100%;
+        border: 2px solid black;
+    }
+    #canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    #detections-log {
+        width: 100%;
+        max-width: 300px;
+        max-height: 500px;
+        overflow-y: auto;
+        border: 2px solid black;
+        padding: 10px;
+        background-color: #f9f9f9;
+        margin-top: 20px;
+    }
+    .buttons-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        margin-top: 20px;
+    }
+    button {
+        background-color: rgba(0, 122, 204, 0.8);
+        color: white;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 30px;
+        border: none;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 200px;
+        text-align: center;
+    }
+    button:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+    }
+    @media (max-width: 768px) {
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin: 20px;
-            height: calc(100vh - 40px);
-            background: linear-gradient(-45deg, #000000, #1e1e1e, #005f99, #000000);
-            background-size: 200% 200%;
-            animation: gradient 10s ease infinite;
+            flex-direction: column;
+            align-items: center;
         }
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        #video-container {
-            flex: 1;
-            position: relative;
-        }
-        #video {
-            width: 100%;
-            max-width: 640px;
-            border: 2px solid black;
-        }
-        #canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .buttons-container {
+            flex-direction: column;
+            align-items: center;
         }
         #detections-log {
-            width: 300px;
-            max-height: 500px;
-            overflow-y: auto;
-            border: 2px solid black;
-            padding: 10px;
-            background-color: #f9f9f9;
+            width: 90%;
         }
-
-        .buttons-container {
-            position: absolute;
-            bottom: 20px; /* Posición al pie del contenedor de video */
-            display: flex;
-            flex-direction: column; /* Organización vertical */
-            align-items: center; /* Alineación central */
-            gap: 10px;
-        }
-        button {
-            background-color: rgba(0, 122, 204, 0.8);
-            color: white;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 30px;
-            border: none;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 200px; /* Ancho uniforme para todos los botones */
-        }
-        button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
-
-    <div id="video-container">
-        <video id="video" autoplay></video>
-        <canvas id="canvas"></canvas>
-    </div>
+<div id="video-container">
+    <video id="video" autoplay></video>
+    <canvas id="canvas"></canvas>
+</div>
+<div class="buttons-container">
     <button onclick="startDetection()">Iniciar Detección</button>
     <button onclick="stopDetection()">Detener Detección</button>
     <button onclick="sendDetectionsToServer()">Enviar Detecciones</button>
     <button id="microphone-button">Start Conversation</button>
-    <div id="detections-log">
-        <h3>Detecciones</h3>
-        <ul id="detections-list"></ul>
-    </div>
-
+</div>
+<div id="detections-log">
+    <h3>Detecciones</h3>
+    <ul id="detections-list"></ul>
+</div>
+<body>
     <script>
         const microphoneButton = document.getElementById("microphone-button");
         let detectionInterval;
