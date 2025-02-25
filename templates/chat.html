@@ -212,11 +212,11 @@
 
                 // Verificamos si el objeto tiene las llaves 'nombre' y 'precio'
                 if (item.nombre && item.precio) {
-                    // Si tiene 'nombre' y 'precio', mostramos el producto
                     listItem.innerHTML = `<div class="producto">
-                                            <span class="producto-nombre">${item.nombre}</span> - 
-                                            <span class="producto-precio">${item.precio}</span>
-                                        </div>`;
+                            <span class="producto-nombre">${item.nombre}</span> - 
+                            <span class="producto-precio">${item.precio}</span>
+                            <button onclick="addToCart({nombre: '${item.nombre}', precio: '${item.precio}'})">Add to cart</button>
+                        </div>`;
 
                     // Verificamos si también tiene la URL de la imagen
                     if (item.imagen_url) {
@@ -255,32 +255,6 @@
     }
 }
 
-            const cart = [];
-            const cartButton = document.getElementById("cart-button");
-            const cartDropdown = document.getElementById("cart-dropdown");
-            const cartItemsList = document.getElementById("cart-items");
-
-            // Función para añadir items al carrito
-            window.addToCart = function(item) {
-            cart.push(item);
-            updateCartDropdown();
-            };
-            function updateCartDropdown() {
-                // Limpiar el contenido actual
-                cartItemsList.innerHTML = '';
-
-                // Añadir cada link al desplegable
-                cart.forEach(item => {
-                    const listItem = document.createElement("li");
-                    listItem.textContent = item.title; // Mostrar el título
-                    listItem.onclick = () => window.open(item.link, "_blank"); // Abrir enlace en nueva pestaña
-                    cartItemsList.appendChild(listItem);
-                });
-            }
-            // Toggle del desplegable del carrito
-            cartButton.onclick = function() {
-                cartDropdown.style.display = cartDropdown.style.display === 'none' ? 'block' : 'none';
-            }
 
             // Mostrar las recomendaciones en el cuadro de recomendaciones
             const recommendationsList = document.getElementById("recommendations-list");
@@ -553,6 +527,7 @@
 
         });
     </script>
+    <script src="../static/java/cartshop.js"></script>
 
     <!-- Aquí agregamos el popup -->
     <div id="popup" class="popup hidden"></div>
