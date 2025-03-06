@@ -89,10 +89,9 @@
     <canvas id="canvas"></canvas>
 </div>
 <div class="buttons-container">
-    <button onclick="startDetection()">Iniciar Detección</button>
-    <button onclick="stopDetection()">Detener Detección</button>
-    <button onclick="sendDetectionsToServer()">Enviar Detecciones</button>
-    <button id="microphone-button">Start Conversation</button>
+    <button onclick="startDetection()">Start</button>
+    <button onclick="stopDetection()">stop</button>
+    <button id="microphone-button">Talk</button>
 </div>
 <div id="detections-log">
     <h3>Detecciones</h3>
@@ -177,10 +176,7 @@
                 clearInterval(detectionInterval);
                 detectionInterval = null;
             }
-        }
-
-        async function sendDetectionsToServer() {
-    if (detectedClasses.size === 0) {
+            if (detectedClasses.size === 0) {
         alert("No hay detecciones para enviar.");
         return;
     }
@@ -298,13 +294,25 @@
 
                 }
             };
-        window.onload = () => {
-            const videoElement = document.getElementById('video');
-            navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-                videoElement.srcObject = stream;
-                videoElement.play();
-            });
-        };
+            let useBackCamera = true;
+
+function startCamera() {
+    const videoElement = document.getElementById('video');
+    const constraints = {
+        video: { facingMode: useBackCamera ? "environment" : "user" }
+    };
+
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then(stream => {
+            videoElement.srcObject = stream;
+        })
+        .catch(error => {
+            console.error("Error al acceder a la cámara:", error);
+        });
+}
+
+// Llamar a la función al cargar la página
+window.onload = startCamera;
     </script>
 
 </body>
