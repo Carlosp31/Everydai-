@@ -174,7 +174,7 @@ def main4():
     options.add_argument("--no-sandbox")  
     options.add_argument("--disable-dev-shm-usage")  
     options.add_argument("--disable-extensions")  
-
+    
     # Iniciar el driver de Chrome con las opciones
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
@@ -224,3 +224,40 @@ def main4():
     finally:
         driver.quit()  # Cerrar el navegador al finalizar
 
+
+def main5():
+
+    print("Ejecutando Main")
+    producto="camisa"
+
+    # Configuración para el modo headless
+    options = Options()
+    options.add_argument("--headless")  # Ejecuta el navegador sin interfaz gráfica
+    options.add_argument("--disable-gpu")  # Deshabilita la GPU para mejorar la compatibilidad
+    options.add_argument("--no-sandbox")  # Evita problemas en sistemas Linux
+    options.add_argument("--disable-dev-shm-usage")  # Optimiza para entornos de bajo rendimiento
+    options.add_argument("--disable-extensions")  # Deshabilita extensiones para evitar conflictos
+
+    # Iniciar el controlador de Chrome con las opciones
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
+    driver.get("https://co.hm.com/")
+
+    productos_lista = []  # Lista donde se almacenarán los productos extraídos
+
+    try:
+        ### REALIZAR BÚSQUEDA DEL PRODUCTO ###
+        print("Abriendo página de HM..")
+        
+        busqueda = WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@placeholder="Buscar productos"]'))
+        )
+        busqueda.send_keys(producto)
+        busqueda.send_keys(Keys.RETURN)  # Simula la tecla Enter
+        print("Texto enviado correctamente al campo de búsqueda.")
+
+    except Exception as e:
+        print(f"❌ Error en la ejecución: {str(e)}")
+
+    finally:
+        driver.quit()  # Cerrar el navegador al finalizar
