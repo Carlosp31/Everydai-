@@ -208,6 +208,69 @@ class EventHandler(AssistantEventHandler):
 # and stream the response.
 ####################################################
 
+class Domain(db.Model):
+    __tablename__ = "domains"
+    id = db.Column(db.Integer, primary_key=True)
+    domain_name = db.Column(db.String(100), unique=True, nullable=False)
+    description = db.Column(db.Text)
+
+class Inventory(db.Model):
+    __tablename__ = "inventories"  # Asegurar que coincide con la tabla en la DB
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)  # Cambiado de provider_id a user_id
+    domain_id = db.Column(db.Integer, db.ForeignKey("domains.id"), nullable=False)  # Cambiado de domain_name a domain_id
+    items = db.Column(db.JSON, nullable=True, default=[])  
+    created_at = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp())
+
+    @classmethod
+    def get_or_create(cls, provider_id, domain_name):
+        """Busca el inventario del usuario o lo crea si no existe"""
+        try:
+            inventory = cls.query.filter_by(provider_id=provider_id, domain_name=domain_name).first()
+            if not inventory:
+                inventory = cls(provider_id=provider_id, domain_name=domain_name, items={})
+                db.session.add(inventory)
+            
+            db.session.commit()
+            return inventory
+        
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error en get_or_create: {e}")
+            return None
+
+###############################################
+@app.route('/get_inventory', methods=['GET'])
+def get_inventory():
+    if 'provider_id' not in session:
+        return jsonify({"error": "Usuario no autenticado"}), 401
+
+    provider_id = session['provider_id']
+    selected_domain = session.get('selected_domain')
+
+    if not selected_domain:
+        return jsonify({"error": "No se ha seleccionado un dominio"}), 400
+
+    user = Usuario.query.filter_by(provider_id=provider_id).first()
+    if not user:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    domain = Domain.query.filter_by(domain_name=selected_domain).first()
+    if not domain:
+        return jsonify({"error": "Dominio no encontrado"}), 404
+
+    inventory = Inventory.query.filter_by(user_id=user.id, domain_id=domain.id).first()
+    
+    print(f"User ID: {user.id}, Selected Domain: {selected_domain}")
+    print(f"Inventory Found: {inventory.items if inventory else 'No Inventory'}")
+
+    if not inventory:
+        return jsonify({"items": []})
+
+    return jsonify({"items": inventory.items}), 200
+
+
 ########################################################
 
 current_os = platform.system()

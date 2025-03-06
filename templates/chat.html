@@ -29,6 +29,13 @@
     <div id="cart-dropdown" style="display:none;">
         <ul id="cart-items"></ul>
     </div>
+    <button id="inventory-button">Inventory</button>
+    <div id="inventory-dropdown" style="display:none;">
+        <ul id="inventory-items"></ul>
+    </div>
+    
+    <script src="../static/java/inventories.js"></script>
+    
 
 
     <div class="chat-container">
@@ -215,7 +222,7 @@
                     listItem.innerHTML = `<div class="producto">
                             <span class="producto-nombre">${item.nombre}</span> - 
                             <span class="producto-precio">${item.precio}</span>
-                            <button onclick="addToCart({nombre: '${item.nombre}', precio: '${item.precio}'})">Add to cart</button>
+                            <button onclick="addToCart({nombre: '${item.nombre}', precio: '${item.precio}'})">Add to list</button>
                         </div>`;
 
                     // Verificamos si también tiene la URL de la imagen
@@ -527,7 +534,8 @@
 
         });
     </script>
-    <script src="../static/java/cartshop.js"></script>
+    <!-- <script src="../static/java/cartshop.js"></script> -->
+
 
     <!-- Aquí agregamos el popup -->
     <div id="popup" class="popup hidden"></div>
