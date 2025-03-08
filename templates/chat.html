@@ -34,7 +34,18 @@
     <div class="chat-container">
         <h1>Chat with EverydAI</h1>
         <div id="selected-model-display" class="selected-model-display">
-            {{ domain }} <!-- Aquí se mostrará el modelo seleccionado -->
+            <span class="emoji">
+                {% if domain == "Cooking" %}
+                    🍽️
+                {% elif domain == "fashion" %}
+                    👔
+                {% elif domain == "Fitness" %}
+                    🏃
+                {% else %}
+                    🌐
+                {% endif %}
+            </span>
+            {{ domain }}
         </div>
         <div id="avatar-container">
             <div id="subtitulos-container"></div>
@@ -567,7 +578,7 @@
         // Definir la ruta del modelo en función del dominio
         let modelPath;
         switch (domain) {
-            case 'culinary':
+            case 'Cooking':
                 modelPath = '{{ url_for("static", filename="models/avatar1.glb") }}';
                 animationpath = '{{ url_for("static", filename="animations/animationschef.glb") }}';
                 break;
@@ -575,7 +586,7 @@
                 modelPath = '{{ url_for("static", filename="models/avatar3.glb") }}';
                 animationpath = '{{ url_for("static", filename="animations/animationsfashion.glb") }}';
                 break;
-            case 'gym':
+            case 'Fitness':
                 modelPath = '{{ url_for("static", filename="models/avatar2.glb") }}';
                 animationpath = '{{ url_for("static", filename="animations/animationsgym.glb") }}';
                 break;

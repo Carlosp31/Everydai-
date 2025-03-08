@@ -4,7 +4,8 @@ body {
     margin: 0;
     padding: 20px;
     color: #c9c9c9; /* Texto gris claro */
-    background: linear-gradient(-45deg, #000000, #1e1e1e, #005f99, #000000);
+    background: linear-gradient(-45deg, #cccccc, #0077cc, #0099ff, #0077cc);
+
     background-size: 200% 200%;
     animation: gradient 10s ease infinite;
 }
@@ -15,14 +16,19 @@ body {
     100% { background-position: 0% 50%; }
 }
 
-
+.emoji {
+    font-size: 3rem; /* Ajusta el tamaño según lo necesites */
+}
 /* Contenedor principal */
 .chat-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(-45deg, #000000, #1e1e1e, #005f99, #000000);
+    background: linear-gradient(-45deg, #cccccc, #0077cc, #0099ff, #0077cc);
+
+
+
     background-size: 200% 200%;
     animation: gradient 10s ease infinite;
     padding: 30px;

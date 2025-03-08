@@ -354,7 +354,7 @@ def oauth2callback():
 @app.route('/chat')
 def chat():
     domain = request.args.get('domain', '')  # Obtener el dominio desde la URL
-    if domain not in ['culinary', 'fashion', 'gym']:
+    if domain not in ['Cooking', 'fashion', 'Fitness']:
         return "Dominio no válido", 400  # Validar el dominio
 
     # Almacenar el dominio seleccionado en la sesión
