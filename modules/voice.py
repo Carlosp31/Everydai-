@@ -61,7 +61,7 @@ def sintetizar_voz(texto, api_key, modelo):
         os.remove(audio_path)
     
     # Selección del modelo de voz
-    voz = voz_hombre if modelo == "gym" else voz_mujer
+    voz = voz_hombre if modelo == "Fitness" else voz_mujer
     
     # URL de la API
     url = "https://api.elevenlabs.io/v1/text-to-speech/" + voz
