@@ -7,7 +7,7 @@
         align-items: center;
         margin: 20px;
         height: auto;
-        background: linear-gradient(-45deg, #000000, #1e1e1e, #005f99, #000000);
+        background: linear-gradient(-45deg, #cccccc, #0077cc, #0099ff, #0077cc);
         background-size: 200% 200%;
         animation: gradient 10s ease infinite;
     }
@@ -164,18 +164,21 @@
         }
 
         function startDetection() {
-            if (!detectionInterval) {
-                detectedClasses.clear(); // Limpiar detecciones previas
-                document.getElementById("detections-list").innerHTML = "";
-                detectionInterval = setInterval(captureFrame, 1000);
-            }
-        }
+    if (!detectionInterval) {
+        startCamera()
+        detectedClasses.clear();
+        document.getElementById("detections-list").innerHTML = "";
+        detectionInterval = setInterval(captureFrame, 1000);
+
+    }
+}
 
         function stopDetection() {
             if (detectionInterval) {
                 clearInterval(detectionInterval);
                 detectionInterval = null;
             }
+            stopCamera(); // Ahora la cámara se apaga correctamente
             if (detectedClasses.size === 0) {
         alert("No hay detecciones para enviar.");
         return;
@@ -295,15 +298,17 @@
                 }
             };
             let useBackCamera = true;
+            let videoStream = null; // Se declara la variable globalmente
 
 function startCamera() {
     const videoElement = document.getElementById('video');
     const constraints = {
-        video: { facingMode: useBackCamera ? "environment" : "user" }
+        video: { facingMode: "environment" }
     };
 
-    navigator.mediaDevices.getUserMedia(constraints)
+    return navigator.mediaDevices.getUserMedia(constraints)
         .then(stream => {
+            videoStream = stream; // Guardamos el stream en la variable global
             videoElement.srcObject = stream;
         })
         .catch(error => {
@@ -311,8 +316,14 @@ function startCamera() {
         });
 }
 
-// Llamar a la función al cargar la página
-window.onload = startCamera;
+function stopCamera() {
+    if (videoStream) {
+        videoStream.getTracks().forEach(track => track.stop()); // Detiene la cámara
+        videoStream = null; // Se limpia la variable
+    }
+    document.getElementById('video').srcObject = null; // Limpia el video
+}
+
     </script>
 
 </body>
