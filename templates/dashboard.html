@@ -76,12 +76,26 @@ loader.load('{{ url_for("static", filename="models/avatar3.glb") }}', function(g
     model1.rotation.y = 0;
     model1.rotation.x = 0;
 
-    // Animar el modelo 1
-    function animate() {
-        requestAnimationFrame(animate);
-        renderer.render(scene, camera);
-    }
-    animate();
+        // Aplicar morph targets al rostro
+        model1.traverse((child) => {
+        if (child.isMesh && child.name === 'Wolf3D_Head') {
+            const morphs = {
+                browInnerUp: 0.17,
+                eyeSquintLeft: 0.4,
+                eyeSquintRight: 0.44,
+                noseSneerLeft: 0.17,
+                noseSneerRight: 0.14,
+                mouthPressLeft: 0.61,
+                mouthPressRight: 0.41
+            };
+
+            Object.keys(morphs).forEach((key) => {
+                if (child.morphTargetDictionary[key] !== undefined) {
+                    child.morphTargetInfluences[child.morphTargetDictionary[key]] = morphs[key];
+                }
+            });
+        }
+    });
 
 
 // Cargar la animación desde animationschef.glb para avatar1
@@ -122,13 +136,34 @@ loader.load('{{ url_for("static", filename="models/avatar2.glb") }}', function(g
     model2.rotation.y = 0;
     model2.rotation.x = 0;
 
+    // Aplicar morph targets al rostro
+    model2.traverse((child) => {
+        if (child.isMesh && child.name === 'Wolf3D_Head') {
+            const morphs = {
+                browInnerUp: 0.17,
+                eyeSquintLeft: 0.4,
+                eyeSquintRight: 0.44,
+                noseSneerLeft: 0.17,
+                noseSneerRight: 0.14,
+                mouthPressLeft: 0.61,
+                mouthPressRight: 0.41
+            };
+
+            Object.keys(morphs).forEach((key) => {
+                if (child.morphTargetDictionary[key] !== undefined) {
+                    child.morphTargetInfluences[child.morphTargetDictionary[key]] = morphs[key];
+                }
+            });
+        }
+    });
+
     // Cargar la animación desde animationsgym.glb
     let animations2;
     const animationLoader2 = new THREE.GLTFLoader();
     animationLoader2.load('{{ url_for("static", filename="animations/animationsgym.glb") }}', function(gltf) {
         animations2 = gltf.animations;
 
-        // Buscar la animación llamada "pose" (o la animación que deseas aplicar)
+        // Buscar la animación llamada "pose"
         const gymAnimation = animations2.find(animation => animation.name === "pose");
 
         if (gymAnimation) {
@@ -136,20 +171,21 @@ loader.load('{{ url_for("static", filename="models/avatar2.glb") }}', function(g
             gymAnimation.tracks = gymAnimation.tracks.filter(track => !track.name.includes('.position'));
 
             // Crear un Action de animación y reproducirla
-            const mixer = new THREE.AnimationMixer(model2);  // Usamos model2 porque es el avatar2
+            const mixer = new THREE.AnimationMixer(model2);
             const action = mixer.clipAction(gymAnimation);
             action.fadeIn(0.5).play();
 
             // Animar la escena con la animación
             function animate() {
                 requestAnimationFrame(animate);
-                mixer.update(0.01);  // Actualizar la animación
+                mixer.update(0.01);
                 renderer.render(scene, camera);
             }
             animate();
         }
     });
 });
+
 
 // Cargar el tercer modelo 3D (avatar3) y su animación (animationsfashion.glb)
 let model3;
@@ -160,7 +196,26 @@ loader.load('{{ url_for("static", filename="models/avatar1.glb") }}', function(g
     model3.position.set(-1.2, 0, 0);
     model3.rotation.y = 0;
     model3.rotation.x = 0;
+    // Aplicar morph targets al rostro
+    model3.traverse((child) => {
+        if (child.isMesh && child.name === 'Wolf3D_Head') {
+            const morphs = {
+                browInnerUp: 0.17,
+                eyeSquintLeft: 0.4,
+                eyeSquintRight: 0.44,
+                noseSneerLeft: 0.17,
+                noseSneerRight: 0.14,
+                mouthPressLeft: 0.61,
+                mouthPressRight: 0.41
+            };
 
+            Object.keys(morphs).forEach((key) => {
+                if (child.morphTargetDictionary[key] !== undefined) {
+                    child.morphTargetInfluences[child.morphTargetDictionary[key]] = morphs[key];
+                }
+            });
+        }
+    });
     // Cargar la animación desde animationsfashion.glb
     let animations3;
     const animationLoader3 = new THREE.GLTFLoader();
