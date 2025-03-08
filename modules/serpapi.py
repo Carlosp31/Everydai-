@@ -46,11 +46,11 @@ def buscar_resultados_en_serpapi(query, model):
 
     try:
         # Ajusta la consulta según el modelo seleccionado
-        if model == 'culinary':
+        if model == 'Cooking':
             search_query = f"Recetas con {query}"
         elif model == 'fashion':
             search_query = f"Outfits with {query}"
-        elif model == 'gym':
+        elif model == 'Fitness':
             search_query = f"Gym exercises using {query}"
         else:
             return f"Modelo {model} no soportado."
@@ -68,7 +68,7 @@ def buscar_resultados_en_serpapi(query, model):
         # Para el modelo culinario, usamos 'recipes_results', pero para otros modelos
         # podrían necesitarse diferentes campos en los resultados
         
-        if model == 'culinary':
+        if model == 'Cooking':
             return result.get("recipes_results", [])
         else:
 
