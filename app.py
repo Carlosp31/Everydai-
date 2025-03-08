@@ -254,15 +254,10 @@ flow = Flow.from_client_secrets_file(
 )
 @app.route('/')
 def dashboard():
-    user_agent = request.headers.get('User-Agent')
-    if "Mobile" in user_agent:
-        ruta_dash = "dash_mobile.html"
-    else:
-        ruta_dash = "dashboard.html"
     # Verificar si está en Linux y el archivo de secretos es "client_secret.json"
     if current_os == 'Linux' and CLIENT_SECRETS_FILE == "client_secret.json":
         print("Sin autenticación requerida en Linux con 'client_secret.json'.")
-        return render_template(ruta_dash)  # Renderizar directamente el dashboard
+        return render_template("dashboard.html")  # Renderizar directamente el dashboard
 
     # Flujo normal para Linux con autenticación requerida
     elif current_os == 'Linux':
@@ -312,7 +307,7 @@ def dashboard():
 
 
     # Para otros sistemas operativos, renderizar el dashboard directamente
-    return render_template(ruta_dash)
+    return render_template("dashboard.html")
 @app.route('/get_shopping_list', methods=['GET'])
 def get_shopping_list():
     if 'provider_id' not in session:
