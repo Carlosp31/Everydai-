@@ -252,6 +252,7 @@ flow = Flow.from_client_secrets_file(
     scopes=SCOPES,
     redirect_uri=REDIRECT_URI
 )
+@app.route('/')
 def dashboard():
     # Verificar si está en Linux y el archivo de secretos es "client_secret.json"
     if current_os == 'Linux' and CLIENT_SECRETS_FILE == "client_secret.json":
