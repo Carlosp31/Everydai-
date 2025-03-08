@@ -42,7 +42,7 @@ def process_frame():
             14: 'watch'  
         }
 
-    if domain == "culinary":
+    if domain == "Cooking":
         cv_model = YOLO('static/real_models/culinary.pt')  # Ruta del modelo en tu carpeta
         class_names_dict = {
             0: 'bay_leaves',
