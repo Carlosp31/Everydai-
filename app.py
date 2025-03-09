@@ -317,10 +317,15 @@ flow = Flow.from_client_secrets_file(
 )
 @app.route('/')
 def dashboard():
+    user_agent = request.headers.get('User-Agent')
+    if "Mobile" in user_agent:  # Verifica si el navegador es móvil
+        dash_ruta = 'dash_mobile.html'  # Devuelve la versión móvil
+    else:
+        dash_ruta = 'dashboard.html'  # Devuelve la versión de escritorio
     # Verificar si está en Linux y el archivo de secretos es "client_secret.json"
     if current_os == 'Linux' and CLIENT_SECRETS_FILE == "client_secret.json":
         print("Sin autenticación requerida en Linux con 'client_secret.json'.")
-        return render_template('dashboard.html')  # Renderizar directamente el dashboard
+        return render_template(dash_ruta)  # Renderizar directamente el dashboard
 
     # Flujo normal para Linux con autenticación requerida
     elif current_os == 'Linux':
@@ -370,7 +375,7 @@ def dashboard():
 
 
     # Para otros sistemas operativos, renderizar el dashboard directamente
-    return render_template('dashboard.html')
+    return render_template(dash_ruta)
 @app.route('/get_shopping_list', methods=['GET'])
 def get_shopping_list():
     if 'provider_id' not in session:
@@ -417,7 +422,7 @@ def oauth2callback():
 @app.route('/chat')
 def chat():
     domain = request.args.get('domain', '')  # Obtener el dominio desde la URL
-    if domain not in ['culinary', 'fashion', 'gym']:
+    if domain not in ['Cooking', 'fashion', 'Fitness']:
         return "Dominio no válido", 400  # Validar el dominio
 
     # Almacenar el dominio seleccionado en la sesión

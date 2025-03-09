@@ -103,13 +103,13 @@ def chat_post():
     
     
     ####################################################
-    if selected_model == 'culinary':  
+    if selected_model == 'Cooking':  
         response, response_2 = domains.chat_response(selected_model, user_input, client, thread_idf=thread_culinary.id, assistant_idf =assistant_culinary_id)
 
     elif selected_model == 'fashion':  
         response, response_2 = domains.chat_response(selected_model, user_input, client, thread_idf=thread_fashion.id, assistant_idf =assistant_fashion_id)
         ####################################################
-    elif selected_model == 'gym':  
+    elif selected_model == 'Fitness':  
         response, response_2  = domains.chat_response(selected_model, user_input, client, thread_idf=thread_gym.id, assistant_idf =assistant_gym_id)
 
     else:
