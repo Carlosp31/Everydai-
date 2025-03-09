@@ -14,16 +14,13 @@ def decode_image(data):
     return np.array(image)
 
 
-    
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
 
 def process_frame():
     data = request.json
     image_data = data['image']
     domain = data['domain']
     if domain == "fashion":
-        cv_model = YOLO('static/real_models/fashion_100.pt')
+        cv_model = YOLO('static/real_models/fashion2.pt')
         class_names_dict = {
             0: 'belt',  
             1: 'blazer', 
@@ -92,7 +89,7 @@ def process_frame():
             x_center, y_center, width, height = box.xywh[0]
             confidence = box.conf[0]  # Confianza
             class_id = int(box.cls[0])  # ID de clase (convierte a entero)
-            if confidence > 0.5:  # Umbral de confianza
+            if confidence > 0.3:  # Umbral de confianza
                 class_name = class_names_dict.get(class_id, 'unknown')  # Obtener el nombre de la clase usando el ID
                 boxes.append({
                     'x': int(x_center - width / 2),
