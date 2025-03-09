@@ -238,7 +238,9 @@ def realidadpro():
 @app.route('/realidadpro2')
 def realidadpro2():
     return render_template('realidadpro2.html')
-
+@app.route('/realidadpro3')
+def realidadpro3():
+    return render_template('realidadpro3.html')
 @app.route('/pruebas')
 def pruebas():
     return render_template('pruebas_avatar.html')
