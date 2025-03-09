@@ -104,9 +104,9 @@ def chat_response(model, user_input, client, thread_idf, assistant_idf):
         else:
             print("No se encontró un mensaje del asistente.")
     elif run.status == "requires_action":
-       if model=="culinary":
+       if model=="Cooking":
             response, response_2 = hd_culinary.hd_culinary(user_input, client, thread_idf, assistant_idf, run)
-       elif model=="gym":
+       elif model=="Fitness":
             response, response_2 = hd_gym.hd_gym(user_input, client, thread_idf, assistant_idf, run)
        elif model=="fashion":
             response, response_2 = hd_fashion.hd_fashion(user_input, client, thread_idf, assistant_idf, run)

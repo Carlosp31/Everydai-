@@ -13,6 +13,11 @@
     <title>Chat with EverydAI</title>
 </head>
 <body>
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <p class="loading-text">Loading</p>
+    </div>
+<div class="content" id="content"></div>
     <button class ="redirect-button" onclick="redirectToRealidad()">Scan</button>
     <!-- Mostrar el modelo seleccionado dinámicamente -->
     <div id="recommendations-box" class="recommendations-box">
@@ -41,7 +46,18 @@
     <div class="chat-container">
         <h1>Chat with EverydAI</h1>
         <div id="selected-model-display" class="selected-model-display">
-            {{ domain }} <!-- Aquí se mostrará el modelo seleccionado -->
+            <span class="emoji">
+                {% if domain == "Cooking" %}
+                    🍽️
+                {% elif domain == "fashion" %}
+                    👔
+                {% elif domain == "Fitness" %}
+                    🏃
+                {% else %}
+                    🌐
+                {% endif %}
+            </span>
+            {{ domain }}
         </div>
         <div id="avatar-container">
             <div id="subtitulos-container"></div>
@@ -73,9 +89,18 @@
             <img id="image-preview" alt="Your uploaded image will appear here" style="display: none; width: 300px; margin-top: 10px;">
         </div>
     </div>
+</div>    
     <script src="../static/java/recommendations.js"></script>
     <script>
-
+            window.onload = function() {
+            setTimeout(() => {
+                document.getElementById("loading-screen").style.opacity = "0";
+            }, 2000);
+            setTimeout(() => {
+                    document.getElementById("loading-screen").style.display = "none";
+                    document.getElementById("content").style.display = "block";
+                }, 500);
+        };
         function redirectToRealidad() {
             let selectedModel = '{{ domain }}';
 
@@ -575,7 +600,7 @@
         // Definir la ruta del modelo en función del dominio
         let modelPath;
         switch (domain) {
-            case 'culinary':
+            case 'Cooking':
                 modelPath = '{{ url_for("static", filename="models/avatar1.glb") }}';
                 animationpath = '{{ url_for("static", filename="animations/animationschef.glb") }}';
                 break;
@@ -583,7 +608,7 @@
                 modelPath = '{{ url_for("static", filename="models/avatar3.glb") }}';
                 animationpath = '{{ url_for("static", filename="animations/animationsfashion.glb") }}';
                 break;
-            case 'gym':
+            case 'Fitness':
                 modelPath = '{{ url_for("static", filename="models/avatar2.glb") }}';
                 animationpath = '{{ url_for("static", filename="animations/animationsgym.glb") }}';
                 break;
@@ -617,7 +642,8 @@
         model.rotation.x = 0;
     
         // Centrar el modelo en la escena (en el centro del div)
-        model.position.set(0, 1.6, 0);  // Coloca el modelo en el origen (0, 0, 0)
+        let yPosition = (domain === "Fitness") ? 1.6 : 1.7;
+        model.position.set(0, yPosition, 0);
         
         // Animar el modelo
         function animate() {
