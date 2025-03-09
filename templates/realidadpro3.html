@@ -119,25 +119,23 @@
     const url = `https://detect.roboflow.com/${model}/${version}?api_key=${apiKey}`;
 
     try {
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body:  frameBase64 
-        });
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: frameBase64 
+    });
 
-        const data = await response.json();
-        console.log("✅ Respuesta de Roboflow:", data);
+    const data = await response.json();
+    console.log(data.predictions.map(p => p.class));
 
-        if (data.predictions && data.predictions.length > 0) {
-            drawBoundingBoxes(data.predictions);
-        } else {
-            console.warn("⚠️ No se encontraron detecciones en la imagen.");
-        }
-    } catch (error) {
-        console.error("❌ Error al enviar imagen a Roboflow:", error);
+    if (data.predictions && data.predictions.length > 0) {
+        drawBoundingBoxes(data.predictions);
     }
+} catch (error) {
+    console.error("❌ Error al enviar imagen a Roboflow:", error);
+}
 }
 
     function drawBoundingBoxes(predictions) {
@@ -172,9 +170,6 @@
 
     // Obtener la imagen en formato base64 y eliminar el prefijo
     const imageBase64 = canvas.toDataURL('image/jpeg').split(",")[1]; 
-
-    console.log("Imagen Base64 (Primeros 50 caracteres):", imageBase64.substring(0, 50) + "..."); // Verificar
-
     sendFrameToRoboflow(imageBase64);
 }
 
