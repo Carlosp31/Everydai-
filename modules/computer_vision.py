@@ -23,7 +23,7 @@ def process_frame():
     image_data = data['image']
     domain = data['domain']
     if domain == "fashion":
-        cv_model = YOLO('static/real_models/fashion2.pt')
+        cv_model = YOLO('static/real_models/fashion_100.pt')
         class_names_dict = {
             0: 'belt',  
             1: 'blazer', 
@@ -43,7 +43,7 @@ def process_frame():
         }
 
     if domain == "Cooking":
-        cv_model = YOLO('static/real_models/culinary.pt')  # Ruta del modelo en tu carpeta
+        cv_model = YOLO('static/real_models/comida_50.pt')  # Ruta del modelo en tu carpeta
         class_names_dict = {
             0: 'bay_leaves',
             1: 'beef',
