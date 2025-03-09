@@ -43,7 +43,7 @@ def process_frame():
         }
 
     if domain == "Cooking":
-        cv_model = YOLO('static/real_models/comida_66.pt')  # Ruta del modelo en tu carpeta
+        cv_model = YOLO('static/real_models/comida_50.pt')  # Ruta del modelo en tu carpeta
         class_names_dict = {
             0: 'bay_leaves',
             1: 'beef',
