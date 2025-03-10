@@ -94,10 +94,25 @@ from playwright.sync_api import sync_playwright
 
 def web_fashion_HM(producto):
     with sync_playwright() as p:
-        browser = p.chromium.launch(
-            headless=True,
-            executable_path="/home/maicolln/.cache/ms-playwright/chromium-1155/chrome-linux/chrome"
-        )
+        browser = None
+        executable_paths = [
+            "/home/maicolln/.cache/ms-playwright/chromium-1155/chrome-linux/chrome",
+            None,  # Opción predeterminada (sin ruta específica)
+            "/usr/bin/google-chrome-stable",  # Otra ruta común en Linux
+        ]
+
+        for path in executable_paths:
+            try:
+                print(f"[INFO] Intentando iniciar Chromium con ruta: {path if path else 'Predeterminado'}")
+                browser = p.chromium.launch(headless=True, executable_path=path) if path else p.chromium.launch(headless=True)
+                print("[INFO] Navegador iniciado correctamente.")
+                break  # Si funciona, salimos del bucle
+            except Exception as e:
+                print(f"[ERROR] Falló con {path if path else 'Predeterminado'}: {e}")
+
+        if not browser:
+            print("[CRÍTICO] No se pudo iniciar el navegador.")
+            return None, None, None
 
         context = browser.new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
