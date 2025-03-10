@@ -108,35 +108,54 @@
     const microphoneButton = document.getElementById("microphone-button");
     let detectionInterval;
     let detectedClasses = new Set(); // Guarda solo los nombres de las clases detectadas
+    let isListening = false;
+    let isBotSpeaking = false;
+    let recognition;
+    let videoStream = null;
 
     const params = new URLSearchParams(window.location.search);
-    const domain = params.get("domain");
+const domain = params.get("domain");
 
-    async function sendFrameToRoboflow(frameBase64) {
-    const apiKey = "ASM9d0x59Igg7FJzi6fu"; // Asegúrate de que sea la clave correcta
-    const model = "ingredients-mqhxf";
-    const version = "1";
+async function sendFrameToRoboflow(frameBase64) {
+    const apiKey = "ASM9d0x59Igg7FJzi6fu";
+    
+    let model, version;
+
+    if (domain === "Cooking") {
+        model = "ingredients-mqhxf";
+        version = "1";
+    } else if (domain === "fashion") {
+        model = "";  // Completa con el modelo correspondiente
+        version = "";  // Completa con la versión correspondiente
+    } else if (domain === "Fitness") {
+        model = "all-gym-equipment";  // Completa con el modelo correspondiente
+        version = "2";  // Completa con la versión correspondiente
+    } else {
+        console.error("❌ Dominio no reconocido");
+        return;
+    }
+
     const url = `https://detect.roboflow.com/${model}/${version}?api_key=${apiKey}`;
 
     try {
-    const response = await fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: frameBase64 
-    });
+        const response = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: frameBase64 
+        });
 
-    const data = await response.json();
-    console.log(data.predictions.map(p => p.class));
+        const data = await response.json();
+        console.log(data.predictions.map(p => p.class));
 
-    if (data.predictions && data.predictions.length > 0) {
-        drawBoundingBoxes(data.predictions);
+        if (data.predictions && data.predictions.length > 0) {
+            drawBoundingBoxes(data.predictions);
+            saveDetections(data.predictions);
+        }
+    } catch (error) {
+        console.error("❌ Error al enviar imagen a Roboflow:", error);
     }
-} catch (error) {
-    console.error("❌ Error al enviar imagen a Roboflow:", error);
 }
-}
+
 
     function drawBoundingBoxes(predictions) {
         const canvas = document.getElementById('canvas');
@@ -159,19 +178,42 @@
             ctx.fillText(pred.class, x, y - 10);
         });
     }
+    function clearBoundingBoxes() {
+    const canvas = document.getElementById('canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+}
+    function saveDetections(predictions) {
+        let batchDetected = new Set();
+
+        predictions.forEach(pred => {
+            if (!detectedClasses.has(pred.class) || batchDetected.has(pred.class)) {
+                detectedClasses.add(pred.class);
+                batchDetected.add(pred.class);
+                updateDetectionList(pred.class);
+            }
+        });
+    }
+
+    function updateDetectionList(objectName) {
+        const ul = document.getElementById("detections-list");
+        const li = document.createElement("li");
+        li.textContent = objectName;
+        ul.appendChild(li);
+    }
 
     async function captureFrame() {
-    const videoElement = document.getElementById('video');
-    const canvas = document.createElement('canvas');
-    canvas.width = videoElement.videoWidth || 640;
-    canvas.height = videoElement.videoHeight || 480;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-
-    // Obtener la imagen en formato base64 y eliminar el prefijo
-    const imageBase64 = canvas.toDataURL('image/jpeg').split(",")[1]; 
-    sendFrameToRoboflow(imageBase64);
-}
+        const videoElement = document.getElementById('video');
+        const canvas = document.createElement('canvas');
+        canvas.width = videoElement.videoWidth || 640;
+        canvas.height = videoElement.videoHeight || 480;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+        const imageBase64 = canvas.toDataURL('image/jpeg').split(",")[1]; 
+        sendFrameToRoboflow(imageBase64);
+    }
 
     function startDetection() {
         if (!detectionInterval) {
@@ -183,35 +225,113 @@
     }
 
     function stopDetection() {
-        if (detectionInterval) {
-            clearInterval(detectionInterval);
-            detectionInterval = null;
+        if (detectionInterval !== null) {
+    clearInterval(detectionInterval);
+    detectionInterval = null;
+}
+        stopCamera();
+        clearBoundingBoxes(); // Llamamos a la función para limpiar los bounding boxes
+        if (detectedClasses.size === 0) {
+            alert("No hay detecciones para enviar.");
+            return;
         }
-        stopCamera(); // Ahora la cámara se apaga correctamente
+
+        let message = Array.from(detectedClasses).map(item => ({
+            type: "text",
+            text: item
+        }));
+
+        try {
+            sendMessage(message);
+        } catch (error) {
+            alert("⚠️ Error en la solicitud.");
+            console.error("⚠️ Error en la solicitud:", error);
+        }
+    }
+
+    function sendMessage(userInput) {
+        fetch('/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: userInput, model: domain })
+        })
+        .then(response => response.json())
+        .then(data => {
+            speakResponse(data.text_response);
+        });
+    }
+
+    function speakResponse(responseText) {
+        fetch('/synthesize-audio', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: responseText, modelo: domain })
+        })
+        .then(audioResponse => audioResponse.blob())
+        .then(audioBlob => {
+            const audioUrl = URL.createObjectURL(audioBlob);
+            const audio = new Audio(audioUrl);
+            audio.play();
+        })
+        .catch(error => console.error('Error:', error));
     }
 
     function startCamera() {
         const videoElement = document.getElementById('video');
-        const constraints = {
-            video: { facingMode: "environment" }
-        };
-
-        return navigator.mediaDevices.getUserMedia(constraints)
+        return navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
             .then(stream => {
+                videoStream = stream;
                 videoElement.srcObject = stream;
             })
-            .catch(error => {
-                console.error("Error al acceder a la cámara:", error);
-            });
+            .catch(error => console.error("Error al acceder a la cámara:", error));
+    }
+                    function startVoiceRecognition() {
+                if (!recognition) {
+                    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                    recognition.lang = 'es-ES';
+                    recognition.continuous = false;
+                    recognition.interimResults = false;
+                }
+
+                recognition.onresult = function(event) {
+                    if (!isBotSpeaking) { // Solo procesar si el bot no está hablando
+                        const userInput = event.results[0][0].transcript;
+                        sendMessage(userInput);
+                    }
+                };
+
+                recognition.onerror = function(event) {
+                    console.error("Error en el reconocimiento de voz: ", event.error);
+                };
+
+                recognition.onend = function() {
+                    if (isListening && !isBotSpeaking) {
+                        recognition.start(); // Reiniciar reconocimiento si sigue en modo escucha
+                    }
+                };
+
+                recognition.start();
+
+            }
+    function stopCamera() {
+        if (videoStream) {
+            videoStream.getTracks().forEach(track => track.stop());
+            videoStream = null;
+        }
+        document.getElementById('video').srcObject = null;
     }
 
-    function stopCamera() {
-        const videoElement = document.getElementById('video');
-        if (videoElement.srcObject) {
-            videoElement.srcObject.getTracks().forEach(track => track.stop());
-            videoElement.srcObject = null;
+    microphoneButton.onclick = function() {
+        if (!isListening) {
+            isListening = true;
+            microphoneButton.innerText = "Stop Conversation";
+            startVoiceRecognition();
+        } else {
+            isListening = false;
+            microphoneButton.innerText = "Start Conversation";
+            if (recognition) recognition.stop();
         }
-    }
+    };
 </script>
 
 </body>
