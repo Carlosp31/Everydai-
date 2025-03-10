@@ -58,11 +58,11 @@ def upload_image():
         try:
             # Procesa la imagen con el modelo de imágenes
             selected_model = request.form.get('model', '').strip()
-            if selected_model == 'culinary':
+            if selected_model == 'Cooking':
                 prompt = "Actúa como un maestro culinario e identifica los ingredientes en la imagen. Solo quiero la lista de ingredientes, trata de no extender mucho la conversación. Sé conciso y damelo en formato de lista."
             elif selected_model == 'fashion':
                 prompt = "Actúa como asesor de moda y comenta la vestimenta o prendas presentes en la imagen. Solo quiero la lista de prendas, trata de no extender mucho la conversación. Sé conciso y damelo en formato de lista."
-            elif selected_model == 'gym':
+            elif selected_model == 'Fitness':
                 prompt = "Actúa como un entrenador personal e identifica los elementos de gimnasio en la imagen. Solo quiero la lista de elementos, trata de no extender mucho la conversación. Sé conciso y damelo en formato de lista."
             else:
                 return jsonify({'response': 'Modelo no válido.'}), 400
