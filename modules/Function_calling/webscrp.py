@@ -9,6 +9,7 @@ from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import TimeoutException
 import time
+from playwright.sync_api import sync_playwright
 
 def web_culinary(producto):
     print("Ejecutando Main")
@@ -85,142 +86,87 @@ def web_culinary(producto):
     finally:
         driver.quit()
         print("Navegador cerrado.")
-from selenium.webdriver import Chrome
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 
 
-from selenium.webdriver.support import expected_conditions as EC   
-from selenium.webdriver.support.ui import WebDriverWait as Wait 
-from selenium.webdriver.common.by import By
 
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.keys import Keys
-import time
+import json
+from playwright.sync_api import sync_playwright
 
+def web_fashion_HM(producto):
+    with sync_playwright() as p:
+        browser = None
+        executable_paths = [
+            "/home/maicolln/.cache/ms-playwright/chromium-1155/chrome-linux/chrome",
+            None,  # Opción predeterminada (sin ruta específica)
+            "/usr/bin/google-chrome-stable",  # Otra ruta común en Linux
+        ]
 
-def web_decathlon(producto):
-    print("Ejecutando Main")
+        for path in executable_paths:
+            try:
+                print(f"[INFO] Intentando iniciar Chromium con ruta: {path if path else 'Predeterminado'}")
+                browser = p.chromium.launch(headless=True, executable_path=path) if path else p.chromium.launch(headless=True)
+                print("[INFO] Navegador iniciado correctamente.")
+                break  # Si funciona, salimos del bucle
+            except Exception as e:
+                print(f"[ERROR] Falló con {path if path else 'Predeterminado'}: {e}")
 
-    # Configuración para el modo headless
-    options = Options()
-    options.add_argument("--headless")  
-    options.add_argument("--disable-gpu")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    
-    # Iniciar el driver de Chrome
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=options)
-    
-    try:
-        # Abrir Decathlon
-        driver.get("https://www.decathlon.com.co")
-        print("Página abierta correctamente.")
-        time.sleep(5)  
+        if not browser:
+            print("[CRÍTICO] No se pudo iniciar el navegador.")
+            return None, None, None
 
-        # Aceptar cookies si aparecen
-        print("Buscando el botón de aceptar cookies...")
+        context = browser.new_context(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+        )
+        page = context.new_page()
+
+        print("[INFO] Abriendo la página...")
+        page.goto("https://co.hm.com/", wait_until="networkidle")
+
         try:
-            boton_cookies = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.ID, "didomi-notice-agree-button"))
-            )
-            boton_cookies.click()
-            print("✔️ Botón de cookies aceptado.")
-        except Exception:
-            print("⚠️ No se encontró el botón de cookies o ya estaba cerrado.")
+            print("[INFO] Buscando el campo de búsqueda...")
+            search_box = page.wait_for_selector("input[placeholder='Buscar productos']", timeout=10000)
+            search_box.fill(producto)
+            search_box.press("Enter")
+            print("[INFO] Búsqueda enviada.")
 
-        # Esperar el botón de búsqueda y hacer clic
-        print("Esperando el botón de búsqueda...")
-        boton_busqueda = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "//button[@data-testid='search-popover-trigger']"))
-        )
-        boton_busqueda.click()
-        print("✔️ Botón de búsqueda activado y clickeado.")
+            page.wait_for_selector(".vtex-search-result-3-x-galleryItem")
+            print("[INFO] Resultados cargados.")
 
-        # Esperar el campo de búsqueda y enviar el producto
-        input_busqueda = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "input[type='search']"))
-        )
-        input_busqueda.send_keys(producto)
-        print(f"🔍 Buscando '{producto}' en Decathlon...")
+            # Extraer nombres, precios, imágenes y enlaces
+            products = page.query_selector_all(".vtex-search-result-3-x-galleryItem")
+            print(f"[INFO] {len(products)} productos encontrados.")
 
-        time.sleep(3)
+            productos_lista = []
 
-    except Exception as e:
-        print(f"❌ Error en la ejecución: {e}")
+            for product in products:
+                title_element = product.query_selector(".vtex-product-summary-2-x-productNameContainer span")
+                price_element = product.query_selector(".vtex-product-price-1-x-sellingPrice")
+                image_element = product.query_selector("img.vtex-product-summary-2-x-imageNormal")
+                link_element = product.query_selector("a.vtex-product-summary-2-x-clearLink")
 
-    finally:
-        driver.quit()
-        print("🚪 Driver cerrado.")
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
-import time
+                title = title_element.inner_text().strip() if title_element else "N/A"
+                price = price_element.inner_text().strip() if price_element else "N/A"
+                image_url = image_element.get_attribute("src") if image_element else "N/A"
+                link = link_element.get_attribute("href") if link_element else "N/A"
 
-def main4():
-    print("Ejecutando Main")
+                producto_info = {
+                    "nombre": title,
+                    "precio": price,
+                    "imagen_url": image_url,
+                    "enlace": f"https://co.hm.com{link}" if link != "N/A" else "N/A"
+                }
 
-    # Configuración para el modo headless
-    options = Options()
-    options.add_argument("--headless")  
-    options.add_argument("--disable-gpu")  
-    options.add_argument("--no-sandbox")  
-    options.add_argument("--disable-dev-shm-usage")  
-    options.add_argument("--disable-extensions")  
+                productos_lista.append(producto_info)
 
-    # Iniciar el driver de Chrome con las opciones
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=options)
+            print("[INFO] Datos guardados en productos_hm.json")
+            return productos_lista  # 🔹 Retorna la lista de productos
 
-    producto = "pesas"
+        except Exception as e:
+            print(f"[ERROR] Ocurrió un problema: {e}")
+            return None
 
-    # Abrir Decathlon
-    driver.get("https://www.decathlon.com.co")
-    print("Página abierta correctamente.")
-    time.sleep(9)  # Pequeña espera para garantizar carga inicial
+        finally:
+            browser.close()
 
-    try:
-        # Aceptar cookies si aparecen
-        print("Buscando el botón de aceptar cookies...")
-        try:
-            boton_cookies = WebDriverWait(driver, 5).until(
-                EC.element_to_be_clickable((By.ID, "didomi-notice-agree-button"))
-            )
-            boton_cookies.click()
-            print("✔️ Botón de cookies aceptado.")
-        except Exception:
-            print("⚠️ No se encontró el botón de cookies o ya estaba cerrado.")
 
-        # Esperar el botón de búsqueda y hacer clic
-        print("Esperando el botón de búsqueda...")
-        boton_busqueda = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "/html/body/os-header/header/div/div[3]/os-drawer-trigger/button"))
-        )
-        boton_busqueda.click()
-        print("✔️ Botón de búsqueda activado y clickeado.")
-
-        # Esperar el campo de búsqueda y enviar el producto
-        input_busqueda = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "input[type='search']"))
-        )
-        input_busqueda.send_keys(producto)
-        input_busqueda.send_keys("\n")  # Simula Enter
-        print(f"🔍 Búsqueda de '{producto}' enviada.")
-
-        # Esperar a que los resultados carguen
-        time.sleep(3)  # Esperar unos segundos por los resultados
-        print("✅ Resultados cargados.")
-
-    except Exception as e:
-        print(f"❌ Error en la ejecución: {str(e)}")
-
-    finally:
-        driver.quit()  # Cerrar el navegador al finalizar
 
