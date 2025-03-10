@@ -14,9 +14,6 @@ def decode_image(data):
     return np.array(image)
 
 
-    
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
 
 def process_frame():
     data = request.json
@@ -43,7 +40,7 @@ def process_frame():
         }
 
     if domain == "Cooking":
-        cv_model = YOLO('static/real_models/culinary.pt')  # Ruta del modelo en tu carpeta
+        cv_model = YOLO('static/real_models/comida_50.pt')  # Ruta del modelo en tu carpeta
         class_names_dict = {
             0: 'bay_leaves',
             1: 'beef',
@@ -92,7 +89,7 @@ def process_frame():
             x_center, y_center, width, height = box.xywh[0]
             confidence = box.conf[0]  # Confianza
             class_id = int(box.cls[0])  # ID de clase (convierte a entero)
-            if confidence > 0.5:  # Umbral de confianza
+            if confidence > 0.3:  # Umbral de confianza
                 class_name = class_names_dict.get(class_id, 'unknown')  # Obtener el nombre de la clase usando el ID
                 boxes.append({
                     'x': int(x_center - width / 2),
