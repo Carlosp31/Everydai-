@@ -78,9 +78,7 @@ def hd_gym(user_input, client, thread_idf, assistant_idf, run):
             model = arguments_dict.get("model", "Modelo no encontrado")
             response_2 = busquedas.buscar_resultados_en_serpapi_gym(query, model)
 
-
-
-        elif tool.function.name == "buscar_producto_gym":
+        elif tool.function.name == "buscar_producto_fitness":
 
             # Acceder al primer tool_call en required_action.submit_tool_outputs
             tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
@@ -93,7 +91,7 @@ def hd_gym(user_input, client, thread_idf, assistant_idf, run):
             # Ejemplo: Si quieres extraer el valor del 'query'
             producto = arguments_dict.get("producto", "Valor no encontrado")
             print (f"producto a buscar: {producto}")
-            response_2  = webscrp.web_gym(producto)
+            response_2  = webscrp.web_fitness_decathlon(producto)
             tool_outputs.append({
                 "tool_call_id": tool.id,
                 "output": "He encontrado algunos productos relacionados con tus busquedas. " #json.dumps(response_2)
