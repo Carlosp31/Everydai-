@@ -26,7 +26,13 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timezone
 from database import db, Config
 ################################################
+import redis
+from database import db
+from models import User, Domain, Inventory, WishList, UserPreference
+import json
+from modules.get_inventory import get_inventory_from_redis
 
+################################################
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
 cert_file = '/etc/letsencrypt/live/everydai.ddns.net/fullchain.pem'
@@ -249,19 +255,18 @@ def dashboard():
 
         session['provider_id'] = user_info['id']  # Guardar provider_id en sesión
         # Verificar si el usuario ya existe en la base de datos
-        # existing_user = Usuario.query.filter_by(provider_id=user_info['id']).first()
-        # if not existing_user:
-        #     # Si el usuario no existe, crear uno nuevo
-        #     new_user = Usuario(
-        #         provider='google',
-        #         provider_id=user_info['id'],
-        #         name=user_info['name'],
-        #         email=user_info['email'],
-        #         profile_pic=user_info['picture']
-        #     )
-        #     db.session.add(new_user)
-        #     db.session.commit()
-
+        existing_user = User.query.filter_by(provider_id=user_info['id']).first()
+        if not existing_user:
+            # Si el usuario no existe, crear uno nuevo
+            new_user = User(
+                provider='google',
+                provider_id=user_info['id'],
+                name=user_info['name'],
+                email=user_info['email'],
+                profile_pic=user_info['picture']
+            )
+            db.session.add(new_user)
+            db.session.commit()
 
     # Para otros sistemas operativos, renderizar el dashboard directamente
     return render_template(dash_ruta)
@@ -307,18 +312,71 @@ def oauth2callback():
     session['credentials'] = credentials_to_dict(credentials)
     return redirect('/')
 
-# Ruta para el chatbot que recibe el dominio seleccionado
+
+# Configuración de Redis
+redis_client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
+
 @app.route('/chat')
 def chat():
     domain = request.args.get('domain', '')  # Obtener el dominio desde la URL
-    if domain not in ['Cooking', 'fashion', 'Fitness']:
+    if domain not in ['Cooking', 'Fashion', 'Fitness']:
         return "Dominio no válido", 400  # Validar el dominio
 
-    # Almacenar el dominio seleccionado en la sesión
-    session['selected_domain'] = domain
+    domain_q = Domain.query.filter_by(domain_name=domain).first()
+    user_q = User.query.filter_by(provider_id=session.get('provider_id')).first()
 
-    # Renderizar la página del chatbot y pasar el dominio seleccionado
-    return render_template('chat.html', domain=domain)
+    if not user_q or not domain_q:
+        return "Usuario o dominio no encontrado", 404
+
+    # Intentar obtener los items desde Redis primero
+    redis_key = f"user:{user_q.id}:domain:{domain_q.id}:inventory"
+    items_json = redis_client.get(redis_key)
+
+    if items_json:
+        items = json.loads(items_json)  # Convertir el JSON almacenado en lista
+        print("Cargando desde Redis:", items)
+    else:
+        # Si no están en Redis, consultarlos en la base de datos
+        inventory = Inventory.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
+        items = inventory.items if inventory else []
+
+        # Guardar en Redis para futuras consultas
+        redis_client.set(redis_key, json.dumps(items))
+        print("Cargando desde MySQL y guardando en Redis:", items)
+
+    session['selected_domain'] = domain  # Almacenar el dominio en la sesión
+    return render_template('chat.html', domain=domain, items=items)
+
+@app.route('/get_inventory')
+def get_inventory_route():
+    return get_inventory_from_redis() 
+
+# def chat():
+#     domain_name = request.args.get('domain', '')  # Obtener el dominio desde la URL
+    
+#     if domain_name not in ['Cooking', 'Fashion', 'Fitness']:
+#         return "Dominio no válido", 400  # Validar el dominio
+
+#     # Almacenar el dominio seleccionado en la sesión
+#     session['selected_domain'] = domain_name
+
+#     # Obtener el dominio desde la base de datos
+#     domain = Domain.query.filter_by(domain_name=domain_name).first()
+#     user_id = User.query.filter_by(provider_id=session['provider_id']).first()
+
+#     if not domain:
+#         return "Dominio no encontrado", 404
+
+#     # Buscar el inventario del usuario en ese dominio
+#     inventory = Inventory.query.filter_by(user_id=user_id, domain_id=domain.id).first()
+
+#     # Extraer los ítems del inventario (si existe)
+#     items = json.loads(inventory.items) if inventory else []
+#     print(items)
+
+#     # Renderizar el chatbot pasando el dominio y los ítems
+#     return render_template('chat.html', domain=domain_name, items=items)
+
 
 
 
