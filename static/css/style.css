@@ -578,3 +578,34 @@ button:active, .controls button:active, .sidebar a:active {
 #inventory-dropdown ul li:last-child {
     border-bottom: none;
 }
+
+
+/* LISTA DE DESEOS */
+
+/* LISTA DE DESEOS */
+#wish-dropdown {
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    color: black;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#wish-dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#wish-dropdown ul li {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#wish-dropdown ul li:last-child {
+    border-bottom: none;
+}
