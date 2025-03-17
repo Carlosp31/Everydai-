@@ -14,9 +14,8 @@ class User(db.Model):
     created_at = db.Column(db.TIMESTAMP, default=lambda: datetime.now(timezone.utc))
 
     inventories = db.relationship('Inventory', backref='user', lazy=True)
-    wish_list = db.relationship('WishList', backref='user', lazy=True)
+    wish_lists = db.relationship('WishList', backref='user', lazy=True)  # Corregido nombre de backref
     preferences = db.relationship('UserPreference', backref='user', lazy=True)
-
 
 class Domain(db.Model):
     __tablename__ = 'domains'
@@ -26,7 +25,7 @@ class Domain(db.Model):
     description = db.Column(db.Text)
 
     inventories = db.relationship('Inventory', backref='domain', lazy=True)
-    wish_list = db.relationship('WishList', backref='domain', lazy=True)
+    wish_lists = db.relationship('WishList', backref='domain', lazy=True)  # Corregido nombre de backref
 
 class Inventory(db.Model):
     __tablename__ = 'inventories'
@@ -43,7 +42,7 @@ class WishList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     domain_id = db.Column(db.Integer, db.ForeignKey('domains.id'), nullable=False)
-    list = db.Column(JSON)
+    wish_items = db.Column(JSON)  # Corregido nombre de columna
     created_at = db.Column(db.TIMESTAMP, default=lambda: datetime.now(timezone.utc))
 
 class UserPreference(db.Model):

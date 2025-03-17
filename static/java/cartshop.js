@@ -1,41 +1,48 @@
 const wishList = [];
-const wishListButton = document.getElementById("wishlist-button");
-const wishListDropdown = document.getElementById("wishlist-dropdown");
-const wishListItemsList = document.getElementById("wishlist-items");
+const wishButton = document.getElementById("wish-button");
+const wishDropdown = document.getElementById("wish-dropdown");
+const wishItemsList = document.getElementById("wish-items");
 
-// ✅ Función para obtener la wish list cuando se presiona el botón
-wishListButton.addEventListener("click", () => {
-    if (wishListDropdown.style.display === "none" || wishListDropdown.style.display === "") {
-        fetchWishList();
-        wishListDropdown.style.display = "block";
-    } else {
-        wishListDropdown.style.display = "none";
-    }
-});
-
-// ✅ Función para obtener la wish list del usuario
+// ✅ Función para obtener la lista de deseos del usuario
 function fetchWishList() {
     fetch('/get_wish_list')
         .then(response => response.json())
         .then(data => {
-            console.log("Respuesta del backend (Wish List):", data);
+            console.log("Respuesta del backend (Wish List):", data); // 👉 Verifica que los datos llegan
             if (data.error) {
-                console.error("Error al obtener la wish list:", data.error);
+                console.error("Error al obtener la lista de deseos:", data.error);
                 return;
             }
             wishList.length = 0;
-            wishList.push(...Object.entries(data.wish_list).map(([name, quantity]) => ({ name, quantity }))); 
-            updateWishListDropdown();
+            wishList.push(...data.items);
+            updateWishDropdown();
         })
-        .catch(error => console.error("Error al obtener la wish list:", error));
+        .catch(error => console.error("Error al obtener la lista de deseos:", error));
 }
 
-// ✅ Función para actualizar la UI de la wish list
-function updateWishListDropdown() {
-    wishListItemsList.innerHTML = "";
+// ✅ Función para actualizar la UI de la lista de deseos
+function updateWishDropdown() {
+    wishItemsList.innerHTML = ''; // Limpiar la lista
+
+    // Mostrar nombre y precio de cada item
     wishList.forEach(item => {
         const listItem = document.createElement("li");
-        listItem.textContent = `- ${item.name}`;
-        wishListItemsList.appendChild(listItem);
+        // Asegurarse de que cada item tenga 'name' y 'price'
+        const name = item.name || 'Nombre no disponible';
+        const price = item.price !== undefined ? `$${item.price.toFixed(2)}` : 'Precio no disponible';
+
+        listItem.textContent = `- ${name} : ${price}`;
+        wishItemsList.appendChild(listItem);
     });
 }
+
+// ✅ Mostrar/Ocultar la lista de deseos
+wishButton.addEventListener("click", () => {
+    if (wishDropdown.style.display === "none" || wishDropdown.style.display === "") {
+        fetchWishList(); // Cargar los datos cuando se abre
+        wishDropdown.style.display = "block";
+    } else {
+        wishDropdown.style.display = "none";
+    }
+});
+

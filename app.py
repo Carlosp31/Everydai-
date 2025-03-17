@@ -31,7 +31,7 @@ from database import db
 from models import User, Domain, Inventory, WishList, UserPreference
 import json
 from modules.get_inventory import get_inventory_from_redis
-
+from modules.get_wish_list import get_wish_list_from_redis
 ################################################
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
@@ -328,29 +328,58 @@ def chat():
     if not user_q or not domain_q:
         return "Usuario o dominio no encontrado", 404
 
-    # Intentar obtener los items desde Redis primero
-    redis_key = f"user:{user_q.id}:domain:{domain_q.id}:inventory"
-    items_json = redis_client.get(redis_key)
+    # Intentar obtener los items de inventario desde Redis primero
+    redis_key_inventory = f"user:{user_q.id}:domain:{domain_q.id}:inventory"
+    inventory_json = redis_client.get(redis_key_inventory)
 
-    if items_json:
-        items = json.loads(items_json)  # Convertir el JSON almacenado en lista
-        print("Cargando desde Redis:", items)
+    if inventory_json:
+        # Si los items están en Redis, los cargamos
+        items = json.loads(inventory_json)  # Convertir el JSON almacenado en lista
+        print("Cargando inventario desde Redis:", items)
     else:
-        # Si no están en Redis, consultarlos en la base de datos
+        # Si no están en Redis, los consultamos en la base de datos
         inventory = Inventory.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
         items = inventory.items if inventory else []
 
-        # Guardar en Redis para futuras consultas
-        redis_client.set(redis_key, json.dumps(items))
-        print("Cargando desde MySQL y guardando en Redis:", items)
+        # Guardamos en Redis para futuras consultas
+        redis_client.set(redis_key_inventory, json.dumps(items))
+        print("Cargando inventario desde MySQL y guardando en Redis:", items)
 
-    session['selected_domain'] = domain  # Almacenar el dominio en la sesión
-    return render_template('chat.html', domain=domain, items=items)
+    # Intentar obtener los items de la wish_list desde Redis primero
+    redis_key_wish_list = f"user:{user_q.id}:domain:{domain_q.id}:wish_list"
+    wish_list_json = redis_client.get(redis_key_wish_list)
+
+    if wish_list_json:
+        # Si la wish_list está en Redis, la cargamos
+        wish_list_items = json.loads(wish_list_json)
+        print("Cargando wish_list desde Redis:", wish_list_items)
+    else:
+        # Si no está en Redis, la consultamos en la base de datos
+        wish_list_query = WishList.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
+        wish_list_items = wish_list_query.wish_items if wish_list_query else []
+
+        # Guardamos la wish_list en Redis para futuras consultas
+        redis_client.set(redis_key_wish_list, json.dumps(wish_list_items))
+        print("Cargando wish_list desde MySQL y guardando en Redis:", wish_list_items)
+
+    # Almacenar el dominio en la sesión
+    session['selected_domain'] = domain
+
+    # Renderizamos la plantilla con los items de inventario y wish_list
+    return render_template('chat.html', domain=domain, wish_list_items=wish_list_items, inventory_items=items)
+
+
+
 
 @app.route('/get_inventory')
 def get_inventory_route():
     return get_inventory_from_redis() 
 
+
+
+@app.route('/get_wish_list')
+def get_wish_list_route():
+    return get_wish_list_from_redis()
 # def chat():
 #     domain_name = request.args.get('domain', '')  # Obtener el dominio desde la URL
     
