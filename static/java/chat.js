@@ -1,7 +1,3 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    let domain = urlParams.get('domain');
-});
            window.onload = function() {
             setTimeout(() => {
                 document.getElementById("loading-screen").style.opacity = "0";
@@ -12,120 +8,23 @@ document.addEventListener("DOMContentLoaded", function() {
                 }, 500);
         };
         function redirectToRealidad() {
-            let selectedModel = domain;
-
-            window.location.href = `/realidadpro3?domain=${encodeURIComponent(selectedModel)}`;
+            window.location.href = `/realidadpro3?domain=${encodeURIComponent(domain)}`;
         }
         document.addEventListener("DOMContentLoaded", function() {
-            const microphoneButton = document.getElementById("microphone-button");
-            const frequencyCanvas = document.getElementById("frequency-canvas");
-            const canvasContext = frequencyCanvas.getContext("2d");
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
             const imageInput = document.getElementById("image-input");
+            let selectedModel = domain;
             const imagePreview = document.getElementById("image-preview");
             const videoPreview = document.getElementById("video-preview");
             const canvas = document.getElementById("canvas");
             const captureButton = document.getElementById("capture-button");
-            let selectedModel = domain;
             let recognition;
-            let analyser;
             let isListening = false;
             let isBotSpeaking = false; // Variable para saber si el bot está hablando
             // Función para iniciar el reconocimiento de voz y el espectro de frecuencias
-            function startVoiceRecognition() {
-                if (!recognition) {
-                    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-                    recognition.lang = 'es-ES';
-                    recognition.continuous = false;
-                    recognition.interimResults = false;
-                }
-
-                recognition.onresult = function(event) {
-                    if (!isBotSpeaking) { // Solo procesar si el bot no está hablando
-                        const userInput = event.results[0][0].transcript;
-                        document.getElementById("user-input").value = userInput;
-                        sendMessage(userInput);
-                        dots.style.opacity = 1; // Mostrar los puntos
-                        const event5 = new CustomEvent('pensar');
-                        window.dispatchEvent(event5);
-                    }
-                };
-
-                recognition.onerror = function(event) {
-                    console.error("Error en el reconocimiento de voz: ", event.error);
-                };
-
-                recognition.onend = function() {
-                    if (isListening && !isBotSpeaking) {
-                        recognition.start(); // Reiniciar reconocimiento si sigue en modo escucha
-                    }
-                };
-
-                recognition.start();
-                startFrequencySpectrum(); // Iniciar el espectro de frecuencias
-            }
-
-            // Evento para iniciar o detener el reconocimiento de voz con el botón de 'Start Conversation'
-            microphoneButton.onclick = function() {
-                if (!isListening) {
-                    isListening = true;
-                    microphoneButton.innerText = "Stop Conversation";
-                    startVoiceRecognition();
-                } else {
-                    isListening = false;
-                    microphoneButton.innerText = "Start Conversation";
-                    if (recognition) {
-                        recognition.stop();
-                    }
-                    stopFrequencySpectrum();
-                }
-            };
-
-            // Función para iniciar el espectro de frecuencias
-            function startFrequencySpectrum() {
-                navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-                    const source = audioContext.createMediaStreamSource(stream);
-                    analyser = audioContext.createAnalyser();
-                    source.connect(analyser);
-                    analyser.fftSize = 256;
-
-                    frequencyCanvas.style.display = "block";
-                    drawFrequencySpectrum();
-                }).catch((error) => {
-                    console.error("Error al acceder al micrófono: ", error);
-                });
-            }
-
-            // Función para detener el espectro de frecuencias
-            function stopFrequencySpectrum() {
-                frequencyCanvas.style.display = "none";
-            }
-
-            // Función para dibujar el espectro de frecuencias
-            function drawFrequencySpectrum() {
-                if (!isListening) return;
-
-                requestAnimationFrame(drawFrequencySpectrum);
-
-                const bufferLength = analyser.frequencyBinCount;
-                const dataArray = new Uint8Array(bufferLength);
-                analyser.getByteFrequencyData(dataArray);
-
-                canvasContext.clearRect(0, 0, frequencyCanvas.width, frequencyCanvas.height);
-                const barWidth = (frequencyCanvas.width / bufferLength) * 2.5;
-                let barHeight;
-                let x = 0;
-
-                for (let i = 0; i < bufferLength; i++) {
-                    barHeight = dataArray[i] / 2;
-                    canvasContext.fillStyle = `rgb(${barHeight + 100}, 50, 50)`;
-                    canvasContext.fillRect(x, frequencyCanvas.height - barHeight, barWidth, barHeight);
-                    x += barWidth + 1;
-                }
-            }
+            
 
             // Función para enviar mensajes (tanto por texto como por voz)
-           function sendMessage(userInput) {
+function sendMessage(userInput) {
     if (userInput.trim() !== "") {
         document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
         document.getElementById("user-input").value = ''; // Limpiar el input después de enviar
@@ -407,63 +306,5 @@ document.addEventListener("DOMContentLoaded", function() {
                 };
                 reader.readAsDataURL(file);
             };
-            document.getElementById("download-button").onclick = function() {
-    const chatBox = document.getElementById("chat-box");
-    const recommendationsList = document.getElementById("recommendations-list");
-
-    if (!chatBox || chatBox.children.length === 0) {
-        alert("No hay conversaciones disponibles para descargar.");
-        return;
-    }
-
-    // Obtener el texto de la conversación
-    const conversationText = Array.from(chatBox.children)
-        .map(child => child.textContent.trim())
-        .join("\n\n");
-
-    // Obtener el texto de las recomendaciones
-    const recommendationsText = Array.from(recommendationsList.children)
-        .map(child => {
-            if (child.querySelector('a')) {
-                // Si es un enlace, obtener el texto y la URL
-                const link = child.querySelector('a');
-                return `${link.textContent}: ${link.href}`;
-            } else {
-                // Si no es un enlace, obtener el texto normal
-                return child.textContent.trim();
-            }
-        })
-        .join("\n\n");
-
-    // Combinar el texto de la conversación y las recomendaciones
-    const fullText = `Conversación:\n${conversationText}\n\nRecomendaciones:\n${recommendationsText}`;
-
-    // Verificar si hay texto para generar el PDF
-    if (!fullText) {
-        alert("No hay contenido para generar el archivo PDF.");
-        return;
-    }
-
-    try {
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF();
-
-        const pageWidth = pdf.internal.pageSize.getWidth();
-        const margin = 10;
-        const maxLineWidth = pageWidth - margin * 2;
-
-        pdf.setFont("Helvetica", "normal");
-        pdf.setFontSize(12);
-
-        const textLines = pdf.splitTextToSize(fullText, maxLineWidth);
-        pdf.text(textLines, margin, margin + 10);
-
-        // Descargar el archivo
-        pdf.save("conversation_and_recommendations.pdf");
-    } catch (error) {
-        console.error("Error al generar el PDF:", error);
-        alert("Ocurrió un error al generar el archivo PDF. Verifica la consola para más detalles.");
-    }
-};
 
         });
