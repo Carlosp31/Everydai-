@@ -1,15 +1,9 @@
 import os
 from flask import Flask, render_template, request, jsonify, redirect, send_file, url_for, session
 import google.generativeai as genai
-from werkzeug.utils import secure_filename
-from PIL import Image
-import serpapi
 from dotenv import load_dotenv
 import requests
-from openai import OpenAI
 from google.oauth2.credentials import Credentials
-from datetime import datetime, timedelta
-import requests  # Asegúrate de importar la biblioteca requests
 import modules.voice as voice
 import modules.images as images
 import modules.chat as chats
@@ -22,10 +16,6 @@ from openai import AssistantEventHandler
 from sqlalchemy.exc import SQLAlchemyError
 #### Librerias de base de datos ###############
 from flask_sqlalchemy import SQLAlchemy
-
-
-
-################################################
 
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
@@ -154,7 +144,6 @@ def debug_session():
 #################
 # Cargar las variables de entorno
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
-SERPAPI_KEY = os.getenv('SERPAPI_KEY')
 CULINARY_MODEL = os.getenv('CULINARY_MODEL')
 FASHION_MODEL = os.getenv('FASHION_MODEL')
 GYM_MODEL = os.getenv('GYM_MODEL')
@@ -162,7 +151,6 @@ IMG_MODEL = os.getenv('IMG_MODEL')
 ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY')
 
 # Configurar la clave API de SerpAPI
-client_serpapi = serpapi.Client(api_key=SERPAPI_KEY)
 # Inicializar los modelos generativos con las variables de entorno
 model_culinary = genai.GenerativeModel(model_name=CULINARY_MODEL)
 model_fashion = genai.GenerativeModel(model_name=FASHION_MODEL)
