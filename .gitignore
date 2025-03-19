@@ -11,4 +11,4 @@ client_secret_wmaicol.json
 cert.pem
 key.pem
 Computer_vision/
-
+clean_redis.py

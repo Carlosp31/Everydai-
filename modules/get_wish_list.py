@@ -3,8 +3,11 @@ from flask import session, jsonify
 from models import User, Domain, WishList
 from database import redis_client
 
+import json
+
 def get_wish_list_from_redis():
     """Obtiene la lista de deseos del usuario autenticado desde Redis o MySQL."""
+    
     if 'provider_id' not in session or 'selected_domain' not in session:
         return jsonify({"error": "Usuario no autenticado o dominio no seleccionado"}), 401
 
@@ -19,21 +22,18 @@ def get_wish_list_from_redis():
 
     if items_json:
         try:
-            items = json.loads(items_json)  # Convertir JSON almacenado en Redis a lista
-            print("Cargando desde Redis:", items)
-        except json.JSONDecodeError as e:
-            print("Error al decodificar JSON desde Redis:", e)
-            items = []
+            wish_list = json.loads(items_json)  # 🔵 Primero decodificamos
+
+            if isinstance(wish_list, str):  # 🔵 Si sigue siendo string, volvemos a decodificar
+                wish_list = json.loads(wish_list)
+
+        except json.JSONDecodeError:
+            return jsonify({"error": "Error al decodificar la lista de deseos"}), 500
     else:
-        # Si no están en Redis, consultarlos en la base de datos
-        wish_list_entry = WishList.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
-        items = wish_list_entry.wish_items if wish_list_entry and wish_list_entry.wish_items else []
+        wish_list = []
 
-        # Guardar en Redis para futuras consultas
-        redis_client.set(redis_key, json.dumps(items))
-        print("Cargando desde MySQL y guardando en Redis:", items)
+    return jsonify({"items": wish_list})  # 🔥 Ahora devuelve la lista limpia
 
-    return jsonify({"items": items}), 200
 
 
 

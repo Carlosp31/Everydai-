@@ -609,3 +609,8 @@ button:active, .controls button:active, .sidebar a:active {
 #wish-dropdown ul li:last-child {
     border-bottom: none;
 }
+#wish-dropdown {
+    max-height: none !important;  /* Asegura que no haya límite de altura */
+    overflow-y: auto; /* Habilita el scroll si hay más elementos */
+}
+

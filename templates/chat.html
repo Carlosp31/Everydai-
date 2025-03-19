@@ -242,13 +242,12 @@
         if (Array.isArray(data.recipes)) {
             data.recipes.forEach(item => {
                 const listItem = document.createElement("li");
-
                 // Verificamos si el objeto tiene las llaves 'nombre' y 'precio'
                 if (item.nombre && item.precio) {
                     listItem.innerHTML = `<div class="producto">
                             <span class="producto-nombre">${item.nombre}</span> - 
                             <span class="producto-precio">${item.precio}</span>
-                            <button onclick="addToCart({nombre: '${item.nombre}', precio: '${item.precio}'})">Add to list</button>
+                            <button onclick="addToCart('${selectedModel}', {nombre: '${item.nombre}', precio: '${item.precio}'})">Add to list</button>
                         </div>`;
 
                     // Verificamos si también tiene la URL de la imagen
