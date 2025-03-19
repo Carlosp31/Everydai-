@@ -24,8 +24,6 @@ directionalLight.position.set(1, 1, 1).normalize();
 scene.add(directionalLight);
 
 // Obtener el parámetro 'domain' desde la URL
-const urlParams = new URLSearchParams(window.location.search);
-const domain = urlParams.get('domain');
 
 // Definir la ruta del modelo en función del dominio
 let modelPath;

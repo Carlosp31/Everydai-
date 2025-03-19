@@ -1,3 +1,6 @@
+const urlParams = new URLSearchParams(window.location.search);
+const domain = urlParams.get('domain');
+
            window.onload = function() {
             setTimeout(() => {
                 document.getElementById("loading-screen").style.opacity = "0";
@@ -8,27 +11,131 @@
                 }, 500);
         };
         function redirectToRealidad() {
-            window.location.href = `/realidadpro3?domain=${encodeURIComponent(domain)}`;
-        }
-        document.addEventListener("DOMContentLoaded", function() {
-            const imageInput = document.getElementById("image-input");
             let selectedModel = domain;
+
+            window.location.href = `/realidadpro3?domain=${encodeURIComponent(selectedModel)}`;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const microphoneButton = document.getElementById("microphone-button");
+            const frequencyCanvas = document.getElementById("frequency-canvas");
+            const canvasContext = frequencyCanvas.getContext("2d");
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const imageInput = document.getElementById("image-input");
             const imagePreview = document.getElementById("image-preview");
             const videoPreview = document.getElementById("video-preview");
             const canvas = document.getElementById("canvas");
             const captureButton = document.getElementById("capture-button");
+            let selectedModel = domain;
             let recognition;
+            let analyser;
             let isListening = false;
             let isBotSpeaking = false; // Variable para saber si el bot está hablando
-            // Función para iniciar el reconocimiento de voz y el espectro de frecuencias
-            
 
-            // Función para enviar mensajes (tanto por texto como por voz)
-function sendMessage(userInput) {
+
+            // Función para iniciar el reconocimiento de voz y el espectro de frecuencias
+            function startVoiceRecognition() {
+                if (!recognition) {
+                    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                    recognition.lang = 'es-ES';
+                    recognition.continuous = false;
+                    recognition.interimResults = false;
+                }
+
+                recognition.onresult = function(event) {
+                    if (!isBotSpeaking) { // Solo procesar si el bot no está hablando
+                        const userInput = event.results[0][0].transcript;
+                        document.getElementById("user-input").value = userInput;
+                        sendMessage(userInput , "voice");
+                        dots.style.opacity = 1; // Mostrar los puntos
+                        const event5 = new CustomEvent('pensar');
+                        window.dispatchEvent(event5);
+                    }
+                };
+
+                recognition.onerror = function(event) {
+                    console.error("Error en el reconocimiento de voz: ", event.error);
+                };
+
+                recognition.onend = function() {
+                    if (isListening && !isBotSpeaking) {
+                        recognition.start(); // Reiniciar reconocimiento si sigue en modo escucha
+                    }
+                };
+
+                recognition.start();
+                startFrequencySpectrum(); // Iniciar el espectro de frecuencias
+            }
+
+            // Evento para iniciar o detener el reconocimiento de voz con el botón de 'Start Conversation'
+            microphoneButton.onclick = function() {
+                if (!isListening) {
+                    isListening = true;
+                    microphoneButton.innerText = "Stop Conversation";
+                    startVoiceRecognition();
+                } else {
+                    isListening = false;
+                    microphoneButton.innerText = "Start Conversation";
+                    if (recognition) {
+                        recognition.stop();
+                    }
+                    stopFrequencySpectrum();
+                }
+            };
+
+            // Función para iniciar el espectro de frecuencias
+            function startFrequencySpectrum() {
+                navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+                    const source = audioContext.createMediaStreamSource(stream);
+                    analyser = audioContext.createAnalyser();
+                    source.connect(analyser);
+                    analyser.fftSize = 256;
+
+                    frequencyCanvas.style.display = "block";
+                    drawFrequencySpectrum();
+                }).catch((error) => {
+                    console.error("Error al acceder al micrófono: ", error);
+                });
+            }
+
+            // Función para detener el espectro de frecuencias
+            function stopFrequencySpectrum() {
+                frequencyCanvas.style.display = "none";
+            }
+
+            // Función para dibujar el espectro de frecuencias
+            function drawFrequencySpectrum() {
+                if (!isListening) return;
+
+                requestAnimationFrame(drawFrequencySpectrum);
+
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                analyser.getByteFrequencyData(dataArray);
+
+                canvasContext.clearRect(0, 0, frequencyCanvas.width, frequencyCanvas.height);
+                const barWidth = (frequencyCanvas.width / bufferLength) * 2.5;
+                let barHeight;
+                let x = 0;
+
+                for (let i = 0; i < bufferLength; i++) {
+                    barHeight = dataArray[i] / 2;
+                    canvasContext.fillStyle = `rgb(${barHeight + 100}, 50, 50)`;
+                    canvasContext.fillRect(x, frequencyCanvas.height - barHeight, barWidth, barHeight);
+                    x += barWidth + 1;
+                }
+            }
+
+
+
+
+     // Función para enviar mensajes (tanto por texto como por voz)
+function sendMessage(userInput, type = "text") {
     if (userInput.trim() !== "") {
+        let interaction = startTimer(type);  // Registrar inicio de interacción
         document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
         document.getElementById("user-input").value = ''; // Limpiar el input después de enviar
-
+     
         // Detener temporalmente el reconocimiento de voz mientras se obtiene la respuesta del bot
         if (recognition) recognition.stop();
         isBotSpeaking = true;
@@ -44,6 +151,7 @@ function sendMessage(userInput) {
         .then(data => {
             document.getElementById("chat-box").innerHTML += `<div>AI: ${data.text_response}</div>`;
             speakResponse(data.text_response);
+            logResponse(interaction);  // Registrar el tiempo de respuesta
 
         // Verificar si data.recipes es un array antes de recorrerlo
         if (Array.isArray(data.recipes)) {
@@ -94,6 +202,9 @@ function sendMessage(userInput) {
         .catch(error => console.error('Error:', error));
     }
 }
+
+
+
 
 
             // Mostrar las recomendaciones en el cuadro de recomendaciones
@@ -171,6 +282,10 @@ function sendMessage(userInput) {
                     subtitulosContainer.style.display = "none"; // Ocultar subtítulos en caso de error
                 });
             }
+
+
+
+
             // Función para mostrar subtítulos progresivamente
             function mostrarSubtitulosProgresivos(textoCompleto, duracionAudio, contenedor) {
                 const palabras = textoCompleto.split(" ");
@@ -190,6 +305,9 @@ function sendMessage(userInput) {
                     }
                 }, tiempoPorPalabra * 50001); // Convierte el tiempo por palabra a milisegundos
             }
+
+
+
             const dots = document.getElementById("dots");
             // Evento al hacer clic en el botón de enviar texto manualmente
             document.getElementById("send-button").onclick = function() {
@@ -236,7 +354,7 @@ function sendMessage(userInput) {
                 videoPreview.srcObject = null;
                 videoPreview.style.display = "none";
                 captureButton.style.display = "none";
-
+                let interaction = startTimer("image2");
                 // Enviar la imagen capturada al servidor
                 canvas.toBlob(function(blob) {
                     const formData = new FormData();
@@ -259,6 +377,7 @@ function sendMessage(userInput) {
 
                         document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
                         speakResponse(data.response);
+                        logResponse(interaction);  
                     })
                     .catch(error => console.error('Error:', error));
                 }, 'image/png');
@@ -269,6 +388,7 @@ function sendMessage(userInput) {
                 const file = imageInput.files[0];
 
                 if (file) {
+                    let interaction = startTimer("image1");
                     const formData = new FormData();
                     formData.append('image', file);
                     formData.append('model', selectedModel);
@@ -291,6 +411,7 @@ function sendMessage(userInput) {
 
                         document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
                         speakResponse(data.response);
+                        logResponse(interaction);  // Registrar el tiempo de respuesta
                     })
                     .catch(error => console.error('Error:', error));
                 }
@@ -307,4 +428,22 @@ function sendMessage(userInput) {
                 reader.readAsDataURL(file);
             };
 
+            // Función para guardar el tiempo de inicio
+            function startTimer(type) {
+                return { type: type, startTime: Date.now() };
+            }
+            
+            // Función para registrar el tiempo de respuesta
+            function logResponse(interaction) {
+                interaction.endTime = Date.now();
+                interaction.responseTime = interaction.endTime - interaction.startTime;
+            
+                fetch('/log-interaction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(interaction),
+                })
+                .then(response => response.json())
+                .catch(error => console.error('Error al guardar interacción:', error));
+            }
         });
