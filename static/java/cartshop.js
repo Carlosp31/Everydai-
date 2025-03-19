@@ -20,21 +20,33 @@ function fetchWishList() {
         .catch(error => console.error("Error al obtener la lista de deseos:", error));
 }
 
-// ✅ Función para actualizar la UI de la lista de deseos
 function updateWishDropdown() {
     wishItemsList.innerHTML = ''; // Limpiar la lista
+
+    console.log("Lista de deseos actualizada:", wishList); // 🔍 Verificar los elementos
 
     // Mostrar nombre y precio de cada item
     wishList.forEach(item => {
         const listItem = document.createElement("li");
-        // Asegurarse de que cada item tenga 'name' y 'price'
-        const name = item.name || 'Nombre no disponible';
-        const price = item.price !== undefined ? `$${item.price.toFixed(2)}` : 'Precio no disponible';
 
-        listItem.textContent = `- ${name} : ${price}`;
+        // Asegurar que cada item tenga 'name' y 'price'
+        const name = item.name || 'Nombre no disponible';
+
+        // Si el precio es string, convertirlo a número sin alterar su precisión original
+        let price = item.price;
+        if (typeof price === "string") {
+            price = parseFloat(price.replace(",", "").replace("$", ""));
+        }
+
+        // Mostrar el precio tal cual sin formatear decimales
+        const priceText = isNaN(price) ? 'Precio no disponible' : `$${price}`;
+
+        listItem.textContent = `${name} : ${priceText}`;
         wishItemsList.appendChild(listItem);
     });
 }
+
+
 
 // ✅ Mostrar/Ocultar la lista de deseos
 wishButton.addEventListener("click", () => {
@@ -45,4 +57,25 @@ wishButton.addEventListener("click", () => {
         wishDropdown.style.display = "none";
     }
 });
+
+function addToCart(domainName, item) {
+    const normalizedItem = {
+        name: item.nombre || item.name,  // Convertir 'nombre' a 'name'
+        price: item.precio || item.price // Convertir 'precio' a 'price'
+    };
+
+    fetch('/add_to_cart', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+            domain_name: domainName,  
+            item: normalizedItem  
+        })
+    })
+    .then(response => response.json())
+    .then(data => console.log("✅ Respuesta del backend:", data))
+    .catch(error => console.error("❌ Error en la petición:", error));
+}
+
+
 

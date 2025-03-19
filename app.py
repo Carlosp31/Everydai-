@@ -380,6 +380,88 @@ def get_inventory_route():
 @app.route('/get_wish_list')
 def get_wish_list_route():
     return get_wish_list_from_redis()
+
+
+from flask import request, jsonify, session
+from models import db, WishList, User, Domain
+import json 
+import json
+
+
+
+
+
+import json
+
+def save_wish_list_to_db(user_id, domain_id, wish_list):
+    """Guarda correctamente la lista de deseos en MySQL sin caracteres escapados"""
+    
+    print(f"💾 Guardando en MySQL para user_id={user_id}, domain_id={domain_id}...")
+    
+    wish_list_json = json.dumps(wish_list, ensure_ascii=False)  # ✅ Guardar JSON sin caracteres extraños
+
+    wish_list_entry = WishList.query.filter_by(user_id=user_id, domain_id=domain_id).first()
+    
+    if wish_list_entry:
+        print("✏️ Actualizando lista existente en MySQL...")
+        wish_list_entry.wish_items = wish_list_json
+    else:
+        print("🆕 Creando nueva entrada en MySQL...")
+        wish_list_entry = WishList(user_id=user_id, domain_id=domain_id, wish_items=wish_list_json)
+        db.session.add(wish_list_entry)
+
+    db.session.commit()
+    print("✅ Lista guardada en MySQL correctamente.")
+    
+# Intentar obtener los items de la wish_list desde Redis primero
+redis_key_wish_list = f"user:{user_q.id}:domain:{domain_q.id}:wish_list"
+wish_list_json = redis_client.get(redis_key_wish_list)
+
+if wish_list_json:
+    try:
+        # Si la wish_list está en Redis, intentamos cargarla
+        wish_list_items = json.loads(wish_list_json)
+
+        # ⚠️ Verificar si lo cargado es realmente una lista
+        if not isinstance(wish_list_items, list):
+            print("⚠️ Error: wish_list en Redis no es una lista válida. Reinicializando...")
+            wish_list_items = []
+        
+        print("✅ Cargando wish_list desde Redis:", wish_list_items)
+
+    except json.JSONDecodeError:
+        print("⚠️ Error al decodificar JSON de Redis. Reinicializando...")
+        wish_list_items = []
+else:
+    # Si no está en Redis, la consultamos en la base de datos
+    wish_list_query = WishList.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
+    
+    # Si existe en MySQL, cargamos su contenido
+    if wish_list_query:
+        try:
+            wish_list_items = json.loads(wish_list_query.wish_items)
+
+            # ⚠️ Verificar si lo cargado es realmente una lista
+            if not isinstance(wish_list_items, list):
+                print("⚠️ Error: wish_list en MySQL no es una lista válida. Reinicializando...")
+                wish_list_items = []
+        except json.JSONDecodeError:
+            print("⚠️ Error al decodificar JSON de MySQL. Reinicializando...")
+            wish_list_items = []
+    else:
+        wish_list_items = []
+
+    # Guardamos la wish_list en Redis para futuras consultas
+    redis_client.set(redis_key_wish_list, json.dumps(wish_list_items))
+    print("✅ Cargando wish_list desde MySQL y guardando en Redis:", wish_list_items)
+
+# Almacenar el dominio en la sesión
+session['selected_domain'] = domain
+
+# Renderizamos la plantilla con los items de inventario y wish_list
+return render_template('chat.html', domain=domain, wish_list_items=wish_list_items, inventory_items=items)
+
+
 # def chat():
 #     domain_name = request.args.get('domain', '')  # Obtener el dominio desde la URL
     
