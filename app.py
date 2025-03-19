@@ -413,53 +413,94 @@ def save_wish_list_to_db(user_id, domain_id, wish_list):
     db.session.commit()
     print("✅ Lista guardada en MySQL correctamente.")
     
-# Intentar obtener los items de la wish_list desde Redis primero
-redis_key_wish_list = f"user:{user_q.id}:domain:{domain_q.id}:wish_list"
-wish_list_json = redis_client.get(redis_key_wish_list)
+@app.route('/add_to_cart', methods=['POST'])
+def add_to_cart():
+    """Añade un producto a la lista de deseos en Redis y lo guarda en MySQL."""
 
-if wish_list_json:
+    print("🔵 Iniciando add_to_cart...")
+
     try:
-        # Si la wish_list está en Redis, intentamos cargarla
-        wish_list_items = json.loads(wish_list_json)
+        # 🛑 Verificar sesión del usuario
+        if 'provider_id' not in session or 'selected_domain' not in session:
+            return jsonify({"error": "Usuario no autenticado o dominio no seleccionado"}), 401
 
-        # ⚠️ Verificar si lo cargado es realmente una lista
-        if not isinstance(wish_list_items, list):
-            print("⚠️ Error: wish_list en Redis no es una lista válida. Reinicializando...")
-            wish_list_items = []
-        
-        print("✅ Cargando wish_list desde Redis:", wish_list_items)
+        user_q = User.query.filter_by(provider_id=session['provider_id']).first()
+        domain_q = Domain.query.filter_by(domain_name=session['selected_domain']).first()
 
-    except json.JSONDecodeError:
-        print("⚠️ Error al decodificar JSON de Redis. Reinicializando...")
-        wish_list_items = []
-else:
-    # Si no está en Redis, la consultamos en la base de datos
-    wish_list_query = WishList.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
-    
-    # Si existe en MySQL, cargamos su contenido
-    if wish_list_query:
-        try:
-            wish_list_items = json.loads(wish_list_query.wish_items)
+        if not user_q or not domain_q:
+            return jsonify({"error": "Usuario o dominio no encontrado"}), 404
 
-            # ⚠️ Verificar si lo cargado es realmente una lista
-            if not isinstance(wish_list_items, list):
-                print("⚠️ Error: wish_list en MySQL no es una lista válida. Reinicializando...")
-                wish_list_items = []
-        except json.JSONDecodeError:
-            print("⚠️ Error al decodificar JSON de MySQL. Reinicializando...")
-            wish_list_items = []
-    else:
-        wish_list_items = []
+        # 📩 Recibir datos
+        data = request.get_json()
+        print(f"📩 Datos recibidos: {data}")
 
-    # Guardamos la wish_list en Redis para futuras consultas
-    redis_client.set(redis_key_wish_list, json.dumps(wish_list_items))
-    print("✅ Cargando wish_list desde MySQL y guardando en Redis:", wish_list_items)
+        if not data or "item" not in data or "name" not in data["item"] or "price" not in data["item"]:
+            return jsonify({"error": "Datos inválidos"}), 400
 
-# Almacenar el dominio en la sesión
-session['selected_domain'] = domain
+        new_item = {
+            "name": data["item"]["name"],
+            "price": data["item"]["price"]
+        }
 
-# Renderizamos la plantilla con los items de inventario y wish_list
-return render_template('chat.html', domain=domain, wish_list_items=wish_list_items, inventory_items=items)
+        # 🔑 Clave en Redis
+        redis_key = f"user:{user_q.id}:domain:{domain_q.id}:wish_list"
+
+        # 📜 Obtener la lista de deseos desde Redis
+        wish_list_json = redis_client.get(redis_key)
+        print(f"📜 Lista en Redis (raw): {wish_list_json}")
+
+        wish_list = []
+        if wish_list_json:
+            try:
+                wish_list = json.loads(wish_list_json)
+                print(f"✅ Lista deserializada: {wish_list}")
+            except json.JSONDecodeError:
+                print("⚠️ Error: No se pudo decodificar wish_list desde JSON")
+                wish_list = []
+
+        # 🛑 Evitar duplicados
+        if any(item["name"] == new_item["name"] for item in wish_list):
+            return jsonify({"message": "El ítem ya está en la lista de deseos"}), 200
+
+        # 🆕 Agregar el nuevo ítem a la lista
+        wish_list.append(new_item)
+        redis_client.set(redis_key, json.dumps(wish_list))
+        print("✅ Lista actualizada guardada en Redis.")
+
+        # 💾 Guardar en MySQL si es necesario
+        # 💾 Consultar o crear la wish_list en MySQL
+        wish_list_q = WishList.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
+
+        if isinstance(wish_list, str):  # Si es string, convertirlo a lista
+            try:
+                wish_list = json.loads(wish_list)
+            except json.JSONDecodeError:
+                print("⚠️ Error: wish_list ya estaba mal serializado antes de MySQL.")
+                return jsonify({"error": "Error interno"}), 500
+
+        if wish_list_q:
+            # Si la lista ya existe en la base de datos, actualizarla
+            wish_list_q.wish_items = wish_list # Serializar correctamente antes de guardar
+        else:
+            # Si no existe, crear una nueva entrada en la base de datos
+            wish_list_q = WishList(user_id=user_q.id, domain_id=domain_q.id, wish_items=wish_list)
+            db.session.add(wish_list_q)
+
+        db.session.commit()
+        print("✅ Lista guardada en MySQL correctamente.")
+
+
+
+        return jsonify({"message": "Ítem añadido correctamente", "wish_list": wish_list}), 201
+
+    except Exception as e:
+        print(f"❌ Error en add_to_cart: {e}")
+        return jsonify({"error": "Error interno del servidor"}), 500
+
+
+
+
+
 
 
 # def chat():
