@@ -20,31 +20,25 @@ function fetchWishList() {
         .catch(error => console.error("Error al obtener la lista de deseos:", error));
 }
 
+
 function updateWishDropdown() {
     wishItemsList.innerHTML = ''; // Limpiar la lista
 
-    console.log("Lista de deseos actualizada:", wishList); // 🔍 Verificar los elementos
-
-    // Mostrar nombre y precio de cada item
     wishList.forEach(item => {
         const listItem = document.createElement("li");
 
-        // Asegurar que cada item tenga 'name' y 'price'
+        // Obtener nombre y precio sin alteraciones
         const name = item.name || 'Nombre no disponible';
-
-        // Si el precio es string, convertirlo a número sin alterar su precisión original
-        let price = item.price;
-        if (typeof price === "string") {
-            price = parseFloat(price.replace(",", "").replace("$", ""));
-        }
+        const price = item.price;
 
         // Mostrar el precio tal cual sin formatear decimales
-        const priceText = isNaN(price) ? 'Precio no disponible' : `$${price}`;
+        const priceText = price ? `${price}` : 'Precio no disponible';
 
-        listItem.textContent = `${name} : ${priceText}`;
+        listItem.textContent = `${name}: ${priceText}`;
         wishItemsList.appendChild(listItem);
     });
 }
+
 
 
 
