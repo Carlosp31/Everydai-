@@ -12,7 +12,7 @@ import platform
 from google_auth_oauthlib.flow import Flow
 from typing_extensions import override
 from openai import AssistantEventHandler
-
+import json
 from sqlalchemy.exc import SQLAlchemyError
 #### Librerias de base de datos ###############
 from flask_sqlalchemy import SQLAlchemy
@@ -454,6 +454,43 @@ def handle_image():
 def process_frame():
    return cp.process_frame()
 
+# Detectar sistema operativo
+if platform.system() == "Linux":
+    LOG_DIR = "/"  # Guardar en la raíz del sistema en Linux
+else:
+    LOG_DIR = "logs"  # Guardar en "logs/" si no es Linux
+
+LOG_FILE = os.path.join(LOG_DIR, "interactions.json")  
+
+if LOG_DIR != "/":
+    os.makedirs(LOG_DIR, exist_ok=True)
+
+def load_interactions():
+    """Carga las interacciones desde el JSON, o lo inicializa si no existe."""
+    if not os.path.exists(LOG_FILE):  # Si el archivo no existe, lo crea vacío
+        with open(LOG_FILE, "w", encoding="utf-8") as file:
+            json.dump([], file, indent=4, ensure_ascii=False)
+        return []
+
+    with open(LOG_FILE, "r", encoding="utf-8") as file:
+        try:
+            return json.load(file)
+        except json.JSONDecodeError:  # Si el JSON está dañado, reiniciarlo
+            return []
+
+def save_interactions(data):
+    """Guarda las interacciones en el JSON."""
+    with open(LOG_FILE, "w", encoding="utf-8") as file:
+        json.dump(data, file, indent=4, ensure_ascii=False)
+
+
+@app.route('/log-interaction', methods=['POST'])
+def log_interaction():
+    interaction = request.json
+    interactions = load_interactions()
+    interactions.append(interaction)  # Agregar nueva interacción
+    save_interactions(interactions)
+    return jsonify({"message": "Interacción guardada"}), 200
 
 if __name__ == '__main__':
     # Crear el directorio de carga si no existe
