@@ -1,86 +1,75 @@
-const cart = [];
-const cartButton = document.getElementById("cart-button");
-const cartDropdown = document.getElementById("cart-dropdown");
-const cartItemsList = document.getElementById("cart-items");
+const wishList = [];
+const wishButton = document.getElementById("wish-button");
+const wishDropdown = document.getElementById("wish-dropdown");
+const wishItemsList = document.getElementById("wish-items");
 
-// ✅ Función para añadir items al carrito y enviarlos al backend
-window.addToCart = function(item) {
-    cart.push(item);  // Añadir al carrito en el frontend
-    updateCartDropdown();  // Actualizar la interfaz
+// ✅ Función para obtener la lista de deseos del usuario
+function fetchWishList() {
+    fetch('/get_wish_list')
+        .then(response => response.json())
+        .then(data => {
+            console.log("Respuesta del backend (Wish List):", data); // 👉 Verifica que los datos llegan
+            if (data.error) {
+                console.error("Error al obtener la lista de deseos:", data.error);
+                return;
+            }
+            wishList.length = 0;
+            wishList.push(...data.items);
+            updateWishDropdown();
+        })
+        .catch(error => console.error("Error al obtener la lista de deseos:", error));
+}
 
-    // Enviar el item al backend para guardarlo en la base de datos
-    const domainId = 1; // ⚠️ Asegúrate de obtener el dominio correcto
-    sendCartToBackend(domainId, item);
-};
 
-// ✅ Función para actualizar la visualización del carrito en el frontend
-function updateCartDropdown() {
-    cartItemsList.innerHTML = ''; // Limpiar el contenido actual
+function updateWishDropdown() {
+    wishItemsList.innerHTML = ''; // Limpiar la lista
 
-    cart.forEach(item => {
+    wishList.forEach(item => {
         const listItem = document.createElement("li");
 
-        // Si es un producto con 'nombre' y 'precio'
-        if (item.nombre && item.precio) {
-            listItem.textContent = `${item.nombre} - $${item.precio}`;
-        
-        // Si es una receta con 'link' y 'title'
-        } else if (item.link && item.title) {
-            listItem.textContent = item.title;
-            listItem.onclick = () => window.open(item.link, "_blank"); // Abrir enlace en nueva pestaña
-            listItem.style.cursor = "pointer"; // Indicar que es clickeable
-        }
+        // Obtener nombre y precio sin alteraciones
+        const name = item.name || 'Nombre no disponible';
+        const price = item.price;
 
-        cartItemsList.appendChild(listItem);
+        // Mostrar el precio tal cual sin formatear decimales
+        const priceText = price ? `${price}` : 'Precio no disponible';
+
+        listItem.textContent = `${name}: ${priceText}`;
+        wishItemsList.appendChild(listItem);
     });
 }
 
-// ✅ Toggle del desplegable del carrito
-cartButton.onclick = function() {
-    cartDropdown.style.display = cartDropdown.style.display === 'none' ? 'block' : 'none';
-};
 
-// ✅ Función para cargar el carrito desde la base de datos
-function loadCart(domainId) {
-    fetch(`/get_shopping_list?domain_id=${domainId}`)
-    .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            console.error("Error al obtener la lista de compras:", data.error);
-            return;
-        }
 
-        cart.length = 0; // Vaciar el carrito local
-        cart.push(...data.items); // Cargar los items desde la base de datos
-        updateCartDropdown(); // Refrescar la interfaz
-    })
-    .catch(error => console.error("Error al cargar el carrito:", error));
-}
 
-function sendCartToBackend(domainName, item) {
+// ✅ Mostrar/Ocultar la lista de deseos
+wishButton.addEventListener("click", () => {
+    if (wishDropdown.style.display === "none" || wishDropdown.style.display === "") {
+        fetchWishList(); // Cargar los datos cuando se abre
+        wishDropdown.style.display = "block";
+    } else {
+        wishDropdown.style.display = "none";
+    }
+});
+
+function addToCart(domainName, item) {
+    const normalizedItem = {
+        name: item.nombre || item.name,  // Convertir 'nombre' a 'name'
+        price: item.precio || item.price // Convertir 'precio' a 'price'
+    };
+
     fetch('/add_to_cart', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
-            domain_name: domainName, // Enviar domain_name en lugar de domain_id
-            item: item 
+            domain_name: domainName,  
+            item: normalizedItem  
         })
     })
-
     .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            console.error("Error al añadir al carrito:", data.error);
-        } else {
-            console.log("Carrito actualizado en la base de datos:", data.items);
-        }
-    })
-    .catch(error => console.error("Error al enviar carrito:", error));
+    .then(data => console.log("✅ Respuesta del backend:", data))
+    .catch(error => console.error("❌ Error en la petición:", error));
 }
 
-// ✅ Cargar el carrito al iniciar la página
-document.addEventListener("DOMContentLoaded", function () {
-    const domainId = 1; // ⚠️ Asegúrate de obtener el dominio correcto
-    loadCart(domainId);
-});
+
 
