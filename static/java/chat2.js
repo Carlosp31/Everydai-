@@ -1,7 +1,4 @@
-const urlParams = new URLSearchParams(window.location.search);
-const domain = urlParams.get('domain');
-
-           window.onload = function() {
+            window.onload = function() {
             setTimeout(() => {
                 document.getElementById("loading-screen").style.opacity = "0";
             }, 2000);
@@ -11,11 +8,10 @@ const domain = urlParams.get('domain');
                 }, 500);
         };
         function redirectToRealidad() {
-            let selectedModel = domain;
+            let selectedModel = '{{ domain }}';
 
             window.location.href = `/realidadpro3?domain=${encodeURIComponent(selectedModel)}`;
         }
-
         document.addEventListener("DOMContentLoaded", function() {
             const microphoneButton = document.getElementById("microphone-button");
             const frequencyCanvas = document.getElementById("frequency-canvas");
@@ -26,12 +22,11 @@ const domain = urlParams.get('domain');
             const videoPreview = document.getElementById("video-preview");
             const canvas = document.getElementById("canvas");
             const captureButton = document.getElementById("capture-button");
-            let selectedModel = domain;
+            let selectedModel = '{{ domain }}';
             let recognition;
             let analyser;
             let isListening = false;
             let isBotSpeaking = false; // Variable para saber si el bot está hablando
-
 
             // Función para iniciar el reconocimiento de voz y el espectro de frecuencias
             function startVoiceRecognition() {
@@ -46,7 +41,7 @@ const domain = urlParams.get('domain');
                     if (!isBotSpeaking) { // Solo procesar si el bot no está hablando
                         const userInput = event.results[0][0].transcript;
                         document.getElementById("user-input").value = userInput;
-                        sendMessage(userInput , "voice");
+                        sendMessage(userInput);
                         dots.style.opacity = 1; // Mostrar los puntos
                         const event5 = new CustomEvent('pensar');
                         window.dispatchEvent(event5);
@@ -126,16 +121,12 @@ const domain = urlParams.get('domain');
                 }
             }
 
-
-
-
-     // Función para enviar mensajes (tanto por texto como por voz)
-function sendMessage(userInput, type = "text") {
+            // Función para enviar mensajes (tanto por texto como por voz)
+           function sendMessage(userInput) {
     if (userInput.trim() !== "") {
-        let interaction = startTimer(type);  // Registrar inicio de interacción
         document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
         document.getElementById("user-input").value = ''; // Limpiar el input después de enviar
-     
+
         // Detener temporalmente el reconocimiento de voz mientras se obtiene la respuesta del bot
         if (recognition) recognition.stop();
         isBotSpeaking = true;
@@ -151,13 +142,11 @@ function sendMessage(userInput, type = "text") {
         .then(data => {
             document.getElementById("chat-box").innerHTML += `<div>AI: ${data.text_response}</div>`;
             speakResponse(data.text_response);
-            logResponse(interaction);  // Registrar el tiempo de respuesta
 
         // Verificar si data.recipes es un array antes de recorrerlo
         if (Array.isArray(data.recipes)) {
             data.recipes.forEach(item => {
                 const listItem = document.createElement("li");
-
                 // Verificamos si el objeto tiene las llaves 'nombre' y 'precio'
                 if (item.nombre && item.precio) {
                     listItem.innerHTML = `<div class="producto">
@@ -202,9 +191,6 @@ function sendMessage(userInput, type = "text") {
         .catch(error => console.error('Error:', error));
     }
 }
-
-
-
 
 
             // Mostrar las recomendaciones en el cuadro de recomendaciones
@@ -282,10 +268,6 @@ function sendMessage(userInput, type = "text") {
                     subtitulosContainer.style.display = "none"; // Ocultar subtítulos en caso de error
                 });
             }
-
-
-
-
             // Función para mostrar subtítulos progresivamente
             function mostrarSubtitulosProgresivos(textoCompleto, duracionAudio, contenedor) {
                 const palabras = textoCompleto.split(" ");
@@ -305,9 +287,6 @@ function sendMessage(userInput, type = "text") {
                     }
                 }, tiempoPorPalabra * 50001); // Convierte el tiempo por palabra a milisegundos
             }
-
-
-
             const dots = document.getElementById("dots");
             // Evento al hacer clic en el botón de enviar texto manualmente
             document.getElementById("send-button").onclick = function() {
@@ -354,7 +333,7 @@ function sendMessage(userInput, type = "text") {
                 videoPreview.srcObject = null;
                 videoPreview.style.display = "none";
                 captureButton.style.display = "none";
-                let interaction = startTimer("image2");
+
                 // Enviar la imagen capturada al servidor
                 canvas.toBlob(function(blob) {
                     const formData = new FormData();
@@ -377,7 +356,6 @@ function sendMessage(userInput, type = "text") {
 
                         document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
                         speakResponse(data.response);
-                        logResponse(interaction);  
                     })
                     .catch(error => console.error('Error:', error));
                 }, 'image/png');
@@ -388,7 +366,6 @@ function sendMessage(userInput, type = "text") {
                 const file = imageInput.files[0];
 
                 if (file) {
-                    let interaction = startTimer("image1");
                     const formData = new FormData();
                     formData.append('image', file);
                     formData.append('model', selectedModel);
@@ -411,7 +388,6 @@ function sendMessage(userInput, type = "text") {
 
                         document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
                         speakResponse(data.response);
-                        logResponse(interaction);  // Registrar el tiempo de respuesta
                     })
                     .catch(error => console.error('Error:', error));
                 }
@@ -427,23 +403,7 @@ function sendMessage(userInput, type = "text") {
                 };
                 reader.readAsDataURL(file);
             };
+            
 
-            // Función para guardar el tiempo de inicio
-            function startTimer(type) {
-                return { type: type, startTime: Date.now() };
-            }
-            
-            // Función para registrar el tiempo de respuesta
-            function logResponse(interaction) {
-                interaction.endTime = Date.now();
-                interaction.responseTime = interaction.endTime - interaction.startTime;
-            
-                fetch('/log-interaction', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(interaction),
-                })
-                .then(response => response.json())
-                .catch(error => console.error('Error al guardar interacción:', error));
-            }
+
         });
