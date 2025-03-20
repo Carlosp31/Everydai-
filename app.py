@@ -311,7 +311,7 @@ redis_client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_respo
 @app.route('/chat')
 def chat():
     domain = request.args.get('domain', '')  # Obtener el dominio desde la URL
-    if domain not in ['Cooking', 'Fashion', 'Fitness']:
+    if domain not in ['Cooking', 'fashion', 'Fitness']:
         return "Dominio no válido", 400  # Validar el dominio
 
     domain_q = Domain.query.filter_by(domain_name=domain).first()
