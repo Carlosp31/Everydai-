@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflae.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
@@ -30,10 +30,11 @@
         <ul id="recommendations-list"></ul>
     </div>
     <button id="download-button">Download Conversation</button>
-    <button id="cart-button">Cart</button>
-    <div id="cart-dropdown" style="display:none;">
-        <ul id="cart-items"></ul>
+    <button id="wish-button">Wish List</button>
+    <div id="wish-dropdown" style="display:none;">
+        <ul id="wish-items"></ul> <!-- ✅ Este ID debe coincidir con el JS -->
     </div>
+    
     <button id="inventory-button">Inventory</button>
     <div id="inventory-dropdown" style="display:none;">
         <ul id="inventory-items"></ul>
@@ -92,7 +93,7 @@
 </div>    
     <script src="../static/java/recommendations.js"></script>
     <script src="../static/java/chat.js"></script>
-    <!-- <script src="../static/java/cartshop.js"></script> -->
+    <script src="../static/java/cartshop.js"></script>
 
 
     <!-- Aquí agregamos el popup -->
