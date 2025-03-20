@@ -46,5 +46,11 @@
         "startTime": 1742346414720,
         "endTime": 1742346419274,
         "responseTime": 4554
+    },
+    {
+        "type": "text",
+        "startTime": 1742474438340,
+        "endTime": 1742474442990,
+        "responseTime": 4650
     }
 ]
