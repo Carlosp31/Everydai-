@@ -31,7 +31,8 @@ import modules.actions_db as actions_db
 load_dotenv()
 cert_file = '/etc/letsencrypt/live/everydai.ddns.net/fullchain.pem'
 key_file = '/etc/letsencrypt/live/everydai.ddns.net/privkey.pem'
-app = Flask(__name__)
+app = Flask(__name__) 
+
 app.secret_key = os.getenv('SECRET_KEY', 'supersecretkey')
 
 
@@ -52,32 +53,6 @@ def test_redis():
     redis_client.set("mensaje", "Hola desde Redis!")
     return redis_client.get("mensaje")  # Devuelve "Hola desde Redis!"
 
-# @app.route('/add_to_cart', methods=['POST'])
-# def add_to_cart():
-#     if 'provider_id' not in session:
-#         return jsonify({"error": "Usuario no autenticado"}), 401
-
-#     provider_id = session['provider_id']
-#     data = request.json
-#     domain_name = data.get('domain_name')  # Cambia de domain_id a domain_name
-#     item = data.get('item')
-#     print(f"data: {data}")
-#     print(f"item: {item}")
-
-#     if not domain_name or not item:
-#         return jsonify({"error": "Faltan datos"}), 400
-
-#     # Buscar o crear la lista de compras
-#     shopping_list = ShoppingList.get_or_create(provider_id, domain_name)
-
-#     # Añadir el nuevo ítem al carrito
-#     if not isinstance(shopping_list.items, list):  # Asegurar que es una lista
-#         shopping_list.items = []
-
-#     shopping_list.items.append(item)
-#     db.session.commit()
-
-#     return jsonify({"items": shopping_list.items})
 
 
 
