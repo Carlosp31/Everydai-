@@ -7,7 +7,6 @@ from google.oauth2.credentials import Credentials
 import modules.voice as voice
 import modules.images as images
 import modules.chat as chats
-import modules.computer_vision as cp
 import platform
 from google_auth_oauthlib.flow import Flow
 from typing_extensions import override
@@ -450,9 +449,9 @@ def handle_image():
 
 
 
-@app.route('/process_frame', methods=['POST'])
-def process_frame():
-   return cp.process_frame()
+#@app.route('/process_frame', methods=['POST'])
+#def process_frame():
+#   return cp.process_frame()
 
 # Detectar sistema operativo
 if platform.system() == "Linux":
