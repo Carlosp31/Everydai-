@@ -1,4 +1,3 @@
-
 let animations
 let mixer; // AnimationMixer
 let animationActions = {}; // Guardará las animaciones por nombre
@@ -25,25 +24,9 @@ directionalLight.position.set(1, 1, 1).normalize();
 scene.add(directionalLight);
 
 // Obtener el parámetro 'domain' desde la URL
-const urlParams = new URLSearchParams(window.location.search);
-const domain = urlParams.get('domain');
 
 // Definir la ruta del modelo en función del dominio
 let modelPath;
-switch (domain) {
-    case 'Cooking':
-        modelPath = '{{ url_for("static", filename="models/avatar1.glb") }}';
-        animationpath = '{{ url_for("static", filename="animations/animationschef.glb") }}';
-        break;
-    case 'fashion':
-        modelPath = '{{ url_for("static", filename="models/avatar3.glb") }}';
-        animationpath = '{{ url_for("static", filename="animations/animationsfashion.glb") }}';
-        break;
-    case 'Fitness':
-        modelPath = '{{ url_for("static", filename="models/avatar2.glb") }}';
-        animationpath = '{{ url_for("static", filename="animations/animationsgym.glb") }}';
-        break;
-}
 function getModelPaths(domain) {
     if (models[domain]) {
         return models[domain];

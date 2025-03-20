@@ -1,7 +1,6 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    let domain = urlParams.get('domain');
-});
+const urlParams = new URLSearchParams(window.location.search);
+const domain = urlParams.get('domain');
+
            window.onload = function() {
             setTimeout(() => {
                 document.getElementById("loading-screen").style.opacity = "0";
@@ -16,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             window.location.href = `/realidadpro3?domain=${encodeURIComponent(selectedModel)}`;
         }
+
         document.addEventListener("DOMContentLoaded", function() {
             const microphoneButton = document.getElementById("microphone-button");
             const frequencyCanvas = document.getElementById("frequency-canvas");
@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", function() {
             let analyser;
             let isListening = false;
             let isBotSpeaking = false; // Variable para saber si el bot está hablando
+
+
             // Función para iniciar el reconocimiento de voz y el espectro de frecuencias
             function startVoiceRecognition() {
                 if (!recognition) {
@@ -44,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     if (!isBotSpeaking) { // Solo procesar si el bot no está hablando
                         const userInput = event.results[0][0].transcript;
                         document.getElementById("user-input").value = userInput;
-                        sendMessage(userInput);
+                        sendMessage(userInput , "voice");
                         dots.style.opacity = 1; // Mostrar los puntos
                         const event5 = new CustomEvent('pensar');
                         window.dispatchEvent(event5);
@@ -124,12 +126,16 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
 
-            // Función para enviar mensajes (tanto por texto como por voz)
-           function sendMessage(userInput) {
+
+
+
+     // Función para enviar mensajes (tanto por texto como por voz)
+function sendMessage(userInput, type = "text") {
     if (userInput.trim() !== "") {
+        let interaction = startTimer(type);  // Registrar inicio de interacción
         document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
         document.getElementById("user-input").value = ''; // Limpiar el input después de enviar
-
+     
         // Detener temporalmente el reconocimiento de voz mientras se obtiene la respuesta del bot
         if (recognition) recognition.stop();
         isBotSpeaking = true;
@@ -145,6 +151,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
             document.getElementById("chat-box").innerHTML += `<div>AI: ${data.text_response}</div>`;
             speakResponse(data.text_response);
+            logResponse(interaction);  // Registrar el tiempo de respuesta
 
         // Verificar si data.recipes es un array antes de recorrerlo
         if (Array.isArray(data.recipes)) {
@@ -175,10 +182,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     listItem.classList.add("producto-con-precio");
                 } else if (item.link && item.title) {
                     // Si tiene 'link' y 'title', mostramos la receta
-                    listItem.innerHTML = `<div>
-                                            <a href="${item.link}" target="_blank">${item.title}</a>
-                                            <button onclick="addToCart({link: '${item.link}', title: '${item.title}'})">Add to cart</button>
-                                        </div>`;
+                    listItem.innerHTML = `<div class="producto">
+                            <span class="producto-nombre">${item.nombre}</span> - 
+                            <span class="producto-precio">${item.precio}</span>
+                            <button onclick="addToCart('${selectedModel}', {nombre: '${item.nombre}', precio: '${item.precio}'})">Add to list</button>
+                        </div>`;
                 } else {
                     // Si no tiene 'nombre' y 'precio' ni 'link' y 'title', mostramos un mensaje por defecto
                     listItem.innerHTML = "Información no válida";
@@ -195,6 +203,9 @@ document.addEventListener("DOMContentLoaded", function() {
         .catch(error => console.error('Error:', error));
     }
 }
+
+
+
 
 
             // Mostrar las recomendaciones en el cuadro de recomendaciones
@@ -272,6 +283,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     subtitulosContainer.style.display = "none"; // Ocultar subtítulos en caso de error
                 });
             }
+
+
+
+
             // Función para mostrar subtítulos progresivamente
             function mostrarSubtitulosProgresivos(textoCompleto, duracionAudio, contenedor) {
                 const palabras = textoCompleto.split(" ");
@@ -291,6 +306,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 }, tiempoPorPalabra * 50001); // Convierte el tiempo por palabra a milisegundos
             }
+
+
+
             const dots = document.getElementById("dots");
             // Evento al hacer clic en el botón de enviar texto manualmente
             document.getElementById("send-button").onclick = function() {
@@ -337,7 +355,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 videoPreview.srcObject = null;
                 videoPreview.style.display = "none";
                 captureButton.style.display = "none";
-
+                let interaction = startTimer("image2");
                 // Enviar la imagen capturada al servidor
                 canvas.toBlob(function(blob) {
                     const formData = new FormData();
@@ -360,6 +378,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                         document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
                         speakResponse(data.response);
+                        logResponse(interaction);  
                     })
                     .catch(error => console.error('Error:', error));
                 }, 'image/png');
@@ -370,6 +389,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const file = imageInput.files[0];
 
                 if (file) {
+                    let interaction = startTimer("image1");
                     const formData = new FormData();
                     formData.append('image', file);
                     formData.append('model', selectedModel);
@@ -392,6 +412,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                         document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
                         speakResponse(data.response);
+                        logResponse(interaction);  // Registrar el tiempo de respuesta
                     })
                     .catch(error => console.error('Error:', error));
                 }
@@ -407,63 +428,23 @@ document.addEventListener("DOMContentLoaded", function() {
                 };
                 reader.readAsDataURL(file);
             };
-            document.getElementById("download-button").onclick = function() {
-    const chatBox = document.getElementById("chat-box");
-    const recommendationsList = document.getElementById("recommendations-list");
 
-    if (!chatBox || chatBox.children.length === 0) {
-        alert("No hay conversaciones disponibles para descargar.");
-        return;
-    }
-
-    // Obtener el texto de la conversación
-    const conversationText = Array.from(chatBox.children)
-        .map(child => child.textContent.trim())
-        .join("\n\n");
-
-    // Obtener el texto de las recomendaciones
-    const recommendationsText = Array.from(recommendationsList.children)
-        .map(child => {
-            if (child.querySelector('a')) {
-                // Si es un enlace, obtener el texto y la URL
-                const link = child.querySelector('a');
-                return `${link.textContent}: ${link.href}`;
-            } else {
-                // Si no es un enlace, obtener el texto normal
-                return child.textContent.trim();
+            // Función para guardar el tiempo de inicio
+            function startTimer(type) {
+                return { type: type, startTime: Date.now() };
             }
-        })
-        .join("\n\n");
-
-    // Combinar el texto de la conversación y las recomendaciones
-    const fullText = `Conversación:\n${conversationText}\n\nRecomendaciones:\n${recommendationsText}`;
-
-    // Verificar si hay texto para generar el PDF
-    if (!fullText) {
-        alert("No hay contenido para generar el archivo PDF.");
-        return;
-    }
-
-    try {
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF();
-
-        const pageWidth = pdf.internal.pageSize.getWidth();
-        const margin = 10;
-        const maxLineWidth = pageWidth - margin * 2;
-
-        pdf.setFont("Helvetica", "normal");
-        pdf.setFontSize(12);
-
-        const textLines = pdf.splitTextToSize(fullText, maxLineWidth);
-        pdf.text(textLines, margin, margin + 10);
-
-        // Descargar el archivo
-        pdf.save("conversation_and_recommendations.pdf");
-    } catch (error) {
-        console.error("Error al generar el PDF:", error);
-        alert("Ocurrió un error al generar el archivo PDF. Verifica la consola para más detalles.");
-    }
-};
-
+            
+            // Función para registrar el tiempo de respuesta
+            function logResponse(interaction) {
+                interaction.endTime = Date.now();
+                interaction.responseTime = interaction.endTime - interaction.startTime;
+            
+                fetch('/log-interaction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(interaction),
+                })
+                .then(response => response.json())
+                .catch(error => console.error('Error al guardar interacción:', error));
+            }
         });
