@@ -13,7 +13,6 @@ inventoryButton.addEventListener("click", () => {
     }
 });
 
-// ✅ Función para obtener el inventario del usuario
 function fetchInventory() {
     fetch('/get_inventory')
         .then(response => response.json())
@@ -23,8 +22,9 @@ function fetchInventory() {
                 console.error("Error al obtener el inventario:", data.error);
                 return;
             }
+
             inventory.length = 0;
-            inventory.push(...Object.entries(data.items).map(([name, quantity]) => ({ name, quantity }))); 
+            inventory.push(...data.items);  // ✅ Guardar la lista correctamente
             updateInventoryDropdown();
         })
         .catch(error => console.error("Error al obtener inventario:", error));
@@ -50,7 +50,9 @@ function updateInventoryDropdown() {
 
     inventory.forEach(item => {
         const listItem = document.createElement("li");
-        listItem.textContent = `${item.name}: ${item.quantity}`;
+        listItem.textContent = `- ${item}`; // ✅ Ahora muestra "- NombreDelItem"
         inventoryItemsList.appendChild(listItem);
     });
 }
+    
+
