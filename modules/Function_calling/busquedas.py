@@ -1,6 +1,5 @@
 
 from typing_extensions import override
-from openai import AssistantEventHandler
 import os
 import serpapi
 from dotenv import load_dotenv

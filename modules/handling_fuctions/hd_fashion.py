@@ -1,4 +1,3 @@
-import os
 import modules.Function_calling.busquedas as busquedas
 import modules.Function_calling.webscrp as webscrp
 import json
