@@ -1,19 +1,12 @@
 import os
 from flask import Flask, render_template, request, jsonify, redirect, send_file, url_for, session
 import google.generativeai as genai
-from werkzeug.utils import secure_filename
-from PIL import Image
-import serpapi
 from dotenv import load_dotenv
 import requests
-from openai import OpenAI
 from google.oauth2.credentials import Credentials
-from datetime import datetime, timedelta
-import requests  # Asegúrate de importar la biblioteca requests
 import modules.voice as voice
 import modules.images as images
 import modules.chat as chats
-import modules.computer_vision as cp
 import platform
 from google_auth_oauthlib.flow import Flow
 from typing_extensions import override
@@ -109,7 +102,6 @@ def debug_session():
 #################
 # Cargar las variables de entorno
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
-SERPAPI_KEY = os.getenv('SERPAPI_KEY')
 CULINARY_MODEL = os.getenv('CULINARY_MODEL')
 FASHION_MODEL = os.getenv('FASHION_MODEL')
 GYM_MODEL = os.getenv('GYM_MODEL')
@@ -117,7 +109,6 @@ IMG_MODEL = os.getenv('IMG_MODEL')
 ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY')
 
 # Configurar la clave API de SerpAPI
-client_serpapi = serpapi.Client(api_key=SERPAPI_KEY)
 # Inicializar los modelos generativos con las variables de entorno
 model_culinary = genai.GenerativeModel(model_name=CULINARY_MODEL)
 model_fashion = genai.GenerativeModel(model_name=FASHION_MODEL)
@@ -417,10 +408,47 @@ def handle_image():
 
 
 
-@app.route('/process_frame', methods=['POST'])
-def process_frame():
-   return cp.process_frame()
+#@app.route('/process_frame', methods=['POST'])
+#def process_frame():
+#   return cp.process_frame()
 
+# Detectar sistema operativo
+if platform.system() == "Linux":
+    LOG_DIR = "/"  # Guardar en la raíz del sistema en Linux
+else:
+    LOG_DIR = "logs"  # Guardar en "logs/" si no es Linux
+
+LOG_FILE = os.path.join(LOG_DIR, "interactions.json")  
+
+if LOG_DIR != "/":
+    os.makedirs(LOG_DIR, exist_ok=True)
+
+def load_interactions():
+    """Carga las interacciones desde el JSON, o lo inicializa si no existe."""
+    if not os.path.exists(LOG_FILE):  # Si el archivo no existe, lo crea vacío
+        with open(LOG_FILE, "w", encoding="utf-8") as file:
+            json.dump([], file, indent=4, ensure_ascii=False)
+        return []
+
+    with open(LOG_FILE, "r", encoding="utf-8") as file:
+        try:
+            return json.load(file)
+        except json.JSONDecodeError:  # Si el JSON está dañado, reiniciarlo
+            return []
+
+def save_interactions(data):
+    """Guarda las interacciones en el JSON."""
+    with open(LOG_FILE, "w", encoding="utf-8") as file:
+        json.dump(data, file, indent=4, ensure_ascii=False)
+
+
+@app.route('/log-interaction', methods=['POST'])
+def log_interaction():
+    interaction = request.json
+    interactions = load_interactions()
+    interactions.append(interaction)  # Agregar nueva interacción
+    save_interactions(interactions)
+    return jsonify({"message": "Interacción guardada"}), 200
 
 if __name__ == '__main__':
     # Crear el directorio de carga si no existe
