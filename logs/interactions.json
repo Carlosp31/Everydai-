@@ -46,5 +46,53 @@
         "startTime": 1742346414720,
         "endTime": 1742346419274,
         "responseTime": 4554
+    },
+    {
+        "type": "text",
+        "startTime": 1742474438340,
+        "endTime": 1742474442990,
+        "responseTime": 4650
+    },
+    {
+        "type": "voice",
+        "startTime": 1742572919361,
+        "endTime": 1742572926976,
+        "responseTime": 7615
+    },
+    {
+        "type": "voice",
+        "startTime": 1742572959636,
+        "endTime": 1742573056105,
+        "responseTime": 96469
+    },
+    {
+        "type": "voice",
+        "startTime": 1742573088118,
+        "endTime": 1742573107578,
+        "responseTime": 19460
+    },
+    {
+        "type": "voice",
+        "startTime": 1742575139498,
+        "endTime": 1742575144112,
+        "responseTime": 4614
+    },
+    {
+        "type": "voice",
+        "startTime": 1742575155356,
+        "endTime": 1742575160188,
+        "responseTime": 4832
+    },
+    {
+        "type": "voice",
+        "startTime": 1742575720511,
+        "endTime": 1742575754993,
+        "responseTime": 34482
+    },
+    {
+        "type": "voice",
+        "startTime": 1742575774000,
+        "endTime": 1742575799809,
+        "responseTime": 25809
     }
 ]
