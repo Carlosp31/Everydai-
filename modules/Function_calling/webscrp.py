@@ -96,6 +96,7 @@ def web_fashion_HM(producto):
         browser = None
         executable_paths = [
             "/home/maicolln/.cache/ms-playwright/chromium-1155/chrome-linux/chrome",
+            "C:/Users/DELL/AppData/Local/ms-playwright/chromium-1155/chrome-win/chrome.exe",
             None,  # Opción predeterminada (sin ruta específica)
             "/home/ubuntu/.cache/ms-playwright/chromium-1155/chrome-linux/chrome"
         ]

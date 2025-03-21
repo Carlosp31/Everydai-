@@ -12,11 +12,9 @@ from google_auth_oauthlib.flow import Flow
 from typing_extensions import override
 from openai import AssistantEventHandler
 from database import db, Config, redis_client
-from sqlalchemy.exc import SQLAlchemyError
-#### Librerias de base de datos ###############
-from flask_sqlalchemy import SQLAlchemy
 
-from datetime import datetime, timezone
+#### Librerias de base de datos ###############
+
 from database import db, Config
 ################################################
 import redis
@@ -51,37 +49,6 @@ db.init_app(app)
 def test_redis():
     redis_client.set("mensaje", "Hola desde Redis!")
     return redis_client.get("mensaje")  # Devuelve "Hola desde Redis!"
-
-# @app.route('/add_to_cart', methods=['POST'])
-# def add_to_cart():
-#     if 'provider_id' not in session:
-#         return jsonify({"error": "Usuario no autenticado"}), 401
-
-#     provider_id = session['provider_id']
-#     data = request.json
-#     domain_name = data.get('domain_name')  # Cambia de domain_id a domain_name
-#     item = data.get('item')
-#     print(f"data: {data}")
-#     print(f"item: {item}")
-
-#     if not domain_name or not item:
-#         return jsonify({"error": "Faltan datos"}), 400
-
-#     # Buscar o crear la lista de compras
-#     shopping_list = ShoppingList.get_or_create(provider_id, domain_name)
-
-#     # Añadir el nuevo ítem al carrito
-#     if not isinstance(shopping_list.items, list):  # Asegurar que es una lista
-#         shopping_list.items = []
-
-#     shopping_list.items.append(item)
-#     db.session.commit()
-
-#     return jsonify({"items": shopping_list.items})
-
-
-
-
 
 # Función para convertir las credenciales en un diccionario para almacenarlas en la sesión
 def credentials_to_dict(credentials):
@@ -147,15 +114,6 @@ class EventHandler(AssistantEventHandler):
             print(f"\n{output.logs}", flush=True)
             print("Test runner")
  
-
- 
-# Then, we use the `stream` SDK helper 
-# with the `EventHandler` class to create the Run 
-# and stream the response.
-####################################################
-########################################################
-
-########################################################
 
 ########################################################
 current_os = platform.system()
@@ -259,27 +217,31 @@ def dashboard():
             )
             db.session.add(new_user)
             db.session.commit()
+        
+    elif current_os == 'Windows':
+  
 
+        # Datos simulados para autenticación en Windows
+        user_info = {
+            'id': '111023325935054444837',
+            'provider': 'google',
+            'name': 'Carlos Pardo',
+            'email': 'cpardobar@gmail.com',
+            'profile_pic': 'https://lh3.googleusercontent.com/a/ACg8ocJ_Ai5OrqNKRad968wXeraJXD0TpQoVDYH4OeOTMBUlAst2Yw=s96-c',
+            'created_at': '2025-03-15 16:21:39'
+        }
+
+        print("Autenticación simulada en Windows:", user_info)
+
+        # Guardar en sesión
+        session['provider_id'] = user_info['id']
+        session['credentials'] = {'token': 'fake_token_for_windows'}
+        session['user_info'] = user_info  # Guarda toda la info del usuario en sesión
+            
+
+ 
     # Para otros sistemas operativos, renderizar el dashboard directamente
     return render_template(dash_ruta)
-# @app.route('/get_shopping_list', methods=['GET'])
-# def get_shopping_list():
-#     if 'provider_id' not in session:
-#         return jsonify({"error": "Usuario no autenticado"}), 401
-
-#     provider_id = session['provider_id']
-#     selected_domain = session.get('selected_domain')  # Dominio seleccionado
-
-#     if not selected_domain:
-#         return jsonify({"error": "No se ha seleccionado un dominio"}), 400
-
-#     # Buscar la lista de compras del usuario en ese dominio
-#     shopping_list = ShoppingList.query.filter_by(provider_id=provider_id, domain_name=selected_domain).first()
-
-#     if not shopping_list:
-#         return jsonify({"items": []})  # Si no tiene lista, devolvemos vacío
-
-#     return jsonify({"items": shopping_list.items if shopping_list.items else []}), 200
 
 
 
