@@ -12,3 +12,5 @@ cert.pem
 key.pem
 Computer_vision/
 clean_redis.py
+jsn_excel.py
+output.xlsx
