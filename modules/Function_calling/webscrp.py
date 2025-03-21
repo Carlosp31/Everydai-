@@ -12,80 +12,64 @@ from playwright.sync_api import sync_playwright
 
 def web_culinary(producto):
     print("Ejecutando Main")
+    
+    with sync_playwright() as p:
+        browser = None
+        executable_paths = [
+            "/home/maicolln/.cache/ms-playwright/chromium-1155/chrome-linux/chrome",
+            None,  # Opción predeterminada (sin ruta específica)
+            "/home/ubuntu/.cache/ms-playwright/chromium-1155/chrome-linux/chrome"
+        ]
 
-    # Configuración para el modo headless
-    options = Options()
-    options.add_argument("--headless")  # Ejecuta el navegador sin interfaz gráfica
-    options.add_argument("--disable-gpu")  # Deshabilita la GPU para mejorar la compatibilidad
-    options.add_argument("--no-sandbox")  # Evita problemas en sistemas Linux
-    options.add_argument("--disable-dev-shm-usage")  # Optimiza para entornos de bajo rendimiento
-    options.add_argument("--disable-extensions")  # Deshabilita extensiones para evitar conflictos
-
-    # Iniciar el controlador de Chrome con las opciones
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=options)
-    driver.get("https://www.olimpica.com/supermercado")
-
-    productos_lista = []  # Lista donde se almacenarán los productos extraídos
-
-    try:
-        ### REALIZAR BÚSQUEDA DEL PRODUCTO ###
-        print("Abriendo página de Olímpica...")
-        
-        # Espera activa para que el campo de búsqueda esté disponible
-        busqueda = WebDriverWait(driver, 15).until(
-            EC.presence_of_element_located((By.XPATH, '//*[@placeholder="Busca por nombre, categoría…"]'))
-        )
-        busqueda.send_keys(producto)
-        busqueda.send_keys(Keys.RETURN)  # Simula la tecla Enter
-        print("Texto enviado correctamente al campo de búsqueda.")
-        
-        # Espera a que los resultados se carguen (ajusta el tiempo si es necesario)
-        WebDriverWait(driver, 14).until(
-            EC.presence_of_element_located((By.CLASS_NAME, "vtex-product-summary-2-x-productBrand"))
-        )
-        time.sleep(5)
-        ### EXTRAER INFORMACIÓN DE LOS PRIMEROS TRES PRODUCTOS ###
-        productos = driver.find_elements(By.CLASS_NAME, "vtex-product-summary-2-x-productBrand")
-
-        # Iterar sobre los primeros tres productos
-        for i in range(min(5, len(productos))):  # Asegura que solo se iteren los primeros tres productos
+        for path in executable_paths:
             try:
-                producto_nombre = productos[i].text
-                print(f"Nombre del producto {i + 1}: {producto_nombre}")
-
-                # Obtener el precio del producto
-                price_container = driver.find_elements(By.CLASS_NAME, "olimpica-dinamic-flags-0-x-currencyContainer")[i]
-                full_price = price_container.text.strip()
-                print(f"Precio concatenado: {full_price}")
-
-                # Obtener la imagen del producto
-                imagen = driver.find_elements(By.CSS_SELECTOR, "img.vtex-product-summary-2-x-imageNormal")[i]
-                imagen_src = imagen.get_attribute("src")  # URL de la imagen
-
-                # Crear un diccionario con la información del producto
-                producto_info = {
-                    "nombre": producto_nombre,
-                    "precio": full_price,
-                    "imagen_url": imagen_src
-                }
-
-                # Agregar el producto a la lista
-                productos_lista.append(producto_info)
-
+                print(f"[INFO] Intentando iniciar Chromium con ruta: {path if path else 'Predeterminado'}")
+                browser = p.chromium.launch(headless=True, executable_path=path) if path else p.chromium.launch(headless=True)
+                print("[INFO] Navegador iniciado correctamente.")
+                break  # Si funciona, salimos del bucle
             except Exception as e:
-                print(f"No se pudo extraer información del producto {i + 1}.")
-                print(e)
+                print(f"[ERROR] Falló con {path if path else 'Predeterminado'}: {e}")
 
-        print("Extracción completada.")
-        return productos_lista  # Devolver la lista de productos extraídos
+        if not browser:
+            print("[CRÍTICO] No se pudo iniciar el navegador.")
+            return None, None, None
 
-    except TimeoutException:
-        print("No se encontró el campo de búsqueda o hubo un problema cargando la página.")
-    finally:
-        driver.quit()
-        print("Navegador cerrado.")
-
+        context = browser.new_context(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+        )
+        page = context.new_page()
+        page.goto("https://www.olimpica.com/supermercado")
+        
+        productos_lista = []  # Lista donde se almacenarán los productos extraídos
+        
+        try:
+            print("Abriendo página de Olímpica...")
+            
+            # Esperar a que el campo de búsqueda esté disponible y escribir el producto
+            page.wait_for_selector('xpath=//*[@placeholder="Busca por nombre, categoría…"]', timeout=15000)
+            page.fill('xpath=//*[@placeholder="Busca por nombre, categoría…"]', producto)
+            page.press('xpath=//*[@placeholder="Busca por nombre, categoría…"]', 'Enter')
+            
+            # Esperar resultados y extraer información
+            page.wait_for_selector('xpath=//div[contains(@class, "product-card")]', timeout=15000)
+            productos = page.query_selector_all('xpath=//div[contains(@class, "product-card")]')
+            
+            for prod in productos:
+                nombre = prod.query_selector('xpath=.//h3')
+                precio = prod.query_selector('xpath=.//span[contains(@class, "price")]')
+                
+                nombre_texto = nombre.inner_text() if nombre else "Nombre no disponible"
+                precio_texto = precio.inner_text() if precio else "Precio no disponible"
+                
+                productos_lista.append({"nombre": nombre_texto, "precio": precio_texto})
+                
+        except Exception as e:
+            print(f"Error durante la ejecución: {e}")
+        
+        finally:
+            browser.close()
+        
+        return productos_lista
 
 
 import json
@@ -293,3 +277,4 @@ def web_fitness_decathlon(producto):
 
         finally:
             browser.close()
+
