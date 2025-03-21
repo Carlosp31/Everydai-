@@ -94,5 +94,17 @@
         "startTime": 1742575774000,
         "endTime": 1742575799809,
         "responseTime": 25809
+    },
+    {
+        "type": "image1",
+        "startTime": 1742588674349,
+        "endTime": 1742588685858,
+        "responseTime": 11509
+    },
+    {
+        "type": "voice",
+        "startTime": 1742588760674,
+        "endTime": 1742588779765,
+        "responseTime": 19091
     }
 ]
