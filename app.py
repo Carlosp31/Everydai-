@@ -12,11 +12,9 @@ from google_auth_oauthlib.flow import Flow
 from typing_extensions import override
 from openai import AssistantEventHandler
 from database import db, Config, redis_client
-from sqlalchemy.exc import SQLAlchemyError
-#### Librerias de base de datos ###############
-from flask_sqlalchemy import SQLAlchemy
 
-from datetime import datetime, timezone
+#### Librerias de base de datos ###############
+
 from database import db, Config
 ################################################
 import redis
@@ -116,15 +114,6 @@ class EventHandler(AssistantEventHandler):
             print(f"\n{output.logs}", flush=True)
             print("Test runner")
  
-
- 
-# Then, we use the `stream` SDK helper 
-# with the `EventHandler` class to create the Run 
-# and stream the response.
-####################################################
-########################################################
-
-########################################################
 
 ########################################################
 current_os = platform.system()
@@ -228,7 +217,29 @@ def dashboard():
             )
             db.session.add(new_user)
             db.session.commit()
+        
+    elif current_os == 'Windows':
+  
 
+        # Datos simulados para autenticación en Windows
+        user_info = {
+            'id': '111023325935054444837',
+            'provider': 'google',
+            'name': 'Carlos Pardo',
+            'email': 'cpardobar@gmail.com',
+            'profile_pic': 'https://lh3.googleusercontent.com/a/ACg8ocJ_Ai5OrqNKRad968wXeraJXD0TpQoVDYH4OeOTMBUlAst2Yw=s96-c',
+            'created_at': '2025-03-15 16:21:39'
+        }
+
+        print("Autenticación simulada en Windows:", user_info)
+
+        # Guardar en sesión
+        session['provider_id'] = user_info['id']
+        session['credentials'] = {'token': 'fake_token_for_windows'}
+        session['user_info'] = user_info  # Guarda toda la info del usuario en sesión
+            
+
+ 
     # Para otros sistemas operativos, renderizar el dashboard directamente
     return render_template(dash_ruta)
 
