@@ -1,11 +1,8 @@
-const wishList = [];
+let wishList = [];  // Usa let para evitar la redeclaración
 const wishButton = document.getElementById("wish-button");
 const wishDropdown = document.getElementById("wish-dropdown");
 const wishItemsList = document.getElementById("wish-items");
 
-// Obtener el nombre del dominio desde la URL
-const urlParams = new URLSearchParams(window.location.search);
-const domain = urlParams.get('domain') || 'Dominio no disponible';
 // ✅ Función para obtener la lista de deseos del usuario
 function fetchWishList() {
     fetch('/get_wish_list')
@@ -37,34 +34,36 @@ function updateWishDropdown() {
         // Botón para eliminar el elemento
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Eliminar";
-        deleteButton.onclick = () => removeFromWishList(name);
+        
+        deleteButton.onclick = () => {
+            console.log("🛑 Botón clickeado para eliminar:", name); // Verificar si el botón detecta el clic
+            removeFromWishList(name);
+        };
 
         listItem.appendChild(deleteButton);
         wishItemsList.appendChild(listItem);
     });
 }
 
-// ✅ Función para eliminar un ítem de la lista de deseos
+
 function removeFromWishList(itemName) {
+    console.log(`🛑 Intentando eliminar: ${itemName} del dominio: ${domain}`);
+
     fetch('/remove_from_wish_list', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ domain_name: domain, item_name: itemName })
+        body: JSON.stringify({ domain_name: domain, item_name: itemName }) 
     })
     .then(response => response.json())
     .then(data => {
         console.log("✅ Respuesta del backend:", data);
-        if (!data.error) {
-            // Eliminar el ítem localmente y actualizar la lista
-            const index = wishList.findIndex(item => item.name === itemName);
-            if (index !== -1) {
-                wishList.splice(index, 1);
-                updateWishDropdown();
-            }
-        }
+        fetchWishList(); // Recargar la lista después de eliminar
     })
     .catch(error => console.error("❌ Error en la petición:", error));
 }
+
+
+
 
 // ✅ Mostrar/Ocultar la lista de deseos
 wishButton.addEventListener("click", () => {
@@ -97,8 +96,3 @@ function addToCart(domainName, item) {
 
 
 
-
-function removeFromWishList(index) {
-    wishList.splice(index, 1);
-    updateWishDropdown();
-}
