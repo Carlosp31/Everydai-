@@ -31,8 +31,22 @@ const domain = urlParams.get('domain');
             let analyser;
             let isListening = false;
             let isBotSpeaking = false; // Variable para saber si el bot está hablando
+            document.getElementById("user-input").addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault(); // Evita que se agregue una nueva línea en el input
+                    const userInput = document.getElementById("user-input").value.trim(); // Elimina espacios en blanco
+                    if (userInput) { 
+                        sendMessage(userInput);
 
-
+                        const dots = document.getElementById("dots");
+                        const event3 = new CustomEvent('pensar');
+                        window.dispatchEvent(event3);
+                        dots.style.opacity = 1; // Mostrar los puntos
+                    } else {
+                        alert("Please enter a message before sending.");
+                    }
+                }
+            });
             // Función para iniciar el reconocimiento de voz y el espectro de frecuencias
             function startVoiceRecognition() {
                 if (!recognition) {
@@ -203,10 +217,6 @@ function sendMessage(userInput, type = "text") {
     }
 }
 
-
-
-
-
             // Mostrar las recomendaciones en el cuadro de recomendaciones
             const recommendationsList = document.getElementById("recommendations-list");
             recommendationsList.innerHTML = '';  // Limpiar la lista existente
@@ -219,9 +229,7 @@ function sendMessage(userInput, type = "text") {
                     console.error("El contenedor de subtítulos no existe.");
                     return;
                 }
-                    // Mostrar subtítulos
-                //subtitulosContainer.textContent = responseText;
-                //subtitulosContainer.style.display = "block";
+
 
                 fetch('/synthesize-audio', {
                     method: 'POST',
@@ -339,6 +347,10 @@ function sendMessage(userInput, type = "text") {
 
             // Funcionalidad para capturar imagen de la cámara
             captureButton.onclick = function() {
+                dots.style.opacity = 1; // Mostrar los puntos
+
+                const event4 = new CustomEvent('pensar');
+                window.dispatchEvent(event4);
                 const context = canvas.getContext('2d');
                 canvas.width = videoPreview.videoWidth;
                 canvas.height = videoPreview.videoHeight;
@@ -384,38 +396,41 @@ function sendMessage(userInput, type = "text") {
             };
 
             // Evento al hacer clic en el botón de cargar imagen
-            document.getElementById("upload-button").onclick = function() {
-                const file = imageInput.files[0];
-
+            document.getElementById("image-input").addEventListener("change", function() {
+                const file = this.files[0];  // Obtener el archivo seleccionado
+        
                 if (file) {
                     let interaction = startTimer("image1");
                     const formData = new FormData();
                     formData.append('image', file);
                     formData.append('model', selectedModel);
+        
                     dots.style.opacity = 1; // Mostrar los puntos
+        
                     const event4 = new CustomEvent('pensar');
                     window.dispatchEvent(event4);
+        
                     fetch('/upload-image', {
                         method: 'POST',
                         body: formData,
                     })
                     .then(response => response.json())
                     .then(data => {
-                            // Muestra la alerta SweetAlert2
-                            Swal.fire({
+                        // Muestra la alerta SweetAlert2
+                        Swal.fire({
                             title: 'Success!',
                             text: 'Image uploaded successfully',
                             icon: 'success',
                             confirmButtonText: 'OK'
                         });
-
+        
                         document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
                         speakResponse(data.response);
                         logResponse(interaction);  // Registrar el tiempo de respuesta
                     })
                     .catch(error => console.error('Error:', error));
                 }
-            };
+            });
 
             // Vista previa de la imagen cargada
             imageInput.onchange = function() {
