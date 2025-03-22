@@ -329,9 +329,18 @@ def add_to_cart_route():
     return actions_db.add_to_cart()
 
 
+# @app.route('/remove_from_wish_list', methods=['POST'])
+# def remove_from_cart_route():
+#     return actions_db.remove_from_wishlist()
 @app.route('/remove_from_wish_list', methods=['POST'])
 def remove_from_cart_route():
-    return actions_db.remove_from_wishlist()
+    data = request.get_json()
+    print(f"🛑 Petición recibida en Flask: {data}")  # Verifica qué datos está recibiendo el backend
+    
+    if not data or 'domain_name' not in data or 'item_name' not in data:
+        return jsonify({"error": "Datos inválidos"}), 400
+    
+    return actions_db.remove_from_wish_list()
 
 
 @app.route('/get_inventory')
