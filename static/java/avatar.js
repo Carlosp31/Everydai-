@@ -219,16 +219,32 @@ window.addEventListener('parar', () => {
 playAnimationLoop("pose")
 });
 
+let jawResetTimeout;
+
 window.addEventListener('audio-level', (event) => {
-const amplitude = event.detail.amplitude;
-if (jawOpenTarget !== null && model) {
-    model.traverse((child) => {
-        if (child.isMesh && child.name === 'Wolf3D_Head') {
-            child.morphTargetInfluences[jawOpenTarget] = amplitude;
+    const amplitude = event.detail.amplitude;
+
+    if (jawOpenTarget !== null && model) {
+        model.traverse((child) => {
+            if (child.isMesh && child.name === 'Wolf3D_Head') {
+                child.morphTargetInfluences[jawOpenTarget] = amplitude;
+            }
+        });
+    }
+
+    // Reinicia el temporizador cada vez que hay audio
+    clearTimeout(jawResetTimeout);
+    jawResetTimeout = setTimeout(() => {
+        if (jawOpenTarget !== null && model) {
+            model.traverse((child) => {
+                if (child.isMesh && child.name === 'Wolf3D_Head') {
+                    child.morphTargetInfluences[jawOpenTarget] = 0;
+                }
+            });
         }
-    });
-}
+    }, 100); // Se resetea después de 200ms sin eventos
 });
+
 
 
 // Función para realizar el parpadeo
