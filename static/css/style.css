@@ -516,12 +516,21 @@ button:active, .controls button:active, .sidebar a:active {
     border-radius: 5px;
     font-size: 13px;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease;  /* Transición suave de color y tamaño */
-  }
-  
-  #image-input-label:hover {
-    background-color: #007acc; /* Color de fondo cuando el mouse pasa por encima */
-  }
+    transition: background-color 0.2s ease, transform 0.2s ease;  
+    display: inline-block; /* Para comportarse como botón */
+    text-align: center;
+}
+
+/* Efecto hover */
+#image-input-label:hover {
+    background-color: #005fa3; /* Azul más oscuro */
+    transform: scale(1.05); /* Efecto de zoom */
+}
+
+/* Efecto cuando se presiona el botón */
+#image-input-label:active {
+    transform: scale(0.95); /* Disminuye un poco el tamaño */
+}
   
 /* Animación de parpadeo */
 @keyframes blink {
