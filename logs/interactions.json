@@ -106,5 +106,65 @@
         "startTime": 1742588760674,
         "endTime": 1742588779765,
         "responseTime": 19091
+    },
+    {
+        "type": "image1",
+        "startTime": 1742668269968,
+        "endTime": 1742668278416,
+        "responseTime": 8448
+    },
+    {
+        "type": "image1",
+        "startTime": 1742668539117,
+        "endTime": 1742668547871,
+        "responseTime": 8754
+    },
+    {
+        "type": "text",
+        "startTime": 1742668694431,
+        "endTime": 1742668698764,
+        "responseTime": 4333
+    },
+    {
+        "type": "text",
+        "startTime": 1742668719070,
+        "endTime": 1742668723233,
+        "responseTime": 4163
+    },
+    {
+        "type": "text",
+        "startTime": 1742669152438,
+        "endTime": 1742669157822,
+        "responseTime": 5384
+    },
+    {
+        "type": "text",
+        "startTime": 1742669313687,
+        "endTime": 1742669318185,
+        "responseTime": 4498
+    },
+    {
+        "type": "text",
+        "startTime": 1742669632046,
+        "endTime": 1742669638188,
+        "responseTime": 6142
+    },
+    {
+        "type": "text",
+        "startTime": 1742669746738,
+        "endTime": 1742669751958,
+        "responseTime": 5220
+    },
+    {
+        "type": "image2",
+        "startTime": 1742669813287,
+        "endTime": 1742669822927,
+        "responseTime": 9640
+    },
+    {
+        "type": "image2",
+        "startTime": 1742669895101,
+        "endTime": 1742669904955,
+        "responseTime": 9854
     }
 ]
