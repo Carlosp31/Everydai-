@@ -51,14 +51,6 @@ def test_redis():
     redis_client.set("mensaje", "Hola desde Redis!")
     return redis_client.get("mensaje")  # Devuelve "Hola desde Redis!"
 
-<<<<<<< HEAD
-
-
-
-
-
-=======
->>>>>>> 99468c47eb76344a80c0f746f21939dc79c45287
 # Función para convertir las credenciales en un diccionario para almacenarlas en la sesión
 def credentials_to_dict(credentials):
     """Convierte las credenciales en un diccionario para almacenarlas en la sesión."""
@@ -335,6 +327,11 @@ def chat():
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart_route():
     return actions_db.add_to_cart()
+
+
+@app.route('/remove_from_wish_list', methods=['POST'])
+def remove_from_cart_route():
+    return actions_db.remove_from_wishlist()
 
 
 @app.route('/get_inventory')
