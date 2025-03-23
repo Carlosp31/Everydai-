@@ -70,19 +70,10 @@
         </div>
         <div id="chat-box" class="hidden"></div>
         <input type="text" id="user-input" placeholder="Chat with us...">
-        <div class="control-container">
-            <button id="microphone-button">Start Conversation</button>
-            <label for="image-input" id="image-input-label">Select Image</label>
-            <button id="upload-button">Upload Image</button>
-            <button id="camera-button">Open Camera</button>
-            <button id="send-button">Send</button>
-            <button id="capture-button" style="display:none;">Capture</button>
-        </div>
         <input type="file" id="image-input" accept="image/*">
 
         <!-- Canvas para el espectro de frecuencias -->
-        <canvas id="frequency-canvas"></canvas>
-
+        
         <video id="video-preview" autoplay style="display:none; width: 300px;"></video>
         <canvas id="canvas" style="display:none;"></canvas>
 
@@ -90,6 +81,15 @@
             <img id="image-preview" alt="Your uploaded image will appear here" style="display: none; width: 300px; margin-top: 10px;">
         </div>
     </div>
+    <div class="control-container">
+        <button id="microphone-button">Start Conversation</button>
+        <label for="image-input" id="image-input-label">Select Image</label>
+        <button id="camera-button">Open Camera</button>
+        <button id="send-button">Send</button>
+        <button id="capture-button" style="display:none;">Capture</button>
+    </div>
+    <canvas id="frequency-canvas"></canvas>
+
 </div>    
     <script src="../static/java/recommendations.js"></script>
     <script src="../static/java/chat.js"></script>
