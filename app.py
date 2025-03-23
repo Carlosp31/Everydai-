@@ -272,6 +272,8 @@ def oauth2callback():
 # Configuración de Redis
 redis_client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
 
+
+
 @app.route('/chat')
 def chat():
     domain = request.args.get('domain', '')  # Obtener el dominio desde la URL
