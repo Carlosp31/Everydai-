@@ -13,7 +13,7 @@ const domain = urlParams.get('domain');
         function redirectToRealidad() {
             let selectedModel = domain;
 
-            window.location.href = `/realidadpro3?domain=${encodeURIComponent(selectedModel)}`;
+            window.location.href = `/augmented experience?domain=${encodeURIComponent(selectedModel)}`;
         }
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -226,7 +226,7 @@ function sendMessage(userInput, type = "text") {
                     // Si tiene 'link' y 'title', mostramos la receta
                     listItem.innerHTML = `<div>
                                             <a href="${item.link}" target="_blank">${item.title}</a>
-                                            <button onclick="addToCart({link: '${item.link}', title: '${item.title}'})">Add to cart</button>
+                                
                                         </div>`;
                 } else {
                     // Si no tiene 'nombre' y 'precio' ni 'link' y 'title', mostramos un mensaje por defecto
