@@ -42,7 +42,7 @@ function updateInventoryDropdown() {
 
     if (inventory.length === 0) {
         const emptyMessage = document.createElement("li");
-        emptyMessage.textContent = "No hay items en el inventario.";
+        emptyMessage.textContent = "No items on inventory.";
         emptyMessage.style.color = "gray";
         inventoryItemsList.appendChild(emptyMessage);
         return;
