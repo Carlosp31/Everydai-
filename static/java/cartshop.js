@@ -90,7 +90,10 @@ function addToCart(domainName, item) {
         })
     })
     .then(response => response.json())
-    .then(data => console.log("✅ Respuesta del backend:", data))
+    .then(data => {
+        console.log("✅ Respuesta del backend:", data);
+        fetchWishList(); // Actualizar la lista de deseos
+    })
     .catch(error => console.error("❌ Error en la petición:", error));
 }
 
