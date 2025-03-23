@@ -47,7 +47,21 @@ const domain = urlParams.get('domain');
                     }
                 }
             });
+            let storedMessage = sessionStorage.getItem("pendingMessage");
 
+            if (storedMessage) {
+                sendMessage(storedMessage, "detection"); // Enviamos directamente como string
+                        // Cambiar la opacidad de los puntos
+        const dots = document.getElementById("dots");
+        const event6 = new CustomEvent('pensar');
+        window.dispatchEvent(event6);
+        dots.style.opacity = 1; // Mostrar los puntos
+                sessionStorage.removeItem("pendingMessage"); // Eliminamos el mensaje después de enviarlo
+            }
+
+
+
+            
 // Seleccionar el contenedor del chat
             const chatContainer = document.querySelector('.chat-container');
 
@@ -157,6 +171,8 @@ const domain = urlParams.get('domain');
 
      // Función para enviar mensajes (tanto por texto como por voz)
 function sendMessage(userInput, type = "text") {
+
+    console.log("mensaje",userInput);
     if (userInput.trim() !== "") {
         let interaction = startTimer(type);  // Registrar inicio de interacción
         document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
