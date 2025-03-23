@@ -14,7 +14,6 @@
     <div class="buttons-container">
         <button onclick="startDetection()">Start</button>
         <button onclick="stopDetection()">Stop</button>
-        <button id="microphone-button">Talk</button>
     </div>
     <div id="detections-log">
         <h3>Detections</h3>
@@ -22,7 +21,6 @@
     </div>
 </body>
 <script>
-    const microphoneButton = document.getElementById("microphone-button");
     let detectionInterval;
     let detectedClasses = new Set(); // Guarda solo los nombres de las clases detectadas
     let isListening = false;
@@ -141,57 +139,33 @@ async function sendFrameToRoboflow(frameBase64) {
         }
     }
 
-    function stopDetection() {
-        if (detectionInterval !== null) {
-    clearInterval(detectionInterval);
-    detectionInterval = null;
+    async function stopDetection() {
+    if (detectionInterval !== null) {
+        clearInterval(detectionInterval);
+        detectionInterval = null;
+    }
+    stopCamera();
+    clearBoundingBoxes();
+
+    if (detectedClasses.size === 0) {
+        alert("No hay detecciones para enviar.");
+        return;
+    }
+
+    let message = Array.from(detectedClasses).map(item => ({
+        type: "text",
+        text: item
+    }));
+
+    // Guardamos el mensaje en sessionStorage antes de redirigir
+    sessionStorage.setItem("pendingMessage", JSON.stringify(message));
+
+    // Redirigimos a la nueva página
+    window.location.href = `/chat?domain=${domain}`;
 }
-        stopCamera();
-        clearBoundingBoxes(); // Llamamos a la función para limpiar los bounding boxes
-        if (detectedClasses.size === 0) {
-            alert("No hay detecciones para enviar.");
-            return;
-        }
 
-        let message = Array.from(detectedClasses).map(item => ({
-            type: "text",
-            text: item
-        }));
 
-        try {
-            sendMessage(message);
-        } catch (error) {
-            alert("⚠️ Error en la solicitud.");
-            console.error("⚠️ Error en la solicitud:", error);
-        }
-    }
 
-    function sendMessage(userInput) {
-        fetch('/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: userInput, model: domain })
-        })
-        .then(response => response.json())
-        .then(data => {
-            speakResponse(data.text_response);
-        });
-    }
-
-    function speakResponse(responseText) {
-        fetch('/synthesize-audio', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: responseText, modelo: domain })
-        })
-        .then(audioResponse => audioResponse.blob())
-        .then(audioBlob => {
-            const audioUrl = URL.createObjectURL(audioBlob);
-            const audio = new Audio(audioUrl);
-            audio.play();
-        })
-        .catch(error => console.error('Error:', error));
-    }
 
     function startCamera() {
         const videoElement = document.getElementById('video');
@@ -237,18 +211,6 @@ async function sendFrameToRoboflow(frameBase64) {
         }
         document.getElementById('video').srcObject = null;
     }
-
-    microphoneButton.onclick = function() {
-        if (!isListening) {
-            isListening = true;
-            microphoneButton.innerText = "Stop Conversation";
-            startVoiceRecognition();
-        } else {
-            isListening = false;
-            microphoneButton.innerText = "Start Conversation";
-            if (recognition) recognition.stop();
-        }
-    };
 </script>
 
 </body>

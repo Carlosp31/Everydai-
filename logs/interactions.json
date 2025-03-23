@@ -220,5 +220,53 @@
         "startTime": 1742693813325,
         "endTime": 1742693817642,
         "responseTime": 4317
+    },
+    {
+        "type": "text",
+        "startTime": 1742695753527,
+        "endTime": 1742695757967,
+        "responseTime": 4440
+    },
+    {
+        "type": "text",
+        "startTime": 1742762321146,
+        "endTime": 1742762330099,
+        "responseTime": 8953
+    },
+    {
+        "type": "text",
+        "startTime": 1742762528633,
+        "endTime": 1742762536385,
+        "responseTime": 7752
+    },
+    {
+        "type": "text",
+        "startTime": 1742762731442,
+        "endTime": 1742762740577,
+        "responseTime": 9135
+    },
+    {
+        "type": "text",
+        "startTime": 1742763104919,
+        "endTime": 1742763109102,
+        "responseTime": 4183
+    },
+    {
+        "type": "detection",
+        "startTime": 1742763505698,
+        "endTime": 1742763511348,
+        "responseTime": 5650
+    },
+    {
+        "type": "detection",
+        "startTime": 1742763649585,
+        "endTime": 1742763655889,
+        "responseTime": 6304
+    },
+    {
+        "type": "detection",
+        "startTime": 1742763889317,
+        "endTime": 1742763894833,
+        "responseTime": 5516
     }
 ]
