@@ -45,32 +45,64 @@ def web_culinary(producto):
         try:
             print("Abriendo página de Olímpica...")
             
-            # Esperar a que el campo de búsqueda esté disponible y escribir el producto
-            page.wait_for_selector('xpath=//*[@placeholder="Busca por nombre, categoría…"]', timeout=15000)
-            page.fill('xpath=//*[@placeholder="Busca por nombre, categoría…"]', producto)
-            page.press('xpath=//*[@placeholder="Busca por nombre, categoría…"]', 'Enter')
-            
-            # Esperar resultados y extraer información
-            page.wait_for_selector('xpath=//div[contains(@class, "product-card")]', timeout=15000)
-            productos = page.query_selector_all('xpath=//div[contains(@class, "product-card")]')
-            
-            for prod in productos:
-                nombre = prod.query_selector('xpath=.//h3')
-                precio = prod.query_selector('xpath=.//span[contains(@class, "price")]')
-                
-                nombre_texto = nombre.inner_text() if nombre else "Nombre no disponible"
-                precio_texto = precio.inner_text() if precio else "Precio no disponible"
-                
-                productos_lista.append({"nombre": nombre_texto, "precio": precio_texto})
-                
+            # Seleccionar el input usando el placeholder
+            input_selector = 'input[placeholder="Encuentra todo lo que necesitas"]'
+            page.fill(input_selector, producto)
+            print("Campo llenado con:", producto)
+
+            # Simular presionar Enter para buscar
+            page.press(input_selector, "Enter")
+            print("Enter presionado")
+
+            # Esperar a que carguen los productos
+            page.wait_for_selector('.vtex-search-result-3-x-galleryItem', timeout=15000)
+
+            productos_lista = []
+            productos = page.query_selector_all('.vtex-product-summary-2-x-galleryItem')
+
+            # Iterar sobre los primeros 5 productos
+            for i in range(min(5, len(productos))):
+                try:
+                    prod = productos[i]
+
+                    # Obtener nombre del producto
+                    nombre_elem = prod.query_selector('.vtex-product-summary-2-x-productBrand')
+                    producto_nombre = nombre_elem.inner_text().strip() if nombre_elem else "Nombre no disponible"
+                    print(f"Nombre del producto {i + 1}: {producto_nombre}")
+
+                    # Obtener el precio del producto
+                    precio_elem = prod.query_selector('.olimpica-dinamic-flags-0-x-currencyContainer')
+                    full_price = precio_elem.inner_text().strip() if precio_elem else "Precio no disponible"
+                    print(f"Precio del producto {i + 1}: {full_price}")
+
+                    # Obtener la imagen del producto
+                    imagen_elem = prod.query_selector("img.vtex-product-summary-2-x-imageNormal")
+                    imagen_src = imagen_elem.get_attribute("src") if imagen_elem else "Imagen no disponible"
+
+                    # Guardar la información del producto en un diccionario
+                    producto_info = {
+                        "nombre": producto_nombre,
+                        "precio": full_price,
+                        "imagen_url": imagen_src
+                    }
+
+                    # Agregar a la lista de productos
+                    productos_lista.append(producto_info)
+
+                except Exception as e:
+                    print(f"No se pudo extraer información del producto {i + 1}: {e}")
+
+            # Cerrar el navegador
+            browser.close()
+
         except Exception as e:
             print(f"Error durante la ejecución: {e}")
-        
+
         finally:
             browser.close()
-        
+        print(productos_lista)
         return productos_lista
-
+web_culinary("salsa de tomate")
 
 import json
 from playwright.sync_api import sync_playwright
