@@ -1,12 +1,3 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
 import time
 from playwright.sync_api import sync_playwright
 
@@ -102,7 +93,6 @@ def web_culinary(producto):
             browser.close()
         print(productos_lista)
         return productos_lista
-web_culinary("salsa de tomate")
 
 import json
 from playwright.sync_api import sync_playwright
