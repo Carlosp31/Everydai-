@@ -47,6 +47,18 @@ const domain = urlParams.get('domain');
                     }
                 }
             });
+
+// Seleccionar el contenedor del chat
+            const chatContainer = document.querySelector('.chat-container');
+
+            // Verificar el valor de `domain` y cambiar el fondo dinámicamente
+            if (domain === "Cooking") {
+                chatContainer.style.backgroundImage = "url('static/css/kitchen.jpg')";
+            } else if (domain === "fashion") {
+                chatContainer.style.backgroundImage = "url('static/css/clothes.jpg')";
+            } else if (domain === "Fitness") {
+                chatContainer.style.backgroundImage = "url('static/css/gym.png')";
+            }
             // Función para iniciar el reconocimiento de voz y el espectro de frecuencias
             function startVoiceRecognition() {
                 if (!recognition) {
@@ -209,7 +221,7 @@ function sendMessage(userInput, type = "text") {
                 recommendationsList.appendChild(listItem);
             });
         } else {
-            recommendationsList.innerHTML = '<li>No se encontraron recomendaciones.</li>';
+            recommendationsList.innerHTML = '<li>.</li>';
         }
 
         })
