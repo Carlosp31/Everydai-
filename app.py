@@ -33,23 +33,11 @@ app = Flask(__name__)
 
 app.secret_key = os.getenv('SECRET_KEY', 'supersecretkey')
 
-
-
-##################
-# Configurar la conexión a la base de datos usando variables de entorno
-from flask import Flask
-
-
-
 app.config.from_object(Config)
 
 # Inicializar la base de datos con la app
 db.init_app(app)
 
-@app.route('/test_redis')
-def test_redis():
-    redis_client.set("mensaje", "Hola desde Redis!")
-    return redis_client.get("mensaje")  # Devuelve "Hola desde Redis!"
 
 # Función para convertir las credenciales en un diccionario para almacenarlas en la sesión
 def credentials_to_dict(credentials):
@@ -136,22 +124,13 @@ SCOPES = ["https://www.googleapis.com/auth/userinfo.email", "https://www.googlea
 REDIRECT_URI = 'https://everydai.ddns.net/oauth2callback'
 
 
-@app.route('/realidad')
-def realidad():
-    return render_template('realidad.html')
 
-@app.route('/realidadpro')
-def realidadpro():
-    return render_template('realidadpro.html')
-@app.route('/realidadpro2')
-def realidadpro2():
-    return render_template('realidadpro2.html')
-@app.route('/realidadpro3')
-def realidadpro3():
-    return render_template('realidadpro3.html')
-@app.route('/pruebas')
-def pruebas():
-    return render_template('pruebas_avatar.html')
+
+
+@app.route('/augmented experience')
+def augmented_experience():
+    return render_template('augmented experience.html')
+
 
 if current_os == 'Linux' and CLIENT_SECRETS_FILE == "client_secret_wmaicol.json":
    REDIRECT_URI='https://localhost/oauth2callback'
@@ -333,9 +312,7 @@ def add_to_cart_route():
     return actions_db.add_to_cart()
 
 
-# @app.route('/remove_from_wish_list', methods=['POST'])
-# def remove_from_cart_route():
-#     return actions_db.remove_from_wishlist()
+
 @app.route('/remove_from_wish_list', methods=['POST'])
 def remove_from_cart_route():
     data = request.get_json()
@@ -387,11 +364,6 @@ def synthesize_audio():
 def handle_image():
     return images.upload_image()
 
-
-
-#@app.route('/process_frame', methods=['POST'])
-#def process_frame():
-#   return cp.process_frame()
 
 # Detectar sistema operativo
 if platform.system() == "Linux":
@@ -463,4 +435,4 @@ if __name__ == '__main__':
     print(f"Ejecutando en {current_os}, puerto: {port}, SSL: {'Habilitado' if ssl_context else 'Deshabilitado'}")
 
     # Iniciar la aplicación Flask
-    app.run(host='0.0.0.0', port=port, ssl_context=ssl_context)
+    app.run(host='0.0.0.0', port=port, ssl_context=ssl_context, debug= True)
