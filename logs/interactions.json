@@ -268,5 +268,59 @@
         "startTime": 1742763889317,
         "endTime": 1742763894833,
         "responseTime": 5516
+    },
+    {
+        "type": "text",
+        "startTime": 1742767305477,
+        "endTime": 1742767309367,
+        "responseTime": 3890
+    },
+    {
+        "type": "detection",
+        "startTime": 1742767848216,
+        "endTime": 1742767862537,
+        "responseTime": 14321
+    },
+    {
+        "type": "voice",
+        "startTime": 1742768516481,
+        "endTime": 1742768520045,
+        "responseTime": 3564
+    },
+    {
+        "type": "voice",
+        "startTime": 1742768532622,
+        "endTime": 1742768553876,
+        "responseTime": 21254
+    },
+    {
+        "type": "voice",
+        "startTime": 1742768617930,
+        "endTime": 1742768629242,
+        "responseTime": 11312
+    },
+    {
+        "type": "voice",
+        "startTime": 1742768675807,
+        "endTime": 1742768680778,
+        "responseTime": 4971
+    },
+    {
+        "type": "voice",
+        "startTime": 1742768699111,
+        "endTime": 1742768711348,
+        "responseTime": 12237
+    },
+    {
+        "type": "voice",
+        "startTime": 1742768753758,
+        "endTime": 1742768765596,
+        "responseTime": 11838
+    },
+    {
+        "type": "voice",
+        "startTime": 1742768826609,
+        "endTime": 1742768840802,
+        "responseTime": 14193
     }
 ]
