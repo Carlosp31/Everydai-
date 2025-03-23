@@ -59,6 +59,9 @@ const domain = urlParams.get('domain');
                 sessionStorage.removeItem("pendingMessage"); // Eliminamos el mensaje después de enviarlo
             }
 
+
+
+            
 // Seleccionar el contenedor del chat
             const chatContainer = document.querySelector('.chat-container');
 
