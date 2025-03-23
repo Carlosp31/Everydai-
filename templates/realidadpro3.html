@@ -28,7 +28,7 @@
     let recognition;
     let videoStream = null;
 
-    
+
     const params = new URLSearchParams(window.location.search);
 const domain = params.get("domain");
 
@@ -164,6 +164,9 @@ async function sendFrameToRoboflow(frameBase64) {
     // Redirigimos a la nueva página
     window.location.href = `/chat?domain=${domain}`;
 }
+
+
+
 
 
 
