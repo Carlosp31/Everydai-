@@ -288,6 +288,7 @@ def chat():
     redis_key_inventory = f"user:{user_q.id}:domain:{domain_q.id}:inventory"
     inventory_json = redis_client.get(redis_key_inventory)
 
+
     if inventory_json:
         # Si los items están en Redis, los cargamos
         items = json.loads(inventory_json)  # Convertir el JSON almacenado en lista
