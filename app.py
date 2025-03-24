@@ -12,6 +12,7 @@ from google_auth_oauthlib.flow import Flow
 from typing_extensions import override
 from openai import AssistantEventHandler
 from database import db, Config, redis_client
+import modules.chat as chat_api
 
 #### Librerias de base de datos ###############
 
@@ -302,6 +303,8 @@ def chat():
 
     # Almacenar el dominio en la sesión
     session['selected_domain'] = domain
+
+    chat_api.initialize_thread_with_inventory(items, domain_name=domain)
 
     # Renderizamos la plantilla con los items de inventario y wish_list
     return render_template('chat.html', domain=domain, wish_list_items=wish_list_items, inventory_items=items)
