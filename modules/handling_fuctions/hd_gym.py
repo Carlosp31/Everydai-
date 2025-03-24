@@ -1,6 +1,4 @@
 from werkzeug.utils import secure_filename
-import modules.voice as voice
-import modules.images as images
 import modules.Function_calling.busquedas as busquedas
 import json
 import modules.Function_calling.busquedas as busquedas
@@ -35,6 +33,7 @@ def hd_gym(user_input, client, thread_idf, assistant_idf, run):
             # Si necesitas el modelo:
             model = arguments_dict.get("model", "Modelo no encontrado")
             response_2 = busquedas.buscar_resultados_en_serpapi_gym(query, model)
+            response_3 = "Busqueda_serp_fitness"
 
         elif tool.function.name == "buscar_producto_fitness":
 
@@ -50,6 +49,7 @@ def hd_gym(user_input, client, thread_idf, assistant_idf, run):
             producto = arguments_dict.get("producto", "Valor no encontrado")
             print (f"producto a buscar: {producto}")
             response_2  = webscrp.web_fitness_decathlon(producto)
+            response_3 = "Busqueda_prod_fitness"
             tool_outputs.append({
                 "tool_call_id": tool.id,
                 "output": "He encontrado algunos productos relacionados con tus busquedas. " #json.dumps(response_2)
@@ -80,6 +80,6 @@ def hd_gym(user_input, client, thread_idf, assistant_idf, run):
                 for block in ultimo_mensaje.content:
                     print(f"Assistant: {block.text.value}") 
                     response= block.text.value# Imprime solo el contenido del último mensaje
-                    return response, response_2
+                    return response, response_2, response_3
             else:
                 print("No se encontró un mensaje del asistente.")

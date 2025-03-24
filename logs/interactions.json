@@ -334,5 +334,119 @@
         "startTime": 1742779881679,
         "endTime": 1742779885581,
         "responseTime": 3902
+    },
+    {
+        "type": "detection",
+        "startTime": 1742847527406,
+        "endTime": 1742847533375,
+        "responseTime": 5969
+    },
+    {
+        "type": "voice",
+        "startTime": 1742847557079,
+        "endTime": 1742847567630,
+        "responseTime": 10551
+    },
+    {
+        "type": "voice",
+        "startTime": 1742847699556,
+        "endTime": 1742847705357,
+        "responseTime": 5801
+    },
+    {
+        "type": "voice",
+        "startTime": 1742847727146,
+        "endTime": 1742847737855,
+        "responseTime": 10709
+    },
+    {
+        "type": "voice",
+        "startTime": 1742851413500,
+        "endTime": 1742851421673,
+        "responseTime": 8173
+    },
+    {
+        "type": "image2",
+        "startTime": 1742851857373,
+        "endTime": 1742851867885,
+        "responseTime": 10512
+    },
+    {
+        "type": "image2",
+        "startTime": 1742852164024,
+        "endTime": 1742852173462,
+        "responseTime": 9438
+    },
+    {
+        "type": "voice",
+        "startTime": 1742853141861,
+        "endTime": 1742853148749,
+        "responseTime": 6888
+    },
+    {
+        "type": "voice",
+        "startTime": 1742853220071,
+        "endTime": 1742853225480,
+        "responseTime": 5409
+    },
+    {
+        "type": "voice",
+        "startTime": 1742853274708,
+        "endTime": 1742853281404,
+        "responseTime": 6696
+    },
+    {
+        "type": "voice",
+        "startTime": 1742853395125,
+        "endTime": 1742853401207,
+        "responseTime": 6082
+    },
+    {
+        "type": "voice",
+        "startTime": 1742854906804,
+        "endTime": 1742854912526,
+        "responseTime": 5722
+    },
+    {
+        "type": "voice",
+        "startTime": 1742855042384,
+        "endTime": 1742855046953,
+        "responseTime": 4569
+    },
+    {
+        "type": "voice",
+        "startTime": 1742855070529,
+        "endTime": 1742855076638,
+        "responseTime": 6109
+    },
+    {
+        "type": "voice",
+        "startTime": 1742855424587,
+        "endTime": 1742855430259,
+        "responseTime": 5672
+    },
+    {
+        "type": "voice",
+        "startTime": 1742855457259,
+        "endTime": 1742855462599,
+        "responseTime": 5340
+    },
+    {
+        "type": "voice",
+        "startTime": 1742855699939,
+        "endTime": 1742855706503,
+        "responseTime": 6564
+    },
+    {
+        "type": "text",
+        "startTime": 1742855937765,
+        "endTime": 1742855947212,
+        "responseTime": 9447
+    },
+    {
+        "type": "text",
+        "startTime": 1742855968356,
+        "endTime": 1742855975459,
+        "responseTime": 7103
     }
 ]

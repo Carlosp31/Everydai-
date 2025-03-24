@@ -64,13 +64,13 @@ def chat_post():
     
     ####################################################
     if selected_model == 'Cooking':  
-        response, response_2 = domains.chat_response(selected_model, user_input, client, thread_idf=thread_culinary.id, assistant_idf =assistant_culinary_id)
+        response, response_2, response_3 = domains.chat_response(selected_model, user_input, client, thread_idf=thread_culinary.id, assistant_idf =assistant_culinary_id)
 
     elif selected_model == 'fashion':  
-        response, response_2 = domains.chat_response(selected_model, user_input, client, thread_idf=thread_fashion.id, assistant_idf =assistant_fashion_id)
+        response, response_2, response_3 = domains.chat_response(selected_model, user_input, client, thread_idf=thread_fashion.id, assistant_idf =assistant_fashion_id)
         ####################################################
     elif selected_model == 'Fitness':  
-        response, response_2  = domains.chat_response(selected_model, user_input, client, thread_idf=thread_gym.id, assistant_idf =assistant_gym_id)
+        response, response_2, response_3  = domains.chat_response(selected_model, user_input, client, thread_idf=thread_gym.id, assistant_idf =assistant_gym_id)
 
     else:
         return jsonify({'response': 'Modelo no encontrado.'}), 400
@@ -89,5 +89,6 @@ def chat_post():
     return jsonify({
         'text_response': response,
         'mensaje_inicial': mensaje_inicial,
-        'recipes': response_2
+        'recipes': response_2,
+        "response_3": response_3
     })
