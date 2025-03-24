@@ -163,3 +163,87 @@ def remove_from_wish_list():
         print(f"❌ Error en remove_from_wish_list: {e}")
         return jsonify({"error": "Error interno del servidor"}), 500
 
+
+
+def remove_from_inventory():
+    """Elimina un ingrediente del inventario en Redis y MySQL."""
+
+    print("🔴 Iniciando remove_from_inventory...")
+
+    try:
+        # 📩 Recibir datos del frontend
+        data = request.get_json()
+        print(f"📩 Datos recibidos: {data}")
+
+        if not data or "name" not in data or "domain_name" not in data:
+            return jsonify({"error": "Datos inválidos"}), 400
+
+        item_name = data["name"]  # ✅ Nombre del ingrediente
+        domain_name = data["domain_name"]  # ✅ Dominio
+
+        # 🛑 Verificar sesión del usuario
+        if 'provider_id' not in session:
+            return jsonify({"error": "Usuario no autenticado"}), 401
+
+        # 🔍 Buscar usuario y dominio
+        user_q = User.query.filter_by(provider_id=session['provider_id']).first()
+        domain_q = Domain.query.filter_by(domain_name=domain_name).first()
+
+        if not user_q or not domain_q:
+            return jsonify({"error": "Usuario o dominio no encontrado"}), 404
+
+        # 🔑 Clave en Redis
+        redis_key = f"user:{user_q.id}:domain:{domain_q.id}:inventory"
+
+        # 📜 Obtener el inventario desde Redis
+        inventory_json = redis_client.get(redis_key)
+        inventory = json.loads(inventory_json) if inventory_json else []
+
+        # 🚨 Verificar si el ítem existe en el inventario
+        if item_name not in inventory:
+            return jsonify({"error": "El ítem no está en el inventario"}), 404
+
+        # ❌ Eliminar el ítem del inventario
+        inventory.remove(item_name)
+
+        # 🔄 Guardar los cambios en Redis
+        redis_client.set(redis_key, json.dumps(inventory))
+        print(f"✅ Inventario actualizado: {inventory}")
+        # 🔍 Buscar el inventario del usuario en este dominio
+        inventory = Inventory.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
+
+        if not inventory:
+            return jsonify({"error": "Inventario no encontrado"}), 404
+
+        # 📌 Verificar si `items` es una cadena JSON o una lista
+        if isinstance(inventory.items, str):
+            try:
+                current_items = json.loads(inventory.items)  # Convertir de JSON a lista
+            except json.JSONDecodeError:
+                return jsonify({"error": "Error al decodificar el inventario"}), 500
+        elif isinstance(inventory.items, list):
+            current_items = inventory.items  # Ya es una lista
+        else:
+            return jsonify({"error": "Formato inválido en items"}), 500
+
+        # ❌ Intentar eliminar el ítem
+        if item_name not in current_items:
+            return jsonify({"error": "El ítem no se encontró en el inventario"}), 404
+
+        current_items.remove(item_name)  # Eliminar el ítem
+
+        # 🔄 Guardar la lista actualizada en MySQL
+        # Actualizar la lista en MySQL
+        inventory.items = current_items  # Evita caracteres escapados
+        db.session.add(inventory)  # Asegurar que SQLAlchemy registra el cambio
+        db.session.commit()  # Guardar en la base de datos
+
+        print(f"✅ Inventario actualizado en MySQL: {current_items}")
+
+        print(f"✅ Inventario actualizado en MySQL: {current_items}")
+        return jsonify({"success": True, "updated_inventory": current_items}), 200
+
+    except Exception as e:
+        print(f"⚠️ Error en remove_from_inventory: {str(e)}")
+        db.session.rollback()  # 🔄 Revertir en caso de error
+        return jsonify({"error": "Error interno del servidor"}), 500
