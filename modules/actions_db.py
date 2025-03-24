@@ -234,13 +234,12 @@ def remove_from_inventory():
 
         # 🔄 Guardar la lista actualizada en MySQL
         # Actualizar la lista en MySQL
-        inventory.items = current_items  # Evita caracteres escapados
+        inventory.items = (list(set(current_items)))   # Evita caracteres escapados
         db.session.add(inventory)  # Asegurar que SQLAlchemy registra el cambio
         db.session.commit()  # Guardar en la base de datos
 
         print(f"✅ Inventario actualizado en MySQL: {current_items}")
 
-        print(f"✅ Inventario actualizado en MySQL: {current_items}")
         return jsonify({"success": True, "updated_inventory": current_items}), 200
 
     except Exception as e:

@@ -6,7 +6,7 @@ from flask import Flask, render_template, request, jsonify, redirect, send_file,
 from app import redis_client 
 import json
 
-def almacenar_ingredientes(ingredientes):
+def almacenar_items(ingredientes):
     """Almacena ingredientes en la lista de inventario del usuario."""
 
     print(f"🔵 Iniciando almacenar_ingredientes con ingredientes: {ingredientes}")
