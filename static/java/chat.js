@@ -199,8 +199,8 @@ const domain = urlParams.get('domain');
             })
             .then(response => response.json())
             .then(data => {
-                let responseType = (data.response_3 !== undefined && data.response_3 !== null) ? data.response_3 : type;
-                let interaction = startTimer(responseType);
+                let responseType = (data.response_3 && data.response_3.trim() !== "") ? data.response_3 : type;
+let interaction = startTimer(responseType);
     
                 document.getElementById("chat-box").innerHTML += `<div>AI: ${data.text_response}</div>`;
                 speakResponse(data.text_response);

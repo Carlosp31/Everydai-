@@ -4,6 +4,15 @@ import modules.domains as domains
 from typing_extensions import override
 from openai import AssistantEventHandler
  
+
+ ### For initialization inventory
+import redis
+from database import db
+from models import User, Domain, Inventory, WishList, UserPreference
+import json
+from flask import Flask, render_template, request, jsonify, redirect, send_file, url_for, session
+from app import redis_client 
+import json
 # First, we create a EventHandler class to define
 # how we want to handle the events in the response stream.
 
@@ -29,6 +38,7 @@ class EventHandler(AssistantEventHandler):
           if output.type == "logs":
             print(f"\n{output.logs}", flush=True)
 
+global client
 client = OpenAI()
 
 # Definir variables globales
@@ -41,7 +51,7 @@ assistant_culinary_id= "asst_zOGNCMFiaD5IP0u4u4t8dOpX"
 # Crear el thread global para culinary (esto solo lo inicializamos una vez)
 global thread_culinary
 thread_culinary = client.beta.threads.create()
-#################################################################
+
 ##################### Fashion #################################
 # Definir variables globales para el dominio de moda
 global assistant_fashion
@@ -59,7 +69,6 @@ thread_gym = client.beta.threads.create()
 def chat_post():
     user_input = request.json['message']
     selected_model = request.json['model']
-    client = OpenAI()
     
     
     ####################################################
@@ -92,3 +101,42 @@ def chat_post():
         'recipes': response_2,
         "response_3": response_3
     })
+
+
+#####Initial Inventory 
+
+def chat_inventory(domain_name, items, thread_idf, assistant_idf):
+    """Inicializa la conversación con OpenAI proporcionando el inventario del usuario."""
+
+    print(f"🔹 Inicializando inventario en {domain_name}")
+    # 🔹 Crear mensaje de concientización para el asistente
+    user_inventory = f"El usuario tiene los siguientes ítems en su inventario: {', '.join(items)}."
+
+    # 🔹 Enviar mensaje al asistente para que sea consciente del inventario
+    message = client.beta.threads.messages.create(
+        thread_id=thread_idf,
+        role="user",
+        content=user_inventory
+    )
+    run = client.beta.threads.runs.create_and_poll(
+        thread_id=thread_idf,
+        assistant_id= assistant_idf
+
+    )
+    
+
+    print("📩 Inventario enviado al asistente:", user_inventory)
+
+def initialize_thread_with_inventory(items, domain_name):
+    """Inicializa un thread con la concientización del inventario (solo una vez)."""
+
+    if domain_name == 'Cooking':  
+        chat_inventory(domain_name, items, thread_idf=thread_culinary.id, assistant_idf=assistant_culinary_id)
+
+    elif domain_name == 'fashion':  
+        chat_inventory(domain_name, items, thread_idf=thread_fashion.id, assistant_idf=assistant_fashion_id)
+
+    elif domain_name == 'Fitness':  
+        chat_inventory(domain_name, items, thread_idf=thread_gym.id, assistant_idf=assistant_gym_id)
+
+

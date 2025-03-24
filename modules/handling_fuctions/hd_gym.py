@@ -3,7 +3,7 @@ import modules.Function_calling.busquedas as busquedas
 import json
 import modules.Function_calling.busquedas as busquedas
 import modules.Function_calling.webscrp as webscrp
-
+import modules.Function_calling.act_bd as action_db
 
 def hd_gym(user_input, client, thread_idf, assistant_idf, run):
     response_2= None
@@ -53,6 +53,28 @@ def hd_gym(user_input, client, thread_idf, assistant_idf, run):
             tool_outputs.append({
                 "tool_call_id": tool.id,
                 "output": "He encontrado algunos productos relacionados con tus busquedas. " #json.dumps(response_2)
+            })
+        elif tool.function.name == "almacenar_items_fitness":
+            # Obtener los argumentos del tool_call
+            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+            arguments_str = tool_call.function.arguments
+            arguments_dict = json.loads(arguments_str)
+
+            # 📩 Depuración: Verificar el JSON recibido
+            print(f"📥 JSON recibido en almacenar_items: {arguments_dict}")
+
+            # Extraer ingredientes correctamente
+            items = arguments_dict.get("items", [])
+
+            # 📦 Depuración: Verificar lo que se enviará a la función
+            print(f"Items extraídos: {items}")
+
+            # Llamar a la función con la lista de ingredientes
+            response_2 = action_db.almacenar_items(items)
+
+            tool_outputs.append({
+                "tool_call_id": tool.id,
+                "output": "He almacenado los items en tu inventario"
             })
         print(run.status)
 
