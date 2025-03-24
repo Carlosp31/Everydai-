@@ -45,53 +45,60 @@ def web_culinary(producto):
             page.press(input_selector, "Enter")
             print("Enter presionado")
 
-            # Esperar a que carguen los productos
+            # Esperar a que carguen los resultados
             page.wait_for_selector('.vtex-search-result-3-x-galleryItem', timeout=15000)
 
+            # Extraer los productos
             productos_lista = []
-            productos = page.query_selector_all('.vtex-product-summary-2-x-galleryItem')
 
-            # Iterar sobre los primeros 5 productos
-            for i in range(min(5, len(productos))):
+            page.wait_for_selector('.vtex-search-result-3-x-galleryItem', timeout=15000)
+            print("Productos cargados...")
+
+            # Extraer los productos
+            productos_lista = []
+            productos = page.query_selector_all('.vtex-search-result-3-x-galleryItem')
+
+            for i, prod in enumerate(productos):
                 try:
-                    prod = productos[i]
-
                     # Obtener nombre del producto
                     nombre_elem = prod.query_selector('.vtex-product-summary-2-x-productBrand')
                     producto_nombre = nombre_elem.inner_text().strip() if nombre_elem else "Nombre no disponible"
-                    print(f"Nombre del producto {i + 1}: {producto_nombre}")
+                    
 
                     # Obtener el precio del producto
                     precio_elem = prod.query_selector('.olimpica-dinamic-flags-0-x-currencyContainer')
-                    full_price = precio_elem.inner_text().strip() if precio_elem else "Precio no disponible"
-                    print(f"Precio del producto {i + 1}: {full_price}")
+                    full_price = precio_elem.inner_text().strip().replace("\xa0", " ") if precio_elem else "Precio no disponible"
+                    
 
                     # Obtener la imagen del producto
                     imagen_elem = prod.query_selector("img.vtex-product-summary-2-x-imageNormal")
                     imagen_src = imagen_elem.get_attribute("src") if imagen_elem else "Imagen no disponible"
 
-                    # Guardar la información del producto en un diccionario
+                    # Obtener el enlace del producto
+                    enlace_elem = prod.query_selector("a.vtex-product-summary-2-x-clearLink")
+                    enlace_href = enlace_elem.get_attribute("href") if enlace_elem else "Enlace no disponible"
+                    enlace_url = f"https://www.olimpica.com{enlace_href}" if enlace_href != "Enlace no disponible" else enlace_href
+
+                    # Agregar a la lista
                     producto_info = {
                         "nombre": producto_nombre,
                         "precio": full_price,
-                        "imagen_url": imagen_src
+                        "imagen_url": imagen_src,
+                        "enlace": enlace_url
                     }
-
-                    # Agregar a la lista de productos
                     productos_lista.append(producto_info)
 
                 except Exception as e:
                     print(f"No se pudo extraer información del producto {i + 1}: {e}")
 
-            # Cerrar el navegador
-            browser.close()
+            print("Productos encontrados:", productos_lista)
 
         except Exception as e:
             print(f"Error durante la ejecución: {e}")
 
         finally:
             browser.close()
-        print(productos_lista)
+        
         return productos_lista
 
 import json
