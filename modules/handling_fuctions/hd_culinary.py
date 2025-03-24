@@ -69,7 +69,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             print(f"🍽 Ingredientes extraídos: {items}")
 
             # Llamar a la función con la lista de ingredientes
-            response_2 = action_db.almacenar_ingredientes(items)
+            response_2 = action_db.almacenar_items(items)
 
             tool_outputs.append({
                 "tool_call_id": tool.id,
