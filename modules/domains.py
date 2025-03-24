@@ -33,7 +33,7 @@ class EventHandler(AssistantEventHandler):
 
 
 def chat_response(model, user_input, client, thread_idf, assistant_idf):
-    response_2= None ##Esto guarda la respuesta de serpapi, sino hay es None
+    response_2= None 
     message = client.beta.threads.messages.create(
     thread_id=thread_idf,
     role="user",

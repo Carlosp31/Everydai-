@@ -322,5 +322,17 @@
         "startTime": 1742768826609,
         "endTime": 1742768840802,
         "responseTime": 14193
+    },
+    {
+        "type": "text",
+        "startTime": 1742779852754,
+        "endTime": 1742779856965,
+        "responseTime": 4211
+    },
+    {
+        "type": "text",
+        "startTime": 1742779881679,
+        "endTime": 1742779885581,
+        "responseTime": 3902
     }
 ]
