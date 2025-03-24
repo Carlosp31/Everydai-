@@ -92,29 +92,5 @@ def almacenar_ingredientes(ingredientes):
         print(f"❌ Error en almacenar_ingredientes: {e}")
         return items
 
-        # # 🔍 Buscar si el usuario ya tiene un inventario
-        # inventory = Inventory.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
-
-        # if inventory:
-        #     # ✅ Verificar si items ya es una lista
-        #     if isinstance(inventory.items, str):
-        #         current_items = json.loads(inventory.items)  # Convertir a lista si es string
-        #     else:
-        #         current_items = inventory.items  # Ya es una lista
-
-        #     # 📦 Agregar nuevos ingredientes sin duplicados
-        #     current_items.extend(ingredientes)
-        #     inventory.items = list(set(current_items))  # Eliminar duplicados
-        # else:
-        #     # 🆕 Crear nuevo inventario
-        #     new_inventory = Inventory(
-        #         user_id=user_q.id,
-        #         domain_id=domain_q.id,
-        #         items=ingredientes  # Ya está en el formato correcto
-        #     )
-        #     db.session.add(new_inventory)
-
-        # # 💾 Guardar cambios en la base de datos
-        # db.session.commit()
 
 

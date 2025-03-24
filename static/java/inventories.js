@@ -48,11 +48,40 @@ function updateInventoryDropdown() {
         return;
     }
 
-    inventory.forEach(item => {
+
+    inventory.forEach((item, index) => { // 👈 Incluye el índice
         const listItem = document.createElement("li");
-        listItem.textContent = `- ${item}`; // ✅ Ahora muestra "- NombreDelItem"
+        listItem.textContent = `- ${item}`; // ✅ Usa el nombre del ítem directamente
+
+        // 🔴 Botón de eliminar
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "❌";
+        deleteButton.style.marginLeft = "10px";
+        deleteButton.onclick = () => removeItem(item, index); // ✅ Pasa el nombre y el índice
+
+        listItem.appendChild(deleteButton);
         inventoryItemsList.appendChild(listItem);
     });
 }
+
+// ✅ Función para eliminar un ítem llamando al backend Flask
+function removeItem(itemName, index) {
+    fetch('/remove_item', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ domain_name: domain,  name: itemName }) // ✅ Enviar el nombre del ítem
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            inventory.splice(index, 1); // ✅ Elimina el ítem localmente
+            updateInventoryDropdown(); // ✅ Refresca la UI
+        } else {
+            console.error("Error al eliminar el ítem:", data.error);
+        }
+    })
+    .catch(error => console.error("Error al conectar con el servidor:", error));
+}
+
     
 

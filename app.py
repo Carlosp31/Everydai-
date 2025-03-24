@@ -324,6 +324,10 @@ def remove_from_cart_route():
     return actions_db.remove_from_wish_list()
 
 
+@app.route('/remove_item', methods=['POST'])
+def remove_inv():
+    return actions_db.remove_from_inventory()
+
 @app.route('/get_inventory')
 def get_inventory_route():
     return get_inventory_from_redis() 
@@ -333,9 +337,6 @@ def get_inventory_route():
 @app.route('/get_wish_list')
 def get_wish_list_route():
     return get_wish_list_from_redis()
-
-
-
 
 
 
