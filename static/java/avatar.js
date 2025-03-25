@@ -214,6 +214,18 @@ window.addEventListener('Pensar', () => {
 
 playAnimationLoop("thinking", 0.5);
 });
+window.addEventListener('WebSearching', () => {
+
+    playAnimationLoop("thinking", 0.5);
+    });
+    window.addEventListener('SearchingProducts', () => {
+
+        playAnimationLoop("thinking", 0.5);
+        });
+        window.addEventListener('UpdatingInventory', () => {
+
+            playAnimationLoop("thinking", 0.5);
+            });
 
 window.addEventListener('Parar', () => {
 playAnimationLoop("pose")

@@ -71,6 +71,7 @@ def hd_gym(user_input, client, thread_idf, assistant_idf, run):
 
             # Llamar a la función con la lista de ingredientes
             response_2 = action_db.almacenar_items(items)
+            response_3 = "inventory_fitness"
 
             tool_outputs.append({
                 "tool_call_id": tool.id,

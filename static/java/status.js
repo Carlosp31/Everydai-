@@ -25,6 +25,18 @@ window.addEventListener("Parar", (event) => {
 window.addEventListener("Stop", (event) => {
     updateStatus(event.detail.currentStatus);
 });
+window.addEventListener("WebSearching", (event) => {
+    updateStatus(event.detail.currentStatus);
+});
+window.addEventListener("SearchingProducts", (event) => {
+    updateStatus(event.detail.currentStatus);
+});
+window.addEventListener("UpdatingInventory", (event) => {
+    updateStatus(event.detail.currentStatus);
+});
+window.addEventListener("Detección", (event) => {
+    updateStatus(event.detail.currentStatus);
+});
 // Mostrar el estado inicial al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
     updateStatus(window.currentStatus);

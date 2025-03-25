@@ -35,19 +35,30 @@ const domain = urlParams.get('domain');
             document.getElementById("user-input").addEventListener("keypress", function(event) {
                 if (event.key === "Enter") {
                     event.preventDefault(); // Evita que se agregue una nueva línea en el input
-                    const userInput = document.getElementById("user-input").value.trim(); // Elimina espacios en blanco
+                    const userInput = document.getElementById("user-input").value.trim().toLowerCase(); // Convertir a minúsculas y eliminar espacios
+            
                     if (userInput) { 
                         sendMessage(userInput);
-
+            
                         const dots = document.getElementById("dots");
-                        
-                        window.dispatchEvent(event_thinking);
+            
+                        if (userInput.includes("internet") || userInput.includes("web")) {
+                            window.dispatchEvent(new CustomEvent('WebSearching', { detail: { currentStatus: "Web Searching" } }));
+                        } else if (userInput.includes("comprar") || userInput.includes("buy") || userInput.includes("purchase")) {
+                            window.dispatchEvent(new CustomEvent('SearchingProducts', { detail: { currentStatus: "Searching Products" } }));
+                        } else if (userInput.includes("inventario") || userInput.includes("inventory") || userInput.includes("stock")) {
+                            window.dispatchEvent(new CustomEvent('UpdatingInventory', { detail: { currentStatus: "Updating Inventory" } }));
+                        } else {
+                            window.dispatchEvent(event_thinking);
+                        }
+            
                         dots.style.opacity = 1; // Mostrar los puntos
                     } else {
                         alert("Please enter a message before sending.");
                     }
                 }
             });
+            
             let storedMessage = sessionStorage.getItem("pendingMessage");
 
             if (storedMessage) {
@@ -55,13 +66,12 @@ const domain = urlParams.get('domain');
                         // Cambiar la opacidad de los puntos
                     const dots = document.getElementById("dots");
                     dots.style.opacity = 1; // Mostrar los puntos
+                    const event_detection = new CustomEvent('Detección', { detail: { currentStatus: "Processing detections" } });
+                    window.dispatchEvent(event_detection);
+
                 sessionStorage.removeItem("pendingMessage"); // Eliminamos el mensaje después de enviarlo
             }
 
-
-
-            
-// Seleccionar el contenedor del chat
             const chatContainer = document.querySelector('.chat-container');
 
             // Verificar el valor de `domain` y cambiar el fondo dinámicamente
@@ -89,7 +99,15 @@ const domain = urlParams.get('domain');
                         document.getElementById("user-input").value = userInput;
                         sendMessage(userInput , "voice");
                         dots.style.opacity = 1; // Mostrar los puntos
-                        window.dispatchEvent(event_thinking);
+                        if (userInput.includes("internet") || userInput.includes("web")) {
+                            window.dispatchEvent(new CustomEvent('WebSearching', { detail: { currentStatus: "Web Searching" } }));
+                        } else if (userInput.includes("comprar") || userInput.includes("buy") || userInput.includes("purchase")) {
+                            window.dispatchEvent(new CustomEvent('SearchingProducts', { detail: { currentStatus: "Searching Products" } }));
+                        } else if (userInput.includes("inventario") || userInput.includes("inventory") || userInput.includes("stock")) {
+                            window.dispatchEvent(new CustomEvent('UpdatingInventory', { detail: { currentStatus: "Updating Inventory" } }));
+                        } else {
+                            window.dispatchEvent(event_thinking);
+                        }
                     }
                 };
 
@@ -246,7 +264,7 @@ const domain = urlParams.get('domain');
         } else {
             recommendationsList.innerHTML = '<li></li>';
         }
-        return responseType
+
         })
         .catch(error => console.error('Error:', error));
     }
@@ -350,17 +368,21 @@ const domain = urlParams.get('domain');
             }
 
 
-
-            const dots = document.getElementById("dots");
             // Evento al hacer clic en el botón de enviar texto manualmente
             document.getElementById("send-button").onclick = function() {
-    const userInput = document.getElementById("user-input").value.trim(); // Elimina espacios en blanco
+    const userInput = document.getElementById("user-input").value.trim().toLowerCase(); // Elimina espacios en blanco
     if (userInput) { // Si el input no está vacío
         sendMessage(userInput);
-        
-        // Cambiar la opacidad de los puntos
+        if (userInput.includes("internet") || userInput.includes("web")) {
+            window.dispatchEvent(new CustomEvent('WebSearching', { detail: { currentStatus: "Web Searching" } }));
+        } else if (userInput.includes("comprar") || userInput.includes("buy") || userInput.includes("purchase")) {
+            window.dispatchEvent(new CustomEvent('SearchingProducts', { detail: { currentStatus: "Searching Products" } }));
+        } else if (userInput.includes("inventario") || userInput.includes("inventory") || userInput.includes("stock")) {
+            window.dispatchEvent(new CustomEvent('UpdatingInventory', { detail: { currentStatus: "Updating Inventory" } }));
+        } else {
+            window.dispatchEvent(event_thinking);
+        }
         const dots = document.getElementById("dots");
-        window.dispatchEvent(event_thinking);
         dots.style.opacity = 1; // Mostrar los puntos
     } else {
         alert("Please enter a message before sending.");
