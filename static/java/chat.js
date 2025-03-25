@@ -183,13 +183,14 @@ const domain = urlParams.get('domain');
         console.log("mensaje", userInput);
         
         if (userInput.trim() !== "") {
+            let interaction = startTimer(type);
             document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
             document.getElementById("user-input").value = ''; // Limpiar el input después de enviar
     
             // Detener temporalmente el reconocimiento de voz mientras se obtiene la respuesta del bot
             if (recognition) recognition.stop();
             isBotSpeaking = true;
-    
+            
             fetch('/chat', {
                 method: 'POST',
                 headers: {
@@ -200,11 +201,11 @@ const domain = urlParams.get('domain');
             .then(response => response.json())
             .then(data => {
                 let responseType = (data.response_3 && data.response_3.trim() !== "") ? data.response_3 : type;
-let interaction = startTimer(responseType);
+                
     
                 document.getElementById("chat-box").innerHTML += `<div>AI: ${data.text_response}</div>`;
                 speakResponse(data.text_response);
-                logResponse(interaction);  // Registrar el tiempo de respuesta
+                logResponse(interaction, responseType);  // Registrar el tiempo de respuesta
     
         if (Array.isArray(data.recipes)) {
             data.recipes.forEach(item => {
@@ -245,7 +246,7 @@ let interaction = startTimer(responseType);
         } else {
             recommendationsList.innerHTML = '<li></li>';
         }
-        return data.response3 !== undefined ? data.response3 : null;
+        return responseType
         })
         .catch(error => console.error('Error:', error));
     }
@@ -480,9 +481,10 @@ let interaction = startTimer(responseType);
             }
             
             // Función para registrar el tiempo de respuesta
-            function logResponse(interaction) {
+            function logResponse(interaction, responseType) {
                 interaction.endTime = Date.now();
                 interaction.responseTime = interaction.endTime - interaction.startTime;
+                interaction.responseType = responseType; // ✅ Agregamos responseType al objeto
             
                 fetch('/log-interaction', {
                     method: 'POST',

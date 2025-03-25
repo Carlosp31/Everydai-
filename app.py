@@ -439,4 +439,4 @@ if __name__ == '__main__':
     print(f"Ejecutando en {current_os}, puerto: {port}, SSL: {'Habilitado' if ssl_context else 'Deshabilitado'}")
 
     # Iniciar la aplicación Flask
-    app.run(host='0.0.0.0', port=port, ssl_context=ssl_context, debug= True)
+    app.run(host='0.0.0.0', port=port, ssl_context=ssl_context)

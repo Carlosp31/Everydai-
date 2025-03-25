@@ -448,5 +448,39 @@
         "startTime": 1742855968356,
         "endTime": 1742855975459,
         "responseTime": 7103
+    },
+    {
+        "type": "text",
+        "startTime": 1742859844424,
+        "endTime": 1742859844425,
+        "responseTime": 1
+    },
+    {
+        "type": "text",
+        "startTime": 1742860391490,
+        "endTime": 1742860396668,
+        "responseTime": 5178,
+        "responseType": "text"
+    },
+    {
+        "type": "text",
+        "startTime": 1742861179991,
+        "endTime": 1742861196381,
+        "responseTime": 16390,
+        "responseType": "text"
+    },
+    {
+        "type": "text",
+        "startTime": 1742861204679,
+        "endTime": 1742861228989,
+        "responseTime": 24310,
+        "responseType": "text"
+    },
+    {
+        "type": "text",
+        "startTime": 1742861316672,
+        "endTime": 1742861336681,
+        "responseTime": 20009,
+        "responseType": "Busqueda_prod_fashion"
     }
 ]
