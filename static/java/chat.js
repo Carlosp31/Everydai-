@@ -59,6 +59,7 @@ const domain = urlParams.get('domain');
                 }
             });
             
+            
             let storedMessage = sessionStorage.getItem("pendingMessage");
 
             if (storedMessage) {
