@@ -31,38 +31,47 @@ const domain = urlParams.get('domain');
             let analyser;
             let isListening = false;
             let isBotSpeaking = false; // Variable para saber si el bot está hablando
+            const event_thinking = new CustomEvent('Pensar', { detail: { currentStatus: "Thinking" } });
             document.getElementById("user-input").addEventListener("keypress", function(event) {
                 if (event.key === "Enter") {
                     event.preventDefault(); // Evita que se agregue una nueva línea en el input
-                    const userInput = document.getElementById("user-input").value.trim(); // Elimina espacios en blanco
+                    const userInput = document.getElementById("user-input").value.trim().toLowerCase(); // Convertir a minúsculas y eliminar espacios
+            
                     if (userInput) { 
                         sendMessage(userInput);
-
+            
                         const dots = document.getElementById("dots");
-                        const event3 = new CustomEvent('pensar');
-                        window.dispatchEvent(event3);
+            
+                        if (userInput.includes("internet") || userInput.includes("web")) {
+                            window.dispatchEvent(new CustomEvent('WebSearching', { detail: { currentStatus: "Web Searching" } }));
+                        } else if (userInput.includes("comprar") || userInput.includes("buy") || userInput.includes("purchase")) {
+                            window.dispatchEvent(new CustomEvent('SearchingProducts', { detail: { currentStatus: "Searching Products" } }));
+                        } else if (userInput.includes("inventario") || userInput.includes("inventory") || userInput.includes("stock")) {
+                            window.dispatchEvent(new CustomEvent('UpdatingInventory', { detail: { currentStatus: "Updating Inventory" } }));
+                        } else {
+                            window.dispatchEvent(event_thinking);
+                        }
+            
                         dots.style.opacity = 1; // Mostrar los puntos
                     } else {
                         alert("Please enter a message before sending.");
                     }
                 }
             });
+            
             let storedMessage = sessionStorage.getItem("pendingMessage");
 
             if (storedMessage) {
                 sendMessage(storedMessage, "detection"); // Enviamos directamente como string
                         // Cambiar la opacidad de los puntos
-        const dots = document.getElementById("dots");
-        const event6 = new CustomEvent('pensar');
-        window.dispatchEvent(event6);
-        dots.style.opacity = 1; // Mostrar los puntos
+                    const dots = document.getElementById("dots");
+                    dots.style.opacity = 1; // Mostrar los puntos
+                    const event_detection = new CustomEvent('Detección', { detail: { currentStatus: "Processing detections" } });
+                    window.dispatchEvent(event_detection);
+
                 sessionStorage.removeItem("pendingMessage"); // Eliminamos el mensaje después de enviarlo
             }
 
-
-
-            
-// Seleccionar el contenedor del chat
             const chatContainer = document.querySelector('.chat-container');
 
             // Verificar el valor de `domain` y cambiar el fondo dinámicamente
@@ -73,6 +82,7 @@ const domain = urlParams.get('domain');
             } else if (domain === "Fitness") {
                 chatContainer.style.backgroundImage = "url('static/css/gym.png')";
             }
+            let audioDetected = false; // Variable para verificar si hubo audio reconocido
             // Función para iniciar el reconocimiento de voz y el espectro de frecuencias
             function startVoiceRecognition() {
                 if (!recognition) {
@@ -83,13 +93,21 @@ const domain = urlParams.get('domain');
                 }
 
                 recognition.onresult = function(event) {
-                    if (!isBotSpeaking) { // Solo procesar si el bot no está hablando
+                    if (!isBotSpeaking) { // Solo procesar si el bot no está 
+                        audioDetected = true; // Se detectó voz
                         const userInput = event.results[0][0].transcript;
                         document.getElementById("user-input").value = userInput;
                         sendMessage(userInput , "voice");
                         dots.style.opacity = 1; // Mostrar los puntos
-                        const event5 = new CustomEvent('pensar');
-                        window.dispatchEvent(event5);
+                        if (userInput.includes("internet") || userInput.includes("web")) {
+                            window.dispatchEvent(new CustomEvent('WebSearching', { detail: { currentStatus: "Web Searching" } }));
+                        } else if (userInput.includes("comprar") || userInput.includes("buy") || userInput.includes("purchase")) {
+                            window.dispatchEvent(new CustomEvent('SearchingProducts', { detail: { currentStatus: "Searching Products" } }));
+                        } else if (userInput.includes("inventario") || userInput.includes("inventory") || userInput.includes("stock")) {
+                            window.dispatchEvent(new CustomEvent('UpdatingInventory', { detail: { currentStatus: "Updating Inventory" } }));
+                        } else {
+                            window.dispatchEvent(event_thinking);
+                        }
                     }
                 };
 
@@ -105,6 +123,7 @@ const domain = urlParams.get('domain');
 
                 recognition.start();
                 startFrequencySpectrum(); // Iniciar el espectro de frecuencias
+                audioDetected = false; // Se detectó voz
             }
 
             // Evento para iniciar o detener el reconocimiento de voz con el botón de 'Start Conversation'
@@ -113,6 +132,10 @@ const domain = urlParams.get('domain');
                     isListening = true;
                     microphoneButton.innerText = "Stop Conversation";
                     startVoiceRecognition();
+                    if (!isBotSpeaking) {
+                        const event_listening = new CustomEvent('Listening', { detail: { currentStatus: "Listening" } });
+                        window.dispatchEvent(event_listening);
+                    }
                 } else {
                     isListening = false;
                     microphoneButton.innerText = "Start Conversation";
@@ -120,6 +143,10 @@ const domain = urlParams.get('domain');
                         recognition.stop();
                     }
                     stopFrequencySpectrum();
+                    if (!audioDetected && !isBotSpeaking) {
+                        const event_stop_listening = new CustomEvent('Stop', { detail: { currentStatus: "Ready" } });
+                        window.dispatchEvent(event_stop_listening);
+                    }
                 }
             };
 
@@ -170,32 +197,34 @@ const domain = urlParams.get('domain');
 
 
      // Función para enviar mensajes (tanto por texto como por voz)
-function sendMessage(userInput, type = "text") {
-
-    console.log("mensaje",userInput);
-    if (userInput.trim() !== "") {
-        let interaction = startTimer(type);  // Registrar inicio de interacción
-        document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
-        document.getElementById("user-input").value = ''; // Limpiar el input después de enviar
-     
-        // Detener temporalmente el reconocimiento de voz mientras se obtiene la respuesta del bot
-        if (recognition) recognition.stop();
-        isBotSpeaking = true;
-
-        fetch('/chat', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ message: userInput, model: selectedModel }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("chat-box").innerHTML += `<div>AI: ${data.text_response}</div>`;
-            speakResponse(data.text_response);
-            logResponse(interaction);  // Registrar el tiempo de respuesta
-
-        // Verificar si data.recipes es un array antes de recorrerlo
+     function sendMessage(userInput, type = "text") {
+        console.log("mensaje", userInput);
+        
+        if (userInput.trim() !== "") {
+            let interaction = startTimer(type);
+            document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
+            document.getElementById("user-input").value = ''; // Limpiar el input después de enviar
+    
+            // Detener temporalmente el reconocimiento de voz mientras se obtiene la respuesta del bot
+            if (recognition) recognition.stop();
+            isBotSpeaking = true;
+            
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: userInput, model: selectedModel }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                let responseType = (data.response_3 && data.response_3.trim() !== "") ? data.response_3 : type;
+                
+    
+                document.getElementById("chat-box").innerHTML += `<div>AI: ${data.text_response}</div>`;
+                speakResponse(data.text_response);
+                logResponse(interaction, responseType);  // Registrar el tiempo de respuesta
+    
         if (Array.isArray(data.recipes)) {
             data.recipes.forEach(item => {
                 const listItem = document.createElement("li");
@@ -228,16 +257,12 @@ function sendMessage(userInput, type = "text") {
                                             <a href="${item.link}" target="_blank">${item.title}</a>
                                 
                                         </div>`;
-                } else {
-                    // Si no tiene 'nombre' y 'precio' ni 'link' y 'title', mostramos un mensaje por defecto
-                    listItem.innerHTML = "Información no válida";
-                }
-
+                } 
                 // Añadir cada item a la lista de recomendaciones
                 recommendationsList.appendChild(listItem);
             });
         } else {
-            recommendationsList.innerHTML = '<li>.</li>';
+            recommendationsList.innerHTML = '<li></li>';
         }
 
         })
@@ -293,8 +318,8 @@ function sendMessage(userInput, type = "text") {
                     }
 
                     audio.onplay = function() {
-                        const event2 = new CustomEvent('hablar');
-                        window.dispatchEvent(event2);
+                        const event_hablar = new CustomEvent('Hablar', { detail: { currentStatus: "Speaking" } });
+                        window.dispatchEvent(event_hablar);
                         isBotSpeaking = true;
                         emitAudioLevels();
                         if (recognition) recognition.stop(); 
@@ -302,8 +327,8 @@ function sendMessage(userInput, type = "text") {
                     };
 
                     audio.onended = function() {
-                        const event3 = new CustomEvent('parar');
-                        window.dispatchEvent(event3);
+                        const event_parar = new CustomEvent('Parar', { detail: { currentStatus: "Ready" } });
+                        window.dispatchEvent(event_parar);
                         isBotSpeaking = false;
                         if (isListening) recognition.start();
                         const event = new CustomEvent('audio-level', { detail: { amplitude: 0 } });
@@ -343,18 +368,21 @@ function sendMessage(userInput, type = "text") {
             }
 
 
-
-            const dots = document.getElementById("dots");
             // Evento al hacer clic en el botón de enviar texto manualmente
             document.getElementById("send-button").onclick = function() {
-    const userInput = document.getElementById("user-input").value.trim(); // Elimina espacios en blanco
+    const userInput = document.getElementById("user-input").value.trim().toLowerCase(); // Elimina espacios en blanco
     if (userInput) { // Si el input no está vacío
         sendMessage(userInput);
-        
-        // Cambiar la opacidad de los puntos
+        if (userInput.includes("internet") || userInput.includes("web")) {
+            window.dispatchEvent(new CustomEvent('WebSearching', { detail: { currentStatus: "Web Searching" } }));
+        } else if (userInput.includes("comprar") || userInput.includes("buy") || userInput.includes("purchase")) {
+            window.dispatchEvent(new CustomEvent('SearchingProducts', { detail: { currentStatus: "Searching Products" } }));
+        } else if (userInput.includes("inventario") || userInput.includes("inventory") || userInput.includes("stock")) {
+            window.dispatchEvent(new CustomEvent('UpdatingInventory', { detail: { currentStatus: "Updating Inventory" } }));
+        } else {
+            window.dispatchEvent(event_thinking);
+        }
         const dots = document.getElementById("dots");
-        const event3 = new CustomEvent('pensar');
-        window.dispatchEvent(event3);
         dots.style.opacity = 1; // Mostrar los puntos
     } else {
         alert("Please enter a message before sending.");
@@ -376,9 +404,8 @@ function sendMessage(userInput, type = "text") {
             // Funcionalidad para capturar imagen de la cámara
             captureButton.onclick = function() {
                 dots.style.opacity = 1; // Mostrar los puntos
-
-                const event4 = new CustomEvent('pensar');
-                window.dispatchEvent(event4);
+                const event_pensar_captura = new CustomEvent('pensar', { detail: { currentStatus: "Analyzing Photo" } });
+                window.dispatchEvent(event_pensar_captura);
                 const context = canvas.getContext('2d');
                 canvas.width = videoPreview.videoWidth;
                 canvas.height = videoPreview.videoHeight;
@@ -435,9 +462,8 @@ function sendMessage(userInput, type = "text") {
         
                     dots.style.opacity = 1; // Mostrar los puntos
         
-                    const event4 = new CustomEvent('pensar');
-                    window.dispatchEvent(event4);
-        
+                    const event_pensar_imagen = new CustomEvent('pensar', { detail: { currentStatus: "Analyzing Image" } });
+                    window.dispatchEvent(event_pensar_imagen);
                     fetch('/upload-image', {
                         method: 'POST',
                         body: formData,
@@ -477,9 +503,10 @@ function sendMessage(userInput, type = "text") {
             }
             
             // Función para registrar el tiempo de respuesta
-            function logResponse(interaction) {
+            function logResponse(interaction, responseType) {
                 interaction.endTime = Date.now();
                 interaction.responseTime = interaction.endTime - interaction.startTime;
+                interaction.responseType = responseType; // ✅ Agregamos responseType al objeto
             
                 fetch('/log-interaction', {
                     method: 'POST',

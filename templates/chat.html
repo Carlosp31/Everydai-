@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-
+    <script src="../static/java/status.js"></script>
     <title>Chat with EverydAI</title>
 </head>
 <body>
@@ -29,17 +29,18 @@
         </div>
         <ul id="recommendations-list"></ul>
     </div>
-    <button id="download-button">Download Conversation</button>
-    <button id="wish-button">Wish List</button>
-    <div id="wish-dropdown" style="display:none;">
-        <ul id="wish-items"></ul> <!-- ✅ Este ID debe coincidir con el JS -->
+        <div id="container-pro">
+        <button id="download-button">Download Conversation</button>
+        <button id="wish-button">Wish List</button>
+        <div id="wish-dropdown" style="display:none;">
+            <ul id="wish-items"></ul>
+        </div>
+        <button id="inventory-button">Inventory</button>
+        <div id="inventory-dropdown" style="display:none;">
+            <ul id="inventory-items"></ul>
+        </div>
+        <div id="status-indicator">Listening...</div>
     </div>
-    
-    <button id="inventory-button">Inventory</button>
-    <div id="inventory-dropdown" style="display:none;">
-        <ul id="inventory-items"></ul>
-    </div>
-    
     <script src="../static/java/inventories.js"></script>
     <script src="../static/java/cartshop.js"></script>
 

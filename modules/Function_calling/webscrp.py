@@ -45,9 +45,6 @@ def web_culinary(producto):
             page.press(input_selector, "Enter")
             print("Enter presionado")
 
-            # Esperar a que carguen los resultados
-            page.wait_for_selector('.vtex-search-result-3-x-galleryItem', timeout=15000)
-
             # Extraer los productos
             productos_lista = []
 

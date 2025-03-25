@@ -206,16 +206,28 @@ activeAction.play(); // Reiniciar y reproducir la nueva animación
 activeAction.setLoop(THREE.LoopOnce, 1); // Asegurarse de que la animación se ejecute solo una vez
 }
 
-window.addEventListener('hablar', () => {
+window.addEventListener('Hablar', () => {
 dots.style.opacity = 0;
 playAnimationLoop("talking", 1);
 });
-window.addEventListener('pensar', () => {
+window.addEventListener('Pensar', () => {
 
 playAnimationLoop("thinking", 0.5);
 });
+window.addEventListener('WebSearching', () => {
 
-window.addEventListener('parar', () => {
+    playAnimationLoop("thinking", 0.5);
+    });
+    window.addEventListener('SearchingProducts', () => {
+
+        playAnimationLoop("thinking", 0.5);
+        });
+        window.addEventListener('UpdatingInventory', () => {
+
+            playAnimationLoop("thinking", 0.5);
+            });
+
+window.addEventListener('Parar', () => {
 playAnimationLoop("pose")
 });
 
