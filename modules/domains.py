@@ -33,7 +33,8 @@ class EventHandler(AssistantEventHandler):
 
 
 def chat_response(model, user_input, client, thread_idf, assistant_idf):
-    response_2= None ##Esto guarda la respuesta de serpapi, sino hay es None
+    response_2= None 
+    response_3=None
     message = client.beta.threads.messages.create(
     thread_id=thread_idf,
     role="user",
@@ -56,14 +57,14 @@ def chat_response(model, user_input, client, thread_idf, assistant_idf):
             for block in ultimo_mensaje.content:
                 print(f"Assistant: {block.text.value}") 
                 response= block.text.value# Imprime solo el contenido del último mensaje
-                return response, response_2
+                return response, response_2, response_3
         else:
             print("No se encontró un mensaje del asistente.")
     elif run.status == "requires_action":
        if model=="Cooking":
-            response, response_2 = hd_culinary.hd_culinary(user_input, client, thread_idf, assistant_idf, run)
+            response, response_2, response_3 = hd_culinary.hd_culinary(user_input, client, thread_idf, assistant_idf, run)
        elif model=="Fitness":
-            response, response_2 = hd_gym.hd_gym(user_input, client, thread_idf, assistant_idf, run)
+            response, response_2, response_3 = hd_gym.hd_gym(user_input, client, thread_idf, assistant_idf, run)
        elif model=="fashion":
-            response, response_2 = hd_fashion.hd_fashion(user_input, client, thread_idf, assistant_idf, run)
-       return response, response_2
+            response, response_2, response_3 = hd_fashion.hd_fashion(user_input, client, thread_idf, assistant_idf, run)
+       return response, response_2, response_3

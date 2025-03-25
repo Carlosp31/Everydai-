@@ -31,6 +31,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             # Si necesitas el modelo:
             model = arguments_dict.get("model", "Modelo no encontrado")
             response_2 = busquedas.buscar_resultados_en_serpapi_culinary(query, model)
+            response_3 = "Busqueda_serp_cooking"
 
 
 
@@ -48,6 +49,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             producto = arguments_dict.get("producto", "Valor no encontrado")
             print (f"producto a buscar: {producto}")
             response_2  = webscrp.web_culinary(producto)
+            response_3 = "Busqueda_prod_cooking"
             tool_outputs.append({
                 "tool_call_id": tool.id,
                 "output": "He encontrado algunos productos relacionados con tus busquedas. " #json.dumps(response_2)
@@ -69,6 +71,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             print(f"🍽 Ingredientes extraídos: {items}")
 
             # Llamar a la función con la lista de ingredientes
+            response_3 = "inventory_cooking"
             response_2 = action_db.almacenar_items(items)
 
             tool_outputs.append({
@@ -102,6 +105,6 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
                 for block in ultimo_mensaje.content:
                     print(f"Assistant: {block.text.value}") 
                     response= block.text.value# Imprime solo el contenido del último mensaje
-                    return response, response_2
+                    return response, response_2, response_3
             else:
                 print("No se encontró un mensaje del asistente.")
