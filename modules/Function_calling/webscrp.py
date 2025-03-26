@@ -80,7 +80,7 @@ def web_culinary(producto):
             browser.close()
         
         return productos_lista
-web_culinary("salsa de tomate")
+
 
 import json
 from playwright.sync_api import sync_playwright
