@@ -15,7 +15,7 @@ def web_culinary(producto):
         for path in executable_paths:
             try:
                 print(f"[INFO] Intentando iniciar Chromium con ruta: {path if path else 'Predeterminado'}")
-                browser = p.chromium.launch(headless=True, executable_path=path) if path else p.chromium.launch(headless=True)
+                browser = p.chromium.launch(headless=False, executable_path=path) if path else p.chromium.launch(headless=False)
                 print("[INFO] Navegador iniciado correctamente.")
                 break  # Si funciona, salimos del bucle
             except Exception as e:
@@ -36,67 +36,51 @@ def web_culinary(producto):
         try:
             print("Abriendo página de Olímpica...")
             
-            # Seleccionar el input usando el placeholder
+            # Seleccionar el input usando el placeholder y escribir el producto
             input_selector = 'input[placeholder="Encuentra todo lo que necesitas"]'
             page.fill(input_selector, producto)
-            print("Campo llenado con:", producto)
+            print(f"[INFO] Campo llenado con: {producto}")
 
             # Simular presionar Enter para buscar
             page.press(input_selector, "Enter")
-            print("Enter presionado")
-
+            print("[INFO] Enter presionado")
+            
             # Extraer los productos
             productos_lista = []
+            time.sleep(2)
+        # Esperar a que los productos se carguen completamente
+            page.wait_for_selector(".vtex-product-summary-2-x-productBrand", timeout=20000)
+            print("[INFO] Productos cargados...")
+            time.sleep(2)
+            productos_lista = page.evaluate('''() => {
+                return [...document.querySelectorAll('.vtex-product-summary-2-x-productBrand')].map(prod => {
+                    const precioElem = prod.closest('.vtex-search-result-3-x-galleryItem')
+                                        ?.querySelector('.olimpica-dinamic-flags-0-x-currencyContainer');
+                    const imagenElem = prod.closest('.vtex-search-result-3-x-galleryItem')
+                                        ?.querySelector('img.vtex-product-summary-2-x-imageNormal');
+                    const enlaceElem = prod.closest('.vtex-search-result-3-x-galleryItem')
+                                        ?.querySelector('a.vtex-product-summary-2-x-clearLink');
 
-            page.wait_for_selector('.vtex-search-result-3-x-galleryItem', timeout=15000)
-            print("Productos cargados...")
+                    return {
+                        nombre: prod.innerText.trim() || "Nombre no disponible",
+                        precio: precioElem ? precioElem.innerText.trim() : "Precio no disponible",
+                        imagen_url: imagenElem ? imagenElem.getAttribute("src") : "Imagen no disponible",
+                        enlace: enlaceElem ? `https://www.olimpica.com${enlaceElem.getAttribute("href")}` : "Enlace no disponible"
+                    };
+                }).filter(prod => prod.nombre !== "Nombre no disponible");  // Filtrar productos vacíos
+            }''')
 
-            # Extraer los productos
-            productos_lista = []
-            productos = page.query_selector_all('.vtex-search-result-3-x-galleryItem')
 
-            for i, prod in enumerate(productos):
-                try:
-                    # Obtener nombre del producto
-                    nombre_elem = prod.query_selector('.vtex-product-summary-2-x-productBrand')
-                    producto_nombre = nombre_elem.inner_text().strip() if nombre_elem else "Nombre no disponible"
-                    
+            # Imprimir resultados
+            for i, producto in enumerate(productos_lista):
+                print(f"Producto {i+1}: {producto['nombre']}, Precio: {producto['precio']}, Imagen: {producto['imagen_url']}, Enlace: {producto['enlace']}")
 
-                    # Obtener el precio del producto
-                    precio_elem = prod.query_selector('.olimpica-dinamic-flags-0-x-currencyContainer')
-                    full_price = precio_elem.inner_text().strip().replace("\xa0", " ") if precio_elem else "Precio no disponible"
-                    
-
-                    # Obtener la imagen del producto
-                    imagen_elem = prod.query_selector("img.vtex-product-summary-2-x-imageNormal")
-                    imagen_src = imagen_elem.get_attribute("src") if imagen_elem else "Imagen no disponible"
-
-                    # Obtener el enlace del producto
-                    enlace_elem = prod.query_selector("a.vtex-product-summary-2-x-clearLink")
-                    enlace_href = enlace_elem.get_attribute("href") if enlace_elem else "Enlace no disponible"
-                    enlace_url = f"https://www.olimpica.com{enlace_href}" if enlace_href != "Enlace no disponible" else enlace_href
-
-                    # Agregar a la lista
-                    producto_info = {
-                        "nombre": producto_nombre,
-                        "precio": full_price,
-                        "imagen_url": imagen_src,
-                        "enlace": enlace_url
-                    }
-                    productos_lista.append(producto_info)
-
-                except Exception as e:
-                    print(f"No se pudo extraer información del producto {i + 1}: {e}")
-
-            print("Productos encontrados:", productos_lista)
-
-        except Exception as e:
-            print(f"Error durante la ejecución: {e}")
 
         finally:
             browser.close()
         
         return productos_lista
+web_culinary("salsa de tomate")
 
 import json
 from playwright.sync_api import sync_playwright
