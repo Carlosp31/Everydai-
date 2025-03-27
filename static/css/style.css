@@ -23,6 +23,14 @@ body {
         padding: 15px;
         border-radius: 0;
     }}
+    @media (max-width: 1024px) {
+        #container-pro {
+            position: relative;
+            width: 100%;
+            max-width: none;
+            padding: 15px;
+            border-radius: 0;
+        }}
 @keyframes gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -258,7 +266,7 @@ button:active {
     top: 20px;
     right: 15px;
     width: 300px;
-    height: 150px; /* Reducido inicialmente */
+    height: 150px;
     background-color: #f2f2f2;
     border-radius: 10px;
     padding: 15px;
@@ -266,10 +274,23 @@ button:active {
     overflow-y: auto;
     border: 1px solid #ccc;
     color: #333;
-    transition: height 0.3s ease;  /* Transición para el cambio de tamaño */
-    overflow: hidden; /* Ocultar el contenido cuando se colapsa */
+    transition: height 0.3s ease;
+    overflow: hidden;
 }
 
+/* Responsive: Tablets y móviles */
+@media screen and (max-width: 1024px) {
+    .recommendations-box {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 90%; /* Para que se adapte mejor */
+        margin: 10px auto; /* Centrado con margen */
+    }
+}
+#detection-container {
+    display: none; /* Inicialmente oculto */
+}
 /* Estilo para cuando el cuadro está expandido */
 .recommendations-box.expanded {
     height: 600px;  /* Ajusta el tamaño cuando está expandido */
