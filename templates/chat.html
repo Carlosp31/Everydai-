@@ -5,11 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+   
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <link id="detection-styles" rel="stylesheet" href="" data-css-path="{{ url_for('static', filename='css/augmented.css') }}">
     <script src="../static/java/status.js"></script>
+    
     <title>Chat with EverydAI</title>
 </head>
 <body>
@@ -17,7 +20,7 @@
         <div class="spinner"></div>
         <p class="loading-text">Loading</p>
     </div>
-<div class="content" id="content"></div>
+<div class="content" id="content">
     <button class ="redirect-button" onclick="redirectToRealidad()">Scan</button>
     <!-- Mostrar el modelo seleccionado dinámicamente -->
     <div id="recommendations-box" class="recommendations-box">
@@ -76,7 +79,7 @@
         <!-- Canvas para el espectro de frecuencias -->
         
         <video id="video-preview" autoplay style="display:none; width: 300px;"></video>
-        <canvas id="canvas" style="display:none;"></canvas>
+        <canvas id="canvas2" style="display:none;"></canvas>
 
         <div id="image-preview-container" style="text-align: center;">
             <img id="image-preview" alt="Your uploaded image will appear here" style="display: none; width: 300px; margin-top: 10px;">
@@ -95,7 +98,7 @@
     <script src="../static/java/recommendations.js"></script>
     <script src="../static/java/chat.js"></script>
     <script src="../static/java/cartshop.js"></script>
-
+    <script src="../static/java/augmented_experience.js"></script>
 
     <!-- Aquí agregamos el popup -->
     <div id="popup" class="popup hidden"></div>
@@ -119,6 +122,34 @@
         };
     </script>  
     <script src="../static/java/avatar.js"></script>
+    <div id="detection-container">
+        <div id="video-container">
+            <video id="video" autoplay></video>
+            <canvas id="canvas"></canvas>
+        </div>
+        <div class="buttons-container">
+            <button onclick="startDetection()">Start</button>
+            <button onclick="stopDetection()">Stop</button>
+            <button onclick="hideDetection()">Back</button>
+            <div id="detections-log">
+                <h3>Detections</h3>
+                <ul id="detections-list"></ul>
+            </div>
+        </div>
+    </div>
+<script>       
+    function redirectToRealidad() {
+        document.getElementById("detection-styles").href = document.getElementById("detection-styles").getAttribute("data-css-path");
+    document.getElementById("content").style.display = "none";
+    document.getElementById("detection-container").style.display = "block";
     
+
+}
+function hideDetection() {
+            document.getElementById("detection-container").style.display = "none";
+            document.getElementById("content").style.display = "block";
+            document.getElementById("detection-styles").href = ""; // Quitar CSS
+        }
+</script>
 </body>
 </html>

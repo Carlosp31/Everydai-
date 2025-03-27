@@ -226,6 +226,9 @@ window.addEventListener('WebSearching', () => {
 
             playAnimationLoop("thinking", 0.5);
             });
+            window.addEventListener('Detección', () => {
+                playAnimationLoop("thinking", 0.5);
+                });
 
 window.addEventListener('Parar', () => {
 playAnimationLoop("pose")
