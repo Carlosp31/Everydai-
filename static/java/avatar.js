@@ -107,7 +107,7 @@ function (error) {
 }
 function playAnimationSequence(firstAnimationName, secondAnimationName) {
 if (activeAction) {
-activeAction.fadeOut(0.5);
+activeAction.fadeOut(0.3);
 }
 
 // Aplicar los morph targets de la sonrisa
@@ -146,13 +146,13 @@ secondAction.reset();
 secondAction.setLoop(THREE.LoopRepeat);
 
 activeAction = firstAction;
-firstAction.fadeIn(0.5).play();
+firstAction.fadeIn(0.3).play();
 
 mixer.addEventListener('finished', (event) => {
 if (event.action === firstAction) {
-    activeAction.fadeOut(0.8);
+    activeAction.fadeOut(0.3);
     activeAction = secondAction;
-    secondAction.fadeIn(0.6).play();
+    secondAction.fadeIn(0.3).play();
 }
 });
 }
@@ -160,7 +160,7 @@ if (event.action === firstAction) {
 function playAnimationLoop(animationName, speed) {
 // Detener cualquier animación activa (incluidas las de playAnimationSequence)
 if (activeAction) {
-activeAction.fadeOut(0.5); // Transición suave al detener
+activeAction.fadeOut(0.3); // Transición suave al detener
 }
 
 // Aplicar los morph targets de la sonrisa
@@ -192,7 +192,7 @@ loopAction.reset();
 loopAction.setLoop(THREE.LoopRepeat); // Repetir en bucle
 loopAction.timeScale = speed; // Ajustar la velocidad de reproducción
 activeAction = loopAction;
-loopAction.fadeIn(0.5).play();
+loopAction.fadeIn(0.3).play();
 }
 
 function playAnimationOnce(animationName) {
