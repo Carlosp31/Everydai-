@@ -14,7 +14,8 @@ camera.position.set(0, 3.1, 0.9); // Ajustamos la altura para estar a nivel de l
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.setSize(600, 500);
 document.getElementById("avatar-container").appendChild(renderer.domElement);
-
+renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.render(scene, camera);
 // Añadir luces a la escena
 const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
 scene.add(ambientLight);
@@ -208,7 +209,7 @@ activeAction.setLoop(THREE.LoopOnce, 1); // Asegurarse de que la animación se e
 
 window.addEventListener('Hablar', () => {
 dots.style.opacity = 0;
-playAnimationLoop("talking", 0.5);
+playAnimationLoop("talking", 1);
 });
 window.addEventListener('Pensar', () => {
 
