@@ -15,7 +15,7 @@ def web_culinary(producto):
         for path in executable_paths:
             try:
                 print(f"[INFO] Intentando iniciar Chromium con ruta: {path if path else 'Predeterminado'}")
-                browser = p.chromium.launch(headless=False, executable_path=path) if path else p.chromium.launch(headless=False)
+                browser = p.chromium.launch(headless=True, executable_path=path) if path else p.chromium.launch(headless=True)
                 print("[INFO] Navegador iniciado correctamente.")
                 break  # Si funciona, salimos del bucle
             except Exception as e:
@@ -29,6 +29,7 @@ def web_culinary(producto):
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
         )
         page = context.new_page()
+        print("Agente iniciado")
         page.goto("https://www.olimpica.com/supermercado")
         
         productos_lista = []  # Lista donde se almacenarán los productos extraídos
@@ -47,11 +48,10 @@ def web_culinary(producto):
             
             # Extraer los productos
             productos_lista = []
-            time.sleep(2)
+            time.sleep(6)
         # Esperar a que los productos se carguen completamente
             page.wait_for_selector(".vtex-product-summary-2-x-productBrand", timeout=20000)
             print("[INFO] Productos cargados...")
-            time.sleep(2)
             productos_lista = page.evaluate('''() => {
                 return [...document.querySelectorAll('.vtex-product-summary-2-x-productBrand')].map(prod => {
                     const precioElem = prod.closest('.vtex-search-result-3-x-galleryItem')
