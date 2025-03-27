@@ -139,16 +139,20 @@
     </div>
 <script>       
     function redirectToRealidad() {
+        document.getElementById("content").style.display = "none";
         document.getElementById("detection-styles").href = document.getElementById("detection-styles").getAttribute("data-css-path");
-    document.getElementById("content").style.display = "none";
-    document.getElementById("detection-container").style.display = "block";
+        document.getElementById("detection-container").style.display = "block";
+    
+    
+   
     
 
 }
 function hideDetection() {
+    document.getElementById("detection-styles").href = ""; // Quitar CSS
             document.getElementById("detection-container").style.display = "none";
             document.getElementById("content").style.display = "block";
-            document.getElementById("detection-styles").href = ""; // Quitar CSS
+            
         }
 </script>
 </body>
