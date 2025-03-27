@@ -10,11 +10,6 @@ const domain = urlParams.get('domain');
                     document.getElementById("content").style.display = "block";
                 }, 500);
         };
-        function redirectToRealidad() {
-            let selectedModel = domain;
-
-            window.location.href = `/augmented experience?domain=${encodeURIComponent(selectedModel)}`;
-        }
 
         document.addEventListener("DOMContentLoaded", function() {
             const microphoneButton = document.getElementById("microphone-button");
@@ -60,18 +55,7 @@ const domain = urlParams.get('domain');
             });
             
             
-            let storedMessage = sessionStorage.getItem("pendingMessage");
 
-            if (storedMessage) {
-                sendMessage(storedMessage, "detection"); // Enviamos directamente como string
-                        // Cambiar la opacidad de los puntos
-                    const dots = document.getElementById("dots");
-                    dots.style.opacity = 1; // Mostrar los puntos
-                    const event_detection = new CustomEvent('Detección', { detail: { currentStatus: "Processing detections" } });
-                    window.dispatchEvent(event_detection);
-
-                sessionStorage.removeItem("pendingMessage"); // Eliminamos el mensaje después de enviarlo
-            }
 
             const chatContainer = document.querySelector('.chat-container');
 
@@ -198,9 +182,18 @@ const domain = urlParams.get('domain');
 
 
      // Función para enviar mensajes (tanto por texto como por voz)
-     function sendMessage(userInput, type = "text") {
+     window.sendMessage= function(userInput, type = "text") {
         console.log("mensaje", userInput);
-        
+        if (type == "detection"){
+            const dots = document.getElementById("dots");
+                    dots.style.opacity = 1; // Mostrar los puntos
+                    const event_detection = new CustomEvent('Detección', { detail: { currentStatus: "Processing detections" } });
+                    window.dispatchEvent(event_detection);
+
+
+
+        }
+
         if (userInput.trim() !== "") {
             let interaction = startTimer(type);
             document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
