@@ -36,6 +36,8 @@ body {
     left: 0;
 }
 #detections-log {
+    color: black;  /* Asegura que el texto sea negro */
+    font-weight: bold; /* Opcional: Hace que el texto sea más grueso */
     width: 90%;
     max-width: 300px;
     max-height: 500px;
@@ -44,6 +46,7 @@ body {
     padding: 10px;
     background-color: #f9f9f9;
     margin-top: 20px;
+
 }
 .buttons-container {
     display: flex;
