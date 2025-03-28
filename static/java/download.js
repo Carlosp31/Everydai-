@@ -1,4 +1,4 @@
-document.getElementById("download-button").onclick = function() {
+document.getElementById("download-button").onclick = async function () {
     const chatBox = document.getElementById("chat-box");
     const recommendationsList = document.getElementById("recommendations-list");
 
@@ -7,29 +7,23 @@ document.getElementById("download-button").onclick = function() {
         return;
     }
 
-    // Obtener el texto de la conversación
     const conversationText = Array.from(chatBox.children)
         .map(child => child.textContent.trim())
         .join("\n\n");
 
-    // Obtener el texto de las recomendaciones
     const recommendationsText = Array.from(recommendationsList.children)
         .map(child => {
             if (child.querySelector('a')) {
-                // Si es un enlace, obtener el texto y la URL
                 const link = child.querySelector('a');
                 return `${link.textContent}: ${link.href}`;
             } else {
-                // Si no es un enlace, obtener el texto normal
                 return child.textContent.trim();
             }
         })
         .join("\n\n");
 
-    // Combinar el texto de la conversación y las recomendaciones
     const fullText = `Conversación:\n${conversationText}\n\nRecomendaciones:\n${recommendationsText}`;
 
-    // Verificar si hay texto para generar el PDF
     if (!fullText) {
         alert("No hay contenido para generar el archivo PDF.");
         return;
@@ -49,10 +43,34 @@ document.getElementById("download-button").onclick = function() {
         const textLines = pdf.splitTextToSize(fullText, maxLineWidth);
         pdf.text(textLines, margin, margin + 10);
 
-        // Descargar el archivo
-        pdf.save("conversation_and_recommendations.pdf");
+        const pdfBlob = pdf.output("blob");
+
+        // Solicitar correo del usuario
+        const userEmail = prompt("Ingresa tu correo electrónico para recibir el PDF:");
+
+        if (!userEmail || !userEmail.includes("@")) {
+            alert("Correo inválido.");
+            return;
+        }
+
+        // Enviar el PDF al servidor
+        const formData = new FormData();
+        formData.append("file", pdfBlob, "conversation.pdf");
+        formData.append("email", userEmail);
+
+        const response = await fetch("/send-pdf-email", {
+            method: "POST",
+            body: formData
+        });
+
+        if (response.ok) {
+            alert("¡PDF enviado correctamente al correo!");
+        } else {
+            throw new Error("Error al enviar el PDF.");
+        }
+
     } catch (error) {
-        console.error("Error al generar el PDF:", error);
-        alert("Ocurrió un error al generar el archivo PDF. Verifica la consola para más detalles.");
+        console.error("Error:", error);
+        alert("Ocurrió un error al generar o enviar el archivo PDF.");
     }
 };
