@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to EverydAI</title>
+    <style>    
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(-45deg, #cccccc, #0077cc, #0099ff, #0077cc);
+            background-size: 200% 200%;
+            animation: gradient 10s ease infinite;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #0099ff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            border: none; /* Elimina el borde negro */
+        }
+        .title {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            font-size: 1.2em;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .option:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .option i {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<body>
+
+    <button id="openModalButton">User Guide</button>
+
+    <div class="title">WELCOME TO EVERYDAI</div>
+    <div class="subtitle">CHOOSE A DOMAIN TO CONTINUE</div>
+
+    <div class="options">
+        <a href="{{ url_for('chat', domain='Cooking') }}" class="option"><i>🍽️</i> Cooking</a>
+        <a href="{{ url_for('chat', domain='fashion') }}" class="option"><i>👔</i> Fashion</a>
+        <a href="{{ url_for('chat', domain='Fitness') }}" class="option"><i>🏃</i> Fitness</a>
+    </div>
+
+</body>
+<script>
+    document.getElementById('openModalButton').addEventListener('click', function() {
+        Swal.fire({
+            title: 'User Guide',
+            html: `
+                <p>Welcome to EverydAI user guide. Here you can:</p>
+                <ul>
+                    <li>Select the domain for your daily activities.</li>
+                    <li>Talk with the avatars to receive help on your daily tasks.</li>
+                    <li>Receive information based on the elements you share to our avatars.</li>
+                </ul>
+            `,
+            icon: 'info',
+            confirmButtonText: 'Close'
+        });
+    });
+</script>
+</html>
