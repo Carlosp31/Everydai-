@@ -14,7 +14,8 @@ camera.position.set(0, 3.1, 0.9); // Ajustamos la altura para estar a nivel de l
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.setSize(600, 500);
 document.getElementById("avatar-container").appendChild(renderer.domElement);
-
+renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.render(scene, camera);
 // Añadir luces a la escena
 const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
 scene.add(ambientLight);
@@ -137,7 +138,7 @@ model.traverse((child) => {
 const firstAction = animationActions[firstAnimationName];
 firstAction.reset();
 firstAction.setLoop(THREE.LoopOnce);
-firstAction.timeScale = 0.8;
+firstAction.timeScale = 0.65;
 firstAction.clampWhenFinished = true;
 
 // Configurar la segunda animación
@@ -216,19 +217,19 @@ playAnimationLoop("thinking", 0.5);
 });
 window.addEventListener('WebSearching', () => {
 
-    playAnimationLoop("thinking", 0.5);
-    });
-    window.addEventListener('SearchingProducts', () => {
+playAnimationLoop("thinking", 0.5);
+});
+window.addEventListener('SearchingProducts', () => {
 
-        playAnimationLoop("thinking", 0.5);
-        });
-        window.addEventListener('UpdatingInventory', () => {
+playAnimationLoop("thinking", 0.5);
+});
+window.addEventListener('UpdatingInventory', () => {
 
-            playAnimationLoop("thinking", 0.5);
-            });
-            window.addEventListener('Detección', () => {
-                playAnimationLoop("thinking", 0.5);
-                });
+playAnimationLoop("thinking", 0.5);
+});
+window.addEventListener('Detección', () => {
+playAnimationLoop("thinking", 0.5);
+});
 
 window.addEventListener('Parar', () => {
 playAnimationLoop("pose")
