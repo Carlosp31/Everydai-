@@ -48,7 +48,7 @@ def web_culinary(producto):
             
             # Extraer los productos
             productos_lista = []
-            time.sleep(6)
+            time.sleep(8)
         # Esperar a que los productos se carguen completamente
             page.wait_for_selector(".vtex-product-summary-2-x-productBrand", timeout=20000)
             print("[INFO] Productos cargados...")

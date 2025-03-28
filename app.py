@@ -204,16 +204,7 @@ def dashboard():
   
 
         # Datos simulados para autenticación en Windows
-        user_info = {
-            'id': '111023325935054444837',
-            'provider': 'google',
-            'name': 'Carlos Pardo',
-            'email': 'cpardobar@gmail.com',
-            'profile_pic': 'https://lh3.googleusercontent.com/a/ACg8ocJ_Ai5OrqNKRad968wXeraJXD0TpQoVDYH4OeOTMBUlAst2Yw=s96-c',
-            'created_at': '2025-03-15 16:21:39'
-        }
-
-        print("Autenticación simulada en Windows:", user_info)
+        user_info = json.loads(os.getenv('USER_INFO'))
 
         # Guardar en sesión
         session['provider_id'] = user_info['id']
