@@ -7,3 +7,11 @@ Gemini_models.ipynb
 notebook.ipynb
 prueba_aut.py
 .pyc
+client_secret_wmaicol.json
+cert.pem
+key.pem
+Computer_vision/
+clean_redis.py
+jsn_excel.py
+output.xlsx
+logs/

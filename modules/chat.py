@@ -1,49 +1,18 @@
-import os
-from flask import Flask, render_template, request, jsonify, redirect, send_file, url_for, session
-import google.generativeai as genai
-from werkzeug.utils import secure_filename
-from PIL import Image
-import serpapi
-from dotenv import load_dotenv
-import requests
+from flask import  request, jsonify, session
 from openai import OpenAI
-from google.oauth2.credentials import Credentials
-from datetime import datetime, timedelta
-import requests  # Asegúrate de importar la biblioteca requests
-import modules.voice as voice
-import modules.images as images
-import modules.serpapi as serpapii
 import modules.domains as domains
-# Cargar las variables de entorno del archivo .env
-load_dotenv()
-
-app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY', 'supersecretkey')
-
-# Cargar las variables de entorno
-GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
-SERPAPI_KEY = os.getenv('SERPAPI_KEY')
-CULINARY_MODEL = os.getenv('CULINARY_MODEL')
-FASHION_MODEL = os.getenv('FASHION_MODEL')
-GYM_MODEL = os.getenv('GYM_MODEL')
-IMG_MODEL = os.getenv('IMG_MODEL')
-ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY')
-
-# Configurar la clave API de SerpAPI
-client_serpapi = serpapi.Client(api_key=SERPAPI_KEY)
-# Inicializar los modelos generativos con las variables de entorno
-model_culinary = genai.GenerativeModel(model_name=CULINARY_MODEL)
-model_fashion = genai.GenerativeModel(model_name=FASHION_MODEL)
-model_gym = genai.GenerativeModel(model_name=GYM_MODEL)
-model_img = genai.GenerativeModel(IMG_MODEL)
-
-# Configura la carpeta para almacenar las imágenes
-UPLOAD_FOLDER = 'uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-##################################################33
 from typing_extensions import override
 from openai import AssistantEventHandler
  
+
+ ### For initialization inventory
+import redis
+from database import db
+from models import User, Domain, Inventory, WishList, UserPreference
+import json
+from flask import Flask, render_template, request, jsonify, redirect, send_file, url_for, session
+from app import redis_client 
+import json
 # First, we create a EventHandler class to define
 # how we want to handle the events in the response stream.
 
@@ -69,6 +38,7 @@ class EventHandler(AssistantEventHandler):
           if output.type == "logs":
             print(f"\n{output.logs}", flush=True)
 
+global client
 client = OpenAI()
 
 # Definir variables globales
@@ -81,7 +51,7 @@ assistant_culinary_id= "asst_zOGNCMFiaD5IP0u4u4t8dOpX"
 # Crear el thread global para culinary (esto solo lo inicializamos una vez)
 global thread_culinary
 thread_culinary = client.beta.threads.create()
-#################################################################
+
 ##################### Fashion #################################
 # Definir variables globales para el dominio de moda
 global assistant_fashion
@@ -99,18 +69,17 @@ thread_gym = client.beta.threads.create()
 def chat_post():
     user_input = request.json['message']
     selected_model = request.json['model']
-    client = OpenAI()
     
     
     ####################################################
-    if selected_model == 'culinary':  
-        response, response_2 = domains.chat_response(selected_model, user_input, client, thread_idf=thread_culinary.id, assistant_idf =assistant_culinary_id)
+    if selected_model == 'Cooking':  
+        response, response_2, response_3 = domains.chat_response(selected_model, user_input, client, thread_idf=thread_culinary.id, assistant_idf =assistant_culinary_id)
 
     elif selected_model == 'fashion':  
-        response, response_2 = domains.chat_response(selected_model, user_input, client, thread_idf=thread_fashion.id, assistant_idf =assistant_fashion_id)
+        response, response_2, response_3 = domains.chat_response(selected_model, user_input, client, thread_idf=thread_fashion.id, assistant_idf =assistant_fashion_id)
         ####################################################
-    elif selected_model == 'gym':  
-        response, response_2  = domains.chat_response(selected_model, user_input, client, thread_idf=thread_gym.id, assistant_idf =assistant_gym_id)
+    elif selected_model == 'Fitness':  
+        response, response_2, response_3  = domains.chat_response(selected_model, user_input, client, thread_idf=thread_gym.id, assistant_idf =assistant_gym_id)
 
     else:
         return jsonify({'response': 'Modelo no encontrado.'}), 400
@@ -129,5 +98,45 @@ def chat_post():
     return jsonify({
         'text_response': response,
         'mensaje_inicial': mensaje_inicial,
-        'recipes': response_2
+        'recipes': response_2,
+        "response_3": response_3
     })
+
+
+#####Initial Inventory 
+
+def chat_inventory(domain_name, items, thread_idf, assistant_idf):
+    """Inicializa la conversación con OpenAI proporcionando el inventario del usuario."""
+
+    print(f"🔹 Inicializando inventario en {domain_name}")
+    # 🔹 Crear mensaje de concientización para el asistente
+    user_inventory = f"El usuario tiene los siguientes ítems en su inventario: {', '.join(items)}."
+
+    # 🔹 Enviar mensaje al asistente para que sea consciente del inventario
+    message = client.beta.threads.messages.create(
+        thread_id=thread_idf,
+        role="user",
+        content=user_inventory
+    )
+    run = client.beta.threads.runs.create_and_poll(
+        thread_id=thread_idf,
+        assistant_id= assistant_idf
+
+    )
+    
+
+    print("📩 Inventario enviado al asistente:", user_inventory)
+
+def initialize_thread_with_inventory(items, domain_name):
+    """Inicializa un thread con la concientización del inventario (solo una vez)."""
+
+    if domain_name == 'Cooking':  
+        chat_inventory(domain_name, items, thread_idf=thread_culinary.id, assistant_idf=assistant_culinary_id)
+
+    elif domain_name == 'fashion':  
+        chat_inventory(domain_name, items, thread_idf=thread_fashion.id, assistant_idf=assistant_fashion_id)
+
+    elif domain_name == 'Fitness':  
+        chat_inventory(domain_name, items, thread_idf=thread_gym.id, assistant_idf=assistant_gym_id)
+
+

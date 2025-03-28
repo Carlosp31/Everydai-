@@ -2,19 +2,83 @@
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
-    padding: 20px;
     color: #c9c9c9; /* Texto gris claro */
-    background: linear-gradient(-45deg, #000000, #1e1e1e, #005f99, #000000);
+    padding-bottom: 10px;
+    background: linear-gradient(-45deg, #cccccc, #0077cc, #0099ff, #0077cc);
     background-size: 200% 200%;
     animation: gradient 10s ease infinite;
 }
-
+#container-pro {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+@media (max-width: 600px) {
+    #container-pro {
+        position: relative;
+        width: 100%;
+        max-width: none;
+        padding: 15px;
+        border-radius: 0;
+    }}
+    @media (max-width: 1024px) {
+        #container-pro {
+            position: relative;
+            width: 100%;
+            max-width: none;
+            padding: 15px;
+            border-radius: 0;
+        }}
 @keyframes gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
-
+#loading-screen {
+    position: fixed; /* Fija la pantalla de carga en toda la ventana */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Cubre toda la pantalla */
+    background: linear-gradient(-45deg, #cccccc, #0077cc, #0099ff, #0077cc);
+    background-size: 200% 200%;
+    animation: gradient 10s ease infinite;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    border-top: 6px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.loading-text {
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+.emoji {
+    font-size: 3rem; /* Ajusta el tamaño según lo necesites */
+}
+h1 {
+    margin-top: 1px;
+    
+    margin-bottom: 1px; /* Reduce la separación */
+}
 
 /* Contenedor principal */
 .chat-container {
@@ -22,18 +86,19 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(-45deg, #000000, #1e1e1e, #005f99, #000000);
-    background-size: 200% 200%;
-    animation: gradient 10s ease infinite;
-    padding: 30px;
+    width: 100%;
     border-radius: 10px;
     box-shadow: none;
     max-width: 700px;
-    margin: 40px auto;
+    margin: 0 auto; /* Ajusta según necesidad */
     border: 1px solid #333;
     position: relative;
     overflow: hidden; /* Evitar que los hijos se salgan del contenedor */
+    background-size: cover;
+    background-position: center;
 }
+
+
 
 .hidden {
     display: none;
@@ -46,38 +111,27 @@ body {
     background: transparent; /* Fondo transparente para heredar el gradiente */
     width: 100%; /* Asegúrate de que ocupe todo el espacio disponible */
     max-width: 600px; /* Tamaño máximo */
-    padding: 20px; /* Espaciado interno */
     border-radius: 10px;
 }
 
 
-/* Historial del chat */
-#chat-box {
-    border: 1px solid #333;  /* Bordes oscuros */
-    padding: 15px;
-    height: 300px;
-    overflow-y: auto;
-    background-color: #1e1e1e;  /* Fondo igual que el cuerpo */
-    margin-bottom: 20px;
-        border-radius: 10px;
-    color: #d4d4d4;  /* Texto gris claro */
-}
 
 /* Campo de entrada */
 input[type="text"],
 textarea#input-text {
     width: calc(100% - 120px);
     height: 50px;
-    padding: 12px;
+    padding: 5px;
     margin-bottom: 20px;
     border: 1px solid #333;
     background-color: #2c2b2b;  /* Fondo oscuro */
     color: #d4d4d4;  /* Texto claro */
     font-size: 14px;
     border-radius: 5px;
+    margin-bottom: 0px;
 }
 .redirect-button {
-    position: absolute;
+    position: fixed; /* Asegura que siempre esté en pantalla */
     left: 0; /* Pegado a la pared izquierda */
     top: 50%; /* Centrado verticalmente */
     width: 50px; /* Botón angosto */
@@ -93,10 +147,27 @@ textarea#input-text {
     font-family: 'Poppins', sans-serif;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s ease-in-out;
+    z-index: 1000; /* Se asegura de estar encima de otros elementos */
 }
 
 .redirect-button:hover {
     background-color: #c44128;
+}
+/* Ajustes para móviles */
+@media screen and (max-width: 768px) {
+    .redirect-button {
+        width: 40px;
+        height: 120px;
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .redirect-button {
+        width: 35px;
+        height: 100px;
+        font-size: 10px;
+    }
 }
 input[type="text"]:focus,
 textarea#input-text:focus {
@@ -195,7 +266,7 @@ button:active {
     top: 20px;
     right: 15px;
     width: 300px;
-    height: 150px; /* Reducido inicialmente */
+    height: 150px;
     background-color: #f2f2f2;
     border-radius: 10px;
     padding: 15px;
@@ -203,10 +274,23 @@ button:active {
     overflow-y: auto;
     border: 1px solid #ccc;
     color: #333;
-    transition: height 0.3s ease;  /* Transición para el cambio de tamaño */
-    overflow: hidden; /* Ocultar el contenido cuando se colapsa */
+    transition: height 0.3s ease;
+    overflow: hidden;
 }
 
+/* Responsive: Tablets y móviles */
+@media screen and (max-width: 1024px) {
+    .recommendations-box {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 90%; /* Para que se adapte mejor */
+        margin: 10px auto; /* Centrado con margen */
+    }
+}
+#detection-container {
+    display: none; /* Inicialmente oculto */
+}
 /* Estilo para cuando el cuadro está expandido */
 .recommendations-box.expanded {
     height: 600px;  /* Ajusta el tamaño cuando está expandido */
@@ -309,9 +393,8 @@ button:active {
 }
 .dots {
     position: absolute;
-    top: 100px;
+    top: 60px;
     left: 50%;
-    
     transform: translateX(-50%);
     display: flex;
     justify-content: space-between;
@@ -366,13 +449,21 @@ button:active {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     text-align: center;
-    margin-top: 10px; /* Espaciado superior */
     white-space: nowrap; /* Evitar saltos de línea */
     overflow: hidden; /* Ocultar el texto que desborda */
     text-overflow: ellipsis; /* Mostrar puntos suspensivos si el texto es demasiado largo */
     max-width: 100%; /* Limitar el ancho al contenedor padre */
 }
-
+#status-indicator {
+    background-color: #007acc;  /* Azul VSCode */
+    color: white;
+    margin-top: 5px; /* Espaciado debajo del botón */
+    font-size: 13px; /* Tamaño del texto */
+    padding: 5px 10px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    text-align: center; /* Centrado de texto */
+    width: fit-content; /* Ajusta el ancho al contenido */
+}
 /* Botones azules (sidebar y otros botones) con animaciones */
 button, .controls button, .sidebar a {
     background-color: #007acc;  /* Azul VSCode */
@@ -382,7 +473,6 @@ button, .controls button, .sidebar a {
     padding-bottom: 10px;
     border-radius: 5px;
     font-size: 13px;
-    cursor: pointer;
     transition: background-color 0.2s ease, transform 0.2s ease;  /* Transición suave de color y tamaño */
 }
 
@@ -432,16 +522,38 @@ button:active, .controls button:active, .sidebar a:active {
 }
 
 #frequency-canvas {
-    width: 100%;
+    width: 700px;
     height: 50px;
     display: none;
     border: 1px solid #ccc;
     margin-top: 10px;
+    margin: 10px auto 0 auto; /* Centrado horizontal */
 }
+
 .control-container {
-    display: flex;
+    display: flex; /* Por defecto, los elementos estarán en fila */
+    gap: 10px;
+    justify-content: center;
     align-items: center;
-    gap: 20px;
+    width: 100%;
+    max-width: 1000px; /* Ajusta el ancho según necesidad */
+    margin: auto;
+    flex-wrap: wrap; /* Permite que los elementos bajen si no hay espacio */
+}
+
+/* En pantallas pequeñas (menos de 768px), activar el grid con 2 columnas */
+@media screen and (max-width: 768px) {
+    .control-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en responsive */
+    }
+}
+
+/* En móviles muy pequeños, cambiar a 1 columna */
+@media screen and (max-width: 400px) {
+    .control-container {
+        grid-template-columns: repeat(1, 1fr); /* 1 sola columna */
+    }
 }
 /* Estilos para el botón de conversación */
 #microphone-button {
@@ -451,7 +563,7 @@ button:active, .controls button:active, .sidebar a:active {
 
 #subtitulos-container {
     position: absolute; /* Asegura el posicionamiento sobre el avatar */
-    top: 30px; /* Ajusta la altura para colocarlo encima del avatar */
+    top: 10px; /* Ajusta la altura para colocarlo encima del avatar */
     left: 50%; /* Centra horizontalmente en relación con el contenedor */
     transform: translateX(-50%); /* Corrige el centrado perfecto */
     padding: 10px;
@@ -478,12 +590,21 @@ button:active, .controls button:active, .sidebar a:active {
     border-radius: 5px;
     font-size: 13px;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease;  /* Transición suave de color y tamaño */
-  }
-  
-  #image-input-label:hover {
-    background-color: #007acc; /* Color de fondo cuando el mouse pasa por encima */
-  }
+    transition: background-color 0.2s ease, transform 0.2s ease;  
+    display: inline-block; /* Para comportarse como botón */
+    text-align: center;
+}
+
+/* Efecto hover */
+#image-input-label:hover {
+    background-color: #005fa3; /* Azul más oscuro */
+    transform: scale(1.05); /* Efecto de zoom */
+}
+
+/* Efecto cuando se presiona el botón */
+#image-input-label:active {
+    transform: scale(0.95); /* Disminuye un poco el tamaño */
+}
   
 /* Animación de parpadeo */
 @keyframes blink {
@@ -503,34 +624,76 @@ button:active, .controls button:active, .sidebar a:active {
     animation: blink 1s infinite, scale 1s infinite; /* Parpadeo + escala */
 }
 
-#cart-dropdown {
+/* INVENTARIO */
+
+/* INVENTARIO */
+#inventory-dropdown {
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    min-width: 200px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    color: black;
+    border-radius: 5px;
+    padding: 10px;
 }
 
-#cart-dropdown ul {
+#inventory-dropdown h3 {
+    margin: 0;
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+}
+
+#inventory-dropdown ul {
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
-#cart-dropdown ul li {
-    padding: 12px 16px;
+#inventory-dropdown ul li {
+    padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-#cart-dropdown ul li:last-child {
+#inventory-dropdown ul li:last-child {
     border-bottom: none;
 }
 
-/* Responsivo para subtítulos */
-@media (max-width: 768px) {
-    #subtitulos-container {
-        font-size: 14px;
-        padding: 10px;
-        width: 100%; /* Ajusta al ancho completo en pantallas pequeñas */
-    }
+
+/* LISTA DE DESEOS */
+
+/* LISTA DE DESEOS */
+#wish-dropdown {
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    color: black;
+    border-radius: 5px;
+    padding: 10px;
 }
+
+#wish-dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#wish-dropdown ul li {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#wish-dropdown ul li:last-child {
+    border-bottom: none;
+}
+#wish-dropdown {
+    max-height: none !important;  /* Asegura que no haya límite de altura */
+    overflow-y: auto; /* Habilita el scroll si hay más elementos */
+}
+

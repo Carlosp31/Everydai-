@@ -1,49 +1,9 @@
-import os
-from flask import Flask, render_template, request, jsonify, redirect, send_file, url_for, session
-import google.generativeai as genai
 from werkzeug.utils import secure_filename
-from PIL import Image
-import serpapi
-from dotenv import load_dotenv
-import requests
-from openai import OpenAI
-from google.oauth2.credentials import Credentials
-from datetime import datetime, timedelta
-import requests  # Asegúrate de importar la biblioteca requests
-import modules.voice as voice
-import modules.images as images
 import modules.Function_calling.busquedas as busquedas
 import json
-# Cargar las variables de entorno del archivo .env
-load_dotenv()
-
-app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY', 'supersecretkey')
-
-# Cargar las variables de entorno
-GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
-SERPAPI_KEY = os.getenv('SERPAPI_KEY')
-CULINARY_MODEL = os.getenv('CULINARY_MODEL')
-FASHION_MODEL = os.getenv('FASHION_MODEL')
-GYM_MODEL = os.getenv('GYM_MODEL')
-IMG_MODEL = os.getenv('IMG_MODEL')
-ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY')
-
-# Configurar la clave API de SerpAPI
-client_serpapi = serpapi.Client(api_key=SERPAPI_KEY)
-# Inicializar los modelos generativos con las variables de entorno
-model_culinary = genai.GenerativeModel(model_name=CULINARY_MODEL)
-model_fashion = genai.GenerativeModel(model_name=FASHION_MODEL)
-model_gym = genai.GenerativeModel(model_name=GYM_MODEL)
-model_img = genai.GenerativeModel(IMG_MODEL)
-
-# Configura la carpeta para almacenar las imágenes
-UPLOAD_FOLDER = 'uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-##################################################33
-from typing_extensions import override
-from openai import AssistantEventHandler
-
+import modules.Function_calling.busquedas as busquedas
+import modules.Function_calling.webscrp as webscrp
+import modules.Function_calling.act_bd as action_db
 
 def hd_gym(user_input, client, thread_idf, assistant_idf, run):
     response_2= None
@@ -73,13 +33,49 @@ def hd_gym(user_input, client, thread_idf, assistant_idf, run):
             # Si necesitas el modelo:
             model = arguments_dict.get("model", "Modelo no encontrado")
             response_2 = busquedas.buscar_resultados_en_serpapi_gym(query, model)
+            response_3 = "Busqueda_serp_fitness"
 
+        elif tool.function.name == "buscar_producto_fitness":
 
+            # Acceder al primer tool_call en required_action.submit_tool_outputs
+            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+                        # Extrae los arguments de la función, que están en formato string JSON
+            arguments_str = tool_call.function.arguments
+            
+            # Convierte el string JSON de los arguments en un diccionario
+            arguments_dict = json.loads(arguments_str)
 
-        elif tool.function.name == "get_rain_probability":
+            # Ejemplo: Si quieres extraer el valor del 'query'
+            producto = arguments_dict.get("producto", "Valor no encontrado")
+            print (f"producto a buscar: {producto}")
+            response_2  = webscrp.web_fitness_decathlon(producto)
+            response_3 = "Busqueda_prod_fitness"
             tool_outputs.append({
                 "tool_call_id": tool.id,
-                "output": "0.06"
+                "output": "He encontrado algunos productos relacionados con tus busquedas. " #json.dumps(response_2)
+            })
+        elif tool.function.name == "almacenar_items_fitness":
+            # Obtener los argumentos del tool_call
+            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+            arguments_str = tool_call.function.arguments
+            arguments_dict = json.loads(arguments_str)
+
+            # 📩 Depuración: Verificar el JSON recibido
+            print(f"📥 JSON recibido en almacenar_items: {arguments_dict}")
+
+            # Extraer ingredientes correctamente
+            items = arguments_dict.get("items", [])
+
+            # 📦 Depuración: Verificar lo que se enviará a la función
+            print(f"Items extraídos: {items}")
+
+            # Llamar a la función con la lista de ingredientes
+            response_2 = action_db.almacenar_items(items)
+            response_3 = "inventory_fitness"
+
+            tool_outputs.append({
+                "tool_call_id": tool.id,
+                "output": "He almacenado los items en tu inventario"
             })
         print(run.status)
 
@@ -107,6 +103,6 @@ def hd_gym(user_input, client, thread_idf, assistant_idf, run):
                 for block in ultimo_mensaje.content:
                     print(f"Assistant: {block.text.value}") 
                     response= block.text.value# Imprime solo el contenido del último mensaje
-                    return response, response_2
+                    return response, response_2, response_3
             else:
                 print("No se encontró un mensaje del asistente.")

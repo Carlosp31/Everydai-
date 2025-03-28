@@ -1,5 +1,6 @@
-import os
 import modules.Function_calling.busquedas as busquedas
+import modules.Function_calling.webscrp as webscrp
+import modules.Function_calling.act_bd as action_db
 import json
 
 def hd_fashion(user_input, client, thread_idf, assistant_idf, run):
@@ -30,11 +31,50 @@ def hd_fashion(user_input, client, thread_idf, assistant_idf, run):
             # Si necesitas el modelo:
             model = arguments_dict.get("model", "Modelo no encontrado")
             response_2 = busquedas.buscar_resultados_en_serpapi_fashion(query, model)
+            response_3 = "Busqueda_serp_fashion"
 
-        elif tool.function.name == "get_rain_probability":
+        elif tool.function.name == "buscar_producto_fashion":
+
+            # Acceder al primer tool_call en required_action.submit_tool_outputs
+            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+                        # Extrae los arguments de la función, que están en formato string JSON
+            arguments_str = tool_call.function.arguments
+            
+            # Convierte el string JSON de los arguments en un diccionario
+            arguments_dict = json.loads(arguments_str)
+
+            # Ejemplo: Si quieres extraer el valor del 'query'
+            producto = arguments_dict.get("producto", "Valor no encontrado")
+            print (f"producto a buscar: {producto}")
+            response_2  = webscrp.web_fashion_HM(producto)
+            response_3 = "Busqueda_prod_fashion"
             tool_outputs.append({
                 "tool_call_id": tool.id,
-                "output": "0.06"
+                "output": "He encontrado algunos productos relacionados con tus busquedas. " #json.dumps(response_2)
+            })
+        elif tool.function.name == "almacenar_prendas":
+            # Obtener los argumentos del tool_call
+            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+            arguments_str = tool_call.function.arguments
+            arguments_dict = json.loads(arguments_str)
+
+            # 📩 Depuración: Verificar el JSON recibido
+            print(f"📥 JSON recibido en almacenar_items: {arguments_dict}")
+
+            # Extraer ingredientes correctamente
+            items = arguments_dict.get("prendas", [])
+
+            # 📦 Depuración: Verificar lo que se enviará a la función
+            print(f"Items extraídos: {items}")
+
+            # Llamar a la función con la lista de ingredientes
+            response_2 = action_db.almacenar_items(items)
+            response_3 = "inventory_fashion"
+
+
+            tool_outputs.append({
+                "tool_call_id": tool.id,
+                "output": "He almacenado los items en tu inventario"
             })
         print(run.status)
 
@@ -62,6 +102,6 @@ def hd_fashion(user_input, client, thread_idf, assistant_idf, run):
                 for block in ultimo_mensaje.content:
                     print(f"Assistant: {block.text.value}") 
                     response= block.text.value# Imprime solo el contenido del último mensaje
-                    return response, response_2
+                    return response, response_2, response_3
             else:
                 print("No se encontró un mensaje del asistente.")
