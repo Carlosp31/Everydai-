@@ -13,17 +13,12 @@ const domain = urlParams.get('domain');
 
         document.addEventListener("DOMContentLoaded", function() {
             const microphoneButton = document.getElementById("microphone-button");
-            const frequencyCanvas = document.getElementById("frequency-canvas");
-            const canvasContext = frequencyCanvas.getContext("2d");
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
             const imageInput = document.getElementById("image-input");
             const imagePreview = document.getElementById("image-preview");
             const videoPreview = document.getElementById("video-preview");
-            const canvas = document.getElementById("canvas");
             const captureButton = document.getElementById("capture-button");
             let selectedModel = domain;
             let recognition;
-            let analyser;
             let isListening = false;
             let isBotSpeaking = false; // Variable para saber si el bot está hablando
             const event_thinking = new CustomEvent('Pensar', { detail: { currentStatus: "Thinking" } });
@@ -36,16 +31,17 @@ const domain = urlParams.get('domain');
                         sendMessage(userInput);
             
                         const dots = document.getElementById("dots");
-            
+                        let eventToDispatch = event_thinking;
+
                         if (userInput.includes("internet") || userInput.includes("web")) {
-                            window.dispatchEvent(new CustomEvent('WebSearching', { detail: { currentStatus: "Web Searching" } }));
+                            eventToDispatch = new CustomEvent('WebSearching', { detail: { currentStatus: "Web Searching" } });
                         } else if (userInput.includes("comprar") || userInput.includes("buy") || userInput.includes("purchase")) {
-                            window.dispatchEvent(new CustomEvent('SearchingProducts', { detail: { currentStatus: "Searching Products" } }));
+                            eventToDispatch = new CustomEvent('SearchingProducts', { detail: { currentStatus: "Searching Products" } });
                         } else if (userInput.includes("inventario") || userInput.includes("inventory") || userInput.includes("stock")) {
-                            window.dispatchEvent(new CustomEvent('UpdatingInventory', { detail: { currentStatus: "Updating Inventory" } }));
-                        } else {
-                            window.dispatchEvent(event_thinking);
+                            eventToDispatch = new CustomEvent('UpdatingInventory', { detail: { currentStatus: "Updating Inventory" } });
                         }
+                        
+                        window.dispatchEvent(eventToDispatch);
             
                         dots.style.opacity = 1; // Mostrar los puntos
                     } else {
@@ -84,15 +80,17 @@ const domain = urlParams.get('domain');
                         document.getElementById("user-input").value = userInput;
                         sendMessage(userInput , "voice");
                         dots.style.opacity = 1; // Mostrar los puntos
+                        let eventToDispatch = event_thinking;
+
                         if (userInput.includes("internet") || userInput.includes("web")) {
-                            window.dispatchEvent(new CustomEvent('WebSearching', { detail: { currentStatus: "Web Searching" } }));
+                            eventToDispatch = new CustomEvent('WebSearching', { detail: { currentStatus: "Web Searching" } });
                         } else if (userInput.includes("comprar") || userInput.includes("buy") || userInput.includes("purchase")) {
-                            window.dispatchEvent(new CustomEvent('SearchingProducts', { detail: { currentStatus: "Searching Products" } }));
+                            eventToDispatch = new CustomEvent('SearchingProducts', { detail: { currentStatus: "Searching Products" } });
                         } else if (userInput.includes("inventario") || userInput.includes("inventory") || userInput.includes("stock")) {
-                            window.dispatchEvent(new CustomEvent('UpdatingInventory', { detail: { currentStatus: "Updating Inventory" } }));
-                        } else {
-                            window.dispatchEvent(event_thinking);
+                            eventToDispatch = new CustomEvent('UpdatingInventory', { detail: { currentStatus: "Updating Inventory" } });
                         }
+                        
+                        window.dispatchEvent(eventToDispatch);
                     }
                 };
 
@@ -107,7 +105,6 @@ const domain = urlParams.get('domain');
                 };
 
                 recognition.start();
-                startFrequencySpectrum(); // Iniciar el espectro de frecuencias
                 audioDetected = false; // Se detectó voz
             }
 
@@ -127,7 +124,6 @@ const domain = urlParams.get('domain');
                     if (recognition) {
                         recognition.stop();
                     }
-                    stopFrequencySpectrum();
                     if (!audioDetected && !isBotSpeaking) {
                         const event_stop_listening = new CustomEvent('Stop', { detail: { currentStatus: "Ready" } });
                         window.dispatchEvent(event_stop_listening);
@@ -135,68 +131,21 @@ const domain = urlParams.get('domain');
                 }
             };
 
-            // Función para iniciar el espectro de frecuencias
-            function startFrequencySpectrum() {
-                navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-                    const source = audioContext.createMediaStreamSource(stream);
-                    analyser = audioContext.createAnalyser();
-                    source.connect(analyser);
-                    analyser.fftSize = 256;
-
-                    frequencyCanvas.style.display = "block";
-                    drawFrequencySpectrum();
-                }).catch((error) => {
-                    console.error("Error al acceder al micrófono: ", error);
-                });
-            }
-
-            // Función para detener el espectro de frecuencias
-            function stopFrequencySpectrum() {
-                frequencyCanvas.style.display = "none";
-            }
-
-            // Función para dibujar el espectro de frecuencias
-            function drawFrequencySpectrum() {
-                if (!isListening) return;
-
-                requestAnimationFrame(drawFrequencySpectrum);
-
-                const bufferLength = analyser.frequencyBinCount;
-                const dataArray = new Uint8Array(bufferLength);
-                analyser.getByteFrequencyData(dataArray);
-
-                canvasContext.clearRect(0, 0, frequencyCanvas.width, frequencyCanvas.height);
-                const barWidth = (frequencyCanvas.width / bufferLength) * 2.5;
-                let barHeight;
-                let x = 0;
-
-                for (let i = 0; i < bufferLength; i++) {
-                    barHeight = dataArray[i] / 2;
-                    canvasContext.fillStyle = `rgb(${barHeight + 100}, 50, 50)`;
-                    canvasContext.fillRect(x, frequencyCanvas.height - barHeight, barWidth, barHeight);
-                    x += barWidth + 1;
-                }
-            }
 
 
 
 
      // Función para enviar mensajes (tanto por texto como por voz)
      window.sendMessage= function(userInput, type = "text") {
-        console.log("mensaje", userInput);
         if (type == "detection"){
             const dots = document.getElementById("dots");
                     dots.style.opacity = 1; // Mostrar los puntos
                     const event_detection = new CustomEvent('Detección', { detail: { currentStatus: "Processing detections" } });
                     window.dispatchEvent(event_detection);
-
-
-
         }
 
         if (userInput.trim() !== "") {
             let interaction = startTimer(type);
-            document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
             document.getElementById("user-input").value = ''; // Limpiar el input después de enviar
     
             // Detener temporalmente el reconocimiento de voz mientras se obtiene la respuesta del bot
@@ -213,9 +162,6 @@ const domain = urlParams.get('domain');
             .then(response => response.json())
             .then(data => {
                 let responseType = (data.response_3 && data.response_3.trim() !== "") ? data.response_3 : type;
-                
-    
-                document.getElementById("chat-box").innerHTML += `<div>AI: ${data.text_response}</div>`;
                 speakResponse(data.text_response);
                 logResponse(interaction, responseType);  // Registrar el tiempo de respuesta
     
@@ -255,8 +201,6 @@ const domain = urlParams.get('domain');
                 // Añadir cada item a la lista de recomendaciones
                 recommendationsList.appendChild(listItem);
             });
-        } else {
-            recommendationsList.innerHTML = '<li></li>';
         }
 
         })
@@ -367,15 +311,17 @@ const domain = urlParams.get('domain');
     const userInput = document.getElementById("user-input").value.trim().toLowerCase(); // Elimina espacios en blanco
     if (userInput) { // Si el input no está vacío
         sendMessage(userInput);
+        let eventToDispatch = event_thinking;
+
         if (userInput.includes("internet") || userInput.includes("web")) {
-            window.dispatchEvent(new CustomEvent('WebSearching', { detail: { currentStatus: "Web Searching" } }));
+            eventToDispatch = new CustomEvent('WebSearching', { detail: { currentStatus: "Web Searching" } });
         } else if (userInput.includes("comprar") || userInput.includes("buy") || userInput.includes("purchase")) {
-            window.dispatchEvent(new CustomEvent('SearchingProducts', { detail: { currentStatus: "Searching Products" } }));
+            eventToDispatch = new CustomEvent('SearchingProducts', { detail: { currentStatus: "Searching Products" } });
         } else if (userInput.includes("inventario") || userInput.includes("inventory") || userInput.includes("stock")) {
-            window.dispatchEvent(new CustomEvent('UpdatingInventory', { detail: { currentStatus: "Updating Inventory" } }));
-        } else {
-            window.dispatchEvent(event_thinking);
+            eventToDispatch = new CustomEvent('UpdatingInventory', { detail: { currentStatus: "Updating Inventory" } });
         }
+        
+        window.dispatchEvent(eventToDispatch);
         const dots = document.getElementById("dots");
         dots.style.opacity = 1; // Mostrar los puntos
     } else {
@@ -398,7 +344,7 @@ const domain = urlParams.get('domain');
             // Funcionalidad para capturar imagen de la cámara
             captureButton.onclick = function() {
                 dots.style.opacity = 1; // Mostrar los puntos
-                const event_pensar_captura = new CustomEvent('pensar', { detail: { currentStatus: "Analyzing Photo" } });
+                const event_pensar_captura = new CustomEvent('Pensar', { detail: { currentStatus: "Analyzing Photo" } });
                 window.dispatchEvent(event_pensar_captura);
                 const context = canvas.getContext('2d');
                 canvas.width = videoPreview.videoWidth;
@@ -436,7 +382,6 @@ const domain = urlParams.get('domain');
                             confirmButtonText: 'OK'
                         });
 
-                        document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
                         speakResponse(data.response);
                         logResponse(interaction);  
                     })
@@ -456,7 +401,7 @@ const domain = urlParams.get('domain');
         
                     dots.style.opacity = 1; // Mostrar los puntos
         
-                    const event_pensar_imagen = new CustomEvent('pensar', { detail: { currentStatus: "Analyzing Image" } });
+                    const event_pensar_imagen = new CustomEvent('Pensar', { detail: { currentStatus: "Analyzing Image" } });
                     window.dispatchEvent(event_pensar_imagen);
                     fetch('/upload-image', {
                         method: 'POST',
@@ -472,7 +417,6 @@ const domain = urlParams.get('domain');
                             confirmButtonText: 'OK'
                         });
         
-                        document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
                         speakResponse(data.response);
                         logResponse(interaction);  // Registrar el tiempo de respuesta
                     })
