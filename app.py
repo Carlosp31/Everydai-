@@ -13,6 +13,9 @@ from typing_extensions import override
 from openai import AssistantEventHandler
 from database import db, Config, redis_client
 import modules.chat as chat_api
+from flask_mail import Mail, Message
+from werkzeug.utils import secure_filename
+
 
 #### Librerias de base de datos ###############
 
@@ -397,6 +400,40 @@ def log_interaction():
     interactions.append(interaction)  # Agregar nueva interacción
     save_interactions(interactions)
     return jsonify({"message": "Interacción guardada"}), 200
+
+# Configura tu servidor SMTP
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'tu_correo@gmail.com'
+app.config['MAIL_PASSWORD'] = 'tu_contraseña_o_app_password'
+app.config['MAIL_DEFAULT_SENDER'] = 'tu_correo@gmail.com'
+
+mail = Mail(app)
+@app.route('/send-pdf-email', methods=['POST'])
+def send_pdf_email():
+    if 'file' not in request.files or 'email' not in request.form:
+        return jsonify({'error': 'Archivo PDF o email faltante.'}), 400
+
+    file = request.files['file']
+    email = request.form['email']
+
+    filename = secure_filename(file.filename)
+    filepath = os.path.join('/tmp', filename)
+    file.save(filepath)
+
+    try:
+        msg = Message('Tu conversación en PDF', recipients=[email])
+        msg.body = 'Adjunto encontrarás el PDF con tu conversación y recomendaciones.'
+        with open(filepath, 'rb') as f:
+            msg.attach(filename, 'application/pdf', f.read())
+        mail.send(msg)
+        return jsonify({'message': 'Correo enviado con éxito'}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({'error': 'Error al enviar el correo'}), 500
+    finally:
+        os.remove(filepath)
 
 if __name__ == '__main__':
     # Crear el directorio de carga si no existe
