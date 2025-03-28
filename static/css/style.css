@@ -148,9 +148,13 @@ textarea#input-text {
 .redirect-button:hover {
     background-color: #c44128;
 }
+.hidden {
+    display: none;
+}
 /* Ajustes para móviles */
 @media screen and (max-width: 768px) {
     .redirect-button {
+        position: fixed;
         width: 50px;
         height: 120px;
         font-size: 12px;
@@ -541,7 +545,11 @@ button:active, .controls button:active, .sidebar a:active {
     width: 80%; /* Aumenta el ancho al 80% del contenedor padre */
     max-width: 600px; /* Define un ancho máximo en píxeles */
 }
-
+@media (max-width: 768px) {
+    #subtitulos-container {
+        display: none !important;
+    }
+}
 /* Ocultamos el input file original */
 #image-input {
     display: none;
