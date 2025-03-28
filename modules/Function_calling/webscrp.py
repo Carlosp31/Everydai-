@@ -22,6 +22,7 @@ def web_culinary(query):
             "api_key": SERPAPI_KEY
         }
 
+
         # Ejecutar la búsqueda
         search = GoogleSearch(params)
         results = search.get_dict()
