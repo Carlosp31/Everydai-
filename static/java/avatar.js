@@ -69,13 +69,22 @@ let yPosition = (domain === "Fitness") ? 1.6 : 1.66;
 model.position.set(0, yPosition, 0);
 
 // Animar el modelo
-function animate() {
-    requestAnimationFrame(animate);
-    if (mixer) {
+let isMobile = /Mobi|Android/i.test(navigator.userAgent);
+let lastFrameTime = 0;
+const frameRateLimit = 30; // 30 FPS para móviles
 
-        mixer.update(0.01); // Actualizar el mixer
+function animate(timestamp) {
+    if (isMobile) {
+        if (timestamp - lastFrameTime < 1000 / frameRateLimit) {
+            requestAnimationFrame(animate);
+            return;
+        }
+        lastFrameTime = timestamp;
     }
+
+    if (mixer) mixer.update(0.01);
     renderer.render(scene, camera);
+    requestAnimationFrame(animate);
 }
 animate();
 
