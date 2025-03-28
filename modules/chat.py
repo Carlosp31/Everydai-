@@ -4,15 +4,11 @@ import modules.domains as domains
 from typing_extensions import override
 from openai import AssistantEventHandler
  
-
- ### For initialization inventory
-import redis
 from database import db
-from models import User, Domain, Inventory, WishList, UserPreference
-import json
-from flask import Flask, render_template, request, jsonify, redirect, send_file, url_for, session
+
+from flask import  request, jsonify, session
 from app import redis_client 
-import json
+
 # First, we create a EventHandler class to define
 # how we want to handle the events in the response stream.
 
@@ -83,18 +79,9 @@ def chat_post():
 
     else:
         return jsonify({'response': 'Modelo no encontrado.'}), 400
-    # print("Response is:")
-    # print(response)
-    # respuesta_texto = response  # Obtener la respuesta en texto del modelo
-
-
-    # # Mensaje inicial al seleccionar el dominio
+    
     mensaje_inicial = f"Hola, este es el dominio {session.get('selected_domain', 'desconocido')}"
 
-    # # Buscar recetas en SerpAPI (si es necesario)
-    # recetas = serpapii.buscar_resultados_en_serpapi(user_input, selected_model)
-    
-    # Devolver la respuesta escrita, el mensaje inicial y la de SerpAPI
     return jsonify({
         'text_response': response,
         'mensaje_inicial': mensaje_inicial,
