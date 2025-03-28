@@ -59,11 +59,6 @@ def web_culinary(query):
         return []
 
 
-
-
-import json
-from playwright.sync_api import sync_playwright
-
 def web_fashion_HM(query):
     try:
         search_query = f"{query}- HM"
