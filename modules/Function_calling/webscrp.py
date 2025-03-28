@@ -1,85 +1,63 @@
-import time
-from playwright.sync_api import sync_playwright
+import os
+import json
+from serpapi import GoogleSearch
+from dotenv import load_dotenv
 
-def web_culinary(producto):
-    print("Ejecutando Main")
-    
-    with sync_playwright() as p:
-        browser = None
-        executable_paths = [
-            "/home/maicolln/.cache/ms-playwright/chromium-1155/chrome-linux/chrome",
-            None,  # Opción predeterminada (sin ruta específica)
-            "/home/ubuntu/.cache/ms-playwright/chromium-1155/chrome-linux/chrome"
-        ]
+# Cargar variables de entorno
+load_dotenv()
+SERPAPI_KEY = os.getenv("SERPAPI_KEY")
 
-        for path in executable_paths:
-            try:
-                print(f"[INFO] Intentando iniciar Chromium con ruta: {path if path else 'Predeterminado'}")
-                browser = p.chromium.launch(headless=True, executable_path=path) if path else p.chromium.launch(headless=True)
-                print("[INFO] Navegador iniciado correctamente.")
-                break  # Si funciona, salimos del bucle
-            except Exception as e:
-                print(f"[ERROR] Falló con {path if path else 'Predeterminado'}: {e}")
+def web_culinary(query):
+    try:
+        search_query = f"{query}"
 
-        if not browser:
-            print("[CRÍTICO] No se pudo iniciar el navegador.")
-            return None, None, None
+        # Definir los parámetros de búsqueda
+        params = {
+            "q": search_query,
+            "engine": "google_shopping",
+            "hl": "es",
+            "gl": "co",
+            "location_requested": "Atlantico,Colombia",
+            "location_used": "Atlantico,Colombia",
+            "api_key": SERPAPI_KEY
+        }
 
-        context = browser.new_context(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
-        )
-        page = context.new_page()
-        print("Agente iniciado")
-        page.goto("https://www.olimpica.com/supermercado")
-        
-        productos_lista = []  # Lista donde se almacenarán los productos extraídos
-        
-        try:
-            print("Abriendo página de Olímpica...")
-            
-            # Seleccionar el input usando el placeholder y escribir el producto
-            input_selector = 'input[placeholder="Encuentra todo lo que necesitas"]'
-            page.fill(input_selector, producto)
-            print(f"[INFO] Campo llenado con: {producto}")
+        # Ejecutar la búsqueda
+        search = GoogleSearch(params)
+        results = search.get_dict()
 
-            # Simular presionar Enter para buscar
-            page.press(input_selector, "Enter")
-            print("[INFO] Enter presionado")
-            
-            # Extraer los productos
-            productos_lista = []
-            time.sleep(8)
-        # Esperar a que los productos se carguen completamente
-            page.wait_for_selector(".vtex-product-summary-2-x-productBrand", timeout=20000)
-            print("[INFO] Productos cargados...")
-            productos_lista = page.evaluate('''() => {
-                return [...document.querySelectorAll('.vtex-product-summary-2-x-productBrand')].map(prod => {
-                    const precioElem = prod.closest('.vtex-search-result-3-x-galleryItem')
-                                        ?.querySelector('.olimpica-dinamic-flags-0-x-currencyContainer');
-                    const imagenElem = prod.closest('.vtex-search-result-3-x-galleryItem')
-                                        ?.querySelector('img.vtex-product-summary-2-x-imageNormal');
-                    const enlaceElem = prod.closest('.vtex-search-result-3-x-galleryItem')
-                                        ?.querySelector('a.vtex-product-summary-2-x-clearLink');
+        # Obtener los resultados de shopping
+        shopping_results = results.get("shopping_results", [])
 
-                    return {
-                        nombre: prod.innerText.trim() || "Nombre no disponible",
-                        precio: precioElem ? precioElem.innerText.trim() : "Precio no disponible",
-                        imagen_url: imagenElem ? imagenElem.getAttribute("src") : "Imagen no disponible",
-                        enlace: enlaceElem ? `https://www.olimpica.com${enlaceElem.getAttribute("href")}` : "Enlace no disponible"
-                    };
-                }).filter(prod => prod.nombre !== "Nombre no disponible");  // Filtrar productos vacíos
-            }''')
+        productos_lista = []
+        for item in shopping_results:
+            title = item.get("title", "N/A")
+            price = item.get("extracted_price", "N/A")
+            image_url = item.get("thumbnail", "N/A")
+            link = item.get("product_link", "N/A")
 
+            producto_info = {
+                "nombre": title,
+                "precio": f"${price}",
+                "imagen_url": image_url,
+                "enlace": link if link != "N/A" else "N/A"
+            }
 
-            # Imprimir resultados
-            for i, producto in enumerate(productos_lista):
-                print(f"Producto {i+1}: {producto['nombre']}, Precio: {producto['precio']}, Imagen: {producto['imagen_url']}, Enlace: {producto['enlace']}")
+            productos_lista.append(producto_info)
 
+        # Guardar en un archivo JSON
+        with open("productos.json", "w", encoding="utf-8") as file:
+            json.dump(productos_lista, file, ensure_ascii=False, indent=4)
+        print(f"productos: {productos_lista}")
 
-        finally:
-            browser.close()
-        
         return productos_lista
+
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return []
+
+
 
 
 import json
