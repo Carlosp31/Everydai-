@@ -1,8 +1,7 @@
-/* Estilos generales */
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     margin: 0;
-    color: #c9c9c9; /* Texto gris claro */
+    color: #c9c9c9; 
     padding-bottom: 10px;
     background: linear-gradient(-45deg, #cccccc, #0077cc, #0099ff, #0077cc);
     background-size: 200% 200%;
@@ -51,7 +50,7 @@ body {
     align-items: center;
     z-index: 9999;
     color: white;
-    font-family: 'Poppins', sans-serif;
+
     text-align: center;
 }
 .spinner {
@@ -100,9 +99,7 @@ h1 {
 
 
 
-.hidden {
-    display: none;
-}
+
 #avatar-container {
     position: relative;
     display: flex;
@@ -130,33 +127,31 @@ textarea#input-text {
     border-radius: 5px;
     margin-bottom: 0px;
 }
+
 .redirect-button {
-    position: fixed; /* Asegura que siempre esté en pantalla */
-    left: 0; /* Pegado a la pared izquierda */
-    top: 50%; /* Centrado verticalmente */
-    width: 50px; /* Botón angosto */
-    height: 150px; /* Botón largo verticalmente */
+    position: fixed;
+    left: 0;    top: 50%;
+    width: 60px;
+    height: 150px;
     background-color: #ff5733;
     color: white;
-    font-size: 14px; /* Texto más pequeño */
-    writing-mode: vertical-rl; /* Texto vertical */
+    font-size: 14px;
+    writing-mode: vertical-rl;
     text-align: center;
     border: none;
-    border-radius: 0; /* Quita bordes redondeados para un estilo más simple */
+    border-radius: 5px; /* Un pequeño redondeo puede mejorar la apariencia */
     cursor: pointer;
-    font-family: 'Poppins', sans-serif;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s ease-in-out;
-    z-index: 1000; /* Se asegura de estar encima de otros elementos */
+    z-index: 1000;
 }
-
 .redirect-button:hover {
     background-color: #c44128;
 }
 /* Ajustes para móviles */
 @media screen and (max-width: 768px) {
     .redirect-button {
-        width: 40px;
+        width: 50px;
         height: 120px;
         font-size: 12px;
     }
@@ -164,7 +159,7 @@ textarea#input-text {
 
 @media screen and (max-width: 480px) {
     .redirect-button {
-        width: 35px;
+        width: 50px;
         height: 100px;
         font-size: 10px;
     }
@@ -175,26 +170,9 @@ textarea#input-text:focus {
     border-color: #007acc;  /* Azul acento VSCode */
     box-shadow: 0 0 5px rgba(0, 115, 204, 0.5);  /* Glow sutil */
 }
-/* Botones */
-.controls button {
-    padding: 10px 20px;
-    margin: 10px;
-    background-color: #007acc;  /* Azul VSCode */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    gap: 10px;
-}
 
-.controls button:hover {
-    background-color: #005f99;  /* Azul más oscuro al hover */
-}
 
-button:active {
-    transform: scale(0.98);  /* Efecto sutil al hacer clic */
-}
+
 
 /* Vista de imagen cargada */
 .image-display img {
@@ -351,14 +329,13 @@ button:active {
 
 /* Estilo de la flecha */
 .arrow {
-    border: solid white;
+    border: solid black; /* Cambia 'white' por 'black' */
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 4px;
     margin: -7px 0 0px 7px;
     vertical-align: middle;
 }
-
 .arrow.down {
     transform: rotate(45deg); /* Flecha hacia abajo */
 }
@@ -463,6 +440,7 @@ button:active {
     border-radius: 5px; /* Bordes redondeados */
     text-align: center; /* Centrado de texto */
     width: fit-content; /* Ajusta el ancho al contenido */
+    
 }
 /* Botones azules (sidebar y otros botones) con animaciones */
 button, .controls button, .sidebar a {
@@ -471,6 +449,7 @@ button, .controls button, .sidebar a {
     border: none;
     padding: 10px 20px;
     padding-bottom: 10px;
+    cursor: pointer;
     border-radius: 5px;
     font-size: 13px;
     transition: background-color 0.2s ease, transform 0.2s ease;  /* Transición suave de color y tamaño */
@@ -521,15 +500,6 @@ button:active, .controls button:active, .sidebar a:active {
     }
 }
 
-#frequency-canvas {
-    width: 700px;
-    height: 50px;
-    display: none;
-    border: 1px solid #ccc;
-    margin-top: 10px;
-    margin: 10px auto 0 auto; /* Centrado horizontal */
-}
-
 .control-container {
     display: flex; /* Por defecto, los elementos estarán en fila */
     gap: 10px;
@@ -555,11 +525,7 @@ button:active, .controls button:active, .sidebar a:active {
         grid-template-columns: repeat(1, 1fr); /* 1 sola columna */
     }
 }
-/* Estilos para el botón de conversación */
-#microphone-button {
-    padding: 10px 20px;
-    font-size: 13px;
-}
+
 
 #subtitulos-container {
     position: absolute; /* Asegura el posicionamiento sobre el avatar */

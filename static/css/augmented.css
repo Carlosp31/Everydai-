@@ -36,17 +36,33 @@ body {
     left: 0;
 }
 #detections-log {
-    color: black;  /* Asegura que el texto sea negro */
-    font-weight: bold; /* Opcional: Hace que el texto sea más grueso */
+    color: black;
+    font-weight: bold;
     width: 90%;
-    max-width: 300px;
-    max-height: 500px;
     overflow-y: auto;
     border: 2px solid black;
     padding: 10px;
     background-color: #f9f9f9;
     margin-top: 20px;
+    box-sizing: border-box;
+}
 
+/* Ajuste para pantallas más pequeñas */
+@media (max-width: 600px) {
+    #detections-log {
+        width: 95%;
+        max-height: 40vh;
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+/* Ajuste para pantallas muy grandes */
+@media (min-width: 1200px) {
+    #detections-log {
+        max-width: 400px;
+        max-height: 60vh;
+    }
 }
 .buttons-container {
     display: flex;
