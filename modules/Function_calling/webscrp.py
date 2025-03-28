@@ -38,7 +38,7 @@ def web_culinary(query):
 
             producto_info = {
                 "nombre": title,
-                "precio": price,
+                "precio": f"$ {price}",
                 "imagen_url": image_url,
                 "enlace": link if link != "N/A" else "N/A"
             }
