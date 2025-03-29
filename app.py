@@ -15,6 +15,7 @@ from database import db, Config, redis_client
 import modules.chat as chat_api
 from flask_mail import Mail, Message
 from werkzeug.utils import secure_filename
+import tempfile
 
 
 #### Librerias de base de datos ###############
@@ -419,7 +420,7 @@ def send_pdf_email():
     email = request.form['email']
 
     filename = secure_filename(file.filename)
-    filepath = os.path.join('/tmp', filename)
+    filepath = os.path.join(tempfile.gettempdir(), filename)
     file.save(filepath)
 
     try:
