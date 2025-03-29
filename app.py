@@ -295,7 +295,7 @@ def chat():
     # Almacenar el dominio en la sesión
     session['selected_domain'] = domain
 
-    chat_api.initialize_thread_with_inventory(items, domain_name=domain)
+    # chat_api.initialize_thread_with_inventory(items, domain_name=domain)
 
     # Renderizamos la plantilla con los items de inventario y wish_list
     return render_template('chat.html', domain=domain, wish_list_items=wish_list_items, inventory_items=items)
