@@ -299,7 +299,7 @@ def chat():
     # Almacenar el dominio en la sesión
     session['selected_domain'] = domain
 
-    chat_api.initialize_thread_with_inventory(items, domain_name=domain)
+    # chat_api.initialize_thread_with_inventory(items, domain_name=domain)
 
     # Renderizamos la plantilla con los items de inventario y wish_list
     return render_template('chat.html', domain=domain, wish_list_items=wish_list_items, inventory_items=items)
@@ -411,30 +411,39 @@ app.config['MAIL_PASSWORD'] = 'tu_contraseña_o_app_password'
 app.config['MAIL_DEFAULT_SENDER'] = 'tu_correo@gmail.com'
 
 mail = Mail(app)
-@app.route('/send-pdf-email', methods=['POST'])
-def send_pdf_email():
-    if 'file' not in request.files or 'email' not in request.form:
-        return jsonify({'error': 'Archivo PDF o email faltante.'}), 400
+@app.route('/enviar-lista-correo', methods=['POST'])
+def enviar_lista_correo():
+    if 'provider_id' not in session or 'selected_domain' not in session:
+        return jsonify({"error": "Usuario no autenticado o dominio no seleccionado"}), 401
 
-    file = request.files['file']
-    email = request.form['email']
+    user = User.query.filter_by(provider_id=session['provider_id']).first()
+    domain = Domain.query.filter_by(domain_name=session['selected_domain']).first()
 
-    filename = secure_filename(file.filename)
-    filepath = os.path.join(tempfile.gettempdir(), filename)
-    file.save(filepath)
+    if not user or not domain:
+        return jsonify({"error": "Usuario o dominio no encontrado"}), 404
 
-    try:
-        msg = Message('Tu conversación en PDF', recipients=[email])
-        msg.body = 'Adjunto encontrarás el PDF con tu conversación y recomendaciones.'
-        with open(filepath, 'rb') as f:
-            msg.attach(filename, 'application/pdf', f.read())
-        mail.send(msg)
-        return jsonify({'message': 'Correo enviado con éxito'}), 200
-    except Exception as e:
-        print(e)
-        return jsonify({'error': 'Error al enviar el correo'}), 500
-    finally:
-        os.remove(filepath)
+    redis_key = f"user:{user.id}:domain:{domain.id}:wish_list"
+    items_json = redis_client.get(redis_key)
+
+    wish_list = []
+    if items_json:
+        try:
+            wish_list = json.loads(items_json)
+            if isinstance(wish_list, str):
+                wish_list = json.loads(wish_list)
+        except json.JSONDecodeError:
+            return jsonify({"error": "Error al decodificar la lista de deseos"}), 500
+
+    if not wish_list:
+        return jsonify({"message": "Lista vacía, no se envió correo."}), 200
+
+    from send_email import send_wishlist_email  # ajusta al path real de tu proyecto
+    success = send_wishlist_email(user.email, wish_list)
+
+    if success:
+        return jsonify({"message": "Correo enviado con éxito"})
+    else:
+        return jsonify({"error": "No se pudo enviar el correo"}), 500
 
 if __name__ == '__main__':
     # Crear el directorio de carga si no existe

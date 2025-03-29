@@ -12,6 +12,7 @@ const domain = urlParams.get('domain');
         };
 
         document.addEventListener("DOMContentLoaded", function() {
+            
             const microphoneButton = document.getElementById("microphone-button");
             const imageInput = document.getElementById("image-input");
             const imagePreview = document.getElementById("image-preview");
@@ -52,7 +53,7 @@ const domain = urlParams.get('domain');
             
             
 
-
+            
             const chatContainer = document.querySelector('.chat-container');
 
             // Verificar el valor de `domain` y cambiar el fondo dinámicamente
@@ -137,6 +138,7 @@ const domain = urlParams.get('domain');
 
      // Función para enviar mensajes (tanto por texto como por voz)
      window.sendMessage= function(userInput, type = "text") {
+        console.log(userInput)
         if (type == "detection"){
             const dots = document.getElementById("dots");
                     dots.style.opacity = 1; // Mostrar los puntos
@@ -209,7 +211,7 @@ const domain = urlParams.get('domain');
         .catch(error => console.error('Error:', error));
     }
 }
-
+sendMessage("Hola")
             // Mostrar las recomendaciones en el cuadro de recomendaciones
             const recommendationsList = document.getElementById("recommendations-list");
             recommendationsList.innerHTML = '';  // Limpiar la lista existente
