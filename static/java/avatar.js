@@ -107,56 +107,63 @@ function (error) {
 );   
 }
 function playAnimationSequence(firstAnimationName, secondAnimationName) {
-if (activeAction) {
-activeAction.fadeOut(0.5);
-}
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    const fadeInValue = isMobile ? 0.2 : 0.5;
+    const fadeOutValueFirst = isMobile ? 0.2 : 0.5;
+    const fadeOutValueSecond = isMobile ? 0.2 : 0.8;
+    const fadeInValueSecond = isMobile ? 0.2 : 0.6;
 
-// Aplicar los morph targets de la sonrisa
-if (model) {
-model.traverse((child) => {
-    if (child.isMesh && child.name === 'Wolf3D_Head') {
-        const morphs = {
-            browInnerUp: 0.17,
-            eyeSquintLeft: 0.4,
-            eyeSquintRight: 0.44,
-            noseSneerLeft: 0.17,
-            noseSneerRight: 0.14,
-            mouthPressLeft: 0.61,
-            mouthPressRight: 0.41
-        };
+    if (activeAction) {
+        activeAction.fadeOut(fadeOutValueFirst);
+    }
 
-        Object.keys(morphs).forEach((key) => {
-            if (child.morphTargetDictionary[key] !== undefined) {
-                child.morphTargetInfluences[child.morphTargetDictionary[key]] = morphs[key];
+    // Aplicar los morph targets de la sonrisa
+    if (model) {
+        model.traverse((child) => {
+            if (child.isMesh && child.name === 'Wolf3D_Head') {
+                const morphs = {
+                    browInnerUp: 0.17,
+                    eyeSquintLeft: 0.4,
+                    eyeSquintRight: 0.44,
+                    noseSneerLeft: 0.17,
+                    noseSneerRight: 0.14,
+                    mouthPressLeft: 0.61,
+                    mouthPressRight: 0.41
+                };
+
+                Object.keys(morphs).forEach((key) => {
+                    if (child.morphTargetDictionary[key] !== undefined) {
+                        child.morphTargetInfluences[child.morphTargetDictionary[key]] = morphs[key];
+                    }
+                });
             }
         });
     }
-});
+
+    // Configurar la primera animación
+    const firstAction = animationActions[firstAnimationName];
+    firstAction.reset();
+    firstAction.setLoop(THREE.LoopOnce);
+    firstAction.timeScale = 0.65;
+    firstAction.clampWhenFinished = true;
+
+    // Configurar la segunda animación
+    const secondAction = animationActions[secondAnimationName];
+    secondAction.reset();
+    secondAction.setLoop(THREE.LoopRepeat);
+
+    activeAction = firstAction;
+    firstAction.fadeIn(fadeInValue).play();
+
+    mixer.addEventListener('finished', (event) => {
+        if (event.action === firstAction) {
+            activeAction.fadeOut(fadeOutValueSecond);
+            activeAction = secondAction;
+            secondAction.fadeIn(fadeInValueSecond).play();
+        }
+    });
 }
 
-// Configurar la primera animación
-const firstAction = animationActions[firstAnimationName];
-firstAction.reset();
-firstAction.setLoop(THREE.LoopOnce);
-firstAction.timeScale = 0.65;
-firstAction.clampWhenFinished = true;
-
-// Configurar la segunda animación
-const secondAction = animationActions[secondAnimationName];
-secondAction.reset();
-secondAction.setLoop(THREE.LoopRepeat);
-
-activeAction = firstAction;
-firstAction.fadeIn(0.5).play();
-
-mixer.addEventListener('finished', (event) => {
-if (event.action === firstAction) {
-    activeAction.fadeOut(0.8);
-    activeAction = secondAction;
-    secondAction.fadeIn(0.6).play();
-}
-});
-}
 
 function playAnimationLoop(animationName, speed) {
 // Detener cualquier animación activa (incluidas las de playAnimationSequence)
