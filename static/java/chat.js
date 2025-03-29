@@ -12,6 +12,7 @@ const domain = urlParams.get('domain');
         };
 
         document.addEventListener("DOMContentLoaded", function() {
+            
             const microphoneButton = document.getElementById("microphone-button");
             const imageInput = document.getElementById("image-input");
             const imagePreview = document.getElementById("image-preview");
@@ -52,7 +53,7 @@ const domain = urlParams.get('domain');
             
             
 
-
+            
             const chatContainer = document.querySelector('.chat-container');
 
             // Verificar el valor de `domain` y cambiar el fondo dinámicamente
@@ -137,6 +138,7 @@ const domain = urlParams.get('domain');
 
      // Función para enviar mensajes (tanto por texto como por voz)
      window.sendMessage= function(userInput, type = "text") {
+        console.log(userInput)
         if (type == "detection"){
             const dots = document.getElementById("dots");
                     dots.style.opacity = 1; // Mostrar los puntos
@@ -146,6 +148,7 @@ const domain = urlParams.get('domain');
 
         if (userInput.trim() !== "") {
             let interaction = startTimer(type);
+            document.getElementById("chat-box").innerHTML += `<div>Usuario: ${userInput}</div>`;
             document.getElementById("user-input").value = ''; // Limpiar el input después de enviar
     
             // Detener temporalmente el reconocimiento de voz mientras se obtiene la respuesta del bot
@@ -162,6 +165,7 @@ const domain = urlParams.get('domain');
             .then(response => response.json())
             .then(data => {
                 let responseType = (data.response_3 && data.response_3.trim() !== "") ? data.response_3 : type;
+                document.getElementById("chat-box").innerHTML += `<div>AI: ${data.text_response}</div>`;
                 speakResponse(data.text_response);
                 logResponse(interaction, responseType);  // Registrar el tiempo de respuesta
     
@@ -207,7 +211,7 @@ const domain = urlParams.get('domain');
         .catch(error => console.error('Error:', error));
     }
 }
-
+sendMessage("Hola")
             // Mostrar las recomendaciones en el cuadro de recomendaciones
             const recommendationsList = document.getElementById("recommendations-list");
             recommendationsList.innerHTML = '';  // Limpiar la lista existente
@@ -381,7 +385,7 @@ const domain = urlParams.get('domain');
                             icon: 'success',
                             confirmButtonText: 'OK'
                         });
-
+                        document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
                         speakResponse(data.response);
                         logResponse(interaction);  
                     })
@@ -416,7 +420,7 @@ const domain = urlParams.get('domain');
                             icon: 'success',
                             confirmButtonText: 'OK'
                         });
-        
+                        document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
                         speakResponse(data.response);
                         logResponse(interaction);  // Registrar el tiempo de respuesta
                     })

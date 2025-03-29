@@ -148,6 +148,9 @@ textarea#input-text {
 .redirect-button:hover {
     background-color: #c44128;
 }
+.hidden {
+    display: none;
+}
 /* Ajustes para móviles */
 @media screen and (max-width: 768px) {
     .redirect-button {
