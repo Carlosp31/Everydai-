@@ -5,7 +5,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link id="detection-styles" rel="stylesheet" href="" data-css-path="{{ url_for('static', filename='css/augmented.css') }}">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -127,9 +127,9 @@
             <canvas id="canvas"></canvas>
         </div>
         <div class="buttons-container">
-            <button onclick="startDetection()">Start</button>
-            <button onclick="stopDetection()">Stop</button>
-            <button onclick="hideDetection()">Back</button>
+            <button class="button-detection" onclick="startDetection()">Start</button>
+            <button class="button-detection" onclick="stopDetection()">Stop</button>
+            <button class="button-detection" onclick="hideDetection()">Back</button>
             <div id="detections-log">
                 <h3>Detections</h3>
                 <ul id="detections-list"></ul>
@@ -139,11 +139,10 @@
 <script>       
     function redirectToRealidad() {
         document.getElementById("content").style.display = "none";
-        document.getElementById("detection-styles").href = document.getElementById("detection-styles").getAttribute("data-css-path");
+
         document.getElementById("detection-container").style.display = "block";
 }
 function hideDetection() {
-    document.getElementById("detection-styles").href = ""; // Quitar CSS
             document.getElementById("detection-container").style.display = "none";
             document.getElementById("content").style.display = "block";
             
