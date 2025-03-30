@@ -6,16 +6,7 @@ from flask_mail import Message
 from flask import current_app
 from email_validator import validate_email, EmailNotValidError
 import json
-from flask_mail import Mail
-app = Flask(__name__) 
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'  
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'everydaiun@gmail.com'
-app.config['MAIL_PASSWORD'] = 'JUANTRO23'
-app.config['MAIL_DEFAULT_SENDER'] = 'everydaiun@gmail.com'
 
-mail = Mail(app)
 def get_wish_list_from_redis():
     """Obtiene la lista de deseos del usuario autenticado desde Redis o MySQL."""
     
@@ -44,9 +35,18 @@ def get_wish_list_from_redis():
         wish_list = []
 
     return jsonify({"items": wish_list})  # 🔥 Ahora devuelve la lista limpia
+"""
+from flask_mail import Mail
+app = Flask(__name__) 
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'  
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'everydaiun@gmail.com'
+app.config['MAIL_PASSWORD'] = 'JUANTRO23'
+app.config['MAIL_DEFAULT_SENDER'] = 'everydaiun@gmail.com'
 
+mail = Mail(app)
 def send_wish_list_email():
-    """Envía la lista de deseos del usuario autenticado por correo electrónico."""
     
     if 'provider_id' not in session or 'selected_domain' not in session:
         return jsonify({"error": "Usuario no autenticado o dominio no seleccionado"}), 401
@@ -94,5 +94,5 @@ def send_wish_list_email():
         return jsonify({"message": "Lista de deseos enviada con éxito"}), 200
     except Exception as e:
         return jsonify({"error": f"Error al enviar el correo: {str(e)}"}), 500
-
+"""
 
