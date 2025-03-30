@@ -211,7 +211,7 @@ const domain = urlParams.get('domain');
         .catch(error => console.error('Error:', error));
     }
 }
-//sendMessage("Hola")
+sendMessage("Hola")
             // Mostrar las recomendaciones en el cuadro de recomendaciones
             const recommendationsList = document.getElementById("recommendations-list");
             recommendationsList.innerHTML = '';  // Limpiar la lista existente
