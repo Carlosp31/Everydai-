@@ -13,7 +13,7 @@ from typing_extensions import override
 from openai import AssistantEventHandler
 from database import db, Config, redis_client
 import modules.chat as chat_api
-
+import modules.Function_calling.act_bd as fc_bd
 #### Librerias de base de datos ###############
 
 from database import db, Config
@@ -332,7 +332,31 @@ def get_inventory_route():
 def get_wish_list_route():
     return get_wish_list_from_redis()
 
+from flask import request, jsonify
 
+@app.route('/add_to_inventory_from_wl', methods=['POST'])
+def add_to_inventory_from_wl():
+    try:
+        # Obtener el JSON enviado desde la petición
+        data = request.get_json()
+
+        if not data or "items" not in data:
+            return jsonify({"error": "No se recibió una lista válida"}), 400
+
+        # Extraer la lista de items
+        items = data["items"]
+
+        # Asegurar que sea una lista antes de enviarla a almacenar_items()
+        if isinstance(items, str):
+            items = [items]  # Convertir en lista si es string único
+
+        # Llamar a la función que almacena los ingredientes en la base de datos
+        fc_bd.almacenar_items(items)
+
+        return jsonify({"message": "Ítems agregados al inventario", "items": items}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 ####################################################
 # Actualización: mensaje inicial en el chat
