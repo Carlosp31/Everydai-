@@ -135,7 +135,7 @@ let message = [
 // Guardamos el mensaje en sessionStorage antes de redirigir
 sendMessage(JSON.stringify(message), "detection")
 document.getElementById("content").style.display = "block";
-document.getElementById("detection-styles").href = ""; // Quitar CSS
+document.getElementById("detection-container").style.display = "none";
 }
 
 
