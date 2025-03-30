@@ -99,7 +99,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             print(f"🍽 Ingredientes extraídos: {items}")
 
             # Llamar a la función con la lista de ingredientes
-            response_3 = "Sugierendo receta inmediata"
+            response_3 = "Sugierendo receta inmediata cooking"
             inv = get_inventory_from_redis()
             data, status_code = inv # Desempaquetamos la tupla
             
@@ -133,7 +133,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             print(f"🍽 Ingredientes extraídos: {items_receta}")
 
             # Llamar a la función con la lista de ingredientes
-            response_3 = "Sugierendo receta inmediata"
+            response_3 = "Sugierendo receta tardía cooking"
             inv = get_inventory_from_redis()
             data, status_code = inv # Desempaquetamos la tupla
             
@@ -148,6 +148,26 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             tool_outputs.append({
                 "tool_call_id": tool.id,
                 "output": f"ingredientes_receta: {items_receta}, inventario con el que cuenta el usuario: {response_2}"
+            })
+
+        elif tool.function.name == "almacenar_receta":
+            print("almacenar_receta")
+            # Obtener los argumentos del tool_call
+            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+            arguments_str = tool_call.function.arguments
+            arguments_dict = json.loads(arguments_str)
+
+            # 📩 Depuración: Verificar el JSON recibido
+            print(f"📥 JSON receta: {arguments_dict}")
+            # Llamar a la función con la lista de ingredientes
+            action_db.almacenar_receta(arguments_dict)
+            response_3 = "Guardando receta"
+            nombre_receta = arguments_dict.get("nombre_receta", "").strip()
+            response_2 = nombre_receta
+            
+            tool_outputs.append({
+                "tool_call_id": tool.id,
+                "output": nombre_receta
             })
 
 
