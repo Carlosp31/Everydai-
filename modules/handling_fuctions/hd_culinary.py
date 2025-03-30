@@ -99,7 +99,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             print(f"🍽 Ingredientes extraídos: {items}")
 
             # Llamar a la función con la lista de ingredientes
-            response_3 = "Sugierendo receta inmediata"
+            response_3 = "Sugierendo receta inmediata cooking"
             inv = get_inventory_from_redis()
             data, status_code = inv # Desempaquetamos la tupla
             
@@ -133,7 +133,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             print(f"🍽 Ingredientes extraídos: {items_receta}")
 
             # Llamar a la función con la lista de ingredientes
-            response_3 = "Sugierendo receta inmediata"
+            response_3 = "Sugierendo receta tardía cooking"
             inv = get_inventory_from_redis()
             data, status_code = inv # Desempaquetamos la tupla
             
