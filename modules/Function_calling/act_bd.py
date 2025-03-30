@@ -160,7 +160,7 @@ def almacenar_receta(data):
             print(f"➕ Agregando receta '{nombre_receta}' con ingredientes: {ingredientes}")
             current_prefs["recetas"][nombre_receta] = ingredientes
 
-            user_pref.preference = json.dumps(current_prefs) 
+            user_pref.preference = json.dumps(current_prefs, ensure_ascii=False)
             print(f"📌 Preferencias después de agregar receta: {user_pref.preference}")
 
         else:
@@ -182,4 +182,92 @@ def almacenar_receta(data):
 
     except Exception as e:
         print(f"⚠️ Error en almacenar_receta: {e}")
+        return jsonify({"error": str(e)}), 500
+    
+import json
+
+def buscar_receta():
+    """Busca y retorna las recetas almacenadas por el usuario junto con sus ingredientes."""
+
+    print(f"🔵 Iniciando buscar_receta")
+
+    try:
+        # 🛑 Verificar sesión del usuario
+        if "provider_id" not in session or "selected_domain" not in session:
+            return jsonify({"error": "Usuario no autenticado o dominio no seleccionado"}), 401
+
+        user_q = User.query.filter_by(provider_id=session["provider_id"]).first()
+        domain_q = Domain.query.filter_by(domain_name=session["selected_domain"]).first()
+
+        if not user_q or not domain_q:
+            return jsonify({"error": "Usuario o dominio no encontrado"}), 404
+
+        # 🔍 Buscar en la base de datos
+        user_pref = UserPreference.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
+        print(f"🔍 user_pref encontrado: {user_pref}")
+
+        if user_pref:
+            # Cargar preferencias actuales
+            current_prefs = user_pref.preference  
+            print(f"📦 Preferencias actuales antes de procesar: {current_prefs}")
+
+            # Asegurar que sea un diccionario y no una cadena JSON
+            if isinstance(current_prefs, str):  
+                current_prefs = json.loads(current_prefs)  
+
+            # Obtener las recetas completas con ingredientes
+            recetas_completas = current_prefs.get("recetas", {})
+
+            return recetas_completas
+
+        return {"recetas_almacenadas": {}}  # Si no hay recetas guardadas
+
+    except Exception as e:
+        print(f"⚠️ Error en buscar_receta: {e}")
+        return jsonify({"error": str(e)}), 500
+
+def borrar_receta(nombre_receta):
+    """Elimina una receta almacenada por el usuario."""
+
+    print(f"🔴 Iniciando borrar_receta: {nombre_receta}")
+
+    try:
+        # 🛑 Verificar sesión del usuario
+        if "provider_id" not in session or "selected_domain" not in session:
+            return jsonify({"error": "Usuario no autenticado o dominio no seleccionado"}), 401
+
+        user_q = User.query.filter_by(provider_id=session["provider_id"]).first()
+        domain_q = Domain.query.filter_by(domain_name=session["selected_domain"]).first()
+
+        if not user_q or not domain_q:
+            return jsonify({"error": "Usuario o dominio no encontrado"}), 404
+
+        # 🔍 Buscar en la base de datos
+        user_pref = UserPreference.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
+        print(f"🔍 user_pref encontrado: {user_pref}")
+
+        if user_pref:
+            # Cargar preferencias actuales
+            current_prefs = user_pref.preference  
+            print(f"📦 Preferencias actuales antes de procesar: {current_prefs}")
+
+            # Asegurar que sea un diccionario y no una cadena JSON
+            if isinstance(current_prefs, str):  
+                current_prefs = json.loads(current_prefs)
+
+            # Verificar si la receta existe
+            recetas = current_prefs.get("recetas", {})
+            if nombre_receta in recetas:
+                del recetas[nombre_receta]  # Eliminar la receta
+                user_pref.preference = json.dumps(current_prefs)  # Guardar cambios
+                db.session.commit()
+                print(f"✅ Receta '{nombre_receta}' eliminada con éxito.")
+                return jsonify({"message": f"Receta '{nombre_receta}' eliminada exitosamente."}), 200
+            else:
+                return jsonify({"error": "Receta no encontrada"}), 404
+
+        return jsonify({"error": "No hay recetas almacenadas"}), 404
+
+    except Exception as e:
+        print(f"⚠️ Error en borrar_receta: {e}")
         return jsonify({"error": str(e)}), 500
