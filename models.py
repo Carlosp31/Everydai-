@@ -49,7 +49,7 @@ class UserPreference(db.Model):
     __tablename__ = 'user_preferences'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    domain_id = db.Column(db.Integer, db.ForeignKey('domains.id'), nullable=False)
-    preference = db.Column(JSON, nullable=False)
-    extracted_at = db.Column(db.TIMESTAMP, default=lambda: datetime.now(timezone.utc))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
+    domain_id = db.Column(db.Integer, db.ForeignKey('domains.id', ondelete="CASCADE"), nullable=False)
+    preference = db.Column(JSON, nullable=False, comment="Preferencias del usuario en formato JSON")
+    extracted_at = db.Column(db.TIMESTAMP, nullable=False, default=lambda: datetime.now(timezone.utc), comment="Fecha de extracción de preferencias")
