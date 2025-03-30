@@ -110,10 +110,10 @@ const isMobile = /Mobi|Android|iPhone|iPad|iPod|Tablet/i.test(navigator.userAgen
 
 function playAnimationSequence(firstAnimationName, secondAnimationName) {
 
-    const fadeInValue = isMobile ? 0.2 : 0.5;
+    const fadeInValue = isMobile ? 0.1 : 0.5;
     const fadeOutValueFirst = isMobile ? 0.1 : 0.5;
     const fadeOutValueSecond = isMobile ? 0.1 : 0.8;
-    const fadeInValueSecond = isMobile ? 0.2 : 0.6;
+    const fadeInValueSecond = isMobile ? 0.1 : 0.6;
 
     if (activeAction) {
         activeAction.fadeOut(fadeOutValueFirst);
@@ -168,7 +168,7 @@ function playAnimationSequence(firstAnimationName, secondAnimationName) {
 
 function playAnimationLoop(animationName, speed) { 
 
-    const fadeDuration = isMobile ? 0.2 : 0.5;
+    const fadeDuration = isMobile ? 0.1 : 0.5;
     const fadeoutDuration = isMobile ? 0.1 : 0.5;
     // Detener cualquier animación activa (incluidas las de playAnimationSequence)
     if (activeAction) {
