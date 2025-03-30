@@ -169,9 +169,75 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
                 "tool_call_id": tool.id,
                 "output": nombre_receta
             })
+    
+        elif tool.function.name == "query_recetas":
+            print("🔍 Buscando recetas guardadas...")
 
 
+            # Obtener las recetas almacenadas
+            recetas = action_db.buscar_receta()
+            print(f"✅ Recetas encontradas: {recetas}")
 
+            response_3 = "🔍 Buscando recetas guardadas..."
+            tool_outputs.append({
+                "tool_call_id": tool.id,
+                "output": json.dumps(recetas, ensure_ascii=False)
+            })
+
+        elif tool.function.name == "check_receta_comeback":
+            print("FUNTION: check receta_comeback")
+            # Obtener los argumentos del tool_call
+            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+            arguments_str = tool_call.function.arguments
+            arguments_dict = json.loads(arguments_str)
+
+            # 📩 Depuración: Verificar el JSON recibido
+            print(f"📥 Receta escogida: {arguments_dict}")
+
+            # Extraer ingredientes correctamente
+            items = arguments_dict.get("ingredientes", [])
+
+            # 📦 Depuración: Verificar lo que se enviará a la función
+            print(f"🍽 Ingredientes extraídos: {items}")
+
+            # Llamar a la función con la lista de ingredientes
+            response_3 = "Sugierendo receta inmediata"
+            inv = get_inventory_from_redis()
+            data, status_code = inv # Desempaquetamos la tupla
+            
+            if status_code == 200:  # Verificamos que la respuesta es exitosa
+                response_2= data.get_json()  # Extraer el JSON directamente
+                print(f"Response_2: f{response_2}")
+                print("Inventario recibido:", response_2["items"])  # Acceder a los ítems
+            else:
+                print(f"Error en la respuesta: Código {status_code}")
+
+
+            tool_outputs.append({
+                "tool_call_id": tool.id,
+                "output": f"ingredientes necesarios para la receta: {items}, inventario del usuario: {response_2}"
+            })
+
+
+        elif tool.function.name == "receta_comeback":
+            print("Pensando receta")
+            # Obtener los argumentos del tool_call
+            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+            arguments_str = tool_call.function.arguments
+            arguments_dict = json.loads(arguments_str)
+
+            # 📩 Depuración: Verificar el JSON recibido
+            print(f"📥 JSON receta: {arguments_dict}")
+            # Llamar a la función con la lista de ingredientes
+            
+            response_3 = "Guardando receta"
+            nombre_receta = arguments_dict.get("nombre_receta", "").strip()
+            response_2 = nombre_receta
+            action_db.borrar_receta(nombre_receta)
+            tool_outputs.append({
+                "tool_call_id": tool.id,
+                "output": nombre_receta
+            })
         print(run.status)
 
     print(f"print tools outputs: {tool_outputs}")
