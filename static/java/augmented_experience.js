@@ -37,7 +37,7 @@ try {
     if (data.predictions && data.predictions.length > 0) {
         drawBoundingBoxes(data.predictions);
         saveDetections(data.predictions);
-    }
+    }else{clearBoundingBoxes();}
 } catch (error) {
     console.error("❌ Error al enviar imagen a Roboflow:", error);
 }
