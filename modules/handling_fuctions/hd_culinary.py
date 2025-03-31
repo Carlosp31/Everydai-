@@ -3,6 +3,8 @@ import modules.Function_calling.webscrp as webscrp
 import modules.Function_calling.act_bd as action_db
 import json
 from modules.get_inventory import get_inventory_from_redis 
+# from modules.get_wish_list import send_wish_list_email
+from app import send_wish_list_email 
 
 def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
     response_2= None
@@ -237,6 +239,18 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             tool_outputs.append({
                 "tool_call_id": tool.id,
                 "output": nombre_receta
+            })
+
+        elif tool.function.name == "send_wish_list":
+            print("Enviando lista de compras")
+            # Obtener los argumentos del tool_call
+            send_wish_list_email()
+            # Llamar a la función con la lista de ingredientes
+            
+            response_3 = "Enviando lista de compras"
+            tool_outputs.append({
+                "tool_call_id": tool.id,
+                "output": "Receta enviada"
             })
         print(run.status)
 
