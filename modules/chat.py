@@ -3,6 +3,7 @@ from openai import OpenAI
 import modules.domains as domains
 from typing_extensions import override
 from openai import AssistantEventHandler
+import requests
  
 from database import db
 
@@ -92,18 +93,19 @@ def chat_post():
 
 #####Initial Inventory 
 
-def chat_inventory(domain_name, items, thread_idf, assistant_idf):
+def chat_inventory(domain_name, nombre, thread_idf, assistant_idf):
     """Inicializa la conversación con OpenAI proporcionando el inventario del usuario."""
-
-    print(f"🔹 Inicializando inventario en {domain_name}")
+    response = requests.get(f"https://api.genderize.io/?name={nombre}")
+    data = response.json()
+    genero = data.get("gender", "desconocido")
     # 🔹 Crear mensaje de concientización para el asistente
-    user_inventory = f"El usuario tiene los siguientes ítems en su inventario: {', '.join(items)}."
+    user_info= f"El nombre del usuario es {nombre}, solo menciona el primer nombre, ten cuenta que su genero es {genero}."
 
     # 🔹 Enviar mensaje al asistente para que sea consciente del inventario
     message = client.beta.threads.messages.create(
         thread_id=thread_idf,
         role="user",
-        content=user_inventory
+        content=user_info
     )
     run = client.beta.threads.runs.create_and_poll(
         thread_id=thread_idf,
@@ -112,18 +114,18 @@ def chat_inventory(domain_name, items, thread_idf, assistant_idf):
     )
     
 
-    print("📩 Inventario enviado al asistente:", user_inventory)
+    print("📩 Inf enviada al asistente:", user_info)
 
-def initialize_thread_with_inventory(items, domain_name):
+def initialize_thread_with_inventory(nombre, domain_name):
     """Inicializa un thread con la concientización del inventario (solo una vez)."""
 
     if domain_name == 'Cooking':  
-        chat_inventory(domain_name, items, thread_idf=thread_culinary.id, assistant_idf=assistant_culinary_id)
+        chat_inventory(domain_name, nombre, thread_idf=thread_culinary.id, assistant_idf=assistant_culinary_id)
 
     elif domain_name == 'fashion':  
-        chat_inventory(domain_name, items, thread_idf=thread_fashion.id, assistant_idf=assistant_fashion_id)
+        chat_inventory(domain_name, nombre, thread_idf=thread_fashion.id, assistant_idf=assistant_fashion_id)
 
     elif domain_name == 'Fitness':  
-        chat_inventory(domain_name, items, thread_idf=thread_gym.id, assistant_idf=assistant_gym_id)
+        chat_inventory(domain_name, nombre, thread_idf=thread_gym.id, assistant_idf=assistant_gym_id)
 
 
