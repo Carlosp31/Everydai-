@@ -271,3 +271,186 @@ def borrar_receta(nombre_receta):
     except Exception as e:
         print(f"⚠️ Error en borrar_receta: {e}")
         return jsonify({"error": str(e)}), 500
+
+def almacenar_outfit(data):
+    """Almacena un outfit con sus prendas asociadas y la ocasión en user_preferences."""
+
+    print(f"🔵 Iniciando almacenar_outfit con datos recibidos: {data}")
+
+    try:
+        # 🛑 Verificar sesión del usuario
+        if "provider_id" not in session or "selected_domain" not in session:
+            print("⚠️ Usuario no autenticado o dominio no seleccionado en la sesión.")
+            return jsonify({"error": "Usuario no autenticado o dominio no seleccionado"}), 401
+
+        user_q = User.query.filter_by(provider_id=session["provider_id"]).first()
+        domain_q = Domain.query.filter_by(domain_name=session["selected_domain"]).first()
+
+        if not user_q or not domain_q:
+            print(f"❌ Usuario o dominio no encontrado. Usuario: {user_q}, Dominio: {domain_q}")
+            return jsonify({"error": "Usuario o dominio no encontrado"}), 404
+
+        # ✅ Extraer datos del JSON recibido
+        ocasion = data.get("ocasion", "").strip().lower()
+        prendas = data.get("prendas", [])
+
+        if not ocasion:
+            print("⚠️ Ocasión vacía o no proporcionada.")
+            return jsonify({"error": "El nombre de la ocasión es obligatorio"}), 400
+
+        if not isinstance(prendas, list) or not prendas:
+            print("⚠️ Lista de prendas inválida o vacía.")
+            return jsonify({"error": "Debe proporcionar una lista de prendas"}), 400
+
+        prendas = list(set(prendas))  # Eliminar duplicados
+        print(f"👕 Prendas procesadas (sin duplicados): {prendas}")
+
+        # 🔑 Clave para Redis
+        redis_key_prefs = f"user:{user_q.id}:domain:{domain_q.id}:preferences"
+        print(f"🔑 Clave Redis generada: {redis_key_prefs}")
+
+        # 🗄️ Cargar preferencias desde Redis
+        prefs_json = redis_client.get(redis_key_prefs)
+        user_prefs = json.loads(prefs_json) if prefs_json else {}
+        print(f"📥 Preferencias actuales en Redis: {user_prefs}")
+
+        # 📝 Agregar outfit a preferencias
+        if "outfits" not in user_prefs:
+            user_prefs["outfits"] = {}
+
+        user_prefs["outfits"][ocasion] = prendas
+        print(f"🆕 Preferencias con nuevo outfit (Redis): {user_prefs}")
+
+        # Guardar en Redis
+        redis_client.set(redis_key_prefs, json.dumps(user_prefs, ensure_ascii=False))
+        print(f"✅ Outfit para '{ocasion}' almacenado en Redis.")
+
+        # 🔍 Buscar en la base de datos
+        user_pref = UserPreference.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
+        print(f"🔍 user_pref encontrado: {user_pref}")
+
+        if user_pref:
+            # Cargar preferencias actuales
+            current_prefs = user_pref.preference
+            print(f"📦 Preferencias actuales antes de modificar: {current_prefs}")
+
+            # Asegurar que sea un diccionario (por si es string JSON)
+            if isinstance(current_prefs, str):
+                current_prefs = json.loads(current_prefs)
+
+            if "outfits" not in current_prefs:
+                current_prefs["outfits"] = {}
+
+            # Agregar o actualizar el outfit
+            print(f"➕ Agregando outfit para '{ocasion}' con prendas: {prendas}")
+            current_prefs["outfits"][ocasion] = prendas
+
+            # Guardar cambios
+            user_pref.preference = json.dumps(current_prefs, ensure_ascii=False)
+            db.session.commit()
+            print(f"✅ Outfit para '{ocasion}' almacenado en base de datos.")
+        else:
+            # 🆕 Crear preferencia si no existe
+            print("📄 No se encontró registro de preferencias. Creando nuevo...")
+            nueva_pref = UserPreference(
+                user_id=user_q.id,
+                domain_id=domain_q.id,
+                preference=json.dumps({
+                    "outfits": {
+                        ocasion: prendas
+                    }
+                }, ensure_ascii=False)
+            )
+            db.session.add(nueva_pref)
+            db.session.commit()
+            print(f"✅ Nueva preferencia con outfit '{ocasion}' creada en la base de datos.")
+
+    except Exception as e:
+        print(f"❌ Error al almacenar outfit: {str(e)}")
+        return jsonify({"error": "Error interno del servidor"}), 500
+
+def buscar_outfits():
+    """Busca y retorna los outfits almacenados por el usuario junto con sus prendas."""
+
+    print(f"🔵 Iniciando buscar_outfits")
+
+    try:
+        # 🛑 Verificar sesión del usuario
+        if "provider_id" not in session or "selected_domain" not in session:
+            return jsonify({"error": "Usuario no autenticado o dominio no seleccionado"}), 401
+
+        user_q = User.query.filter_by(provider_id=session["provider_id"]).first()
+        domain_q = Domain.query.filter_by(domain_name=session["selected_domain"]).first()
+
+        if not user_q or not domain_q:
+            return jsonify({"error": "Usuario o dominio no encontrado"}), 404
+
+        # 🔍 Buscar en la base de datos
+        user_pref = UserPreference.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
+        print(f"🔍 user_pref encontrado: {user_pref}")
+
+        if user_pref:
+            # Cargar preferencias actuales
+            current_prefs = user_pref.preference  
+            print(f"📦 Preferencias actuales antes de procesar: {current_prefs}")
+
+            # Asegurar que sea un diccionario y no una cadena JSON
+            if isinstance(current_prefs, str):  
+                current_prefs = json.loads(current_prefs)  
+
+            # Obtener los outfits completos con prendas
+            outfits_completos = current_prefs.get("outfits", {})
+            print(f"👗 Outfits encontrados: {outfits_completos}")
+
+            return {"outfits_almacenados": outfits_completos}
+
+        return {"outfits_almacenados": {}}  # Si no hay outfits guardados
+
+    except Exception as e:
+        print(f"⚠️ Error en buscar_outfits: {e}")
+        return jsonify({"error": str(e)}), 500
+def borrar_outfit(nombre_ocasion):
+    """Elimina un outfit (ocasión) almacenado por el usuario."""
+
+    print(f"🔴 Iniciando borrar_outfit: {nombre_ocasion}")
+
+    try:
+        # 🛑 Verificar sesión del usuario
+        if "provider_id" not in session or "selected_domain" not in session:
+            return jsonify({"error": "Usuario no autenticado o dominio no seleccionado"}), 401
+
+        user_q = User.query.filter_by(provider_id=session["provider_id"]).first()
+        domain_q = Domain.query.filter_by(domain_name=session["selected_domain"]).first()
+
+        if not user_q or not domain_q:
+            return jsonify({"error": "Usuario o dominio no encontrado"}), 404
+
+        # 🔍 Buscar en la base de datos
+        user_pref = UserPreference.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
+        print(f"🔍 user_pref encontrado: {user_pref}")
+
+        if user_pref:
+            # Cargar preferencias actuales
+            current_prefs = user_pref.preference  
+            print(f"📦 Preferencias actuales antes de procesar: {current_prefs}")
+
+            # Asegurar que sea un diccionario y no una cadena JSON
+            if isinstance(current_prefs, str):  
+                current_prefs = json.loads(current_prefs)
+
+            # Verificar si el outfit existe
+            outfits = current_prefs.get("outfits", {})
+            if nombre_ocasion in outfits:
+                del outfits[nombre_ocasion]  # Eliminar el outfit
+                user_pref.preference = json.dumps(current_prefs)  # Guardar cambios
+                db.session.commit()
+                print(f"✅ Outfit para ocasión '{nombre_ocasion}' eliminado con éxito.")
+                return jsonify({"message": f"Outfit para ocasión '{nombre_ocasion}' eliminado exitosamente."}), 200
+            else:
+                return jsonify({"error": "Ocasión no encontrada"}), 404
+
+        return jsonify({"error": "No hay outfits almacenados"}), 404
+
+    except Exception as e:
+        print(f"⚠️ Error en borrar_outfit: {e}")
+        return jsonify({"error": str(e)}), 500
