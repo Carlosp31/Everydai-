@@ -218,7 +218,7 @@ const domain = urlParams.get('domain');
 
 
             // Función para sintetizar y reproducir el audio de la respuesta
-            function speakResponse(responseText) {
+            window.speakResponse = function (responseText) {
                 const subtitulosContainer = document.getElementById("subtitulos-container");
                 if (!subtitulosContainer) {
                     console.error("El contenedor de subtítulos no existe.");
@@ -440,12 +440,12 @@ const domain = urlParams.get('domain');
             };
 
             // Función para guardar el tiempo de inicio
-            function startTimer(type) {
+            window.startTimer = function(type) {
                 return { type: type, startTime: Date.now() };
             }
             
             // Función para registrar el tiempo de respuesta
-            function logResponse(interaction, responseType) {
+            window.logResponse = function(interaction, responseType) {
                 interaction.endTime = Date.now();
                 interaction.responseTime = interaction.endTime - interaction.startTime;
                 interaction.responseType = responseType; // ✅ Agregamos responseType al objeto
