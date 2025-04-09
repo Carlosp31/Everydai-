@@ -1,5 +1,365 @@
 [
     {
+<<<<<<< HEAD
+        "nombre": "Kit de barras y mancuernas de 50kg Corength",
+        "precio": "$718625.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRxdO0NtsY0_55cqqqNLw3JsBBJQpovpYh941UBU13W-zwPaJNt47Tw34-cSel0wIemr_lfLllu6qrAKMyZnixmFY07Ww_9jJfSuMUT95iDf-IVr0OaGzBk&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/6677983098957057977?gl=co"
+    },
+    {
+        "nombre": "Kit de mancuernas y pesas 50 kg Musculación Domyos",
+        "precio": "$520000.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT6s-O6xxY5e0ajQj2pvoqjEHQ9pQfskPYZeikxbnbBEjtAGsvCy2AQJBUcRMxK787cQ9yconi-S-XMfmpcB32Z4jFHdjdAmIHPYNiNhuKUgtiqztCvvTOc&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1594821298017092927?gl=co"
+    },
+    {
+        "nombre": "Kit Mancuerna Desarmable 10k Pesas",
+        "precio": "$178900.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTZJ6nTBXVq1mfWjWzHhfJedla4hWdNL6B-9-YLO6GlrD54VNOroKaLGr9E6cTI7ejzpF6A3axkUuS2FnWIDISyy4zxXgA_PlMoccZYmyAUb3vIINN1o03cew&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:11743669252700698910"
+    },
+    {
+        "nombre": "Kit de mancuernas de hierro para levantamiento de pesas de 10kg Corength negro",
+        "precio": "$179000.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTLNCRgGi0jt__XyxltOhDXVrEkX-RnPSWub9raHz5xjsrZjmr7zXLllSbr0mDwhJ2sd4CYMVGkNzB-td9maxE2UGfbas1H8ecF5-wwB40hzrczR25OGlYzJg&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/7171283053631117200?gl=co"
+    },
+    {
+        "nombre": "Kit De Pesas Multifuncionales De 40 Kg Color Negro/Rojo - Homesale",
+        "precio": "$179900.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQohgylo-4uZXJLqQPjumONBPTR1pr99G9XphPRoycp43aby4xxydKTLn180mWw7ViOP0Uk2pIxA_6lHnedsD77YfvPwAsO26rCpyg3Bps&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:9489137321390617102"
+    },
+    {
+        "nombre": "Bloqueadores de discos deals pesas decathlon",
+        "precio": "$169169.27",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQNkw2NNTDu6hzYa_CCqFjB_ipFl5dkxvyXPICD6V-vKEtulOvLUEnit64q_q4uEXSzVFiO75bNvyiAQEW2ef15Znqn2QJiUGZj2C7TE3LUBk1aV4KbRjHR&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:12780814560871931448"
+    },
+    {
+        "nombre": "Juego de pesas de Entrenamiento de Fuerza Ajustable - 44 lbs",
+        "precio": "$699039.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcS7LtAblB9jDQWsvog94GX_k_e1iAFm0IMi9QsT2n6aJ7XAIeS3wjnUjRPQzwW9dBk2Nc9e2wMMBmKS8zT5O2O-l60cGwcefHMyRVGpwWXtSCE8mvoHPknV&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:1232063152238490644"
+    },
+    {
+        "nombre": "Pesas Mancuernas 52.5 Lb Hierro Ajustables Kit Ejercicio- únicas, , COLOR únicas",
+        "precio": "$599990.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRPlnU65pu9a1_h5uh7i_lkSA2ix1oaWTYFGE8YsIIANSuzAXEW9Vws2ySURsTDOhAC82q1ySYhgVIvm4tXz4UQn8bFarbCBt9JTqhic5YTwwDf98A2yDLcXg&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:8585814985113952713"
+    },
+    {
+        "nombre": "Kit de mancuernas de hierro para levantamiento de pesas de 20kg Corength negro ...",
+        "precio": "$339000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQGDZ4tprCsx73wd_FT0kK-1NquiD6JxMSOoZ6q3rVptY48n9KXuoEM3MT0vuH5CEvtzuUKr57GxhRepB2i4eJ-njEjTG_JopLbamsKdVJP43movF5KixpaIQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/2966824797928051295?gl=co"
+    },
+    {
+        "nombre": "Kit de Mancuernas | Sportfitness",
+        "precio": "$214600.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSuE0poeQEBFXQSG6J_AGVFTb_tdts7iOPBwJmSXPSqE51Yh4SHFZ9jkFi9Npy_3mjKNQsELIN0tVcx-PivreS29uzukJN3fDvPHFvZVhx_e8O1jAsApNC9&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/12596611978532300214?gl=co"
+    },
+    {
+        "nombre": "Juego De 2 Pesas/ Mancuernas 1lb Sportfitness Encauchetada - Sport",
+        "precio": "$19300.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSXOwGH-M6aQSLPDdAaxxg1y-lf06P2x_hDTx5eQCeS5sJzAiamy5ATLwIDwB_ql8upe5mxZ-2KihAO1T6niv0v-xbMihv3H-fl8jPfVeJRNjPIW-jAAT1fPQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:15427455472879637277"
+    },
+    {
+        "nombre": "Kit Pesas Barras Mancuernas Juego 112 Libras Profit",
+        "precio": "$459500.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQgyYMuBOELOcMN1JqTyUi5OngUrPxNkrilkpkBmKpKcUyXKnsQysDIvFJLkHecaug48jzAgbIe6KFLL7c8gteyz7NFMdd9aCI5nq5fZuq2imc0A4l4W1da&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6121054737995511827"
+    },
+    {
+        "nombre": "Kit De Mancuernas Termoforradas Con Barra Plana De 40 Kg Antideslizante Color ...",
+        "precio": "$334900.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQ84Br_AajxBZ2be-7qPwAmf0b87csnbDp0zN2sQXCiL4i45w0_CjF9mAJAN8U0DRVTBd3RESLw3qR_UUSJYZ6lrSTTHBVA7qE1MJftoAAYAeG-1I3td5th&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13345870477397565384"
+    },
+    {
+        "nombre": "Duo Mancuernas Neopreno 4 Lb Sport Fitness",
+        "precio": "$63600.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSs6OTdaYmFwvrIJtgSVx4zD42Vdwtq3J1r1jDDybA3jw68SKUWJNFBgFek_rpaXTu4jdUnMumff6ZpipcGA1rHZQHtYTMEk7zw2uK0O4-CT7BQ-kCdZ76BIw&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:11856554269571237743"
+    },
+    {
+        "nombre": "Pesa rusa de 6kg Corength negro",
+        "precio": "$129000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQ04ql-dTB2_tnuhTBG13C6Y54nuFnTnU1jtnGtXPtN4RO8jFGPsxgIEARNS9LLjElq6nZhjTipoQMPYjTVEsqU58QQo1qdXiOslqnlA6CwidWhcfbRFySi&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/2067410875892253067?gl=co"
+    },
+    {
+        "nombre": "Par de Mancuernas en Neopreno 2LB DB2171 Sportfitness",
+        "precio": "$40000.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTtufZnxiu9vUaStS3D9eb4GaXGg3AQmEZ2pmAPp2nZ9srpTDgFpJyYzhn3YBg2Pb9-5oU2HfXrb7Z2MWNP6gYVqyB1QG6l7auWw6tr5yoG3ZrEszBVnIKiqFg&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6389192228397246322"
+    },
+    {
+        "nombre": "Mancuernas Termoformadas 20kg - Fitness de Homesale en Home Sale.",
+        "precio": "$99999.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcT3HYrH7m_zGEpFoaKR9_9qzwDvhxr24W1bDVeh-P56lyWoidkhwCNujgMOzzroOtkfBgijpAgjyVL8Ok_31YButUivu2FPBUfEVNNpQ1NVJgHFiVUpQIef&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:5059416183831315842"
+    },
+    {
+        "nombre": "Mancuerna Encauchetada En Vinilo – Sportfitness",
+        "precio": "$6220.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQvfYWcKRUz_LRQE2Gp4rsoYEN9aGpQTNYXlSgwKJrpzZT9tBZklZsx4MD8mvhLSveEVExAddiU_6_uVkkFjvsMTsgrkQwHOtvx3tfXNXdUAEv2ByI1ej4mTQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3994303614120652034"
+    },
+    {
+        "nombre": "Kit De Mancuernas 6 Kilos Set X3 Pares En Vinilo Multicolor (MULTICOLOR)",
+        "precio": "$139999.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQklEy7aRnfXwh_OAYnIYxy-KJDJVxwaht8qhfHotqZu-DtfRwm55ZmQL5Ed0xs-Zh8ux-rLzwXdPMZjkJEJW_MtwfbvpyPUeaeE2mxph8UR3WpXAYuhdCjxA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:1598996301494380786"
+    },
+    {
+        "nombre": "Kit Mancuernas Pesas 30 Kg Juego De Manc",
+        "precio": "$400900.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSl_Bqbu0vi30i7SAVNLuIlv6Yh8O0tyNgc2ydmqu0jKEI_P0axe7YXCEi2_23KSbqbq3Do8GeOMvpTEINanBFGgOs47wpIZuQbDJiTWbk18T9HWoC_n8pm&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13043481406499749376"
+    },
+    {
+        "nombre": "Kit Juego Pesas Mancuernas Ejercicio Ajustables Encauchetada- Negro, , COLOR Negro",
+        "precio": "$471594.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS2Avvte5qL8RjgP6J8ONE6qcLFnyX7mj1Fxt5Z9GrRWL_gn6jGhlWVGB2r8-9EhVKMZ8VKuSt-vpjBsPtn9cyTMUUYgDQxaProsRcrCW0jb6t7uYkrvP4l&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13543925906037148639"
+    },
+    {
+        "nombre": "Set de Pesas Pro-Form Ajustables",
+        "precio": "$433238.38",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRy8pSe0MlPuRg-YdUA_E2mnEpTWfInR7RBx_cdRWwnK9lvrZlOUGWMLsBa2VkdkN7wxo5oA_4q8X3vMeLwlBdFF9wceHAyQkmG-s73Stu3Qg-5xyttx15yJQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/12759245466089472448?gl=co"
+    },
+    {
+        "nombre": "Kit De Mancuernas En Acero De 18 Kg Con Maletin De Transporte Color Negro ...",
+        "precio": "$314900.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRXdc10C7KUpMK7VGdIJsL3yYmUViqyk_ZLkmDe89TyKjVM9B1Ygu2Dq-Lk0bPJmGvRSbuh_-kNtH2GIZsxpTfjEJRFMXx16_m1iG60Y80xJBeXfW2w8d2BuA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:12575353950604255644"
+    },
+    {
+        "nombre": "Entrenador funcional Home Gym 2 - Cable Crossover - DAP - Musculación",
+        "precio": "$8676736.65",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQtiSq23xv3S73hHEfhX71ATJWlqK60IbNogxzqwvV7-hmhxfEvoUHrBnooxEWKgvQscYVC6ze5fEcfYQ1DBBxBcDyAqCw1pnhzcTLlH3xpCXiCxgxiO_cZ7Q&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/187092231278914764?gl=co"
+    },
+    {
+        "nombre": "Kit De Pesas Ejercicio Mancuernas Juego De Pesas Deportes Fitness Y Musculacion",
+        "precio": "$319024.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTIguh2ouAWjGoWpxm9_dqH5kRbk4QIU6vMdntHV07Gb7CWBhpD1VVDBxn_HtfHrCG1TLBF0Cf-jcWRD0x757X7YsaoasKcRr0ZsvvXFltApoYlp5FaMtY73A&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/12174133236719618246?gl=co"
+    },
+    {
+        "nombre": "Mancuernas de Caucho Supremacy 4LB (Par)",
+        "precio": "$39999.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTVyg2DoMulZT_kMl7J55PYOcbK9uB2vDylTCX3DcbdDPRVEOdfMXdnzo8lzd7_5ONUecYXAtGJi6zcTtq2p-9DmwIuxrkfVMy6qB-hFZGM4b5cFIRauIwMvrk&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:2038726554339839075"
+    },
+    {
+        "nombre": "Kit Set Pesas Barra Mancuernas Graduable Juego 52 Lbs Profit",
+        "precio": "$294900.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQLjpuhmi4MoVe2aoKhc8MwvZwyDu31cKfmAtgbhLNeNan7n7qMtcDYCAlvj3DUUdqpmEPRfghIh_gkZYX6WgF2GXyGqWfxyW436m0l9Mic2marWsaWyA-4&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:2921155637631097277"
+    },
+    {
+        "nombre": "Par de mancuernas de 2kg Domyos azul oscuro",
+        "precio": "$75000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTkbR_AD4wa9Umu63vvzwmuM4JQ7WdpAAcmjKqryR08sp631KgQL1_FwW4GVCQblZOK0KFWl3737m46OwmLno4FEKlZyGcbV-wn03YRGdKnKjLCYF-vaIlx&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/2226304182847250310?gl=co"
+    },
+    {
+        "nombre": "Kit de Mancuernas 50 KG | Sportfitness",
+        "precio": "$775000.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQ2o9p6iZCwfuhtQv-TrEQik54kRJgvAz3pEt1GWuFKACZWJCc5OcZ0fr9qoz8KYQKBatzVFkFZD9Av6EFJYJsFS7QFFdr-NFvInf_-RUDopvEIxG1xTnVWfQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/8850908878508576377?gl=co"
+    },
+    {
+        "nombre": "Mancuerna O Pesa En Hierro De 5 Kg - Generico",
+        "precio": "$45000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQXsKZk3O529ElAYgkEd-ftqpzwehpYkeE30adP2M_6xFJEi2nu-jCFKwTFTa-WLMoeuYdY0tts_1Td1eK73KFmmEN7JCKX7Ro-gWGEm_jgvUs5TRFjtwVRAQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:18200984707436679640"
+    },
+    {
+        "nombre": "Kit Pesas Mancuernas 10 KG Ejercicio Gimnasio",
+        "precio": "$110000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcR8-kgaXTjssYgZKcWJsncfW5_oFV6_h6g-crVAnwV9z4UAeOiicE-7YUavhxUT0o4PPbSXx-o2SjzImPEaigxBc8M9BJvzbw&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/4526438817681653417?gl=co"
+    },
+    {
+        "nombre": "Kit de Mancuernas 6 KG | Sportfitness",
+        "precio": "$127600.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQId3fAxKbOVcRd9AouufbLsyaGOlY9r42v8_oWbaaVGWdKeLZcANkVk-ZEtRNVYUXkkwg3gepBZtZx4GPbQzfTT4e9wSXArrEvEePqth0&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/12053491747941825599?gl=co"
+    },
+    {
+        "nombre": "Kit de Mancuernas 23 KG",
+        "precio": "$467600.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTw_krR9-pp2-l6ZkZKf-HQnxym0wi3fC8EFnZX4wHbiGoJSkzAwYtZNPPTPpRb8lxNZQLZrebikKXTKzfROV9-fArlQuwQ3Qy7VWpjfQ66DUvgmNovW6mD&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:15088704726401609859"
+    },
+    {
+        "nombre": "Par De Pesas Tobilleras Multifuncional 4kg",
+        "precio": "$24900.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRXlSBzG4bQTRWdri88yzCvAmsEJbwz3bm_ukR0XYQSftbq-3uL4LRKxEhkG1ePorW4sLW5FLMOe59hnNRTOF6Nm0Bap_Q32KXUf6I8Emql&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:12972194226558637051"
+    },
+    {
+        "nombre": "Mancuernas Hexagonales Pesas Encauchadas Sportfitness 17.5kg",
+        "precio": "$210000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSXp3Q7z_6EK8t6HrDesLLEWh6jK1ZU_w0j5gsvCEUgMQ7wQoL_uHhvQHvHcLA4psM23MqKqb0LPntBNNoM5UhZVpKmhGOutheXHi9MrfMDuXv1tVilzCkA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/12962833905732563453?gl=co"
+    },
+    {
+        "nombre": "Caja Mancuernas 1kg-2kg-3kg Set 6 Und Supremacy - Supremacy",
+        "precio": "$299900.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTXIS3g86C8rVTGR-z6rqGJ1zAqMTWNMdYFIjf67KIAeJEk34Ibi0E0nGp_wtuNZas58py2-0Z21xxP_Er82e35OQYrISz29hTctogY7DmI2X_5L66J1Iqu&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3795099281610825742"
+    },
+    {
+        "nombre": "Juego De Mancuernas Ajustables Compactas 15 A 90 Libras",
+        "precio": "$1339900.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRqosgypVYWSGzZstfkR6n1TjTbazsFiJFi9dBcDJnhh2sNIxwOKDXROB-0Yblb2kSsPtcYUozfKpf0vR0K32aNTyRSI5IsfwthKGsGDG_NMso6RToy0fgp&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:14280843337212459912"
+    },
+    {
+        "nombre": "Set Par Mancuernas Pesas 3 Lb C/u 1.36 Kg Neopreno 2 Piezas",
+        "precio": "$92820.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcT8yfW35T6keV___e3QPRiF52QNKNpWqhX_M4SRmiWA05--lb8W-j82e528UHaVniKySXz_iiLGJXP9oXsxCON_SOhBWeZRVA26P1_Wak--5v2pj56sWQUh&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/9638689160411137482?gl=co"
+    },
+    {
+        "nombre": "Par de Mancuernas en Neopreno 1LB DB2171 Sportfitness",
+        "precio": "$30000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRD-aWHt0rv3O0ao0gMNkVjSK5w_9piKtMRiH6zoMQKDR8MbG-_vbyyo-KgTl3WrJAbAFciIN3ELfGhjJpYWkLAs7LjGwcx4jp56XNXKQiK_ZnFFuY4RBO8Ww&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:9065830439837728575"
+    },
+    {
+        "nombre": "Kit Pesas Barras Mancuernas Juego 152 Libras Profit",
+        "precio": "$564800.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRHLjdwycQVdePgwAqUSGG2QUQG7WOd9DfXfHDYfbXuc0TIw377_FIC0QZdJckolj24OTFs1bk2t8099Ii9lm-HTmGNdqZdZBdwZi03kBUeyZjWKHhu6dGg&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:12494788947562969382"
+    },
+    {
+        "nombre": "Pesa rusa de 20kg Corength negro",
+        "precio": "$350000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSObbUM7_K8KjpttyjFnpRNlWlM76abOzIw9Ji19sKXKtzHdcA8NlzjaFCnPVWmXVG7MHwEj2CvANX8DVwUZZZYuUaO6VX1XNKt3UxtU1Ja&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/2699789230095800357?gl=co"
+    },
+    {
+        "nombre": "Kit 12 Mancuernas Hexagonales Neopreno, Set Pesas Completo",
+        "precio": "$340000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRcUA4zqzAz-KTUq9HW32fcnMaNkwd6jYKbF56vFv1CfAQm5sabN68E3XR8VyKmLBDMt6_utG_Xc6pHO1dS3W_oFUlOw6_jcXTf2V4TEaC7UrDUPtQIaSMx&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/6602545384881081815?gl=co"
+    },
+    {
+        "nombre": "Mancuernas Encauchetadas (5 kilos)",
+        "precio": "$69000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRQQjArYP0bAFI2bB6zXiQZUSfSpx9zOiOLLas5RCjsdTR6LrX70CjsrOAThbl13nhfnEKr7SkvrseAdf3kGTjj7cev2aiaSu_a0jG8D32S4OAAn1gQQv16&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3137120984152259683"
+    },
+    {
+        "nombre": "Set De Mancuernas De 6Kg Vinilo M92084",
+        "precio": "$116697.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRdWQDy3E4mxIT1MGJg28WZxjOM59eAESu_boavTNPjmkNQKASvGuZct7AeIkSh9rldQsesO1_AbDQ1JsighIndGbqnGRBuCGw7zxRJj1rua-y3ldlWutNy2TIr&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:14212792368550504343"
+    },
+    {
+        "nombre": "Kit Mancuernas Pesas 40 Libras 1 Discos Ejercicio",
+        "precio": "$199900.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcThD_yH1uJwbD7z1kT9PU6tBQ2LMryTHqk7YoMYP-iuJZzy3XNx3d7kOQndV2vNQyuJguJSzyPJZdlgiYyndVCAv0GkLwKFLtKqbtN_WHgmnlDg6ZEfX7o&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:10622601684447617918"
+    },
+    {
+        "nombre": "SET DE MANCUERNAS 20 KG",
+        "precio": "$288900.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRCth7wfMkVAKtFG2BXmZL6a8g0RBRV8VdRw1iLTJFkuD1NMVOKmo3DtIXGW89Qp_L8grxVEfsvMl8btmqhVA4GtSe3A7xV53EB_aIKDn8PMCaNvgS8sZjaWA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:4186817407211368198"
+    },
+    {
+        "nombre": "Kit De Mancuernas Termoforradas Con Barra Plana De 20 Kg Antideslizante Color ...",
+        "precio": "$259900.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRqkRVfCRTwj4W9TUmdb2RgMvnMJMhZvvieHza9I8cD-iXJczil0vQVFrjY0frgHQcqP4mJTGacrOyTt1Q0Vh9qM2WbitUT10J-OUYAFyHl4sGy1URehVI8&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:703069146687663895"
+    },
+    {
+        "nombre": "Mancuerna Encauchetada De 2lb Azul Deporte Ejercicio",
+        "precio": "$34900.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQrfO6C-ixuB5oww9ldEFYdJgxduMyjZPzdX7vNxJONTuu8KqYNy54sQA7XN8pyFn-HY9cS4gnvBrH5lAD2hELoyzXFvV-5xcG9XsTEHyPF5TpEpzOJ-vQ8&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:8947555102701389995"
+    },
+    {
+        "nombre": "Kit Mancuernas Encauchetadas 6 X 10 Kg. Pesas Personales- Azul,Verde,Rojo ...",
+        "precio": "$189990.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSGqcmb9oLiq-iJXa2EL2_C97Q2ULC6ZAQySmNhVFmbCejcc_kYFD6yr2wV2G1Ie0yQntqlPGIuzMwEAWNh-K8_VaN6B6thk7otOOEyMcCSHZslTtoBfcCkWg&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:1766781054171663651"
+    },
+    {
+        "nombre": "Bloqueadores de deals pesas decathlon",
+        "precio": "$173295.35",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRWHsJFdn7gJOPxdaFx49rMFRS0chTfIU2GQ_UlV9ieZpqsesgtvzZwGvxIkTGnu-D9e-xCnXLJOw1-rLje4OTNjz4OoiJz_pRgQSfSb7mpRaFflyQwULdkHw&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:14648414455382264250"
+    },
+    {
+        "nombre": "Mancuerna Encauchetada 1 Kg (DAMA)",
+        "precio": "$55000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQf2FAnwyzQKB5awmiH-dNrsbWYVVwxd08nWKwleEluIyv4NdFfZGBClwzoTUnPtRWNdg80InZCEvYJshhF03Tz_h08KvcD8vliWHIXAGWtdiDnJarM856Y&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:8265587943212723544"
+    },
+    {
+        "nombre": "Kit De Mancuernas 12 Kilos Multi-funcional En Acero + Estuche (Negro)",
+        "precio": "$259900.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQVy8bkzhH3E5c_jroDFAT295-cMV2KWPo282gIPpPU2U-va11NL_9RNJ3ZiV5YR1ZSPmuAspJF36NYiX5Cc6wjlJMEwLay65l6xcBMnPUdIv5JqrNAu0PJNQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3717122457286831642"
+    },
+    {
+        "nombre": "Kit Mancuernas Pesas 50Kg/100Lb Antideslizante Con Estuche",
+        "precio": "$1210110.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRKJX1qBZgdTo63Y0abpgn-vU7KQA-p4pM8qBZjTBKJx59CaZ2asvQGKFyCUXq2-hH2zqZSzzhehPvTeV7LSGmqZEmWKVzf_tqNve5I9sYCKCkxlSnoGxfA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:8050296208598645541"
+    },
+    {
+        "nombre": "Marcy Mancuernas De Neopreno De Colores",
+        "precio": "$22276.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRRs3GUYhMs1AztLkm1DgQdSridm-HfJjVXqziSKw4hZy2adoEO8sbZuptYib1npR-NeIN3jFZxfRAf7Y6TWCianmGw5R71Z_msOpYGQ-ctVLI4VaYNhuPSuA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:7155487211996869437"
+    },
+    {
+        "nombre": "Pesa Mancuerna Premium 15 Libras - Precision",
+        "precio": "$309900.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcT6NpD73Yy7AlgIDlDUvkzlbzHLs2B8SeB_Xmgq77NFR0AJcxoj-Oz5dH1mbcB1Et8fejUzhLTptaduckW97OZqsZCwkJieJaiQ64smkAA4Ozfvd8aBsHDS&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:15053575065688718073"
+    },
+    {
+        "nombre": "Duo Mancuernas Hex Neopreno 5 Lb Sport Fitness - Azul, , COLOR Azul",
+        "precio": "$76900.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRdbJDFoCBM4pmV2ehT3DNqYdKaTEXfQ3lqEJUftNSBuNPHxd4XtZYO-GW26dgfk8LJpPHaC4v4qCaP0E2aHWMX1P15bisEwpk1EMG5h8DZl_W1g1y6zZnZXA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:10577021457032868977"
+    },
+    {
+        "nombre": "Mancuernas Pesas Octagonales 10kg",
+        "precio": "$80000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcToLVhNqAyUWYizeTB3W8dD_yjLRkmM9CYVQBJgGlixmCsP1JcTOyOrs1r1_Zm1ShN-JSDM4zvSy0vxvAyON28NJ8RsSWTpaM40_I6l2ZGWYlw-sYg0B18p&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:11123473288357086335"
+    },
+    {
+        "nombre": "Kit Mancuernas 3 Lb Pesas Encauchetada Ejercicio Gimnasio- Rosa, , COLOR Rosa",
+        "precio": "$75000.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSYTrRo6zr3OrYMar-7Xf0EnKQTK2VKsnfkOQDruSUF57qzKDtQbmtSjZMj7T6vEa4tTH9QVPPmiY0cyVx2UbI56xEao0FL1C-Caq0wHY9m-NNpLsVCCcsB&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:7548904145269630554"
+    },
+    {
+        "nombre": "Barra para pesas y peso muerto de 1,30m Corength",
+        "precio": "$499000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSdrIKD_-fYotsig3MHUVNzYDTQ60BoplJfatPjHQf7RytdLw2ddYEgTwZ47HCU8F9hB2kJ0ibB4lckmKK3d6J9XKHB-99oVgG3ovXHYmR1x6_SrFRimJXOEg&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/8034137968087945146?gl=co"
+    },
+    {
+        "nombre": "Kit de Pesas 20 Kilos",
+        "precio": "$309900.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTldEd0gU3fPey5aR628T0bYwd1V21vR_WPNoK1tndarsJxmE8eIvpag7rWdkhwt06Ch9aTIzyHxbanHMNlCMKnLu9uag9JR6NEfV6-ZlLztaKVKRqPwgjM&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:14574492374081077263"
+=======
         "nombre": "Cinturón De Reloj Para Hombre Luminous Waterproof",
         "precio": "$137058.0",
         "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQmVH5H-01zuhNed4njQtje7CO3NCE6T28l4JXbaSBVHrWu4mjxnB9Do6o7UHkMX61FNna3d1WLDGY2b761ouJecrileTq1SD_LuzwAdlK5mOTCdUtf0LiGlQ&usqp=CAE",
@@ -178,5 +538,6 @@
         "precio": "$316014.76",
         "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcR6Ahb-by50L24vRPxRUOciWLwYb8GsJrbQN0R_2Lbq-xScppGQgCCvtFIxXZhmgMBXl6hRrO5FqaBeWc9q-wqDsBF3WwkwP4IaA-L1mAVh7Xj0516oqngT&usqp=CAE",
         "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3929707230185733655"
+>>>>>>> 8f2f82a54d0da7d0a6d19d11806897bd4bfd4830
     }
 ]
