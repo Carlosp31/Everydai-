@@ -143,6 +143,10 @@ function stopDetection() {
     ];
 
     if (domain === "fashion") {
+        const dots = document.getElementById("dots");
+        dots.style.opacity = 1; // Mostrar los puntos
+        const event_detection = new CustomEvent('Detección', { detail: { currentStatus: "Processing detections" } });
+        window.dispatchEvent(event_detection);
         let interaction = startTimer("detection");
         document.getElementById("content").style.display = "block";
         document.getElementById("detection-container").style.display = "none";
