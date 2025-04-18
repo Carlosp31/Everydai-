@@ -211,7 +211,11 @@ const domain = urlParams.get('domain');
         .catch(error => console.error('Error:', error));
     }
 }
+<<<<<<< HEAD
+//sendMessage("Hola")
+=======
 
+>>>>>>> ebe241403eeee1c07c1b4526b4b472a18326a439
             // Mostrar las recomendaciones en el cuadro de recomendaciones
             const recommendationsList = document.getElementById("recommendations-list");
             recommendationsList.innerHTML = '';  // Limpiar la lista existente
