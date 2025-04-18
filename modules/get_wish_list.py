@@ -1,8 +1,10 @@
 import json
-from flask import session, jsonify
+from flask import Flask, session, jsonify
 from models import User, Domain, WishList
 from database import redis_client
-
+from flask_mail import Message
+from flask import current_app
+from email_validator import validate_email, EmailNotValidError
 import json
 
 def get_wish_list_from_redis():
@@ -33,7 +35,5 @@ def get_wish_list_from_redis():
         wish_list = []
 
     return jsonify({"items": wish_list})  # 🔥 Ahora devuelve la lista limpia
-
-
 
 

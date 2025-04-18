@@ -13,10 +13,14 @@ from typing_extensions import override
 from openai import AssistantEventHandler
 from database import db, Config, redis_client
 import modules.chat as chat_api
+<<<<<<< HEAD
 from werkzeug.utils import secure_filename
 import tempfile
 
 
+=======
+import modules.Function_calling.act_bd as fc_bd
+>>>>>>> ebe241403eeee1c07c1b4526b4b472a18326a439
 #### Librerias de base de datos ###############
 
 from database import db, Config
@@ -28,6 +32,15 @@ import json
 from modules.get_inventory import get_inventory_from_redis
 from modules.get_wish_list import get_wish_list_from_redis
 import modules.actions_db as actions_db
+################ EMAIL #########################
+import json
+from models import User, Domain, WishList
+from database import redis_client
+from flask_mail import Message
+from flask import current_app
+from email_validator import validate_email, EmailNotValidError
+from flask_mail import Mail
+
 ################################################
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
@@ -41,7 +54,85 @@ app.config.from_object(Config)
 
 # Inicializar la base de datos con la app
 db.init_app(app)
+######################################################
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'  
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'everydaiuninorte@gmail.com'
+app.config['MAIL_PASSWORD'] = 'jsum ysbi snlj mwnn'
+app.config['MAIL_DEFAULT_SENDER'] = 'everydaiuninorte@gmail.com'
 
+mail = Mail(app)
+
+def send_wish_list_email():
+    print("🔵 Iniciando envío de lista de deseos por correo...")
+
+    if 'provider_id' not in session or 'selected_domain' not in session:
+        print("🛑 Error: Usuario no autenticado o dominio no seleccionado")
+        return jsonify({"error": "Usuario no autenticado o dominio no seleccionado"}), 401
+
+    user_q = User.query.filter_by(provider_id=session['provider_id']).first()
+    domain_q = Domain.query.filter_by(domain_name=session['selected_domain']).first()
+
+    if not user_q or not domain_q:
+        print("🛑 Error: Usuario o dominio no encontrado")
+        return jsonify({"error": "Usuario o dominio no encontrado"}), 404
+
+    if not user_q.email:
+        print("🛑 Error: El usuario no tiene un correo registrado")
+        return jsonify({"error": "El usuario no tiene un correo registrado"}), 400
+
+    # Validar correo electrónico
+    try:
+        print(f"📧 Validando correo: {user_q.email}")
+        validate_email(user_q.email, check_deliverability=True)
+    except EmailNotValidError:
+        print("🛑 Error: Correo electrónico no válido")
+        return jsonify({"error": "Correo electrónico no válido"}), 400
+
+    redis_key = f"user:{user_q.id}:domain:{domain_q.id}:wish_list"
+    print(f"🔍 Buscando lista de deseos en Redis con clave: {redis_key}")
+
+    items_json = redis_client.get(redis_key)
+
+    if items_json:
+        try:
+            print("📦 Decodificando JSON de la lista de deseos...")
+            wish_list = json.loads(items_json)
+
+            if isinstance(wish_list, str):
+                wish_list = json.loads(wish_list)
+            
+            print(f"✅ Lista de deseos obtenida: {wish_list}")
+        except json.JSONDecodeError:
+            print("🛑 Error al decodificar la lista de deseos")
+            return jsonify({"error": "Error al decodificar la lista de deseos"}), 500
+    else:
+        print("⚠️ No se encontró lista de deseos en Redis")
+        wish_list = []
+
+    if not wish_list:
+        print("⚠️ La lista de deseos está vacía")
+        return jsonify({"message": "La lista de deseos está vacía"}), 200
+
+    # Crear el mensaje de correo
+    subject = "Tu lista de deseos"
+    body = "Aquí está tu lista de deseos:\n\n" + "\n".join(f"- {item}" for item in wish_list)
+    print(f"📨 Preparando mensaje con asunto: {subject}")
+
+    msg = Message(subject, sender=current_app.config['MAIL_DEFAULT_SENDER'], recipients=[user_q.email])
+    msg.body = body
+
+    try:
+        print(f"📤 Enviando correo a {user_q.email}...")
+        mail.send(msg)
+        print("✅ Correo enviado con éxito")
+        return jsonify({"message": "Lista de deseos enviada con éxito"}), 200
+    except Exception as e:
+        print(f"🛑 Error al enviar el correo: {str(e)}")
+        return jsonify({"error": f"Error al enviar el correo: {str(e)}"}), 500
+
+#######################################################
 
 # Función para convertir las credenciales en un diccionario para almacenarlas en la sesión
 def credentials_to_dict(credentials):
@@ -256,6 +347,7 @@ def chat():
 
     domain_q = Domain.query.filter_by(domain_name=domain).first()
     user_q = User.query.filter_by(provider_id=session.get('provider_id')).first()
+    nombre = user_q.name
 
     if not user_q or not domain_q:
         return "Usuario o dominio no encontrado", 404
@@ -298,7 +390,11 @@ def chat():
     # Almacenar el dominio en la sesión
     session['selected_domain'] = domain
 
+<<<<<<< HEAD
     chat_api.initialize_thread_with_inventory(items, domain_name=domain)
+=======
+    chat_api.initialize_thread_with_inventory(nombre, domain_name=domain)
+>>>>>>> ebe241403eeee1c07c1b4526b4b472a18326a439
 
     # Renderizamos la plantilla con los items de inventario y wish_list
     return render_template('chat.html', domain=domain, wish_list_items=wish_list_items, inventory_items=items)
@@ -335,7 +431,31 @@ def get_inventory_route():
 def get_wish_list_route():
     return get_wish_list_from_redis()
 
+from flask import request, jsonify
 
+@app.route('/add_to_inventory_from_wl', methods=['POST'])
+def add_to_inventory_from_wl():
+    try:
+        # Obtener el JSON enviado desde la petición
+        data = request.get_json()
+
+        if not data or "items" not in data:
+            return jsonify({"error": "No se recibió una lista válida"}), 400
+
+        # Extraer la lista de items
+        items = data["items"]
+
+        # Asegurar que sea una lista antes de enviarla a almacenar_items()
+        if isinstance(items, str):
+            items = [items]  # Convertir en lista si es string único
+
+        # Llamar a la función que almacena los ingredientes en la base de datos
+        fc_bd.almacenar_items(items)
+
+        return jsonify({"message": "Ítems agregados al inventario", "items": items}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 ####################################################
 # Actualización: mensaje inicial en el chat
