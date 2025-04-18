@@ -15,8 +15,8 @@ async function sendFrameToRoboflow(frameBase64) {
         model = "main-fashion-wmyfk";
         version = "1";
     } else if (domain === "Fitness") {
-        model = "gymbro";
-        version = "2";
+        model = "fitness-equipment-recognition-wlluo";
+        version = "3";
     } else {
         console.error("❌ Dominio no reconocido");
         return;
