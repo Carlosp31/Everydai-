@@ -78,6 +78,119 @@ h1 {
     
     margin-bottom: 1px; /* Reduce la separación */
 }
+#detection-container {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(-45deg, #cccccc, #0077cc, #0099ff, #0077cc);
+    background-size: 200% 200%;
+    animation: gradient 10s ease infinite;
+}
+#video-container {
+    position: relative;
+    width: 90%;
+    max-width: 640px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+    border: 2px solid black;
+    background-color: #000;
+}
+#video, #canvas {
+    width: 100%;
+    display: block;
+}
+#canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#detections-log {
+    position: relative;
+    width: 90%;
+    max-width: 640px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+    color: black;
+    font-weight: bold;
+    width: 90%;
+    overflow-y: auto;
+    border: 2px solid black;
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+/* Ajuste para pantallas más pequeñas */
+@media (max-width: 600px) {
+    #detections-log {
+        width: 95%;
+        max-height: 40vh;
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+/* Ajuste para pantallas muy grandes */
+@media (min-width: 1200px) {
+    #detections-log {
+        max-width: 400px;
+        max-height: 60vh;
+    }
+}
+.buttons-container {
+    position: relative;
+    width: 90%;
+    max-width: 640px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Distribuye los elementos de manera uniforme */
+    align-items: center; /* Alinea verticalmente */
+    gap: 20px; /* Espaciado entre elementos */
+    width: 90%;
+    max-width: 800px; /* Para evitar que se extienda demasiado en pantallas grandes */
+    margin-top: 20px;
+}
+
+.button-detection {
+    background-color: rgba(0, 122, 204, 0.8);
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 30px;
+    border: none;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    text-align: center;
+}
+.button-detection:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+}
+@media (max-width: 768px) {
+    .buttons-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    #detections-log {
+        width: 100%;
+    }
+}
+
 
 /* Contenedor principal */
 .chat-container {

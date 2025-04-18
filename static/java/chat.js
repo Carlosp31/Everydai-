@@ -211,14 +211,18 @@ const domain = urlParams.get('domain');
         .catch(error => console.error('Error:', error));
     }
 }
+<<<<<<< HEAD
 //sendMessage("Hola")
+=======
+
+>>>>>>> ebe241403eeee1c07c1b4526b4b472a18326a439
             // Mostrar las recomendaciones en el cuadro de recomendaciones
             const recommendationsList = document.getElementById("recommendations-list");
             recommendationsList.innerHTML = '';  // Limpiar la lista existente
 
 
             // Función para sintetizar y reproducir el audio de la respuesta
-            function speakResponse(responseText) {
+            window.speakResponse = function (responseText) {
                 const subtitulosContainer = document.getElementById("subtitulos-container");
                 if (!subtitulosContainer) {
                     console.error("El contenedor de subtítulos no existe.");
@@ -440,12 +444,12 @@ const domain = urlParams.get('domain');
             };
 
             // Función para guardar el tiempo de inicio
-            function startTimer(type) {
+            window.startTimer = function(type) {
                 return { type: type, startTime: Date.now() };
             }
-            
+            window.sendMessage("Hola")
             // Función para registrar el tiempo de respuesta
-            function logResponse(interaction, responseType) {
+            window.logResponse = function(interaction, responseType) {
                 interaction.endTime = Date.now();
                 interaction.responseTime = interaction.endTime - interaction.startTime;
                 interaction.responseType = responseType; // ✅ Agregamos responseType al objeto

@@ -1,296 +1,737 @@
 [
     {
-        "nombre": "Repollo Morado X Kg",
-        "precio": "$7480.0",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTjPtXi5gpA39aHwHRCHxrxx6kjDT5KGK6lzTd-OoIMjK_J-PimxWlvW-wW4Vf5zhckbq5mgvTrGp6xky-3GiHzBukosruBI5hAei_kLwQCVOeRD17ehGJP5_k&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:4116839470015600410"
+<<<<<<< HEAD
+        "nombre": "Gancho Para Sierra Circular Bosch Gkslsh",
+        "precio": "$148000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS__eOoHRJg6FIcGOgcH0t-khsYE7TE7FDW_MZkuzo369WgtWoxA70rKY1nvOwjQfv_edLPIfzJK7O-wdBAgjhgwWYNLTN0dRS9koycd1Une3iMp89sAV3E&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13393371052100691738"
+=======
+<<<<<<< HEAD
+        "nombre": "Kit de barras y mancuernas de 50kg Corength",
+        "precio": "$718625.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRxdO0NtsY0_55cqqqNLw3JsBBJQpovpYh941UBU13W-zwPaJNt47Tw34-cSel0wIemr_lfLllu6qrAKMyZnixmFY07Ww_9jJfSuMUT95iDf-IVr0OaGzBk&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/6677983098957057977?gl=co"
     },
     {
-        "nombre": "Repollo Blanco Kilo | Verduras A Domicilio",
-        "precio": "$1600.0",
-        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRwXAsXggxeXw4yabl9mfOSXNx4XAj4a1ionM0RzDvM82nQlRt5ii-1oz_21_1RcYFyZzlK-xa1bZPo1Ti7A6mkiydaeMEFXil-L_g-Uxu7L-kmWb8R1rqcgg&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:2214570162916180698"
+        "nombre": "Kit de mancuernas y pesas 50 kg Musculación Domyos",
+        "precio": "$520000.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT6s-O6xxY5e0ajQj2pvoqjEHQ9pQfskPYZeikxbnbBEjtAGsvCy2AQJBUcRMxK787cQ9yconi-S-XMfmpcB32Z4jFHdjdAmIHPYNiNhuKUgtiqztCvvTOc&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1594821298017092927?gl=co"
     },
     {
-        "nombre": "Paquete Repollo Morado x1500g",
-        "precio": "$8970.0",
-        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSDdC9GOCyJtidXcYSwTLHK5XgNJ_5eZMoPpryFfDrfwKhPxAEelhqH7gHEEyWqGRZ1s1ATkIWpogZSRb42geL2iWnWwGxb0ZJAmfpU4z1VAwkfLvB9QaGxtA&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3391214113660561549"
+        "nombre": "Kit Mancuerna Desarmable 10k Pesas",
+        "precio": "$178900.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTZJ6nTBXVq1mfWjWzHhfJedla4hWdNL6B-9-YLO6GlrD54VNOroKaLGr9E6cTI7ejzpF6A3axkUuS2FnWIDISyy4zxXgA_PlMoccZYmyAUb3vIINN1o03cew&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:11743669252700698910"
     },
     {
-        "nombre": "Repollo Blanco",
-        "precio": "$5800.0",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRciXuBizpNv3I-5WcJuYfMELLSeoiF4Zw48XsPKAuWkaybE2VUh5rAO8ETTWzkfuFCdMemdfyAjMSc1O7MgI8ZpcVcw4vIgw5JcU_hkdXt&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:4857820522698762672"
+        "nombre": "Kit de mancuernas de hierro para levantamiento de pesas de 10kg Corength negro",
+        "precio": "$179000.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTLNCRgGi0jt__XyxltOhDXVrEkX-RnPSWub9raHz5xjsrZjmr7zXLllSbr0mDwhJ2sd4CYMVGkNzB-td9maxE2UGfbas1H8ecF5-wwB40hzrczR25OGlYzJg&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/7171283053631117200?gl=co"
     },
     {
-        "nombre": "Repollo Tekila - Futuagro",
-        "precio": "$1575000.0",
-        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSLIv2o91nnM6uh1pnaIDtFMe38qhRCUKb7xKx4zkvBx1AxS7IPbry5X70MVVw52pOl2vli-4jQ1BgFApZgVMXptVCioi0jcIQnvS-Tz1Ji&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:2995845521388306615"
+        "nombre": "Kit De Pesas Multifuncionales De 40 Kg Color Negro/Rojo - Homesale",
+        "precio": "$179900.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQohgylo-4uZXJLqQPjumONBPTR1pr99G9XphPRoycp43aby4xxydKTLn180mWw7ViOP0Uk2pIxA_6lHnedsD77YfvPwAsO26rCpyg3Bps&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:9489137321390617102"
     },
     {
-        "nombre": "La Giralda Repollitas Selectas",
-        "precio": "$8990.0",
-        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRBMsISXyWohm_LjqF2LVDPr2S9l0zgGLyrLP1w6QidnExePsW_7YjtxzFoDPi-2zS_tEKVNjsfa4AW-4DtrFS8kI6Ea0Rorkmh4LOJsFa41ZtVWAeG0e9UOw&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/5512711407030386827?gl=co"
+        "nombre": "Bloqueadores de discos deals pesas decathlon",
+        "precio": "$169169.27",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQNkw2NNTDu6hzYa_CCqFjB_ipFl5dkxvyXPICD6V-vKEtulOvLUEnit64q_q4uEXSzVFiO75bNvyiAQEW2ef15Znqn2QJiUGZj2C7TE3LUBk1aV4KbRjHR&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:12780814560871931448"
     },
     {
-        "nombre": "Repollo Morado Selecto x 500 g",
-        "precio": "$3250.0",
-        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTp0SkcRajiruWwJ5pS50dihTmQHiL96iL_Rja0KlPLYZvqxHs9b6ZYp2dGIE_-v0k9qVCHtpIYWD1yrlNyxR6CwANlxb-xIrTgCyMWBk1eTqEib8M9uo70&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:14505977291256761957"
+        "nombre": "Juego de pesas de Entrenamiento de Fuerza Ajustable - 44 lbs",
+        "precio": "$699039.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcS7LtAblB9jDQWsvog94GX_k_e1iAFm0IMi9QsT2n6aJ7XAIeS3wjnUjRPQzwW9dBk2Nc9e2wMMBmKS8zT5O2O-l60cGwcefHMyRVGpwWXtSCE8mvoHPknV&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:1232063152238490644"
     },
     {
-        "nombre": "Paquete De 6 Latas De Repollo Sazonada Margaret Holmes",
-        "precio": "$123576.09",
-        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQRUARhMJ2E2Ifm9bSCZ3h_2oSbQRacyCMTwAJdJUolc0QadldPWqQ92YqCn2pJQYUhWNrXZYlzcZNO_BfFBkJnAwFnCTJaO7VEkPCsxgODkpz6BOE5IRe9VA&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13671215815024996016"
+        "nombre": "Pesas Mancuernas 52.5 Lb Hierro Ajustables Kit Ejercicio- únicas, , COLOR únicas",
+        "precio": "$599990.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRPlnU65pu9a1_h5uh7i_lkSA2ix1oaWTYFGE8YsIIANSuzAXEW9Vws2ySURsTDOhAC82q1ySYhgVIvm4tXz4UQn8bFarbCBt9JTqhic5YTwwDf98A2yDLcXg&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:8585814985113952713"
     },
     {
-        "nombre": "Zapatillas Nike Romaleos 4 Juegos Olímpicos 2024 naranja - 40.5",
-        "precio": "$720396.0",
-        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQXpXO4dTNisH8TpPLyroQekpRAZwwd2U6gYtLiEPa9GNbd66Yo5HQ9qyDI-oH0TzaFcux4WAZ4ZjesMUdKdMuBgAxDZEDLDa2QmC-fkRyz1maG47m5BJc3Og&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/2997850355662771318?gl=co"
+        "nombre": "Kit de mancuernas de hierro para levantamiento de pesas de 20kg Corength negro ...",
+        "precio": "$339000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQGDZ4tprCsx73wd_FT0kK-1NquiD6JxMSOoZ6q3rVptY48n9KXuoEM3MT0vuH5CEvtzuUKr57GxhRepB2i4eJ-njEjTG_JopLbamsKdVJP43movF5KixpaIQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/2966824797928051295?gl=co"
     },
     {
-        "nombre": "Bomba Reebok Omni Zone II Juun.J Negro",
-        "precio": "$2147250.49",
-        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcR2fQWI8SQTnWOverxyEGyDmSHHCju1-AuX01cEssbFoQmfZsx_s-yPoR0L2nqzjAgzn8vdEy1riHZA0prM-GhMyJ326bygCOsfREPS8lNBQillBzMyjLQt&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6782773911766097925"
+        "nombre": "Kit de Mancuernas | Sportfitness",
+        "precio": "$214600.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSuE0poeQEBFXQSG6J_AGVFTb_tdts7iOPBwJmSXPSqE51Yh4SHFZ9jkFi9Npy_3mjKNQsELIN0tVcx-PivreS29uzukJN3fDvPHFvZVhx_e8O1jAsApNC9&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/12596611978532300214?gl=co"
     },
     {
-        "nombre": "Cámara Digital Olympus Pen E-pl8 16,1 Mp - Negra (solo Cuerpo)",
-        "precio": "$2021737.84",
-        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQuklxozfa46GfQ76MwMW_hc0CzZRtTofx_dmWySFL_O3_SS67dvsnCaLLUSYVRogLGIGQIgiUljL65UTTz3YKfhr0tlsEx8YAcc1mFrXFaZ9xzNN0qkmh1&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:16443211542974803899"
+        "nombre": "Juego De 2 Pesas/ Mancuernas 1lb Sportfitness Encauchetada - Sport",
+        "precio": "$19300.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSXOwGH-M6aQSLPDdAaxxg1y-lf06P2x_hDTx5eQCeS5sJzAiamy5ATLwIDwB_ql8upe5mxZ-2KihAO1T6niv0v-xbMihv3H-fl8jPfVeJRNjPIW-jAAT1fPQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:15427455472879637277"
     },
     {
-        "nombre": "OM SYSTEM M.Zuiko Digital ED 75-300mm f/4.8-6.7 II Lens, Mount Micro Four Thirds ...",
-        "precio": "$2862018.0",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcS7M3Yaio-yzP1k2XIjqQRbJcsYieVUkQW3c7UgBiV49TyKhhNKB4v6kOBQeoa-qLhcGzPjTJO5wnXmEDAik71p7wjUqUarVFFckElRBpVBS47O2w1emcUKTQ&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/14374518910576656443?gl=co"
+        "nombre": "Kit Pesas Barras Mancuernas Juego 112 Libras Profit",
+        "precio": "$459500.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQgyYMuBOELOcMN1JqTyUi5OngUrPxNkrilkpkBmKpKcUyXKnsQysDIvFJLkHecaug48jzAgbIe6KFLL7c8gteyz7NFMdd9aCI5nq5fZuq2imc0A4l4W1da&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6121054737995511827"
     },
     {
-        "nombre": "Repollo Morado Fresco - Colorido, Nutritivo y Saludable | Verduras de Calidad en ...",
-        "precio": "$4500.0",
-        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSt9miHX2GsscjdpEFkSs9G12QVQWdXfLthWqcGtu7oJp7tYRxj7pvti8gKuGjwEzGWo-_UHCrTtI0UeMO8uMWZfO0quAIbxMAXtz16RsvRXK0p84Exh2NBPA&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:1540182445437360408"
+        "nombre": "Kit De Mancuernas Termoforradas Con Barra Plana De 40 Kg Antideslizante Color ...",
+        "precio": "$334900.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQ84Br_AajxBZ2be-7qPwAmf0b87csnbDp0zN2sQXCiL4i45w0_CjF9mAJAN8U0DRVTBd3RESLw3qR_UUSJYZ6lrSTTHBVA7qE1MJftoAAYAeG-1I3td5th&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13345870477397565384"
     },
     {
-        "nombre": "Zapatilla Olympikus Look Femenino",
-        "precio": "$244990.0",
-        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTBixJ_KFb6eCUX0j44IzW1uy5Y2h4Rq66rq2R4q44E-ZECM8ty8wtqsebKCcZJJQmr6tRg88jdOHdNmFqLz2s7ixsnwEhfaUYCDhYzfOJmrraKDTMBpq5Q&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:617900167463357742"
+        "nombre": "Duo Mancuernas Neopreno 4 Lb Sport Fitness",
+        "precio": "$63600.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSs6OTdaYmFwvrIJtgSVx4zD42Vdwtq3J1r1jDDybA3jw68SKUWJNFBgFek_rpaXTu4jdUnMumff6ZpipcGA1rHZQHtYTMEk7zw2uK0O4-CT7BQ-kCdZ76BIw&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:11856554269571237743"
     },
     {
-        "nombre": "Tenis Mujer Reverso 2 Olympikus Gris",
-        "precio": "$354900.0",
-        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSUEZhHeNp85X3GbcCB8Y39B6Iny5tCoXEOCyI3IxZ4jffN8TyKNhWRrseaQlcbqcPyum9NPyYY0bKmmEocS_0MEDzzfMVUszb9MTEd3WrK4-LMxKjQA3Oi&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:7465768375685882434"
+        "nombre": "Pesa rusa de 6kg Corength negro",
+        "precio": "$129000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQ04ql-dTB2_tnuhTBG13C6Y54nuFnTnU1jtnGtXPtN4RO8jFGPsxgIEARNS9LLjElq6nZhjTipoQMPYjTVEsqU58QQo1qdXiOslqnlA6CwidWhcfbRFySi&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/2067410875892253067?gl=co"
     },
     {
-        "nombre": "Puma Mb1 Lamelo \"be You\" Verde Gecko Rojo Explosión 376813-01",
-        "precio": "$618911.97",
-        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTmGgfUe4lETu69k5KuPTxRiWVLJPSetinGjKf2YXl_us4Gmu0NBswK4BlK6QY5OtVNA_O0DcPmRu7o6wYIiDAzY1sxM4aOrA&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:5334113886590911760"
+        "nombre": "Par de Mancuernas en Neopreno 2LB DB2171 Sportfitness",
+        "precio": "$40000.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTtufZnxiu9vUaStS3D9eb4GaXGg3AQmEZ2pmAPp2nZ9srpTDgFpJyYzhn3YBg2Pb9-5oU2HfXrb7Z2MWNP6gYVqyB1QG6l7auWw6tr5yoG3ZrEszBVnIKiqFg&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6389192228397246322"
     },
     {
-        "nombre": "ALTRA Tenis Olympus 5 Trail Running para mujer",
-        "precio": "$474416.65",
-        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRiW5IACEvUfbUWAVtAAkkY8_mfh7-_LZn9NNf7C1X0rwC2XVuTUkKXRB04YRRTb0E08C_L1l8IZnG3VcPDwra5Crb0349iK_CA6BcurXk7j-PO4eDXhYMuSA&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:18136258958062364515"
+        "nombre": "Mancuernas Termoformadas 20kg - Fitness de Homesale en Home Sale.",
+        "precio": "$99999.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcT3HYrH7m_zGEpFoaKR9_9qzwDvhxr24W1bDVeh-P56lyWoidkhwCNujgMOzzroOtkfBgijpAgjyVL8Ok_31YButUivu2FPBUfEVNNpQ1NVJgHFiVUpQIef&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:5059416183831315842"
     },
     {
-        "nombre": "Reebok Pump Omni Zone II en blanco y rojo",
-        "precio": "$637274.72",
-        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcR_x8Dl6amYmNrT0-LBwdfVnnwMKsEuCF-KhFqMw4Q80tCAWpCkA1m3JpXm5Bd-KUlYt3feVOlR85vOOvVKGXxwg57sNv44HrL6peDoNOus89tLT-vBGGO3OQ&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/10356479522504695404?gl=co"
+        "nombre": "Mancuerna Encauchetada En Vinilo – Sportfitness",
+        "precio": "$6220.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQvfYWcKRUz_LRQE2Gp4rsoYEN9aGpQTNYXlSgwKJrpzZT9tBZklZsx4MD8mvhLSveEVExAddiU_6_uVkkFjvsMTsgrkQwHOtvx3tfXNXdUAEv2ByI1ej4mTQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3994303614120652034"
     },
     {
-        "nombre": "Zapatos Para Correr Reebok Clásicos De Nailon Para Hombre 233 275",
-        "precio": "$206097.69",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRNPy9nsT0fCae9XMSywuirTv-41tZZFlWl-DZHaajnTV1DTu8U2hWmgN7kacgu_TS9NJ0NLWdubcjK_cPZVdO_M1bsrWgGjersMWWRCKtVpXhJOPEA6uajpw&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6879076848979712831"
+        "nombre": "Kit De Mancuernas 6 Kilos Set X3 Pares En Vinilo Multicolor (MULTICOLOR)",
+        "precio": "$139999.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQklEy7aRnfXwh_OAYnIYxy-KJDJVxwaht8qhfHotqZu-DtfRwm55ZmQL5Ed0xs-Zh8ux-rLzwXdPMZjkJEJW_MtwfbvpyPUeaeE2mxph8UR3WpXAYuhdCjxA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:1598996301494380786"
     },
     {
-        "nombre": "Bomba Reebok Omni Zone II Blanco (2021)",
-        "precio": "$1814406.37",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRC2ZYbTdJMnk4PqYjfSciVrFEA3c_ziPqBeSgfkYWdDBkduQJrGhd2KeUGjgXb0J0CJ_iIOiQkpbTZzORYoDPemOxVSkJKLdyGj8YmLBinRMUCRx9EAKyk&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/8614820548589627415?gl=co"
+        "nombre": "Kit Mancuernas Pesas 30 Kg Juego De Manc",
+        "precio": "$400900.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSl_Bqbu0vi30i7SAVNLuIlv6Yh8O0tyNgc2ydmqu0jKEI_P0axe7YXCEi2_23KSbqbq3Do8GeOMvpTEINanBFGgOs47wpIZuQbDJiTWbk18T9HWoC_n8pm&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13043481406499749376"
     },
     {
-        "nombre": "Mps | CPH2641_C | OPPO A20 128GB 4GB",
-        "precio": "$487000.0",
-        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTQ13p7KvSsZAxjydN4plOHZOYgCQa2MO6Nuzb9Dt759PoJBaH25bf0NR7w-aVSoUWvG_j8TuZ5KuGOwkQ-VgtTWGNJZ950fF5vw9ghX_7CCHw7p9KwPeo8sA&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:16711951699168958201"
+        "nombre": "Kit Juego Pesas Mancuernas Ejercicio Ajustables Encauchetada- Negro, , COLOR Negro",
+        "precio": "$471594.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS2Avvte5qL8RjgP6J8ONE6qcLFnyX7mj1Fxt5Z9GrRWL_gn6jGhlWVGB2r8-9EhVKMZ8VKuSt-vpjBsPtn9cyTMUUYgDQxaProsRcrCW0jb6t7uYkrvP4l&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13543925906037148639"
     },
     {
-        "nombre": "Zapatos Retro Para Hombre Reebok Clásicos Harman Correr Fx9129",
-        "precio": "$164836.89",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSnMVB_hDja8wTntx6Vb18h7Qi5c48nWHthuc34s30iEQs_0L5lW4y0vrSNSwTll7QkTcSrMEiNwe3oIu5YAQZ5VxPMlB1qP0iWP_39nt2GGiS8dm5aQ7fM&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6898079193596566709"
+        "nombre": "Set de Pesas Pro-Form Ajustables",
+        "precio": "$433238.38",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRy8pSe0MlPuRg-YdUA_E2mnEpTWfInR7RBx_cdRWwnK9lvrZlOUGWMLsBa2VkdkN7wxo5oA_4q8X3vMeLwlBdFF9wceHAyQkmG-s73Stu3Qg-5xyttx15yJQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/12759245466089472448?gl=co"
     },
     {
-        "nombre": "Bomba Reebok Omni Zone II NERF Inhibidor de Luz Negro",
-        "precio": "$1846878.97",
-        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRlxuuKOWeAm195YnV80j3Zwg-iUWK_zSbzQdPnya0Z24KfNycxZ1oeKuyX7mbvjRX-rxyZaFdS4vy36cV_vKMng2P48etAId4HEKB2zM1KSOGulMlZIJLK&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/7462198694476405254?gl=co"
+        "nombre": "Kit De Mancuernas En Acero De 18 Kg Con Maletin De Transporte Color Negro ...",
+        "precio": "$314900.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRXdc10C7KUpMK7VGdIJsL3yYmUViqyk_ZLkmDe89TyKjVM9B1Ygu2Dq-Lk0bPJmGvRSbuh_-kNtH2GIZsxpTfjEJRFMXx16_m1iG60Y80xJBeXfW2w8d2BuA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:12575353950604255644"
     },
     {
-        "nombre": "Reebok Zapatos clásicos de nailon para hombre",
-        "precio": "$308630.77",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcS_O-glkILTvVouHNf5A9XuKXBuoPyizHeXl5W85cmLkjlgcolwvMMhEciYOHsoLnm-3sLxUg0fdTzJ-hhCtdZiHZXMpYZCsa84BfVVMLM2a_wziOmVGlTL-3s&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/13724956929419786988?gl=co"
+        "nombre": "Entrenador funcional Home Gym 2 - Cable Crossover - DAP - Musculación",
+        "precio": "$8676736.65",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQtiSq23xv3S73hHEfhX71ATJWlqK60IbNogxzqwvV7-hmhxfEvoUHrBnooxEWKgvQscYVC6ze5fEcfYQ1DBBxBcDyAqCw1pnhzcTLlH3xpCXiCxgxiO_cZ7Q&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/187092231278914764?gl=co"
     },
     {
-        "nombre": "Celular Oppo A20 128Gb 4Gb Ram Ocean Blue Smartphone Unlocked",
-        "precio": "$589369.0",
-        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTFPJM99d-iLb7hx3ZjknVLvpSrVUeaxXQXfEvKtuk4Zw1ZaoqD4LWce2IgCEcw_icv0TUZSSrjCKka_K3jRFWZHTe0IEM_knfMwdl776IumTF9im3YWgR-3A&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:2163829564246296313"
+        "nombre": "Kit De Pesas Ejercicio Mancuernas Juego De Pesas Deportes Fitness Y Musculacion",
+        "precio": "$319024.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTIguh2ouAWjGoWpxm9_dqH5kRbk4QIU6vMdntHV07Gb7CWBhpD1VVDBxn_HtfHrCG1TLBF0Cf-jcWRD0x757X7YsaoasKcRr0ZsvvXFltApoYlp5FaMtY73A&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/12174133236719618246?gl=co"
     },
     {
-        "nombre": "Lamelo Ball X Puma Rs-x \"\"galaxy\"\" 1 De 1 387764-01 Para Hombre Talla",
-        "precio": "$389048.06",
-        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS9FAmwwSIPsh9AE2XtWI_Sai8PiUKTNJhsMnyERjDgsxSYNSjaqn8lJUmJ_hz7qYBhvThlXI0cwSoGaS7jBqa7pAzd0ZDU6unylKIv82OZHEA7nlg8w8zE&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:1473761990004612120"
+        "nombre": "Mancuernas de Caucho Supremacy 4LB (Par)",
+        "precio": "$39999.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTVyg2DoMulZT_kMl7J55PYOcbK9uB2vDylTCX3DcbdDPRVEOdfMXdnzo8lzd7_5ONUecYXAtGJi6zcTtq2p-9DmwIuxrkfVMy6qB-hFZGM4b5cFIRauIwMvrk&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:2038726554339839075"
     },
     {
-        "nombre": "Reebok Bomba Omni Zone II Inhibidor de Luz NERF Anaranjado",
-        "precio": "$1846878.97",
-        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRU9L2KTxnf_ApA_kOi7Y7cVY5Lwd4TEGcsWersHpGp5zejfl7zh-CWG9RgivKnaZurm9KPQwjtdeb1j6DO5d0L2VF8PM6VOtmFthFyxFjptwxxa8ng-gqG&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/8788103622396641790?gl=co"
+        "nombre": "Kit Set Pesas Barra Mancuernas Graduable Juego 52 Lbs Profit",
+        "precio": "$294900.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQLjpuhmi4MoVe2aoKhc8MwvZwyDu31cKfmAtgbhLNeNan7n7qMtcDYCAlvj3DUUdqpmEPRfghIh_gkZYX6WgF2GXyGqWfxyW436m0l9Mic2marWsaWyA-4&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:2921155637631097277"
     },
     {
-        "nombre": "Celulares OPPO RENO 12F 5G 256 GB 12 GB RAM",
-        "precio": "$1880000.0",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRtJhhIyusBeVedR9tSrcwbp2OOHQRHSr0jgJUUBT8wNygLFkmBi7HyH5iTLPuub2q51Yme2wlE7jN_z2mE3Hp58n78Ng31-xJbia5hpFewcNu4W2GAE7RPWQ&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3239297050186335682"
+        "nombre": "Par de mancuernas de 2kg Domyos azul oscuro",
+        "precio": "$75000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTkbR_AD4wa9Umu63vvzwmuM4JQ7WdpAAcmjKqryR08sp631KgQL1_FwW4GVCQblZOK0KFWl3737m46OwmLno4FEKlZyGcbV-wn03YRGdKnKjLCYF-vaIlx&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/2226304182847250310?gl=co"
     },
     {
-        "nombre": "Zapatos De Levantamiento De Pesas Nike Romaleos 2 Para Hombre Talla 10",
-        "precio": "$1031519.95",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTGZg_POEBU8qNi5LyJ42UT0tuowkbqPN55gsNm8Ygr5cyCfAtVFlkXbnSRv95IfNJA7XrrEiURMXll0npt24hBZj14V8owrIoa3945trM&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:16938706386754054446"
+        "nombre": "Kit de Mancuernas 50 KG | Sportfitness",
+        "precio": "$775000.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQ2o9p6iZCwfuhtQv-TrEQik54kRJgvAz3pEt1GWuFKACZWJCc5OcZ0fr9qoz8KYQKBatzVFkFZD9Av6EFJYJsFS7QFFdr-NFvInf_-RUDopvEIxG1xTnVWfQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/8850908878508576377?gl=co"
     },
     {
-        "nombre": "Tiza Reebok Club C 85 MU",
-        "precio": "$2082305.3",
-        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTX2ZIpJjXuqMOLf5dJyuOragu_G40JdTVlb3iwCW79xWarUBhLzQkVrB7QVx_yP7d9IkzPOyMKKt4F5JAI2g2Hv1u-kaeh4vyQoy52dwIlO4PTopj6BzQw&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/8130242645521379282?gl=co"
+        "nombre": "Mancuerna O Pesa En Hierro De 5 Kg - Generico",
+        "precio": "$45000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQXsKZk3O529ElAYgkEd-ftqpzwehpYkeE30adP2M_6xFJEi2nu-jCFKwTFTa-WLMoeuYdY0tts_1Td1eK73KFmmEN7JCKX7Ro-gWGEm_jgvUs5TRFjtwVRAQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:18200984707436679640"
     },
     {
-        "nombre": "Celular OPPO A20 128GB",
-        "precio": "$499999.0",
-        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTGE3_gbyPjSNvnvJNZ-r7oT1rvlT6Ewkk2gCF0-0sl44QWNCrq7m0mDYaGUM4QfusiRbhzCpwC1oIDCLRJB7aTmWgFukMssoLo-iYllYrRyX-7HhZp_L-V&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6981418737219160679"
+        "nombre": "Kit Pesas Mancuernas 10 KG Ejercicio Gimnasio",
+        "precio": "$110000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcR8-kgaXTjssYgZKcWJsncfW5_oFV6_h6g-crVAnwV9z4UAeOiicE-7YUavhxUT0o4PPbSXx-o2SjzImPEaigxBc8M9BJvzbw&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/4526438817681653417?gl=co"
     },
     {
-        "nombre": "Reebok Royal Tenis clásicos de Nailon para Hombre",
-        "precio": "$267782.58",
-        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSlGjQYAdA19YOTnxWiypz8jaBHAcCaXq0PxBJm8-dWv2QnHFmB7zM-4nw_krMyrlrPfqYr4PUrT92_4BQJJZPIbVqENQdI-JVYHL2wsuybk1Zz5dh9TN95JA&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/2690407873257684918?gl=co"
+        "nombre": "Kit de Mancuernas 6 KG | Sportfitness",
+        "precio": "$127600.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQId3fAxKbOVcRd9AouufbLsyaGOlY9r42v8_oWbaaVGWdKeLZcANkVk-ZEtRNVYUXkkwg3gepBZtZx4GPbQzfTT4e9wSXArrEvEePqth0&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/12053491747941825599?gl=co"
     },
     {
-        "nombre": "Puma LaMelo Ball MB.01 Rick and Morty",
-        "precio": "$3811471.1",
-        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQyCTzH4UIGTLU6qSKvk_U1elOE5TS44aJFE4Pce9yxaRZe1DerDQ4coWTyoXAhilqfJnu8oqLa2d3ECdlVqNG7mHO9cZJCOw9wS-WQoi1SuluDA6Vd4IV7Xg&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/5170132914128570017?gl=co"
+        "nombre": "Kit de Mancuernas 23 KG",
+        "precio": "$467600.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTw_krR9-pp2-l6ZkZKf-HQnxym0wi3fC8EFnZX4wHbiGoJSkzAwYtZNPPTPpRb8lxNZQLZrebikKXTKzfROV9-fArlQuwQ3Qy7VWpjfQ66DUvgmNovW6mD&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:15088704726401609859"
     },
     {
-        "nombre": "Reebok Classic - Tenis de nailon para hombre",
-        "precio": "$330045.12",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcR7qq2nLOdPJdKwZksY6B0gL0eSxS8HDhv8jXCxXU3zxYs4hpPR2-KE_ZM2cr38ohLxCdJQxC21JcJmXAESgxgMQ3GshAi8j46WzO4MpAzTE4zbBqVr2O2hfag&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/12304604657226357640?gl=co"
+        "nombre": "Par De Pesas Tobilleras Multifuncional 4kg",
+        "precio": "$24900.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRXlSBzG4bQTRWdri88yzCvAmsEJbwz3bm_ukR0XYQSftbq-3uL4LRKxEhkG1ePorW4sLW5FLMOe59hnNRTOF6Nm0Bap_Q32KXUf6I8Emql&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:12972194226558637051"
     },
     {
-        "nombre": "Celular Oppo A20 4Gb Ram 128Gb",
-        "precio": "$630000.0",
-        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRyaTHC6gIGaG6TgL9FtlHBoYsVPTuERgNxJpJfyexI_N2okuLV1uckabTwR3ZLLfPmjx3wJDHbxPj4uyvERE6EVevpfepVfXd9p3AsOjFKzZQqPajtL-_qNg&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:10882342147935246544"
+        "nombre": "Mancuernas Hexagonales Pesas Encauchadas Sportfitness 17.5kg",
+        "precio": "$210000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSXp3Q7z_6EK8t6HrDesLLEWh6jK1ZU_w0j5gsvCEUgMQ7wQoL_uHhvQHvHcLA4psM23MqKqb0LPntBNNoM5UhZVpKmhGOutheXHi9MrfMDuXv1tVilzCkA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/12962833905732563453?gl=co"
     },
     {
-        "nombre": "Puma LaMelo Ball MB.02 Honeycomb",
-        "precio": "$1250194.99",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQ8p4I6SGafPQ3u54Epv-CYJK9O42TEeq0M8cgVA0BJtVBYgiTWFyx2p8NZhnWYFiW5VW0h_u1acs22jcNOWsODhx3J8KkE6OGzSeeZETlmtlFzRGsMl_DYmw&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:12958290163638280867"
+        "nombre": "Caja Mancuernas 1kg-2kg-3kg Set 6 Und Supremacy - Supremacy",
+        "precio": "$299900.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTXIS3g86C8rVTGR-z6rqGJ1zAqMTWNMdYFIjf67KIAeJEk34Ibi0E0nGp_wtuNZas58py2-0Z21xxP_Er82e35OQYrISz29hTctogY7DmI2X_5L66J1Iqu&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3795099281610825742"
     },
     {
-        "nombre": "Puma LaMelo Ball MB.01 Lo UFO (para escolares)",
-        "precio": "$828051.23",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTFKX8_ejWFnUnBoiZP-GdMe8nI6MNG9qrox1fIDaSqmkEbnkeIf5ykivPZMHJYllq1LhHUutov0mvNoXjoH5GgbA5_j73kGBkqlwwVHKvbBIfPiLDxLeoKCg&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:8609989680544535781"
+        "nombre": "Juego De Mancuernas Ajustables Compactas 15 A 90 Libras",
+        "precio": "$1339900.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRqosgypVYWSGzZstfkR6n1TjTbazsFiJFi9dBcDJnhh2sNIxwOKDXROB-0Yblb2kSsPtcYUozfKpf0vR0K32aNTyRSI5IsfwthKGsGDG_NMso6RToy0fgp&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:14280843337212459912"
     },
     {
-        "nombre": "Olympus Quickmatic Eem, 36/2.8 D.zuiko, Defectuoso, Corrosión, Tal",
-        "precio": "$61891.2",
-        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSAd59fzrvendpdP1hgBUHAMqZIx_xPOdewujZcs0oCBMwGqUUXtay0vIe4OnwT43btv_wsW6Kr74KjZK6EYq0stNBsCnl6pZfWiCFqfIayU4xeXXLfsk3O9Q&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13939345595773308716"
+        "nombre": "Set Par Mancuernas Pesas 3 Lb C/u 1.36 Kg Neopreno 2 Piezas",
+        "precio": "$92820.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcT8yfW35T6keV___e3QPRiF52QNKNpWqhX_M4SRmiWA05--lb8W-j82e528UHaVniKySXz_iiLGJXP9oXsxCON_SOhBWeZRVA26P1_Wak--5v2pj56sWQUh&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/9638689160411137482?gl=co"
     },
     {
-        "nombre": "Reebok Women's Classic Leather Sneaker",
-        "precio": "$527679.7",
-        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTOdc_AaOwo-cqy1TnvJsW2DJkeGv-hic1wVAJbN3PrcP1t51wNUIzU5IDwzYRJYw8OY5fpQ8gNc1rP6_qBHWo9aQtlQegKLc1quuAlYat2MbTesb5tMoRE&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/3767100338017467421?gl=co"
+        "nombre": "Par de Mancuernas en Neopreno 1LB DB2171 Sportfitness",
+        "precio": "$30000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRD-aWHt0rv3O0ao0gMNkVjSK5w_9piKtMRiH6zoMQKDR8MbG-_vbyyo-KgTl3WrJAbAFciIN3ELfGhjJpYWkLAs7LjGwcx4jp56XNXKQiK_ZnFFuY4RBO8Ww&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:9065830439837728575"
     },
     {
-        "nombre": "Smartphone Oppo Reno 12 5g Ai 8gb Ram 256gb Almacenamiento-versión",
-        "precio": "$1918214.5",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQGqQDaRDBnCqiIUJDZE3mWmJkyesVMphDuc5G3B7aR5N5Nw5ruejhVaY7VBn-8SmPm__SQDfVZYpK8EF2_sEW1nGT2C8SDuuxHi2QRDpuU&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:9367563448945769591"
+        "nombre": "Kit Pesas Barras Mancuernas Juego 152 Libras Profit",
+        "precio": "$564800.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRHLjdwycQVdePgwAqUSGG2QUQG7WOd9DfXfHDYfbXuc0TIw377_FIC0QZdJckolj24OTFs1bk2t8099Ii9lm-HTmGNdqZdZBdwZi03kBUeyZjWKHhu6dGg&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:12494788947562969382"
     },
     {
-        "nombre": "[379231-01] Puma Lamelo Ball Mb.03 'guttermelo' Para Hombre",
-        "precio": "$1175808.96",
-        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSlPwXrSWT1uE_lASZlIISspbrf0iT03JrcCRu_jM5KegD6JLrCyALqvyEul7-krOQX6ufwdS4RWvI-RmHAUyjgUckS5F7uZGXoIZj1VQo&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:2322597723136510735"
+        "nombre": "Pesa rusa de 20kg Corength negro",
+        "precio": "$350000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSObbUM7_K8KjpttyjFnpRNlWlM76abOzIw9Ji19sKXKtzHdcA8NlzjaFCnPVWmXVG7MHwEj2CvANX8DVwUZZZYuUaO6VX1XNKt3UxtU1Ja&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/2699789230095800357?gl=co"
     },
     {
-        "nombre": "Teléfono Resistente Ulefone Armor 24\"90hz 24/256gb Ocho Núcleos 64mp",
-        "precio": "$1892632.8",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQK0UqrV7dVInxK8XlSXLuO0uev2sknbsx62EQj8nG-ykboATzTz_4yxWhHFb2CppW6vwOmeHSyBILgos5fYJyrHnJtIYxGfBA7ndV8r8yHXPzKmh4Tf0py&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:4404637556447909376"
+        "nombre": "Kit 12 Mancuernas Hexagonales Neopreno, Set Pesas Completo",
+        "precio": "$340000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRcUA4zqzAz-KTUq9HW32fcnMaNkwd6jYKbF56vFv1CfAQm5sabN68E3XR8VyKmLBDMt6_utG_Xc6pHO1dS3W_oFUlOw6_jcXTf2V4TEaC7UrDUPtQIaSMx&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/6602545384881081815?gl=co"
     },
     {
-        "nombre": "Teléfono Android Oppo Reno2 Z Doble Sim 8/256 Gb Rom 4000mah Octa-core",
-        "precio": "$693181.41",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTvpJPbOqUVeNATqEXtl3bz-1IsW9WJT_tOeQT9yFJea5YrshkQhjsZRWrq5waDdUgLixZ0ybrMM4RO3wLM37_VAenk-T-kZgXREsilC5o&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:5199308664448944167"
+        "nombre": "Mancuernas Encauchetadas (5 kilos)",
+        "precio": "$69000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRQQjArYP0bAFI2bB6zXiQZUSfSpx9zOiOLLas5RCjsdTR6LrX70CjsrOAThbl13nhfnEKr7SkvrseAdf3kGTjj7cev2aiaSu_a0jG8D32S4OAAn1gQQv16&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3137120984152259683"
     },
     {
-        "nombre": "Oppo Reno5 5g Doble Sim 8+128 Gb/12+256 Gb 6,43\" 4300mah Desbloqueado",
-        "precio": "$878566.17",
-        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQ9lsyGVXPE4ECDzQZLjUBrADsrkjIRNvLYn0EqF99v6BpwZAP9jOapOUwL_n6hxTVV8X6ho3bD30CSyQXmarltjxq9lPUNkiB79zDsdnIoP3fim0BWLIYIUQ&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:11460985449533266708"
+        "nombre": "Set De Mancuernas De 6Kg Vinilo M92084",
+        "precio": "$116697.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRdWQDy3E4mxIT1MGJg28WZxjOM59eAESu_boavTNPjmkNQKASvGuZct7AeIkSh9rldQsesO1_AbDQ1JsighIndGbqnGRBuCGw7zxRJj1rua-y3ldlWutNy2TIr&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:14212792368550504343"
     },
     {
-        "nombre": "Teléfono Original Oppo Reno2 Z 256gb Rom 8gb Ram Doble Sim Ocho",
-        "precio": "$627164.13",
-        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTV1pFD-LAeOJJSGBN6V104gJKJ7KVxaCDlfvk8vFMtZqybLBki_Sc0veRF4ePQafbRHYlT0eauKCpQkuP4cIg6FCfn4qtFRqHNRuu6QbINCvFzT6rDaIcEnQ&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:16720069654834202311"
+        "nombre": "Kit Mancuernas Pesas 40 Libras 1 Discos Ejercicio",
+        "precio": "$199900.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcThD_yH1uJwbD7z1kT9PU6tBQ2LMryTHqk7YoMYP-iuJZzy3XNx3d7kOQndV2vNQyuJguJSzyPJZdlgiYyndVCAv0GkLwKFLtKqbtN_WHgmnlDg6ZEfX7o&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:10622601684447617918"
     },
     {
-        "nombre": "Oppo Reno8 5g 6.43\" 90hz 128gb 256gb 50mp Dimensión 1300 80w 4500mah",
-        "precio": "$2516578.59",
-        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcT9gQhK5GpeIt8BUFsXiHHwqh9CaqgbIkxjAM5lB-X9Bp58QxhtexYkEt57TLus9vjL5C7g-6wY6TG0x5lcPl_NhQCvlz-bF4vX_slP_3FRWgmz_LLs3fpx&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:12317690045076110869"
+        "nombre": "SET DE MANCUERNAS 20 KG",
+        "precio": "$288900.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRCth7wfMkVAKtFG2BXmZL6a8g0RBRV8VdRw1iLTJFkuD1NMVOKmo3DtIXGW89Qp_L8grxVEfsvMl8btmqhVA4GtSe3A7xV53EB_aIKDn8PMCaNvgS8sZjaWA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:4186817407211368198"
     },
     {
-        "nombre": "Nuevo Smartphone Oppo Reno2 Z 4g Doble Sim 128gb+8gb 48mp Desbloqueado",
-        "precio": "$568903.88",
-        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRJISfrPVgfuWLZOBweaimS5n2rKh3llmMggm9vt3HtlTmq1EH_maDi-QACJmUIPGgB3w5Wv36V5m5F6oVFwve4fTADIPmturWUf4eaCV_LPep1TdCig4PP3Q&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:17730826649000192922"
+        "nombre": "Kit De Mancuernas Termoforradas Con Barra Plana De 20 Kg Antideslizante Color ...",
+        "precio": "$259900.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRqkRVfCRTwj4W9TUmdb2RgMvnMJMhZvvieHza9I8cD-iXJczil0vQVFrjY0frgHQcqP4mJTGacrOyTt1Q0Vh9qM2WbitUT10J-OUYAFyHl4sGy1URehVI8&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:703069146687663895"
     },
     {
-        "nombre": "Oppo Reno5 5g Lte Doble Sim 8+128gb/12+256gb 64mp 4300mah Android",
-        "precio": "$874728.92",
-        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQyN7oaqSb8FBk584EliZDMd6bN5m3eMCa8TQYCIyHeQPIninC9yaLF-OwN9QlCeMcyU8AHUqKn4ZJ4d9osKK7nfmvLJvw5atE7ZBhCsE6fBqSYI2RlBKC3KQ&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3074724511945416219"
+        "nombre": "Mancuerna Encauchetada De 2lb Azul Deporte Ejercicio",
+        "precio": "$34900.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQrfO6C-ixuB5oww9ldEFYdJgxduMyjZPzdX7vNxJONTuu8KqYNy54sQA7XN8pyFn-HY9cS4gnvBrH5lAD2hELoyzXFvV-5xcG9XsTEHyPF5TpEpzOJ-vQ8&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:8947555102701389995"
     },
     {
-        "nombre": "Oppo Reno9 5g 6.7\" 120hz 256gb 64mp Snapdragon778g 4500mah Por Fedex",
-        "precio": "$2468097.15",
-        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSnFnKS6It2ISebv6kDbX6G_mh_JrFyiH2pDK0GRlZBn85UM5z9ZE4mJGySrMbyyIFaEM3kyUGvJFSZ0KHSIvqXdgw_iAv5JQ&usqp=CAE",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:15101752874692737456"
+        "nombre": "Kit Mancuernas Encauchetadas 6 X 10 Kg. Pesas Personales- Azul,Verde,Rojo ...",
+        "precio": "$189990.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSGqcmb9oLiq-iJXa2EL2_C97Q2ULC6ZAQySmNhVFmbCejcc_kYFD6yr2wV2G1Ie0yQntqlPGIuzMwEAWNh-K8_VaN6B6thk7otOOEyMcCSHZslTtoBfcCkWg&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:1766781054171663651"
+    },
+    {
+        "nombre": "Bloqueadores de deals pesas decathlon",
+        "precio": "$173295.35",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRWHsJFdn7gJOPxdaFx49rMFRS0chTfIU2GQ_UlV9ieZpqsesgtvzZwGvxIkTGnu-D9e-xCnXLJOw1-rLje4OTNjz4OoiJz_pRgQSfSb7mpRaFflyQwULdkHw&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:14648414455382264250"
+    },
+    {
+        "nombre": "Mancuerna Encauchetada 1 Kg (DAMA)",
+        "precio": "$55000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQf2FAnwyzQKB5awmiH-dNrsbWYVVwxd08nWKwleEluIyv4NdFfZGBClwzoTUnPtRWNdg80InZCEvYJshhF03Tz_h08KvcD8vliWHIXAGWtdiDnJarM856Y&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:8265587943212723544"
+    },
+    {
+        "nombre": "Kit De Mancuernas 12 Kilos Multi-funcional En Acero + Estuche (Negro)",
+        "precio": "$259900.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQVy8bkzhH3E5c_jroDFAT295-cMV2KWPo282gIPpPU2U-va11NL_9RNJ3ZiV5YR1ZSPmuAspJF36NYiX5Cc6wjlJMEwLay65l6xcBMnPUdIv5JqrNAu0PJNQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3717122457286831642"
+    },
+    {
+        "nombre": "Kit Mancuernas Pesas 50Kg/100Lb Antideslizante Con Estuche",
+        "precio": "$1210110.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRKJX1qBZgdTo63Y0abpgn-vU7KQA-p4pM8qBZjTBKJx59CaZ2asvQGKFyCUXq2-hH2zqZSzzhehPvTeV7LSGmqZEmWKVzf_tqNve5I9sYCKCkxlSnoGxfA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:8050296208598645541"
+    },
+    {
+        "nombre": "Marcy Mancuernas De Neopreno De Colores",
+        "precio": "$22276.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRRs3GUYhMs1AztLkm1DgQdSridm-HfJjVXqziSKw4hZy2adoEO8sbZuptYib1npR-NeIN3jFZxfRAf7Y6TWCianmGw5R71Z_msOpYGQ-ctVLI4VaYNhuPSuA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:7155487211996869437"
+    },
+    {
+        "nombre": "Pesa Mancuerna Premium 15 Libras - Precision",
+        "precio": "$309900.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcT6NpD73Yy7AlgIDlDUvkzlbzHLs2B8SeB_Xmgq77NFR0AJcxoj-Oz5dH1mbcB1Et8fejUzhLTptaduckW97OZqsZCwkJieJaiQ64smkAA4Ozfvd8aBsHDS&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:15053575065688718073"
+    },
+    {
+        "nombre": "Duo Mancuernas Hex Neopreno 5 Lb Sport Fitness - Azul, , COLOR Azul",
+        "precio": "$76900.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRdbJDFoCBM4pmV2ehT3DNqYdKaTEXfQ3lqEJUftNSBuNPHxd4XtZYO-GW26dgfk8LJpPHaC4v4qCaP0E2aHWMX1P15bisEwpk1EMG5h8DZl_W1g1y6zZnZXA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:10577021457032868977"
+    },
+    {
+        "nombre": "Mancuernas Pesas Octagonales 10kg",
+        "precio": "$80000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcToLVhNqAyUWYizeTB3W8dD_yjLRkmM9CYVQBJgGlixmCsP1JcTOyOrs1r1_Zm1ShN-JSDM4zvSy0vxvAyON28NJ8RsSWTpaM40_I6l2ZGWYlw-sYg0B18p&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:11123473288357086335"
+    },
+    {
+        "nombre": "Kit Mancuernas 3 Lb Pesas Encauchetada Ejercicio Gimnasio- Rosa, , COLOR Rosa",
+        "precio": "$75000.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSYTrRo6zr3OrYMar-7Xf0EnKQTK2VKsnfkOQDruSUF57qzKDtQbmtSjZMj7T6vEa4tTH9QVPPmiY0cyVx2UbI56xEao0FL1C-Caq0wHY9m-NNpLsVCCcsB&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:7548904145269630554"
+    },
+    {
+        "nombre": "Barra para pesas y peso muerto de 1,30m Corength",
+        "precio": "$499000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSdrIKD_-fYotsig3MHUVNzYDTQ60BoplJfatPjHQf7RytdLw2ddYEgTwZ47HCU8F9hB2kJ0ibB4lckmKK3d6J9XKHB-99oVgG3ovXHYmR1x6_SrFRimJXOEg&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/8034137968087945146?gl=co"
+    },
+    {
+        "nombre": "Kit de Pesas 20 Kilos",
+        "precio": "$309900.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTldEd0gU3fPey5aR628T0bYwd1V21vR_WPNoK1tndarsJxmE8eIvpag7rWdkhwt06Ch9aTIzyHxbanHMNlCMKnLu9uag9JR6NEfV6-ZlLztaKVKRqPwgjM&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:14574492374081077263"
+=======
+        "nombre": "Cinturón De Reloj Para Hombre Luminous Waterproof",
+        "precio": "$137058.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQmVH5H-01zuhNed4njQtje7CO3NCE6T28l4JXbaSBVHrWu4mjxnB9Do6o7UHkMX61FNna3d1WLDGY2b761ouJecrileTq1SD_LuzwAdlK5mOTCdUtf0LiGlQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13935446060668107115"
+>>>>>>> 8df31850edbb060fa8a287685d9bbed007104ebc
+    },
+    {
+        "nombre": "Peluche De Lujo Para Perros Grandes Juguete De Para Niños Con Relleno Suave De ...",
+        "precio": "$230891.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQTfv1P-1qRaJZ2ej0VZfD4AzjwB8C7epRET5NQ0h3Y5mcU1H7tdE0Gq0RjHTlAb-zByOAqVftRj7vN5AvHyMHEUxTl4xkj6PURWcL-5TidThqsx8xyjar4&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6623135862642303153"
+    },
+    {
+        "nombre": "Extensor De Parasol N Para Coche, Polarizado Mejorado, Vi 71",
+        "precio": "$44202.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQRqo7lg2Kn5k2mD8pbesNhhJGoGZoM0R6TXB0HpBqqk3F5ZrRKC4uRqd9jUNmbPg7rAtqRzjZFieRPm0EilMx1ioF5uYo6uEW5OTIcLsRKC9W6Y5W7bFqeBw&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:5027249547463198331"
+    },
+    {
+        "nombre": "Alimentador De Colibríes Kingsyard - 6 Puertos De Alimentaci",
+        "precio": "$203000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTViV98gGfLVOHTWquG2fzyDlg8EG2JPXt1vM2rG4GJNt98JVipJoyPkh2DkhEENqx5HS_Uxvtv2hbpsSe2LixNCWz6_D-mKuMOv2RFifeFBCeZD17bmAS8iw&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:11749650237321029972"
+    },
+    {
+        "nombre": "Kit De Suministros Para Fiestas De Dibujos Animados Y Platos Que Incluyen",
+        "precio": "$11279.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQ2fh6gUkHFQpYbDTYJpY9W9HqOsKqWMlo2uFzeLfCIaofPC0d4ZEdMRvxLNrQpJYDT1w-s1j8vClk1o89dbzomo6IdBECKsyf3z2dT2OiOmFmj0A-zaoJO&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:4743680797047685748"
+    },
+    {
+        "nombre": "Tiene Una Textura Ligera Y No Grasa Que Se Absorbe Fácilment",
+        "precio": "$17637.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQ0g7v_yx5fe9bJ3woQVysOysVcQt2KqdmKZEX6gyWLu5VlfUZWoGqpjuupP0F0QKfcXwMvLH1vjG8q3-xjzJwWQlHet3blsSWySv_hGNgOU3WAElIWcqSPbA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:1341367389640431990"
+    },
+    {
+        "nombre": "Kit De Aventura En La Montaña | Comida Para Camping Y Mochil",
+        "precio": "$467000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTfe-Cu86b3KeaTmzqizRCCtopBpa57FqTjKMLAt-erPuS0OOQ18HGMPI6ivAR5xbztvnF4Mjv6B0M1z-YXjQX6ea_zQsTVsdlD1IfTCuBZQ1Hswkv6u6DBUQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:8837762105201378648"
+    },
+    {
+        "nombre": "Plantas Vs . Encantador Tema De Zombies Decoraciones De Cumpleaños Para Una ...",
+        "precio": "$11104.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTguGcdxfLbZdv_CLne9AbMUwdl6Ek_ZxQPcA_OlPVXl1s-EvLjkiu5nWqGJfAaRbF1qUuapzSktyqUKmq_uigef3r_KUdwp84ci2LtiN53Ye0g2ryrOcEU&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:106110254071188334"
+    },
+    {
+        "nombre": "Kit De Muestras De Comida De Emergencia",
+        "precio": "$375000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS7rqA-oZiBDi2aqKkwtcAapa7JZ1yeCmlwfyZexsT4ikw84kfUuxaaNqtDhijeNEqyjzjGpGAhzxoRgvySHwbg5XPbyn4BSNliJEae9z6F__E0qbtjTvJHgzE&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6780577587326306701"
+    },
+    {
+        "nombre": "Piedra De Paso De Hierro Fundido Con Diseño De Hoja De Arce",
+        "precio": "$225000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSv56_533wdlQnZQvJj4g6Jg1jHJjNBikAAn2EdV0guWFy-QT8uVJqo-dHE1pRhapfqZ_0V1jGjXO5RIDPCdkE_Vw97ObSVxBEZZXB5MQJ_juNBHIwCA-hE&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:11022603733158386488"
+    },
+    {
+        "nombre": "El Encantador Gato Pete Peluche Colorido Libro De Cuentos Educativos Para Los ...",
+        "precio": "$47408.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRgP8Dk1ceA3QbkhMUER9Cr-LklMbFCkSdT0PnUlJkLZs2M5bQXTmc7jRuCs9kOOUJfK47SUrOFMUerfC0k7p__EAv3zF5d8haqKbun8005Jk60Vmn765DNBQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:2072603033362893257"
+    },
+    {
+        "nombre": "Semillas Girasol Gaea's Blessing - No-omg - Instrucciones Pl",
+        "precio": "$71000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSAll_EuHlVAL_Bu2i5uiZfDj2HlGbl2DEaD2GJ8X0-q34pF7OWuub_FnbMIoZo5L3aJx2E1QCLnFyh9krtQxCPsoSTtQHyL2vBZ-zpdgA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:7713838640402967521"
+    },
+    {
+        "nombre": "Acogedor Suave Y Winnie The Pooh Bee Muñeco De Peluche Perfecto Para Regalos De ...",
+        "precio": "$118560.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTfv-Bax_fW0cMCUJM3cIy90vQG9V-qellTdx0C-FYsFS_XHZ4NioW-TSXxEWEe1G6p-PpKVEEVwj3DLC3OynoTYsMfXp6KgbU5nmDoej6vTp3_i2_WXisO&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:1993152830655220885"
+    },
+    {
+        "nombre": "Luces Led Luminosas Navideñas Z, Diseño De Muñeco De Nieve,",
+        "precio": "$22519.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTZ-IivPYwNjN-8Jc05yv01rEX94lKL2x-TlqSuJngv6PryyJcznfDU-8xToMEOdt82C9HU-V4QnQFqYreyB4qzgJyQoRvfpKuHkzP33jAg_rEHZjK6tAhiJA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13733311812426635835"
+    },
+    {
+        "nombre": "Encantador Dinosaurio Gato Muñeca De Felpa Adorable Juguete Suave Compañero De ...",
+        "precio": "$110755.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQoawmsn04KNkZkngG44JIVfzxX8Cwd2wwLLZyFHmnf6TNXQpLEUH0I7SdBHh5sGgu70xXBNJ0J04XZZndb0Lom8h7GK91P4LmEwpTQDtDZmu2xO9haixUr&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6642849144032045095"
+    },
+    {
+        "nombre": "Bolsa De Libros Para El Aula, Transparente, Con Vapor De Agu",
+        "precio": "$22035.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQnxw1Z4-dRVTi7yrJhzNyZi-5d8vjG7KxIpuXyq3UfHdSF9iXIw3ivs0a0TZMTIMIS4Q-13RG0iCK7Jdml8KNTBU85W0ew-qdNuZAbr8Et1Di9dSObJxfjGw&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:9554372071310537240"
+    },
+    {
+        "nombre": "Adorable Pete El Gato Muñeco De Peluche Juguete Educativo Suave Para Niños De 30cm",
+        "precio": "$46958.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTY5_y6WB2jvfMBVvMvJXAtU6vLCSub847NVE2c2BYQC5vlt3XZFx5fTskZ13AmeDO9_8-c6Qsohhd3MOd-zAqPHXK6agJMBko5MBITkimop1MtUC6yClkfYw&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13436292425020074082"
+    },
+    {
+        "nombre": "Hermetismo: La guía definitiva para comprender la hermética, el Kybalión y los ...",
+        "precio": "$26148.33",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcScWhZ1X9p3_ww23sBmQjEzJOMaRwyO-NLbYTO3KVpkFyEktjXM0Z653cq5gaH1NPX8aTeSJaek6B_NaBj77agZJGtgZG4dPVjMZ-NSCqjY&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/6992076382234953176?gl=co"
+    },
+    {
+        "nombre": "Sal De Sodio Reducido Losalt, 12.25 Oz",
+        "precio": "$98000.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT--IzMWj3UA7ji-XCNzNMdi0M0bvymcbu6Ml35F9a43Xg41tbWO8I43PUcEdmqVq6_aRtz2j-U3gWZSmsN0ilDzz62oO4dDisUmBvkXvxg_tLRDgnXD_RivQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:9194007459390903369"
+    },
+    {
+        "nombre": "Sierescon Filtros De Proteccion De Cera Para Audifonos Tramp",
+        "precio": "$128325.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQFoHH6jq4CTQOSRQQdWvzQiNZ-7IWGfHruDW8dkLa6SM2h6e4N09_zL2vwhxzBI7pWti9H3Zth6RpdmLlR9FcYjompUiDFp8bYGIN5ggsR8Anqanx_yzgZOA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:14254713250791986750"
+    },
+    {
+        "nombre": "Gel Para Oídos Audinell (5ml) | Para Picazón En Los Oídos, P",
+        "precio": "$115000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQBgJOZvfFMEjX26_7bPXjTh5DI0bhRN7TDlWnfw2MqAgUuTP6MN0TJFT4nt5G2IClDpIRGsrE5NXKrkO20lpz2WUAE3hCobX2xlUKqk3WTTne_cPQdceR0XsTc&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3611468936127857606"
+    },
+    {
+        "nombre": "Nuevo Spray De Revestimiento De Pintura For Automóviles -",
+        "precio": "$23707.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTYRvOyl_-9Vdp23Xz71UCRtCF_Ok6ZzuIGG0jR_DgdRJd5_eAv3Ux0dfEryK9pBfIMd-1dXSIT9NKZFTzTsbkuTH1pywxnS1sVpxhdfI-AP5ZMRk5G7pF2aw&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:10322855196254171839"
+    },
+    {
+        "nombre": "Ladrillos De 650 Gramos De Fibra De Coco Para Cultivo",
+        "precio": "$141000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcR1FcWXWGoRmDxEXrQ2zY06Z5WTfPZcDYdN14B3V50CdmE-Lx5vbs-s_SJ4DY3sANG94ytT60qrmzJlZMWodixk27zHXL8HVVPk7Rb8gMjt1KQFvlmJzL9g2g&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6412032202288643848"
+    },
+    {
+        "nombre": "Fertilizante Líquido Para Árboles Frutales, Compatible Con M",
+        "precio": "$224000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcR-4DiFoXGaGDTHDm6B38N7CECxuAarT7pSSAr1uR8mCLe3qtk4ZaADtwhcIptXnuLcpAG0soSfCrtkWSe7aUa-2W0edAYn4IqCZPfp2Edi0egIxCUYL926&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6022571743297969152"
+    },
+    {
+        "nombre": "Abono Líquido Para Plantas Schultz 10-15-10, 4 Oz",
+        "precio": "$113000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRrJPdzhzht-hSVRoCK26l6kIdtMKcoSrkdzhtoJDpIt-PHFRto6d4rRckJ6n8ptO7uMWVvli6nK7EjoG9LgnwYeMrpjqE9gm7igOKrRXsiwk0WRmh8Nery&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:2906648778655887752"
+    },
+    {
+        "nombre": "Mezcla De Confeti Comestible Para Decorar Pasteles Y Cupcake",
+        "precio": "$140000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTY0RSClCXTBbDTIJmfInGluYV5P1BkCuIZh03ngIdXSosKFsthwXstGn5SOev78txjwfIJNLxWYfNFFN94af-e49EQI_cQT1HriOx0P8N5QliI9LUr3V2P&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3850923256076560205"
+    },
+    {
+        "nombre": "Pintura De Retoque Metálica Compatible Con Bmw.",
+        "precio": "$108000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTic-AYuNLN1F-qtCly4yoTH53JEmKxb6akoR_xVkaVvGDE33clwI8HdNF3oQ7Tz6kE55u4nyIpB8cm88OJznUz99TPehey8vA2MYxO-lkI3_44z55iYqGcCg&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:9849652706121247087"
+    },
+    {
+        "nombre": "Tractor/remolque Agrícola Kubota M F Western Products",
+        "precio": "$188000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTLCnbEN6ac3zIXYKkl1Jjyjk-FO-kqhglK8Uk3Xy5sPRHTxTG0mYN5_drDF_9SV2j43yovYrqOna7yySikElQobH6vJZygoMIWkzYTg8ZNeukXwOuaNy0U_Q&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3940446935288414251"
+    },
+    {
+        "nombre": "Sal De Roca Neotea Lahori Namak 500g (10.58 Oz)",
+        "precio": "$325000.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRWsOAQFnIN3wX4ZjXtteH6QPOZt-fCBm_nv_0TcfeaDqhFVqVYcxBywaOnOtboF8FlDEFImlr2tt552pr3wQn7VwEsK6a5RGje9pOlWsLpBtMUaABzUrus&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:292952150073113752"
+    },
+    {
+<<<<<<< HEAD
+        "nombre": "Pecanas Orgánicas En Mitades - Certificadas Usda, 5 Lbs, Sin",
+        "precio": "$500000.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSQnaNkzOlwNDtusnnEriIVkf1ZCCISd58Ng8z2RWROuuXn590s3d0cx83_WcJ9EV55tWUwF0eunucTkB0kLxVXuGfrYai9Ce6ZKritF8FAaEmZe88olkE3FQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6690055054010549543"
+    },
+    {
+        "nombre": "Sábana De Masaje Antiarrugas Pretyzoom Poliéster Con Agujero",
+        "precio": "$140000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQI-xsv1J1sqJKNXikSUg0nD3kn2UfvT9zLmCcsizqY-GSnzLwKKVCHYu0OQ1EvCZJp1UWHc56gaieFwPb4_qaFbSwWReboufGQMMIZWUeThc31Ze2zKs1D&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6153980768727735950"
+    },
+    {
+        "nombre": "Rollo De Cubierta De Cama Facial Desechable Para Salón De Be",
+        "precio": "$317000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTHvogML0QSnN8fL_byqCoS19rYJxBpsneDwc3ZIRlO8cKFIERp7tLWdAp84FmXZSxxhBw_7pTQBSztL0gC3AVcU60XJxo3w5N5Y0vlmoPzvaN0L7nybUKvhQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:4883131554728604744"
+    },
+    {
+        "nombre": "15 Cajas De Pasteles Bakipack Con Ventana 10x10x5 , Para Fie",
+        "precio": "$251000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRuo-IwvCr3AQd867gihdjDjYRK1EUs2Hh0w2Xu1yIjKxkP9gj1HFNs87YYkAZF-zlynM3R2TH2pO9tPZASqYIiKlMuQiA68q14c5uQwymgvO8_mUBz9hZZ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:996465850817831752"
+    },
+    {
+        "nombre": "Fortalezca Tus Huesos Y Sistema Inmunologico Con Orzax Vitam",
+        "precio": "$122746.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTP5HWT6A90iqyDYOT-A8Jiz2s7faikrwQ5a_jVIi8i7-8zPvrNuGZ7zs-WkPj_-n2_F98TCJJLKTzDcd3fZTnZo2ZkZfaCWyXfv7NWo9Ri9g7JEaFl1Ayc&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:9121340658906525155"
+    },
+    {
+        "nombre": "30 Pldoras Acrbico C 1000 Mg Vittamin C Suplemento Brillante",
+        "precio": "$121051.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSAU5z2qrSgM6V1N1HqZK4tsW58aKnf49V9ys2T_SJZ7Lt0QmRNgZR8yX-rRseQHMUa-irjCguOHVbFrVSF6553jQeqSgStpfEXPjMjtXd5VYZn9PU57jKmKw&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:8414977216799036554"
+    },
+    {
+        "nombre": "Nutre Tu Tiroides Con Naturaleza Y Ciencia",
+        "precio": "$429609.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTXPwnA3eBsBKYGF0MAEhpYifrgrO9z-ZIg6v22YpdqIa4fjnMAGJw-RXs0zGPLVay8P9lCbmmOPgTAWm_r-wtdhuY6kkGMqNnOX84pzkSmFYyq8oz6o2dq&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:429670439080057296"
+    },
+    {
+        "nombre": "Sabor A Salud Natural En Cadacapsula",
+        "precio": "$165527.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT3JJnr1-7p56InaHjgjzgb0M4rvQL8x6Bfv8wMa_0SL5XVRIicf3BvJ5KM5vIU2ZqUOlyfAXrKBD2rgtgXWCtVXEn4XcfXAwgEvjDD9vZWTFHaQ7D1TkugRA&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13568307958951906302"
+    },
+    {
+        "nombre": "Standard Process Super-eff - Energia De Alimentos Integrales",
+        "precio": "$443806.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRXSBDmWXH0RGhGIDjkjPBSpJqeEx11VJsmanJqxje8iKjSC97K4-ovM-E-mqxigYUfdzd5SZVrwE-lC5xBxuXiau9zRK4ufNDNPZQZMQWmWV_FNql7E7wApw&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:9632124320919003451"
+    },
+    {
+        "nombre": "Mejora Tu Cabello Con Suplementos Integrales",
+        "precio": "$159819.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcR9zxG5ozGGrSFqXTnoscgvVjtYd_cXQ35zH3qTxS5h3XdwZIac52sKczdbzuLFfe6aLbY48mg-dlgHp17ul94vJ1311M3k75yst78CIOpOEapPgQzUHiPY&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:5462279662260738417"
+    },
+    {
+        "nombre": "Proceso Estandar C Synergy - Apoyo Inmunologico De Alimentos",
+        "precio": "$210524.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT2lUQ5hPi0lI5JP0PxuLxBgQ2SRJVnDyR79q13dLqsFFpkrcGNiYY4a3xIAc-_8RRpE0oz2XkyIPuNH5-N-bmaOhTp-Gw9HMrWNrie8pfkF2vwqJ6l1IJM7A&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:5138827306940221164"
+    },
+    {
+        "nombre": "Apoyo Inmunologico Equilibrado En Cada Dia",
+        "precio": "$142696.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSO6ougyOM0rUsjmf8F7oAfoCPih8lSo4rakwNZKNiNs_xCRxccWZpem4R8nYPJ8zHTzXCQDCQRQSR_DO2uP4RM1M5T2skoNWrneauVMo8DHYnXGWugewKFiw&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3734032169182644556"
+    },
+    {
+        "nombre": "Purian Purple Superfood - Suplemento De Frutas Y Verduras Fr",
+        "precio": "$386908.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTJ9HWEjrhEO_dafkQg4_BMuBczOCFB9H2xhpYyBIOMfC8M5s112DnbJGHjCOOlUdN5EnmxvzPd2srCFEM0_smqBrCm9YQDaze2XtPpRGClWoiSX7QkxiNqLg&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:60191856248543148"
+    },
+    {
+        "nombre": "Cabsy – Transport Company & On Demand Taxi Elementor Template Kit",
+        "precio": "$23913.92",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRqeBWh9MHA3bXavKrafARrp9IOaN3Kr75BIMcLrY_5OpNCaApxDnzYymA5utWz3r1t_BMxtmN2i6KXI0t-9Em3WuLI2EJzpuP9jkdkdGfc&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:14351539155321202135"
+    },
+    {
+        "nombre": "Bolso De Boxeo De Pared Con Objetivo De Entrenamiento Y Marc",
+        "precio": "$971000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSiVOAC0ZhNHazw_OguolPbptfuM2MLJjKRtQeNeA3i0FQSNI2Eed-qU2OSBmss3pXk9gKma-sP-6ynxQjLmx2dAEkReJ1LpbJ8P3-z4JnOrM0FC6_q-oDl&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:14770757601120441295"
+    },
+    {
+        "nombre": "Saco De Boxeo Inflable Para Niños Y Adultos, Ideal Para Kara",
+        "precio": "$245000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTxioMOyXMj2gBuu93tEk67X1IjyKn-ykH5Ak6YFeEKZBMtSMW5DyogoyTIlTOCz2A4T3ctOtjxJzoQWcKM6EDDPG7KtUZ2IkHHSlfpx-VrUL1_S-JX_2ld7w&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3077391989686838145"
+    },
+    {
+        "nombre": "Terrario De Vidrio D'eco Glass Castle (10x4.5x9) - Decoració",
+        "precio": "$353000.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQYqRJLqJ2aFOgG8Mw80KC-DI3kYa0bM2nKRmwOvn0bOQkfXsd5o32dPtPdFnG7QyetChxYLWj0wkVov6KtOTB0ltBulB69W8dda7gfYwLYL3HVxhPRn50vlg&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6924990396036370884"
+    },
+    {
+        "nombre": "Cabezal De Cilindro Compatible Con H Onda Cb150.",
+        "precio": "$1820000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSLrIhx2LG3kYCZEoc8wAayUf0Vq6lbBZZjftv4gIrR1Fq8zyj_BXDqphq4sp96l9fJNf3jLEGn5h__HzQy7DP44Sgu0q5R9PRRv9VZtth4i7KWLUqCLp4k&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:9905881692613446893"
+    },
+    {
+        "nombre": "Pistola Maquina De Burbujas Burbujero + Jabón (niños)",
+        "precio": "$23655.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQFy3dY2DZNVBZpOVWMiIwbPhleQHD0WP4kA5VMauaWLSjMRvSVGgbDbObiX1-EQVZPWNIXuZhJ6mylwWZzntqQvfmVv5shE58yrmpxI4Y59XeSrpNExgD5&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:5748398565119682140"
+    },
+    {
+        "nombre": "Parche De Gel De Silicona Para Cicatrices Para Heridas Vieja",
+        "precio": "$50756.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQpcl5mUyg3diBwE6Nzct0uAQzMcAM0ZnKenUFruIcdXsmbsva-mfxwiqhG0M0PHm_lVRFrzwj6jNliWFokOJ2bF02p0ib32czIKhc9xGIQGbfK3e8rL119&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:5970712842476827612"
+    },
+    {
+        "nombre": "Et Perfume Armaf Mandarin Sky Eau De Parfum Para Hombre",
+        "precio": "$229990.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcR5R6L8yfXRZ-8IJ5tZDgtIdkUdAJJGi5jHKmoIgM77toUfcZ80kzyCtynSRr9tzt7nr7cZ5ly4tjNhGbJXhVgaSwm_SNhCzoMBhkXFGX9CK-uXpU3GjMJv&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:8490189243136610498"
+    },
+    {
+        "nombre": "Pack X5 Desodorante Roll-on Dry Idea Advanced Dry Powder Fre",
+        "precio": "$253000.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQQrpP5AgBNhsZzg2YmtsqpASZ0B-t-mYrVGmyWx-Bsd07rwkpAYkVPqQyeBO_QG8jSM6vPvqnyQ9wrUcOzESwJ3p1galyHFRnMkq8IDRoiYIRwBD-UjBnz&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:12975926897002534433"
+    },
+    {
+        "nombre": "Little Champion Reader Estableció 3 Tarjetas De Memoria Para",
+        "precio": "$220000.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTvBFjlZi1sUjdjVlJSX6eDxbjV0OfdsKSxbIXeZbrE8HneS6hS6ooeael_agMnE9csw5eQ3dnu9_e8YTV-a_dk-kHKKIq4WOmjDLr7C934zQ803_5zfOZKhes&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6265719086392171726"
+    },
+    {
+        "nombre": "2×spray Masaje Energético Más Largo Y Espray Para Crecimien",
+        "precio": "$80488.0",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSGxMkiY-GYycMrTnHLLC2O9CaiR0LbMkdJ24XxKYpkU68lGzhOUd7NhoWsOHhWkbjYTiNr4jPWaC1mj0PJhfhZBrkKe16zSF55vAU6OX-CUZJc_jEK0hwzlQ&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:9890280547657702430"
+    },
+    {
+        "nombre": "3×cerradura Con Núcleo Bloqueo En Polvo Grafito, Lubrica",
+        "precio": "$78729.0",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSDbWLgrzwnJyMqz9J3_vRc6OzDohKZz2RAYh9LZdUWKbcK0HJDXFcW1uzmCkhevXXQOjEp59Uf7A4n1LiixXtrBUtAF5msbzCeUacM0CeDfw8tF3owsihm&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:7621684495467879270"
+    },
+    {
+        "nombre": "Tiras De Tortilla Azul Green Mountain 12x 8 Oz",
+        "precio": "$672000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSx8pq6ZN9DdZUETG6k7A2v-Nt12uvtu2gO9jfC32Q5TovFeCLaMDBX5xXHMX91a8-GyLuvGrzVu3oO_I_URg-9ZQzbcQO6Dgp8t1Nr-3y7usGeW_StFCVU&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:5188593899062710358"
+    },
+    {
+        "nombre": "De Sta Co 323-ss Abrazadera De Acción De Acero Inoxidable Co",
+        "precio": "$330000.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRXJS9EkcckbVlC5rKGtsZy_9FP4zO92XzfV6j98i3xJ5JfwjcPp9ENFBiDnEwztfjuUfpxYK-JO_gRTXKo9zuZLzdBb5be2ArrigGgVHP5dlwySPSbGKBtISeG&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:2147805430977000903"
+    },
+    {
+        "nombre": "Mesa De Maquillaje Clarisse Con Taburete Tapizado, Estilo Os",
+        "precio": "$1470000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT_di1N0TNknoFdD4_EaCZTAs75eGlflsk-MJWO5qXVoa4jaQgUxqGiTDJ9FC7RRqAPnEJC4bswVE0jKfmh9aeRUs4VF0htyf_wZF9zeLwsSyo2bXLF-yGyOw&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:12729991370014108744"
+    },
+    {
+        "nombre": "\\ Kit Científico Vintage Magical Drinker: Pájaro Bebe Agua",
+        "precio": "$39716.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSUznX5MPHK2TC64oymapb6GmiZCHo-F6WUDSFUGr-jkhnAGrW1ipHT8Qh9dNCz47Elj_dChThZvL5bmvwm2sySW18VejhEAb29hh2gaEe4WF1AISU2kKKX&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:14336147319299614430"
+    },
+    {
+        "nombre": "La Pasta De Dientes Blanqueadora Morada Limpia Y Protege Sua",
+        "precio": "$22519.0",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQNUJxtsFqIXebef8Qk7FOy-gQZ6ku64k4wH5QPSo0bAtcyLQsok2-Jk8KH_gbDPkBfnGFsescZY1L6gS-Ar85uusnHIQV2ppNDD-B65E1sz0JdDZvnEStP&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:11023993817086950888"
+    },
+    {
+        "nombre": "Alimento Compatible Con Peces Medianos Y Grandes.",
+        "precio": "$138000.0",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQe81CEPJ-m6Du6rXjmIP1zJVuYp8S6UExUZakQG9URt-q1PjOeKNuOOsqbdeVYehUkad5PxEPDBAy1heMEd2Dvqy8Emd6lHdMN28b6uVYDn0BF_J9QPEef&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:12293366657532753175"
+=======
+        "nombre": "Banda Montblanc Negra Satinada 19mm En El Reloj, 17mm En El Cierre,",
+        "precio": "$316014.76",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcR6Ahb-by50L24vRPxRUOciWLwYb8GsJrbQN0R_2Lbq-xScppGQgCCvtFIxXZhmgMBXl6hRrO5FqaBeWc9q-wqDsBF3WwkwP4IaA-L1mAVh7Xj0516oqngT&usqp=CAE",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3929707230185733655"
+>>>>>>> 8f2f82a54d0da7d0a6d19d11806897bd4bfd4830
+>>>>>>> 8df31850edbb060fa8a287685d9bbed007104ebc
     }
 ]
