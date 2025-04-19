@@ -1,1 +1,92 @@
-[]
+[
+    {
+        "nombre": "Sal Kosher Morton, 3 libras",
+        "precio": "$3.67",
+        "imagen_url": "https://serpapi.com/searches/6804326f5a350d7cd10b16e5/images/9923043b5fe444f6ee58cebfe51c44e9a77aca175064b11bc675786ac918ed6d.webp",
+        "enlace": "https://www.google.com/shopping/product/14472952813534549398?gl=us"
+    },
+    {
+        "nombre": "Celtic Sea Salt Fine Ground",
+        "precio": "$7.0",
+        "imagen_url": "https://serpapi.com/searches/6804326f5a350d7cd10b16e5/images/9923043b5fe444f6ee58cebfe51c44e9ae0f58629f9eb5c90e78af958d5f9ec8.webp",
+        "enlace": "https://www.google.com/shopping/product/1037312228476875232?gl=us"
+    },
+    {
+        "nombre": "Cisne Sal Refinado 1kg",
+        "precio": "$1.99",
+        "imagen_url": "https://serpapi.com/searches/6804326f5a350d7cd10b16e5/images/9923043b5fe444f6ee58cebfe51c44e91d177609e7dfe9f6c62452f832bfd6b7.webp",
+        "enlace": "https://www.google.com/shopping/product/7176268131232905151?gl=us"
+    },
+    {
+        "nombre": "Sal Natural La Fina 1 Kg",
+        "precio": "$10.0",
+        "imagen_url": "https://serpapi.com/searches/6804326f5a350d7cd10b16e5/images/9923043b5fe444f6ee58cebfe51c44e9dd9c8d5c66797ed68132ae12653570aa.webp",
+        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:1255026075598738620"
+    },
+    {
+        "nombre": "Celtic Sea Salt Light Grey",
+        "precio": "$5.67",
+        "imagen_url": "https://serpapi.com/searches/6804326f5a350d7cd10b16e5/images/9923043b5fe444f6ee58cebfe51c44e9d19b15a0cc8fb3ddf0fba9103fa0bab1.webp",
+        "enlace": "https://www.google.com/shopping/product/17809412320924581610?gl=us"
+    },
+    {
+        "nombre": "Great Value Vegetable Oil",
+        "precio": "$9.12",
+        "imagen_url": "https://serpapi.com/searches/68043275c58ddce9873c0576/images/f9f68c313d349293429cb1d9a384af3cd8c99c389a84e373f2c6bd646bc6dc59.webp",
+        "enlace": "https://www.google.com/shopping/product/10394902318907490113?gl=us"
+    },
+    {
+        "nombre": "Valvoline Advanced - Aceite de motor, SAE totalmente sintético",
+        "precio": "$26.97",
+        "imagen_url": "https://serpapi.com/searches/68043275c58ddce9873c0576/images/f9f68c313d349293429cb1d9a384af3cb34267e381d46f74b5508b8d4614fc0b.webp",
+        "enlace": "https://www.google.com/shopping/product/17121911069663787527?gl=us"
+    },
+    {
+        "nombre": "Good & Gather Vegetable Oil",
+        "precio": "$2.69",
+        "imagen_url": "https://serpapi.com/searches/68043275c58ddce9873c0576/images/f9f68c313d349293429cb1d9a384af3c5edfaa9d4f6375e373739f9fc7196510.webp",
+        "enlace": "https://www.google.com/shopping/product/15951684383744219404?gl=us"
+    },
+    {
+        "nombre": "Great Value Canola Oil",
+        "precio": "$4.33",
+        "imagen_url": "https://serpapi.com/searches/68043275c58ddce9873c0576/images/f9f68c313d349293429cb1d9a384af3c469151f0c0570de0e477819542063e79.webp",
+        "enlace": "https://www.google.com/shopping/product/12161851100099192295?gl=us"
+    },
+    {
+        "nombre": "Mobil 1 - Aceite sintético High Mileage 5W-30 para motor, 5 cuartos de galón",
+        "precio": "$24.97",
+        "imagen_url": "https://serpapi.com/searches/68043275c58ddce9873c0576/images/f9f68c313d349293429cb1d9a384af3c6a762eedb5d709c7dcd16834f500a0e1.webp",
+        "enlace": "https://www.google.com/shopping/product/11669248592651951230?gl=us"
+    },
+    {
+        "nombre": "Huevo blanco mediano Unimarc bandeja 30 un",
+        "precio": "$15.05",
+        "imagen_url": "https://serpapi.com/searches/68043277e3889de3b9619fa4/images/e7a3f8e310b7035727dbbdbe397374aa3affa8413ef595e547dff76d0ffd24a6.webp",
+        "enlace": "https://www.google.com/shopping/product/38925219956463135?gl=us"
+    },
+    {
+        "nombre": "Sprouts Large Brown Cage Free Grade A Eggs - 12 Ct",
+        "precio": "$3.99",
+        "imagen_url": "https://serpapi.com/searches/68043277e3889de3b9619fa4/images/e7a3f8e310b7035727dbbdbe397374aa9523aad5887738ab44d7f10573d72ded.webp",
+        "enlace": "https://www.google.com/shopping/product/15715400070631097583?gl=us"
+    },
+    {
+        "nombre": "Publix Eggs Large",
+        "precio": "$12.99",
+        "imagen_url": "https://serpapi.com/searches/68043277e3889de3b9619fa4/images/e7a3f8e310b7035727dbbdbe397374aa218fab0287bad6a445b38ed76b014fbd.webp",
+        "enlace": "https://www.google.com/shopping/product/6563478436584747689?gl=us"
+    },
+    {
+        "nombre": "Eggland's Best Grade A Large Eggs",
+        "precio": "$3.59",
+        "imagen_url": "https://serpapi.com/searches/68043277e3889de3b9619fa4/images/e7a3f8e310b7035727dbbdbe397374aa23a8702ee0626d3640022643271b56e4.webp",
+        "enlace": "https://www.google.com/shopping/product/7337342100081193876?gl=us"
+    },
+    {
+        "nombre": "Kroger Large White Eggs",
+        "precio": "$27.99",
+        "imagen_url": "https://serpapi.com/searches/68043277e3889de3b9619fa4/images/e7a3f8e310b7035727dbbdbe397374aa01284427577e38fe78991b77796995f7.webp",
+        "enlace": "https://www.google.com/shopping/product/1793896887940547963?gl=us"
+    }
+]

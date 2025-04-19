@@ -79,10 +79,10 @@ def buscar_resultados_en_serpapi_gym(queries):
         traceback.print_exc()
         return f"Error general en SerpAPI: {e}"
 
-queries = ["biceps curl", "triceps extension", "shoulder lateral raise"]
-resultados = buscar_resultados_en_serpapi_gym(queries)
+# queries = ["biceps curl", "triceps extension", "shoulder lateral raise"]
+# resultados = buscar_resultados_en_serpapi_gym(queries)
 
-print(f"resultados: {resultados}")
+# print(f"resultados: {resultados}")
 
     
 def buscar_resultados_en_serpapi_fashion(query, model):
