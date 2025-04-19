@@ -212,9 +212,9 @@ const domain = urlParams.get('domain');
     }
 }
 
-            // Mostrar las recomendaciones en el cuadro de recomendaciones
-            const recommendationsList = document.getElementById("recommendations-list");
-            recommendationsList.innerHTML = '';  // Limpiar la lista existente
+// Mostrar las recomendaciones en el cuadro de recomendaciones
+const recommendationsList = document.getElementById("recommendations-list");
+recommendationsList.innerHTML = '';  // Limpiar la lista existente
 
 
             // Función para sintetizar y reproducir el audio de la respuesta
@@ -443,7 +443,7 @@ const domain = urlParams.get('domain');
             window.startTimer = function(type) {
                 return { type: type, startTime: Date.now() };
             }
-            window.sendMessage("Hola")
+            //window.sendMessage("Hola")
             // Función para registrar el tiempo de respuesta
             window.logResponse = function(interaction, responseType) {
                 interaction.endTime = Date.now();
