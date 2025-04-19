@@ -1,4 +1,4 @@
-body {
+html, body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     color: #c9c9c9; 
@@ -72,11 +72,6 @@ body {
 }
 .emoji {
     font-size: 3rem; /* Ajusta el tamaño según lo necesites */
-}
-h1 {
-    margin-top: 1px;
-    
-    margin-bottom: 1px; /* Reduce la separación */
 }
 #detection-container {
     font-family: Arial, sans-serif;
@@ -245,7 +240,7 @@ textarea#input-text {
     position: fixed;
     left: 0;    top: 50%;
     width: 60px;
-    height: 150px;
+    height: 15%;
     background-color: #ff5733;
     color: white;
     font-size: 14px;
@@ -549,16 +544,19 @@ textarea#input-text:focus {
     max-width: 100%; /* Limitar el ancho al contenedor padre */
 }
 #status-indicator {
-    background-color: #007acc;  /* Azul VSCode */
+    position: relative;
+    top: 60px;       /* Ajusta este valor según la altura de los botones */
+    left: 110px;
+    background-color: #00cc52;
     color: white;
-    margin-top: 5px; /* Espaciado debajo del botón */
-    font-size: 13px; /* Tamaño del texto */
-    padding: 5px 10px; /* Espaciado interno */
-    border-radius: 5px; /* Bordes redondeados */
-    text-align: center; /* Centrado de texto */
-    width: fit-content; /* Ajusta el ancho al contenido */
-    
+    font-size: 32px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: fit-content;
+    z-index: 1000;
 }
+
 /* Botones azules (sidebar y otros botones) con animaciones */
 button, .controls button, .sidebar a {
     background-color: #007acc;  /* Azul VSCode */
@@ -645,24 +643,24 @@ button:active, .controls button:active, .sidebar a:active {
 
 
 #subtitulos-container {
-    position: absolute; /* Asegura el posicionamiento sobre el avatar */
-    top: 10px; /* Ajusta la altura para colocarlo encima del avatar */
-    left: 50%; /* Centra horizontalmente en relación con el contenedor */
-    transform: translateX(-50%); /* Corrige el centrado perfecto */
+    display: none;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
     padding: 10px;
-    color: #fff; /* Texto blanco */
+    color: #fff; /* Letras blancas */
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo negro con un 70% de opacidad */
     border-radius: 8px;
     font-size: 14px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    width: 80%; /* Aumenta el ancho al 80% del contenedor padre */
-    max-width: 600px; /* Define un ancho máximo en píxeles */
+    width: 80%;
+    max-width: 600px;
 }
-@media (max-width: 768px) {
-    #subtitulos-container {
-        display: none !important;
-    }
-}
+
+
+
 /* Ocultamos el input file original */
 #image-input {
     display: none;
@@ -715,36 +713,42 @@ button:active, .controls button:active, .sidebar a:active {
 
 /* INVENTARIO */
 #inventory-dropdown {
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 200px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    color: black;
-    border-radius: 5px;
-    padding: 10px;
-}
-
-#inventory-dropdown h3 {
-    margin: 0;
-    padding: 5px 0;
-    border-bottom: 1px solid #ddd;
-    font-size: 16px;
+    position: relative;
+    background-color: #ffffff;
+    min-width: 260px;
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    padding: 10px 0;
     color: #333;
+    z-index: 10;
+    margin-left: 60px;
+    padding-left: 10px;
+    background-clip: padding-box;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border-radius: 10px;
 }
 
+/* Elemento individual */
 #inventory-dropdown ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
     margin: 0;
 }
 
 #inventory-dropdown ul li {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s ease;
 }
 
+/* Último item sin borde */
 #inventory-dropdown ul li:last-child {
     border-bottom: none;
 }
@@ -754,33 +758,70 @@ button:active, .controls button:active, .sidebar a:active {
 
 /* LISTA DE DESEOS */
 #wish-dropdown {
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 200px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    color: black;
-    border-radius: 5px;
-    padding: 10px;
-}
-
-#wish-dropdown ul {
-    list-style-type: none;
+    position: relative;
+    background-color: #ffffff;
+    min-width: 260px;
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    padding: 10px 0;
+    z-index: 10;
+    margin-left: 60px;
+    padding-left: 10px;
+    background-clip: padding-box;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border-radius: 10px;
+  }
+  
+  #wish-dropdown ul {
+    list-style: none;
     padding: 0;
     margin: 0;
-}
-
-#wish-dropdown ul li {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-#wish-dropdown ul li:last-child {
+  }
+  
+  #wish-dropdown li {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s ease;
+  }
+  
+  #wish-dropdown li:last-child {
     border-bottom: none;
-}
-#wish-dropdown {
-    max-height: none !important;  /* Asegura que no haya límite de altura */
-    overflow-y: auto; /* Habilita el scroll si hay más elementos */
-}
+  }
+  
+  #wish-dropdown li:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .wish-actions {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .wish-actions button {
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .wish-actions button.remove {
+    background-color: #dc3545;
+  }
 
