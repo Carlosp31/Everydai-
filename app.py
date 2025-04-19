@@ -510,6 +510,7 @@ def log_interaction():
     save_interactions(interactions)
     return jsonify({"message": "Interacción guardada"}), 200
 
+
 if __name__ == '__main__':
     # Crear el directorio de carga si no existe
     if not os.path.exists(UPLOAD_FOLDER):

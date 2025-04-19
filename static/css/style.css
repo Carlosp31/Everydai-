@@ -544,16 +544,19 @@ textarea#input-text:focus {
     max-width: 100%; /* Limitar el ancho al contenedor padre */
 }
 #status-indicator {
-    background-color: #007acc;  /* Azul VSCode */
+    position: relative;
+    top: 60px;       /* Ajusta este valor según la altura de los botones */
+    left: 110px;
+    background-color: #00cc52;
     color: white;
-    margin-top: 5px; /* Espaciado debajo del botón */
-    font-size: 13px; /* Tamaño del texto */
-    padding: 5px 10px; /* Espaciado interno */
-    border-radius: 5px; /* Bordes redondeados */
-    text-align: center; /* Centrado de texto */
-    width: fit-content; /* Ajusta el ancho al contenido */
-    
+    font-size: 32px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: fit-content;
+    z-index: 1000;
 }
+
 /* Botones azules (sidebar y otros botones) con animaciones */
 button, .controls button, .sidebar a {
     background-color: #007acc;  /* Azul VSCode */

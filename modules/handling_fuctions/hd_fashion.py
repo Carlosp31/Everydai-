@@ -252,10 +252,6 @@ def hd_fashion(user_input, client, thread_idf, assistant_idf, run):
             })
 
         print(run.status)
-
-
-
-
     print(tool_outputs)
     # Submit all tool outputs at once after collecting them in a list
     if tool_outputs:

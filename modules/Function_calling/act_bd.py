@@ -454,3 +454,194 @@ def borrar_outfit(nombre_ocasion):
     except Exception as e:
         print(f"⚠️ Error en borrar_outfit: {e}")
         return jsonify({"error": str(e)}), 500
+
+
+def almacenar_rutina_gym(data):
+    """Almacena una rutina de ejercicios con sus ejercicios e implementos asociados en user_preferences."""
+
+    print(f"🔵 Iniciando almacenar_rutina_gym con datos recibidos: {data}")
+
+    try:
+        # 🛑 Verificar sesión del usuario
+        if "provider_id" not in session or "selected_domain" not in session:
+            print("⚠️ Usuario no autenticado o dominio no seleccionado en la sesión.")
+            return jsonify({"error": "Usuario no autenticado o dominio no seleccionado"}), 401
+
+        user_q = User.query.filter_by(provider_id=session["provider_id"]).first()
+        domain_q = Domain.query.filter_by(domain_name=session["selected_domain"]).first()
+
+        if not user_q or not domain_q:
+            print(f"❌ Usuario o dominio no encontrado. Usuario: {user_q}, Dominio: {domain_q}")
+            return jsonify({"error": "Usuario o dominio no encontrado"}), 404
+
+        # ✅ Extraer datos del JSON recibido
+        nombre_rutina = data.get("rutina", "").strip().lower()
+        ejercicios = data.get("ejercicios", [])
+        implementos = data.get("implementos", [])
+
+        if not nombre_rutina:
+            print("⚠️ Nombre de rutina vacío o no proporcionado.")
+            return jsonify({"error": "El nombre de la rutina es obligatorio"}), 400
+
+        if not isinstance(ejercicios, list) or not ejercicios:
+            print("⚠️ Lista de ejercicios inválida o vacía.")
+            return jsonify({"error": "Debe proporcionar una lista de ejercicios"}), 400
+
+        if not isinstance(implementos, list):
+            print("⚠️ Lista de implementos inválida.")
+            return jsonify({"error": "Debe proporcionar una lista válida de implementos"}), 400
+
+        ejercicios = list(set(ejercicios))
+        implementos = list(set(implementos))
+        print(f"💪 Ejercicios procesados: {ejercicios}")
+        print(f"🧰 Implementos procesados: {implementos}")
+
+        # 🔑 Clave para Redis
+        redis_key_prefs = f"user:{user_q.id}:domain:{domain_q.id}:preferences"
+        print(f"🔑 Clave Redis generada: {redis_key_prefs}")
+
+        # 🗄️ Cargar preferencias desde Redis
+        prefs_json = redis_client.get(redis_key_prefs)
+        user_prefs = json.loads(prefs_json) if prefs_json else {}
+        print(f"📥 Preferencias actuales en Redis: {user_prefs}")
+
+        # 📝 Agregar rutina a preferencias
+        if "rutinas" not in user_prefs:
+            user_prefs["rutinas"] = {}
+
+        user_prefs["rutinas"][nombre_rutina] = {
+            "ejercicios": ejercicios,
+            "implementos": implementos
+        }
+        print(f"🆕 Preferencias con nueva rutina (Redis): {user_prefs}")
+
+        # Guardar en Redis
+        redis_client.set(redis_key_prefs, json.dumps(user_prefs, ensure_ascii=False))
+        print(f"✅ Rutina '{nombre_rutina}' almacenada en Redis.")
+
+        # 🔍 Buscar en la base de datos
+        user_pref = UserPreference.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
+        print(f"🔍 user_pref encontrado: {user_pref}")
+
+        if user_pref:
+            # Cargar preferencias actuales
+            current_prefs = user_pref.preference
+            print(f"📦 Preferencias actuales antes de modificar: {current_prefs}")
+
+            # Actualizar o crear clave "rutinas"
+            if "rutinas" not in current_prefs:
+                current_prefs["rutinas"] = {}
+
+            current_prefs["rutinas"][nombre_rutina] = {
+                "ejercicios": ejercicios,
+                "implementos": implementos
+            }
+
+            # Guardar cambios en DB
+            user_pref.preference = current_prefs
+        else:
+            # Crear nuevo registro
+            user_pref = UserPreference(
+                user_id=user_q.id,
+                domain_id=domain_q.id,
+                preference={
+                    "rutinas": {
+                        nombre_rutina: {
+                            "ejercicios": ejercicios,
+                            "implementos": implementos
+                        }
+                    }
+                }
+            )
+
+        db.session.add(user_pref)
+        db.session.commit()
+        print(f"💾 Rutina '{nombre_rutina}' almacenada exitosamente en base de datos.")
+        return jsonify({"message": f"Rutina '{nombre_rutina}' almacenada correctamente"}), 200
+
+    except Exception as e:
+        print(f"❌ Error en almacenar_rutina_gym: {e}")
+        return jsonify({"error": "Error al almacenar la rutina"}), 500
+    
+def buscar_rutinas():
+    """Busca todas las rutinas guardadas del usuario en el dominio actual."""
+
+    print("🔵 Iniciando búsqueda de rutinas...")
+
+    try:
+        # 🛑 Verificar sesión del usuario
+        if "provider_id" not in session or "selected_domain" not in session:
+            print("⚠️ Usuario no autenticado o dominio no seleccionado en la sesión.")
+            return {"error": "Usuario no autenticado o dominio no seleccionado"}
+
+        user_q = User.query.filter_by(provider_id=session["provider_id"]).first()
+        domain_q = Domain.query.filter_by(domain_name=session["selected_domain"]).first()
+
+        if not user_q or not domain_q:
+            print(f"❌ Usuario o dominio no encontrado. Usuario: {user_q}, Dominio: {domain_q}")
+            return {"error": "Usuario o dominio no encontrado"}
+
+        # 🔑 Clave Redis
+        redis_key_prefs = f"user:{user_q.id}:domain:{domain_q.id}:preferences"
+        print(f"🔑 Clave Redis generada: {redis_key_prefs}")
+
+        # 📦 Leer preferencias desde Redis
+        prefs_json = redis_client.get(redis_key_prefs)
+        user_prefs = json.loads(prefs_json) if prefs_json else {}
+
+        rutinas_guardadas = user_prefs.get("rutinas", {})
+
+        print(f"📥 Rutinas encontradas en Redis: {rutinas_guardadas}")
+
+        return rutinas_guardadas
+
+    except Exception as e:
+        print(f"❌ Error al buscar rutinas: {str(e)}")
+        return {"error": "Error interno del servidor"}
+    
+
+    
+def borrar_rutina(nombre_rutina):
+    """Elimina una rutina de ejercicios almacenada por el usuario."""
+
+    print(f"🔴 Iniciando borrar_rutina: {nombre_rutina}")
+
+    try:
+        # 🛑 Verificar sesión del usuario
+        if "provider_id" not in session or "selected_domain" not in session:
+            return jsonify({"error": "Usuario no autenticado o dominio no seleccionado"}), 401
+
+        user_q = User.query.filter_by(provider_id=session["provider_id"]).first()
+        domain_q = Domain.query.filter_by(domain_name=session["selected_domain"]).first()
+
+        if not user_q or not domain_q:
+            return jsonify({"error": "Usuario o dominio no encontrado"}), 404
+
+        # 🔍 Buscar preferencias en la base de datos
+        user_pref = UserPreference.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
+        print(f"🔍 user_pref encontrado: {user_pref}")
+
+        if user_pref:
+            # Cargar preferencias actuales
+            current_prefs = user_pref.preference
+            print(f"📦 Preferencias actuales antes de procesar: {current_prefs}")
+
+            if isinstance(current_prefs, str):
+                current_prefs = json.loads(current_prefs)
+
+            # Verificar si la rutina existe
+            rutinas = current_prefs.get("rutinas", {})
+            if nombre_rutina in rutinas:
+                del rutinas[nombre_rutina]
+                user_pref.preference = json.dumps(current_prefs)
+                db.session.commit()
+                print(f"✅ Rutina '{nombre_rutina}' eliminada con éxito.")
+                return jsonify({"message": f"Rutina '{nombre_rutina}' eliminada exitosamente."}), 200
+            else:
+                return jsonify({"error": "Rutina no encontrada"}), 404
+
+        return jsonify({"error": "No hay rutinas almacenadas"}), 404
+
+    except Exception as e:
+        print(f"⚠️ Error en borrar_rutina: {e}")
+        return jsonify({"error": str(e)}), 500
