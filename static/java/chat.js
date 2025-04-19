@@ -212,9 +212,9 @@ const domain = urlParams.get('domain');
     }
 }
 
-            // Mostrar las recomendaciones en el cuadro de recomendaciones
-            const recommendationsList = document.getElementById("recommendations-list");
-            recommendationsList.innerHTML = '';  // Limpiar la lista existente
+// Mostrar las recomendaciones en el cuadro de recomendaciones
+const recommendationsList = document.getElementById("recommendations-list");
+recommendationsList.innerHTML = '';  // Limpiar la lista existente
 
 
             // Función para sintetizar y reproducir el audio de la respuesta
