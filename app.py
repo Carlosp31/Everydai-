@@ -230,17 +230,15 @@ flow = Flow.from_client_secrets_file(
     redirect_uri=REDIRECT_URI
 )
 
-@app.route('/')
-def dashboard2_inicio():
-    return render_template('dashboard2.html')
 
-@app.route('/dashboard')
+
+@app.route('/')
 def dashboard():
     user_agent = request.headers.get('User-Agent')
     if "Mobile" in user_agent:  # Verifica si el navegador es móvil
         dash_ruta = 'dash_mobile.html'  # Devuelve la versión móvil
     else:
-        dash_ruta = 'dashboard.html'  # Devuelve la versión de escritorio
+        dash_ruta = 'dashboard2.html'  # Devuelve la versión de escritorio
     # Verificar si está en Linux y el archivo de secretos es "client_secret.json"
     if current_os == 'Linux' and CLIENT_SECRETS_FILE == "client_secret.json":
         print("Sin autenticación requerida en Linux con 'client_secret.json'.")

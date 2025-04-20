@@ -2,9 +2,10 @@
 <html lang="es">
 <head>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}?v=2">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard 2</title>
+  <title>EverydAI</title>
   <style>
     body {
       margin: 0;
@@ -248,7 +249,7 @@
     <div class="header-sidebar-wrapper">
       <div class="header-container">
         <h1>EverydAI</h1>
-        <button onclick="window.location.href='/dashboard'">Get Started!</button>
+
       </div>
 
       <div class="details-box">
@@ -275,7 +276,7 @@
     </div>
 
     <div class="card-container">
-      <div class="card">
+      <div class="card" data-action="Cooking">
         <div class="text">Cooking</div>
         <img src="/static/css/cooking_av.jpg" alt="Imagen Cooking">
         <div class="content">
@@ -285,7 +286,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card" data-action="fashion">
         <div class="text">Fashion</div>
         <img src="/static/css/fashion_av.jpg" alt="Imagen Fashion">
         <div class="content">
@@ -295,7 +296,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card" data-action="Fitness">
         <div class="text">Fitness</div>
         <img src="/static/css/gym_av.jpg" alt="Imagen Fitness">
         <div class="content">
@@ -306,5 +307,14 @@
       </div>
     </div>
   </div>
+  <script>
+    document.querySelectorAll('.card').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        const domain = card.getAttribute('data-action');
+        window.location.href = `/chat?domain=${domain}`;
+      });
+    });
+  </script>
 </body>
 </html>
