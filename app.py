@@ -13,14 +13,7 @@ from typing_extensions import override
 from openai import AssistantEventHandler
 from database import db, Config, redis_client
 import modules.chat as chat_api
-<<<<<<< HEAD
-from werkzeug.utils import secure_filename
-import tempfile
-
-
-=======
 import modules.Function_calling.act_bd as fc_bd
->>>>>>> ebe241403eeee1c07c1b4526b4b472a18326a439
 #### Librerias de base de datos ###############
 
 from database import db, Config
@@ -236,7 +229,12 @@ flow = Flow.from_client_secrets_file(
     scopes=SCOPES,
     redirect_uri=REDIRECT_URI
 )
+
 @app.route('/')
+def dashboard2_inicio():
+    return render_template('dashboard2.html')
+
+@app.route('/dashboard')
 def dashboard():
     user_agent = request.headers.get('User-Agent')
     if "Mobile" in user_agent:  # Verifica si el navegador es móvil
@@ -390,11 +388,7 @@ def chat():
     # Almacenar el dominio en la sesión
     session['selected_domain'] = domain
 
-<<<<<<< HEAD
-    chat_api.initialize_thread_with_inventory(items, domain_name=domain)
-=======
     chat_api.initialize_thread_with_inventory(nombre, domain_name=domain)
->>>>>>> ebe241403eeee1c07c1b4526b4b472a18326a439
 
     # Renderizamos la plantilla con los items de inventario y wish_list
     return render_template('chat.html', domain=domain, wish_list_items=wish_list_items, inventory_items=items)
