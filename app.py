@@ -229,7 +229,12 @@ flow = Flow.from_client_secrets_file(
     scopes=SCOPES,
     redirect_uri=REDIRECT_URI
 )
+
 @app.route('/')
+def dashboard2_inicio():
+    return render_template('dashboard2.html')
+
+@app.route('/dashboard')
 def dashboard():
     user_agent = request.headers.get('User-Agent')
     if "Mobile" in user_agent:  # Verifica si el navegador es móvil
