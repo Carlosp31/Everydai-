@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard 2</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(45deg, #1a73e8, #6a5acd);
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+    }
+
+    .main-content {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .header-sidebar-wrapper {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+      background: rgba(0, 0, 0, 0.4);
+      border-right: 2px solid #0ff;
+      backdrop-filter: blur(8px);
+      box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+      flex-shrink: 0;
+      padding: 20px;
+      height: 100vh;              /* ✅ Altura fija igual al viewport */
+      overflow-y: auto;           /* ✅ Scroll vertical propio */
+    }
+
+
+    .header-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin: 0;
+      color: #ffffff;
+      text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.6);
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(90deg, #0ff, #00f, #0ff);
+      color: white;
+      border: 2px solid #0ff;
+      border-radius: 12px;
+      cursor: pointer;
+      text-transform: uppercase;
+      box-shadow: 0 0 20px #0ff, inset 0 0 10px #00f;
+      transition: all 0.3s ease;
+      animation: neonPulse 1.5s infinite alternate;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #00f, #0ff, #00f);
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #0ff, 0 0 50px #00f, inset 0 0 20px #0ff;
+    }
+
+    @keyframes neonPulse {
+      from {
+        box-shadow: 0 0 15px #0ff, inset 0 0 5px #00f;
+      }
+      to {
+        box-shadow: 0 0 25px #0ff, inset 0 0 15px #00f;
+      }
+    }
+
+    .details-box {
+      border: 3px solid #1a73e8;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px rgba(26, 115, 232, 0.8);
+      background: rgba(0, 0, 0, 0.4);
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      0% { box-shadow: 0 0 5px rgba(26, 115, 232, 0.8), 0 0 20px rgba(26, 115, 232, 0.5); }
+      100% { box-shadow: 0 0 20px rgba(26, 115, 232, 1), 0 0 50px rgba(26, 115, 232, 0.7); }
+    }
+
+    details summary {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #00ffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      list-style: none;
+    }
+
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .arrow {
+      transition: transform 0.3s ease;
+    }
+
+    details[open] .arrow {
+      transform: rotate(180deg);
+    }
+
+    details .content {
+      margin-top: 15px;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .card-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 30px;
+      padding: 40px;
+      flex-wrap: wrap;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid #00ffff;
+      border-radius: 20px;
+      width: 300px; /* Aumentado de 260px a 300px */
+      height: 600px; /* Aumentado de 480px a 560px */
+      box-shadow: 0 0 20px #00ffff88, 0 0 60px #6a5acd44;
+      transition: transform 0.4s ease, box-shadow 0.3s ease;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .card .content {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #6a5acd;
+      border-radius: 12px;
+      padding: 20px; /* Aumentado el padding para más espacio */
+      font-size: 1rem;
+      color: #ffffffdd;
+      box-shadow: inset 0 0 10px #6a5acd66;
+      overflow-y: auto;
+      text-align: left;
+      height: 180px; /* Aumentado de 120px a 150px */
+    }
+
+
+    .card:hover {
+      transform: scale(1.05) rotateY(5deg);
+      box-shadow: 0 0 30px #00ffffcc, 0 0 60px #6a5acdcc, 0 0 100px #ffffff33;
+    }
+
+
+    .card img {
+      width: 80%;
+      border-radius: 12px;
+      margin-top: 5px; /* Reducir el espacio superior de la imagen */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 15px #0ff;
+    }
+
+    .card:hover img {
+      transform: scale(1.08);
+      box-shadow: 0 0 25px #0ff, 0 0 40px #6a5acd;
+    }
+
+    .card .text {
+      margin-top: 5px; /* Reducir el margen superior entre el texto y la imagen */
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff;
+    }
+
+
+    .card .content {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #6a5acd;
+      border-radius: 12px;
+      padding: 20px; /* Aumentar el padding para más espacio dentro */
+      font-size: 1.0rem; /* Aumentar el tamaño de la fuente para hacerlo más legible */
+      color: #ffffffdd; /* Mantener el color blanco suave */
+      box-shadow: inset 0 0 15px #6a5acd66, 0 0 15px #00ffff; /* Añadir sombra para más enfoque */
+      overflow-y: auto;
+      text-align: left;
+      min-height: 180px; /* Usar min-height para que el contenido crezca solo si es necesario */
+      transition: all 0.3s ease; /* Añadir transición suave para interactividad */
+    }
+
+
+
+    .card .content:hover {
+      box-shadow: inset 0 0 25px #6a5acd99, 0 0 25px #00ffff99; /* Cambiar sombra al pasar el ratón */
+      color: #ffffff; /* Cambiar color de texto a blanco puro en hover */
+    }
+
+    .card .content p {
+      font-family: 'Arial', sans-serif; /* Puedes cambiar a una fuente más llamativa si lo prefieres */
+      font-weight: bold; /* Hacer el texto más grueso */
+      line-height: 1.5;
+    }
+
+
+    @media screen and (max-width: 768px) {
+      .main-content {
+        flex-direction: column;
+      }
+
+      .header-sidebar-wrapper {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #0ff;
+      }
+
+      .card-container {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-content">
+    <div class="header-sidebar-wrapper">
+      <div class="header-container">
+        <h1>EverydAI</h1>
+        <button onclick="window.location.href='/dashboard'">Get Started!</button>
+      </div>
+
+      <div class="details-box">
+        <details>
+          <summary>Get to know us <span class="arrow">&#9662;</span></summary>
+          <div class="content">
+            <p>Welcome to EverydAI, your AI-powered virtual consultant that transforms the way you interact with cooking, fashion, and fitness.</p>
+            <p>Discover personalized recommendations, 3D avatars, voice interaction, and AR detection. Create wish lists and explore smarter.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="details-box">
+        <details>
+          <summary>User Guide <span class="arrow">&#9662;</span></summary>
+          <div class="content">
+            <p>✨ Plan ahead or be spontaneous with recipes and outfits.</p>
+            <p>🕶️ Use your camera to detect items and receive live recommendations.</p>
+            <p>🎙️ Talk or type — EverydAI adapts to your preferred input.</p>
+            <p>📝 Track your favorites and email them to yourself.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="card-container">
+      <div class="card">
+        <div class="text">Cooking</div>
+        <img src="/static/css/cooking_av.jpg" alt="Imagen Cooking">
+        <div class="content">
+          <p>EverydAI can offer you help for the kitchen. It helps you plan recipes, organize ingredients, and learn new cooking techniques interactively.</p>
+          <p>Get personalized recommendations based on what you have, your dietary preferences, and skill level. Use augmented reality for real-time suggestions, track your favorite recipes, and build your cooking wish list. </p>
+          <p>With EverydAI, cooking becomes easier, more fun, and smarter!</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="text">Fashion</div>
+        <img src="/static/css/fashion_av.jpg" alt="Imagen Fashion">
+        <div class="content">
+          <p>EverydAI offers you personalized fashion assistance. It helps you discover new outfits, recommend clothing based on your style, and adapt to local weather.</p>
+          <p>Plan outfits for future occasions, whether for an event, a trip, or simply to feel your best. With real-time clothing detection through augmented reality, EverydAI can suggest combinations that match your current wardrobe.</p>
+          <p>Track your favorite pieces, create wish lists, and stay on top of the latest trends. With EverydAI, fashion becomes effortless, fun, and stylish!</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="text">Fitness</div>
+        <img src="/static/css/gym_av.jpg" alt="Imagen Fitness">
+        <div class="content">
+          <p>EverydAI can guide you through personalized fitness routines tailored to your goals, fitness level, and available equipment.</p>
+          <p>Whether you're looking to build strength, improve endurance, or stay active, EverydAI adapts to your needs. It suggests workouts for both beginners and experienced athletes, and helps you plan future routines based on your progress.</p>
+          <p>Track your workouts, set goals, and stay motivated. With EverydAI, your fitness journey becomes smarter, more efficient, and enjoyable!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
