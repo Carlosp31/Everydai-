@@ -14,19 +14,19 @@ def web_culinary(lista):
     productos_lista = []
     try:
         for query in lista:
-            search_query = f"{query} Olímpica"
+            search_query = f"{query}"
             print(f"Producto a buscar: {query}")
 
             # Definir los parámetros de búsqueda
             params = {
                 "q": search_query,
                 "engine": "google_shopping",
+                "gl": "us",
                 "hl": "es",
-                "gl": "co",
-                "location_requested": "Atlantico,Colombia",
-                "location_used": "Atlantico,Colombia",
+                "google_domain": "google.com",
                 "api_key": SERPAPI_KEY
             }
+            print("Params usados:", params)
 
             print("parametros enviados")
             try:
@@ -34,7 +34,7 @@ def web_culinary(lista):
                 search = GoogleSearch(params)
                 results = search.get_dict()
                 print("parametros enviados")
-                print((f"results: {results}"))
+                print(json.dumps(results, indent=2, ensure_ascii=False))
                 # Obtener los resultados de shopping
                 shopping_results = results.get("shopping_results", [])
                 print(f"Shopping results: {shopping_results}")
@@ -89,9 +89,9 @@ def web_fashion_HM(lista, gender):
                 "q": search_query,
                 "engine": "google_shopping",
                 "hl": "es",
-                "gl": "co",
-                "location_requested": "Atlantico,Colombia",
-                "location_used": "Atlantico,Colombia",
+                "gl": "us",
+                # "location_requested": "Atlantico,Colombia",
+                # "location_used": "Atlantico,Colombia",
                 "api_key": SERPAPI_KEY
             }
 
@@ -140,9 +140,9 @@ def web_fitness_decathlon(query):
             "q": search_query,
             "engine": "google_shopping",
             "hl": "es",
-            "gl": "co",
-            "location_requested": "Atlantico,Colombia",
-            "location_used": "Atlantico,Colombia",
+            "gl": "us",
+            # "location_requested": "Atlantico,Colombia",
+            # "location_used": "Atlantico,Colombia",
             "api_key": SERPAPI_KEY
         }
 
