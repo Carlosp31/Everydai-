@@ -13,7 +13,7 @@ async def main() -> None:
     await runware.connect()
 
     request_image = IImageInference(
-        positivePrompt="Mia khalifa",
+        positivePrompt="Spaguetti con especias naturales",
         model="rundiffusion:130@100",
         numberResults=1,
         negativePrompt="cloudy, rainy",
