@@ -24,6 +24,8 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 1.3);
 directionalLight.position.set(1, 1, 1).normalize();
 scene.add(directionalLight);
 
+
+
 // Obtener el parámetro 'domain' desde la URL
 
 // Definir la ruta del modelo en función del dominio
