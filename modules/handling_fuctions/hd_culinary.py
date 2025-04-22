@@ -5,6 +5,7 @@ import json
 from modules.get_inventory import get_inventory_from_redis 
 # from modules.get_wish_list import send_wish_list_email
 from app import send_wish_list_email 
+import modules.Function_calling.generation as generation
 
 def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
     response_2= None
@@ -106,16 +107,16 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             data, status_code = inv # Desempaquetamos la tupla
             
             if status_code == 200:  # Verificamos que la respuesta es exitosa
-                response_2= data.get_json()  # Extraer el JSON directamente
-                print(f"Response_2: f{response_2}")
-                print("Inventario recibido:", response_2["items"])  # Acceder a los ítems
+                inventario_user= data.get_json()  # Extraer el JSON directamente
+                print(f"Inventario_User: f{inventario_user}")
+                print("Inventario recibido:", inventario_user["items"])  # Acceder a los ítems
             else:
                 print(f"Error en la respuesta: Código {status_code}")
 
 
             tool_outputs.append({
                 "tool_call_id": tool.id,
-                "output": f"ingredientes_receta: {items}, inventario del usuario: {response_2}"
+                "output": f"ingredientes_receta: {items}, inventario del usuario: {inventario_user}"
             })
 
         elif tool.function.name == "receta_tardia":
@@ -151,6 +152,63 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
                 "tool_call_id": tool.id,
                 "output": f"ingredientes_receta: {items_receta}, inventario con el que cuenta el usuario: {response_2}"
             })
+        elif tool.function.name == "ejemplos_recetas":
+            print("FUNCTION: Ejemplos Recetas")
+
+            # Obtener los argumentos del tool_call
+            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+            arguments_str = tool_call.function.arguments
+            arguments_dict = json.loads(arguments_str)
+            response_3= "Generating examples"
+            # 📥 Depuración: Verificar los datos recibidos
+            print(f"📥 JSON recibido en ejemplos_recetas: {arguments_dict}")
+
+            # Extraer el nombre de la receta
+            nombre_receta = arguments_dict.get("nombre_receta", "").strip()
+
+            if nombre_receta:
+                print(f"🎨 Generando visualización para: {nombre_receta}") # Aquí llamas a tu función de visualización
+            else:
+                print("⚠️ No se recibió un nombre válido de receta.")
+            url_imagen = generation.generate(nombre_receta)
+            response_2= url_imagen
+            tool_outputs.append({
+                "tool_call_id": tool.id,
+                "output": f"se ha generado una imagen: {response_2}"
+            })
+        elif tool.function.name == "ejemplos_recetas_tardia":
+            print("FUNCTION: Ejemplos Recetas Tardía")
+
+            # Obtener los argumentos del tool_call
+            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+            arguments_str = tool_call.function.arguments
+            arguments_dict = json.loads(arguments_str)
+            response_3 = "Generating multiple recipe visuals"
+
+            # 📥 Depuración: Verificar los datos recibidos
+            print(f"📥 JSON recibido en ejemplos_recetas_tardia: {arguments_dict}")
+
+            # Extraer la lista de nombres de recetas
+            nombres_recetas = arguments_dict.get("nombres_recetas", [])
+
+            if nombres_recetas and isinstance(nombres_recetas, list):
+                print(f"🎨 Generando visualizaciones para: {nombres_recetas}")
+
+                # Generar imágenes para cada receta
+                urls_imagenes = generation.generate_multiple(nombres_recetas)
+                response_2 = urls_imagenes
+
+
+                # 📤 Mostrar los resultados generados
+                print(f"🖼 URLs generadas: {urls_imagenes}")
+
+                tool_outputs.append({
+                    "tool_call_id": tool.id,
+                    "output": f"Se han generado imágenes para las recetas: {urls_imagenes}"
+                })
+            else:
+                print("⚠️ No se recibió una lista válida de recetas.")
+
 
         elif tool.function.name == "almacenar_receta":
             print("almacenar_receta")
@@ -281,3 +339,6 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
                     return response, response_2, response_3
             else:
                 print("No se encontró un mensaje del asistente.")
+        else:
+            response, response_2, response_3 = hd_culinary(user_input, client, thread_idf, assistant_idf, run)
+            return response, response_2, response_3
