@@ -1,722 +1,92 @@
 [
     {
-        "nombre": "Morton Natural Sea Salt",
-        "precio": "$3.48",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c40a83ad0cb79c94c95ae6f058baa6f5ff.webp",
-        "enlace": "https://www.google.com/shopping/product/6608276771623585616?gl=us"
-    },
-    {
-        "nombre": "Sal Kosher Morton, 3 libras",
-        "precio": "$3.67",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c406ba1f3fdab26f1d64a3e6ce5cd6e61d.webp",
-        "enlace": "https://www.google.com/shopping/product/14472952813534549398?gl=us"
-    },
-    {
-        "nombre": "Sal Natural La Fina 1 Kg",
-        "precio": "$10.0",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c460957674b83ed779fec33045b57dfe8f.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:1255026075598738620"
-    },
-    {
-        "nombre": "Sal Refisal 1Kg",
-        "precio": "$1.99",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4ee0755ce04739e222d5f7a5a8dc41df5.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:10749546312541153984"
-    },
-    {
-        "nombre": "Cisne Sal Refinado 1kg",
-        "precio": "$1.99",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4de027b2fb2f43db4c2443f1fe5553c81.webp",
-        "enlace": "https://www.google.com/shopping/product/7176268131232905151?gl=us"
-    },
-    {
-        "nombre": "Celtic Sea Salt Fine Ground",
-        "precio": "$7.0",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4d0534275c91e65beb11f5a97528743d5.webp",
-        "enlace": "https://www.google.com/shopping/product/1037312228476875232?gl=us"
-    },
-    {
         "nombre": "Morton Sal simple, todo uso, sal no yodada, ideal para cocinar y usar en la mesa, (26 onzas), paquete de 2",
-        "precio": "$3.58",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4a4942910dd0da21fb21e05c28529abea.webp",
+        "precio": "$3.38",
+        "imagen_url": "https://serpapi.com/searches/6807e90a5f508ec9626ae977/images/08d76032000b37dc99195e30368b8cd4c040f5edcab2f637651888561d807032.webp",
         "enlace": "https://www.google.com/shopping/product/4870330614788262921?gl=us"
-    },
-    {
-        "nombre": "Badia Sea Salt Fine",
-        "precio": "$2.99",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c44102634d8ef980a230fb54846415d3c2.webp",
-        "enlace": "https://www.google.com/shopping/product/15074732999698973315?gl=us"
-    },
-    {
-        "nombre": "Member's Mark Sea Salt, 36 oz.",
-        "precio": "$3.98",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c42c648b2ac647f651d36a19fffa1a2094.webp",
-        "enlace": "https://www.google.com/shopping/product/7220332635414073318?gl=us"
-    },
-    {
-        "nombre": "Sal marina en escamas, Grecia",
-        "precio": "$7.0",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4ede21f7903cc3db70235f6c58deaf53d.webp",
-        "enlace": "https://www.google.com/shopping/product/12955059006896333601?gl=us"
-    },
-    {
-        "nombre": "Great Value Fine Sea Salt",
-        "precio": "$2.78",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c40cdc87060691441ffbd26f9dd7219705.webp",
-        "enlace": "https://www.google.com/shopping/product/16389228022571672974?gl=us"
-    },
-    {
-        "nombre": "Morton Sal rosa del Himalaya totalmente natural, fina, ideal para hornear, mezclar y cocinar, (17.6 onzas), paquete de 2",
-        "precio": "$13.56",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c45766f408ebfc2e89b950e014d33deaee.webp",
-        "enlace": "https://www.google.com/shopping/product/7152912372116173909?gl=us"
-    },
-    {
-        "nombre": "Dr Teal's Epsom Salt",
-        "precio": "$4.99",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4a6fc61776283f84532e228fa0cde69aa.webp",
-        "enlace": "https://www.google.com/shopping/product/16101624913251748894?gl=us"
-    },
-    {
-        "nombre": "12% Extra Disc Biocop Coarse Atlantic Sea Salt 1 Kg",
-        "precio": "$1.94",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c47657c4a8eed282d1a2cf5f3ba3ff3fcb.webp",
-        "enlace": "https://www.google.com/shopping/product/13393552420859005941?gl=us"
-    },
-    {
-        "nombre": "Real Salt Kosher Sea Salt Pouch",
-        "precio": "$7.99",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c48f02e98c45197a0e8754f97b72909b2b.webp",
-        "enlace": "https://www.google.com/shopping/product/15708789418202182201?gl=us"
-    },
-    {
-        "nombre": "Sal Elefante Elefante Coarse Sea Salt",
-        "precio": "$2.62",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c41330a75c07a460ee60dbdb17eb3d3629.webp",
-        "enlace": "https://www.google.com/shopping/product/2874963398650800847?gl=us"
-    },
-    {
-        "nombre": "Sal marina céltica gruesa, gris y ligera, 1 libra",
-        "precio": "$17.29",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4784fa9b36db281b8afeb0ac45351d188.webp",
-        "enlace": "https://www.google.com/shopping/product/2389805143985134002?gl=us"
-    },
-    {
-        "nombre": "Sal Bahia Coarse Crystals Iodized Sea Salt",
-        "precio": "$1.86",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c449f64a8bd85cd413567bb3ecbc9ebbb3.webp",
-        "enlace": "https://www.google.com/shopping/product/7349133570626406484?gl=us"
-    },
-    {
-        "nombre": "Morton Fine Sea Salt",
-        "precio": "$3.39",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c41b9e5e176fe76fd377919bd77fc67821.webp",
-        "enlace": "https://www.google.com/shopping/product/4335547826208562533?gl=us"
-    },
-    {
-        "nombre": "Badia Coarse Sea Salt",
-        "precio": "$8.45",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4d4da39278246ae804340327b6ab0ab16.webp",
-        "enlace": "https://www.google.com/shopping/product/5373205968044447352?gl=us"
-    },
-    {
-        "nombre": "Great Value Coarse Sea Salt",
-        "precio": "$4.24",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4a43c4412e31507d84852659016c2fbd3.webp",
-        "enlace": "https://www.google.com/shopping/product/16034981380812476772?gl=us"
-    },
-    {
-        "nombre": "Sal marina gris francesa de 2 libras. Bolsa de grano grueso - Sel Gris por San Francisco Salt Company",
-        "precio": "$17.24",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c488da6a09565ea219c20cb0bf0e2d4520.webp",
-        "enlace": "https://www.google.com/shopping/product/1979680858365266470?gl=us"
-    },
-    {
-        "nombre": "Celtic Sea Salt, Molido fino, mezcla mineral vital, 1 lb (454 g)",
-        "precio": "$13.35",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4a902fb984ce503071ba44c68e9c47042.webp",
-        "enlace": "https://www.google.com/shopping/product/1846372199209221986?gl=us"
-    },
-    {
-        "nombre": "Celtic Light Grey Sea Salt",
-        "precio": "$4.76",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4e69a97f941c943813cdc527903d8be8f.webp",
-        "enlace": "https://www.google.com/shopping/product/12582024185456601395?gl=us"
-    },
-    {
-        "nombre": "Badia Spices Salt",
-        "precio": "$5.99",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4cc1e34830128aa6d3f26017f2adff215.webp",
-        "enlace": "https://www.google.com/shopping/product/18409799176485704963?gl=us"
-    },
-    {
-        "nombre": "Kirkland Signature Pure Sea Salt",
-        "precio": "$21.55",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4f70197de16c9c291cebf0cd5df29d09d.webp",
-        "enlace": "https://www.google.com/shopping/product/12620953067546340470?gl=us"
-    },
-    {
-        "nombre": "Sal gruesa de mar cristalina himalaya de color rosa",
-        "precio": "$8.99",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c44992a0ef57e842bacd0e316faf290fb1.webp",
-        "enlace": "https://www.google.com/shopping/product/2741267340954401239?gl=us"
-    },
-    {
-        "nombre": "Ita Sal Refinado 1Kg (Regular)",
-        "precio": "$3.99",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4b686374b27629d53aa60222825413db1.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:6506329138134031768"
     },
     {
         "nombre": "Dr. Bronner's Sal Suds Biodegradable Cleaner",
         "precio": "$9.99",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c469589f43781191c3941f76ef8a42eafc.webp",
+        "imagen_url": "https://serpapi.com/searches/6807e90a5f508ec9626ae977/images/08d76032000b37dc99195e30368b8cd482e1be695af32f012e3b7d91e84ffd75.webp",
         "enlace": "https://www.google.com/shopping/product/9738700527000827219?gl=us"
     },
     {
-        "nombre": "Sal Yodada Morton 26oz",
-        "precio": "$3.99",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4efe6c3cf85759ca934798aef2ff22a28.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:10375513595313154101"
+        "nombre": "Sal Morton 26 Oz",
+        "precio": "$2.09",
+        "imagen_url": "https://serpapi.com/searches/6807e90a5f508ec9626ae977/images/08d76032000b37dc99195e30368b8cd42cd3b1de390ed1e60a0a54401feb74b7.webp",
+        "enlace": "https://www.google.com/shopping/product/1156916730774236885?gl=us"
     },
     {
-        "nombre": "Cris-Sal Fine Cristal Sea Salt",
-        "precio": "$2.78",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4298bba9a6063ca09a1aa8f6ffb4c2196.webp",
-        "enlace": "https://www.google.com/shopping/product/1924122290458786702?gl=us"
+        "nombre": "Lawry's Sal sazonada, 8 onzas",
+        "precio": "$2.94",
+        "imagen_url": "https://serpapi.com/searches/6807e90a5f508ec9626ae977/images/08d76032000b37dc99195e30368b8cd4bfcc66ccfb3fa677e851f90641711609.webp",
+        "enlace": "https://www.google.com/shopping/product/16017655704938758986?gl=us"
     },
     {
-        "nombre": "Sal marina celta molida fina: (1) bolsa de 5 libras de sal marina nutritiva y clásica, ideal para cocinar, hornear, encurtir, terminar y más, apta",
-        "precio": "$66.75",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4a2128617f2b45284a35ff70b14ebf76f.webp",
-        "enlace": "https://www.google.com/shopping/product/8118218686861974111?gl=us"
+        "nombre": "Sal Elefante Elefante Coarse Sea Salt",
+        "precio": "$2.62",
+        "imagen_url": "https://serpapi.com/searches/6807e90a5f508ec9626ae977/images/08d76032000b37dc99195e30368b8cd405353b61bcd93c307226bb2a877dc111.webp",
+        "enlace": "https://www.google.com/shopping/product/2874963398650800847?gl=us"
     },
     {
-        "nombre": "Saunier De Camargue Fleur De Sel Sea Salt",
-        "precio": "$9.99",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c478bd91b471876d8b3cadebb5d320c722.webp",
-        "enlace": "https://www.google.com/shopping/product/7010518794205954369?gl=us"
+        "nombre": "Tostitos Medium Salsa Con Queso",
+        "precio": "$5.38",
+        "imagen_url": "https://serpapi.com/searches/6807ead905a96b4b7df3d9f6/images/e8b6ae65aa3e983cea6a62449f45ac80163e5f3de834ad92c98a8e7b70770d12.webp",
+        "enlace": "https://www.google.com/shopping/product/16034324283319207893?gl=us"
     },
     {
-        "nombre": "sur La Table Premium Large-Grain Cooking and Finishing Sea Salt",
-        "precio": "$9.95",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c42b68cf98bcd933770cde37b2f8146879.webp",
-        "enlace": "https://www.google.com/shopping/product/2213799297606779247?gl=us"
+        "nombre": "Tostitos Dip Queso Blanco Medium",
+        "precio": "$6.49",
+        "imagen_url": "https://serpapi.com/searches/6807ead905a96b4b7df3d9f6/images/e8b6ae65aa3e983cea6a62449f45ac8055f82dbafa3f1b536a0f7a17a20e4c30.webp",
+        "enlace": "https://www.google.com/shopping/product/8070116807392046393?gl=us"
     },
     {
-        "nombre": "Redmond Real Salt",
-        "precio": "$9.99",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c48f81e472cf47f5df39b6c87cbed43a2c.webp",
-        "enlace": "https://www.google.com/shopping/product/301772842956457752?gl=us"
+        "nombre": "Cacique Ranchero Part Skim Milk Queso Fresco Cheese",
+        "precio": "$4.99",
+        "imagen_url": "https://serpapi.com/searches/6807ead905a96b4b7df3d9f6/images/e8b6ae65aa3e983cea6a62449f45ac805766973c26f6d8e55ee53f306395acde.webp",
+        "enlace": "https://www.google.com/shopping/product/6510550832495296972?gl=us"
     },
     {
-        "nombre": "Sal marina mediterránea cristales orgánicos de grano grueso puro natural 55 lb",
-        "precio": "$114.99",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c46d694ad7c053bf0bea3829bc47218019.webp",
-        "enlace": "https://www.google.com/shopping/product/7641194608268270167?gl=us"
+        "nombre": "Tostitos Dip Queso Blanco",
+        "precio": "$5.09",
+        "imagen_url": "https://serpapi.com/searches/6807ead905a96b4b7df3d9f6/images/e8b6ae65aa3e983cea6a62449f45ac80ed9711e30f72b3a1f13e701c8606f9a9.webp",
+        "enlace": "https://www.google.com/shopping/product/10438782598007219021?gl=us"
     },
     {
-        "nombre": "The Spice Lab - Sal gruesa rosa del Himalaya, cristal puro gourmet, aporta nutrientes y minerales, fortificada para la salud, certificado Kosher y",
-        "precio": "$8.99",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4bbf83f32d1f5e3f09bb9a9c9032314b0.webp",
-        "enlace": "https://www.google.com/shopping/product/15972748927749911483?gl=us"
-    },
-    {
-        "nombre": "Saltworks Sal rosa del Himalaya 5 lb",
-        "precio": "$41.19",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c47b4231fd9175a55df58d06abfaae81e2.webp",
-        "enlace": "https://www.google.com/shopping/product/8748142990603464145?gl=us"
-    },
-    {
-        "nombre": "Morton Sal",
-        "precio": "$1.98",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c4ff25a3701cc9ddb23b5d5e132ab7f26e.webp",
-        "enlace": "https://www.google.com/shopping/product/5854376217598184867?gl=us"
-    },
-    {
-        "nombre": "Sal Fina de Mesa Gourmet 1Kg",
-        "precio": "$1.5",
-        "imagen_url": "https://serpapi.com/searches/6807c202ea957a2cc8e7e1c3/images/ed27f239dd1433e618b0de1c33a525c432c6a9df6a529f4f77756363ba274439.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:11938447693878150105"
-    },
-    {
-        "nombre": "Mazola Corn Oil",
-        "precio": "$4.96",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa2c453be6e2ca772db62b028d1dcd4a23.webp",
-        "enlace": "https://www.google.com/shopping/product/8824429918915923555?gl=us"
+        "nombre": "Pace Queso Blanco Cheese Dip",
+        "precio": "$3.68",
+        "imagen_url": "https://serpapi.com/searches/6807ead905a96b4b7df3d9f6/images/e8b6ae65aa3e983cea6a62449f45ac805b444079bd0c23b3d05a7a61662a0e92.webp",
+        "enlace": "https://www.google.com/shopping/product/5412372840289499855?gl=us"
     },
     {
         "nombre": "Good & Gather Vegetable Oil",
         "precio": "$2.39",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa1475498ee2d41f9bc6b4aa8f901ea154.webp",
+        "imagen_url": "https://serpapi.com/searches/6807e90ce3601e2e51f24c86/images/6f8affb389655b59d9a2d575065c09fa8fecdb42d1392c57568c0ed12ab6537b.webp",
         "enlace": "https://www.google.com/shopping/product/15951684383744219404?gl=us"
     },
     {
         "nombre": "Great Value Vegetable Oil",
         "precio": "$9.12",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa9676fe2e72435593e90e0b123c2df860.webp",
+        "imagen_url": "https://serpapi.com/searches/6807e90ce3601e2e51f24c86/images/6f8affb389655b59d9a2d575065c09fa19dbbfbcb586ef8ce08ba09d201a3662.webp",
         "enlace": "https://www.google.com/shopping/product/10394902318907490113?gl=us"
     },
     {
-        "nombre": "Valvoline Advanced - Aceite de motor, SAE totalmente sintético",
-        "precio": "$26.97",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa874b4c7aaeca345ac2c236a455e16190.webp",
-        "enlace": "https://www.google.com/shopping/product/13179233441140048113?gl=us"
-    },
-    {
-        "nombre": "Member's Mark 100% Pure Clear Frying Oil",
-        "precio": "$12.78",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa419d89e768a39a2995df1d09faee60f0.webp",
-        "enlace": "https://www.google.com/shopping/product/14350069860163554688?gl=us"
-    },
-    {
-        "nombre": "Pure Wesson Vegetable Oil",
-        "precio": "$3.99",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aaf97d70bf41c066fa921534bc1e05bd30.webp",
-        "enlace": "https://www.google.com/shopping/product/9762430345105180900?gl=us"
-    },
-    {
-        "nombre": "Kirkland Signature Vegetable Oil",
-        "precio": "$14.33",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aadd1a14dbf653ee1f12e8204dc5267514.webp",
-        "enlace": "https://www.google.com/shopping/product/11558653384242379640?gl=us"
-    },
-    {
-        "nombre": "Mobil 1 - Aceite sintético High Mileage 5W-30 para motor, 5 cuartos de galón",
-        "precio": "$24.97",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aadb53578ee52a920d5b21e48dee0ae335.webp",
-        "enlace": "https://www.google.com/shopping/product/11669248592651951230?gl=us"
-    },
-    {
-        "nombre": "Aceite vegetal 123 1 l",
-        "precio": "$5.49",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa5036407c80e251acec63d2b779377da1.webp",
-        "enlace": "https://www.google.com/shopping/product/12158877804416798884?gl=us"
-    },
-    {
-        "nombre": "Chosen Foods 100% Pure Avocado Oil",
-        "precio": "$11.99",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa36f002a9cd07ac410fa06c66ef3ce15b.webp",
-        "enlace": "https://www.google.com/shopping/product/4788558632427605242?gl=us"
+        "nombre": "100% virgen extra orgánico, aceite de coco, 84 onzas líquidas, ayuda a la belleza y aceite de cocina",
+        "precio": "$21.45",
+        "imagen_url": "https://serpapi.com/searches/6807e90ce3601e2e51f24c86/images/6f8affb389655b59d9a2d575065c09fae8634c2ead3e399d0c80bd5b586bdddd.webp",
+        "enlace": "https://www.google.com/shopping/product/9891688536794887642?gl=us"
     },
     {
         "nombre": "Crisco Pure Vegetable Oil",
-        "precio": "$3.27",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa1a4e77c29119e325c388932dda660c87.webp",
-        "enlace": "https://www.google.com/shopping/product/16294944587032004390?gl=us"
-    },
-    {
-        "nombre": "Goya Vegetable Oil",
-        "precio": "$7.99",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aac00a2914031cfeabcd64203769d119f8.webp",
-        "enlace": "https://www.google.com/shopping/product/8185406423720309030?gl=us"
-    },
-    {
-        "nombre": "Pennzoil 10W-30 Motor Oil",
-        "precio": "$21.61",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aad1e316fa2e48fccaa3564972b58dc39e.webp",
-        "enlace": "https://www.google.com/shopping/product/4759608145493054543?gl=us"
-    },
-    {
-        "nombre": "365 by Whole Foods Market, Aceite vegetal, 32 onzas líquidas",
-        "precio": "$5.39",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa5ed6ed5a45efe5c1b2da5f733ab0201d.webp",
-        "enlace": "https://www.google.com/shopping/product/2905712487555327281?gl=us"
-    },
-    {
-        "nombre": "Mobil 1 FS European Car Formula Full Synthetic Motor Oil 5w-40",
-        "precio": "$24.97",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa8eaa47f961d12807d6ff40b3baff89c7.webp",
-        "enlace": "https://www.google.com/shopping/product/18327754702560903814?gl=us"
-    },
-    {
-        "nombre": "Bertolli Extra Virgin Olive Oil Smooth Taste",
-        "precio": "$7.99",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa8711ef2606ef449cfc0c32ff6d270dd6.webp",
-        "enlace": "https://www.google.com/shopping/product/14163659427468250719?gl=us"
-    },
-    {
-        "nombre": "Quaker State Aceite de motor sintético completo 5W-30, 5 cuartos de galón",
-        "precio": "$22.97",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa361423c2f471366ec3daedc78fe5df29.webp",
-        "enlace": "https://www.google.com/shopping/product/18342537828377073039?gl=us"
-    },
-    {
-        "nombre": "Gallo Azeite de Oliva Clássico Extravirgem 500ml",
-        "precio": "$26.99",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa8d51c8394e3b9618339600ddf3366d7e.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:14114290743600354488"
-    },
-    {
-        "nombre": "La Favorita Achiote Vegetable Oil",
-        "precio": "$4.99",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aac1ec257676f869e6242db35d5bf84813.webp",
-        "enlace": "https://www.google.com/shopping/product/6437566865697122466?gl=us"
-    },
-    {
-        "nombre": "Castrol Edge - 0W-20 - Aceite de motor totalmente sintético y avanzado, 5 cuartos de galón",
-        "precio": "$23.97",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa210600b9ba2000614b8c244635aa448f.webp",
-        "enlace": "https://www.google.com/shopping/product/17195347869442099668?gl=us"
-    },
-    {
-        "nombre": "Great Value Avocado Oil",
-        "precio": "$9.72",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa7cf74ec168fb96011477ecaa8cd071ee.webp",
-        "enlace": "https://www.google.com/shopping/product/11712126619615276585?gl=us"
-    },
-    {
-        "nombre": "Signature Select Vegetable Oil",
-        "precio": "$3.99",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aac04dab99dd925c54ed0b218343005be2.webp",
-        "enlace": "https://www.google.com/shopping/product/9447687993763641979?gl=us"
-    },
-    {
-        "nombre": "Kevala Aceite orgánico de girasol alto oleico, 1/2 galón",
-        "precio": "$25.02",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa7ba93c618498b8224725096bbf4f26f8.webp",
-        "enlace": "https://www.google.com/shopping/product/6677525617441550653?gl=us"
-    },
-    {
-        "nombre": "Carrington Farms, Aceite de cocina de lino orgánico, 473 ml (16 oz. líq.)",
-        "precio": "$13.19",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa0d1565ca5e83b251f6bc7b3be530946a.webp",
-        "enlace": "https://www.google.com/shopping/product/11782528446495866870?gl=us"
-    },
-    {
-        "nombre": "Terra Delyssa Organic Extra Virgin Olive Oil",
-        "precio": "$12.99",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa349348e3b808b2895c420308e68dcbd5.webp",
-        "enlace": "https://www.google.com/shopping/product/2557995726569657008?gl=us"
-    },
-    {
-        "nombre": "Crisco Oil Pure Canola",
-        "precio": "$4.57",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa4d052d08583ae79348443d7e7e0c897c.webp",
-        "enlace": "https://www.google.com/shopping/product/10229000376964020275?gl=us"
-    },
-    {
-        "nombre": "Colavita Extra Virgin Olive Oil",
-        "precio": "$22.77",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa5f0de8318f441c5c4a30efb4def2334e.webp",
-        "enlace": "https://www.google.com/shopping/product/14739749313247869733?gl=us"
-    },
-    {
-        "nombre": "Aceite de oliva carbonell extra virgen 500 ml",
-        "precio": "$8.65",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aaa0c67cec5759e1be8d5a5c9bc388e392.webp",
-        "enlace": "https://www.google.com/shopping/product/11275610987104119260?gl=us"
-    },
-    {
-        "nombre": "Iberia Mezcla de aceite de oliva de girasol y virgen extra, 3 litros",
-        "precio": "$19.99",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa49881c176f8fc1b206fb8a3ec71b1d0b.webp",
-        "enlace": "https://www.google.com/shopping/product/5793403262742509795?gl=us"
-    },
-    {
-        "nombre": "Graza Sizzle Extra Virgin Olive Oil",
-        "precio": "$91.0",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aaa959d384431cefc6e6f1f5b061071157.webp",
-        "enlace": "https://www.google.com/shopping/product/10472388207568200641?gl=us"
-    },
-    {
-        "nombre": "Mobil 1 aceite sintético para motor 0W-40",
-        "precio": "$11.0",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa18813b0bffdaec4cf61854a1ba2e5a5f.webp",
-        "enlace": "https://www.google.com/shopping/product/16573827675587201585?gl=us"
-    },
-    {
-        "nombre": "Valvoline Aceite de motor sintético completo SAE 5W-40 para vehículos europeos, 5 cuartos de galón",
-        "precio": "$35.99",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa4df33d3b7de9f5be8f77f553609c21a4.webp",
-        "enlace": "https://www.google.com/shopping/product/878656766860642340?gl=us"
-    },
-    {
-        "nombre": "Pure Wesson Canola Oil",
-        "precio": "$12.78",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa8cf697b061450fec02385328ab636bad.webp",
-        "enlace": "https://www.google.com/shopping/product/14570545653756412207?gl=us"
-    },
-    {
-        "nombre": "Motul 5100 4T Synthetic Blend Oil",
-        "precio": "$118.86",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa80595e2c7c400d1a6a9b7a125ecad621.webp",
-        "enlace": "https://www.google.com/shopping/product/3705913767811197713?gl=us"
-    },
-    {
-        "nombre": "Quaker State Aceite de motor sintético completo 5W-20, 1 cuarto de galón (paquete de 6)",
-        "precio": "$36.0",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aaeecf8bd86a8d91a6476880933455f0a5.webp",
-        "enlace": "https://www.google.com/shopping/product/15714359823225857465?gl=us"
-    },
-    {
-        "nombre": "Aceite De Oliva Extra Virgen Cocinero X500 Ml",
-        "precio": "$17.02",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa2dd0278c4b3f9ac9d8e6f16126409632.webp",
-        "enlace": "https://www.google.com/shopping/product/579376034675340153?gl=us"
-    },
-    {
-        "nombre": "Aceite de oliva refinado orgánico prensado en frío premium natural fresco 100% puro 12 oz",
-        "precio": "$10.09",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa3746c53dc7d29b5f357c5fa3dd10cca2.webp",
-        "enlace": "https://www.google.com/shopping/product/4530575937778348628?gl=us"
-    },
-    {
-        "nombre": "Amazon Basics Aceite de motor de alto kilometraje, totalmente sintético, 5W-30, 5 cuartos de galón",
-        "precio": "$27.48",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa12fdc24ea828bbf3ec078e0c1f79a0b5.webp",
-        "enlace": "https://www.google.com/shopping/product/2469798660257161555?gl=us"
-    },
-    {
-        "nombre": "Valvoline 4 Stroke Conventional 10W-40 Motorcycle Oil 798151",
-        "precio": "$6.37",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aadb05348802e615256add22a1b3ad1c9a.webp",
-        "enlace": "https://www.google.com/shopping/product/10602274863849781926?gl=us"
-    },
-    {
-        "nombre": "Filippo Berio Aceite de Oliva 750ml",
-        "precio": "$22.79",
-        "imagen_url": "https://serpapi.com/searches/6807c206e4ae2ed6442e4672/images/ea68160b21e3430aa7c7663e950c76aa0a829eec12ba7cbb7b884ff23bd04ea8.webp",
-        "enlace": "https://www.google.com/shopping/product/1200945176177318585?gl=us"
-    },
-    {
-        "nombre": "Vital Farms Pasture-Raised Large Eggs",
-        "precio": "$5.92",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292959a5efd32c4cb70d3f931895e1647d8.webp",
-        "enlace": "https://www.google.com/shopping/product/14140691088987773987?gl=us"
-    },
-    {
-        "nombre": "Kroger Large Eggs",
-        "precio": "$2.89",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292b9096a2a07d43e39e39c35a68e0d8135.webp",
-        "enlace": "https://www.google.com/shopping/product/12285730389551159362?gl=us"
-    },
-    {
-        "nombre": "Wellsley Farms Large White Eggs",
-        "precio": "$17.0",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292ea7ef980ead74ecdd44d3acf410c590b.webp",
-        "enlace": "https://www.google.com/shopping/product/5042174286732145265?gl=us"
-    },
-    {
-        "nombre": "Vital Farms Pasture Raised Large Eggs",
-        "precio": "$11.89",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292bfee569a31874e0cca87a82ba5ab6fba.webp",
-        "enlace": "https://www.google.com/shopping/product/4165493741200753025?gl=us"
-    },
-    {
-        "nombre": "Happy Egg Free Range Large Eggs",
-        "precio": "$5.49",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e72924848ec3d056e359b86c6a561bb389ef3.webp",
-        "enlace": "https://www.google.com/shopping/product/18346489807461227850?gl=us"
-    },
-    {
-        "nombre": "Vital Farms Organic Pasture Raised Large Eggs",
-        "precio": "$9.99",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e729200305565941ff8754002ca37ef7b742f.webp",
-        "enlace": "https://www.google.com/shopping/product/16052219565977732566?gl=us"
-    },
-    {
-        "nombre": "Huevos de gallina orgánicos sin lavar",
-        "precio": "$6.5",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292f56ce51377faaaab62065c8f5c7caf1a.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:10079490222003532768"
-    },
-    {
-        "nombre": "Lucerne Foods Farms Cage Free Large Eggs",
-        "precio": "$11.39",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292643792d0ff7b4273c7a7a47463abd33c.webp",
-        "enlace": "https://www.google.com/shopping/product/5386996044177580266?gl=us"
-    },
-    {
-        "nombre": "Happy Egg Eggs Organic Brown Free Range Large",
-        "precio": "$5.87",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292d9c2bdce747676a4ac550fe438ca5ef4.webp",
-        "enlace": "https://www.google.com/shopping/product/10364216858717108072?gl=us"
-    },
-    {
-        "nombre": "Kroger Medium Eggs",
-        "precio": "$10.89",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e729207e28eda46b0230897a8387020d37c94.webp",
-        "enlace": "https://www.google.com/shopping/product/2845953246597307282?gl=us"
-    },
-    {
-        "nombre": "Dollar General Clover Valley Grade A Eggs Large",
-        "precio": "$4.95",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e729230fcba2c239f35d64aeabe79f63fc59b.webp",
-        "enlace": "https://www.google.com/shopping/product/5178384823551016447?gl=us"
-    },
-    {
-        "nombre": "Large Eggs, Cage Free, 5 Dozen",
-        "precio": "$21.49",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e72929430929f786356b1612a9ba3311288ce.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:5114949656388210503"
-    },
-    {
-        "nombre": "Good & Gather Grade A Large Eggs",
-        "precio": "$5.73",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292037a0223c1e40c8ab9a8c2e656206765.webp",
-        "enlace": "https://www.google.com/shopping/product/7523491976310786166?gl=us"
-    },
-    {
-        "nombre": "Kroger Medium Grade A White Eggs",
-        "precio": "$4.39",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e729220d8663ccb0c5d20697dcc60b78c64ea.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:5760368662293431643"
-    },
-    {
-        "nombre": "Farm Fresh Eggs",
-        "precio": "$5.99",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292ef9520e149930648ede588a5847a1475.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:4677247556995711517"
-    },
-    {
-        "nombre": "KINDER Glacs Golden Foods Hojuelas DE Maiz CON Azucar",
-        "precio": "$32.97",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292f44a3bef73475e2d2e183bca16d0f79d.webp",
-        "enlace": "https://www.google.com/shopping/product/1353337771922365187?gl=us"
-    },
-    {
-        "nombre": "Kroger Grade A Large White Eggs - Mother’s Day Gifts & Meal Ideas",
-        "precio": "$6.69",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e72926aac5eec7480c524012fb1256c44eba8.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:10936524999586751937"
-    },
-    {
-        "nombre": "Oakdell Usda Grade Aa Eggs",
-        "precio": "$21.99",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e729200415874a3254f88f4f3222771644f9b.webp",
-        "enlace": "https://www.google.com/shopping/product/2825562206036856732?gl=us"
-    },
-    {
-        "nombre": "Citarella Free-Range White Eggs",
-        "precio": "$10.49",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e72925fffe0570a9ab12cda200025793a23e9.webp",
-        "enlace": "https://www.google.com/shopping/product/8896296957614449703?gl=us"
-    },
-    {
-        "nombre": "Simple Truth Cage Free Grade A Large Brown Eggs",
-        "precio": "$5.19",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e729212014d7f65e802d2415854cec9906c5c.webp",
-        "enlace": "https://www.google.com/shopping/product/16422503319481642573?gl=us"
-    },
-    {
-        "nombre": "Vital Farms Eggs Organic Pasture-Raised Large",
-        "precio": "$15.38",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e729236c9eeffd56aedc01f79b1e5759b7ed4.webp",
-        "enlace": "https://www.google.com/shopping/product/10207989169122022354?gl=us"
-    },
-    {
-        "nombre": "JOYIN Huevos de Pascua pastel de 3.15 pulgadas, 500 huevos de plástico grandes, cáscaras de huevo rellenables de colores vacíos para búsqueda de",
-        "precio": "$69.99",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292f043dca069ba10005e7b9365ac812625.webp",
-        "enlace": "https://www.google.com/shopping/product/8043857435659179482?gl=us"
-    },
-    {
-        "nombre": "Kroger Grade A Large Eggs - Mother’s Day Gifts & Meal Ideas",
-        "precio": "$4.49",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e729283f9ee801d31f7736001c76056ea2210.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:2206083820439250439"
-    },
-    {
-        "nombre": "Huevo Blanco de Gallina Libre 12 Pz",
-        "precio": "$4.23",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292a9c14bf5a2d2cc913aac876717e2b5bd.webp",
-        "enlace": "https://www.google.com/shopping/product/5555538797438665743?gl=us"
-    },
-    {
-        "nombre": "Happy Egg Co. Free Range Grade A Large Brown Eggs",
-        "precio": "$9.99",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e72927cbce9fcbc982365f750f80807580275.webp",
-        "enlace": "https://www.google.com/shopping/product/16668072705962807054?gl=us"
-    },
-    {
-        "nombre": "Sprouts Organic Pasture Raised Large Brown Grade A Eggs",
-        "precio": "$11.99",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292a1677937fd79ad4617e48b61a1556225.webp",
-        "enlace": "https://www.google.com/shopping/product/17776846052811405682?gl=us"
-    },
-    {
-        "nombre": "Happy Egg Co. Organic Large Free Range Brown Eggs",
-        "precio": "$12.49",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e729299bc735255bc771f172c689d4d219bf5.webp",
-        "enlace": "https://www.google.com/shopping/product/7837149563719964271?gl=us"
-    },
-    {
-        "nombre": "Eggylicious Polvo de huevo entero, polvo de proteína natural seca, hecho de huevos frescos, mezcla de blanco y yema, pasteurizado, sin OMG, sin",
-        "precio": "$36.99",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e729213cd4eec669ff2f140e68d86483df028.webp",
-        "enlace": "https://www.google.com/shopping/product/601002268922936578?gl=us"
-    },
-    {
-        "nombre": "Nellie's Free Range Large Brown Eggs",
-        "precio": "$6.58",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e72929b536657d84202016a8ca7d99df1093e.webp",
-        "enlace": "https://www.google.com/shopping/product/9120774013234237304?gl=us"
-    },
-    {
-        "nombre": "Good & Gather Grade a Extra Large Eggs",
-        "precio": "$4.99",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e729214249c49bd24f7c995476b7de454e847.webp",
-        "enlace": "https://www.google.com/shopping/product/18383053663130439923?gl=us"
-    },
-    {
-        "nombre": "Kroger Jumbo Grade A Eggs - 12 Ct",
-        "precio": "$4.89",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e72925dc7ab2eb44e43d161e0f6183c244025.webp",
-        "enlace": "https://www.google.com/shopping/product/8544746988014067188?gl=us"
-    },
-    {
-        "nombre": "Land O Lakes Eggs Cage Free Brown Large",
-        "precio": "$8.05",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e72920b2ba3f704224199831dd5028f51e90d.webp",
-        "enlace": "https://www.google.com/shopping/product/4709103354484346609?gl=us"
-    },
-    {
-        "nombre": "Kinder Joy Huevos, 15 unidades, juguete Treat Plus, cremas dulces y obleas de chocolate, envueltas individualmente para golosinas de cesta de Pascua",
-        "precio": "$24.85",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292627be812634feb70631d6f25598ec68b.webp",
-        "enlace": "https://www.google.com/shopping/product/8955283474896402819?gl=us"
-    },
-    {
-        "nombre": "Essential Everyday Grade A Large Fresh Eggs - 12 Ct",
-        "precio": "$7.89",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e72923188fef6e6ac87ccb6ea168be8d5a35d.webp",
-        "enlace": "https://www.google.com/shopping/product/1024244103232739867?gl=us"
-    },
-    {
-        "nombre": "Martin's Quality Eggs Bag in Box Fresh Liquid Whole Eggs 20 lb.",
-        "precio": "$116.99",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292da24d8f55f314e073a3f74c30803ebe9.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:11388221537470201715"
-    },
-    {
-        "nombre": "Simple Truth Kipster Large Grade A Eggs",
-        "precio": "$5.99",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e72924e437fee08fbb870779bb23ba48a56dc.webp",
-        "enlace": "https://www.google.com/shopping/product/12092046638047324779?gl=us"
-    },
-    {
-        "nombre": "Mitlitsky Eggs Grade A Extra Large Eggs",
-        "precio": "$3.09",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292c2568765bc7357429b179cf026a4beab.webp",
-        "enlace": "https://www.google.com/shopping/product/4817544480496122074?gl=us"
-    },
-    {
-        "nombre": "Meijer Cage Free Grade A Large Eggs",
-        "precio": "$8.26",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e7292fb02ea3fba4b938295142d046d94532e.webp",
-        "enlace": "https://www.google.com/shopping/product/13678077452034594841?gl=us"
-    },
-    {
-        "nombre": "Healthier Comforts Huevo entero en polvo | Huevos enteros secos puros | Pasteurizados, listos para comer | Sin gluten, fabricado en Estados Unidos |",
-        "precio": "$44.99",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e729285f60627b5b4075cda9c387152582619.webp",
-        "enlace": "https://www.google.com/shopping/product/13528242761183263215?gl=us"
-    },
-    {
-        "nombre": "Dollar General Clover Valley Cage Free Grade A White Large Eggs",
-        "precio": "$5.95",
-        "imagen_url": "https://serpapi.com/searches/6807c20a084ef8f4fcb11c09/images/cfb62b49f7c51d75abd02197d48e729215570095c6297031a03bfff33e3e1499.webp",
-        "enlace": "https://www.google.com/shopping/product/9265929640917220290?gl=us"
+        "precio": "$4.65",
+        "imagen_url": "https://serpapi.com/searches/6807e90ce3601e2e51f24c86/images/6f8affb389655b59d9a2d575065c09fad379af41d4aa16b480a7ce3cc508c3f0.webp",
+        "enlace": "https://www.google.com/shopping/product/753894286319076855?gl=us"
+    },
+    {
+        "nombre": "Pure Wesson Vegetable Oil",
+        "precio": "$5.29",
+        "imagen_url": "https://serpapi.com/searches/6807e90ce3601e2e51f24c86/images/6f8affb389655b59d9a2d575065c09fafc19e6ce497294152808ae1261839d40.webp",
+        "enlace": "https://www.google.com/shopping/product/9762430345105180900?gl=us"
     }
 ]
