@@ -26,18 +26,13 @@ def web_culinary(lista):
                 "google_domain": "google.com",
                 "api_key": SERPAPI_KEY
             }
-            print("Params usados:", params)
 
-            print("parametros enviados")
             try:
                 # Ejecutar la búsqueda
                 search = GoogleSearch(params)
                 results = search.get_dict()
-                print("parametros enviados")
-                print(json.dumps(results, indent=2, ensure_ascii=False))
                 # Obtener los resultados de shopping
                 shopping_results = results.get("shopping_results", [])
-                print(f"Shopping results: {shopping_results}")
                 
                 for item in results.get("shopping_results", [])[:5]:
                     title = item.get("title", "N/A")
@@ -51,7 +46,6 @@ def web_culinary(lista):
                         "imagen_url": image_url,
                         "enlace": link if link != "N/A" else "N/A"
                     }
-                    print("ciclo")
                     productos_lista.append(producto_info)
                 time.sleep(0.5)
 
@@ -72,7 +66,7 @@ def web_culinary(lista):
         print(f"Error: {e}")
         return []
 # prod=web_culinary(["Sal", "Aceite", "Huevos"])
-# print(prod)
+# print(prod[0])
 def web_fashion_HM(lista, gender):
 
     ###IMPLEMENTAR QUERY PARA LISTA DE PRODUCTOS!!!!!!!!!!!!!!!!!
