@@ -112,7 +112,7 @@ def almacenar_receta(data):
 
         # ✅ Extraer datos del JSON recibido
         nombre_receta = data.get("nombre_receta", "").strip()
-        ingredientes = data.get("ingredientes", [])
+        ingredientes = data.get("ingredientes_receta", [])
 
         if not nombre_receta:
             return jsonify({"error": "El nombre de la receta es obligatorio"}), 400
@@ -645,3 +645,79 @@ def borrar_rutina(nombre_rutina):
     except Exception as e:
         print(f"⚠️ Error en borrar_rutina: {e}")
         return jsonify({"error": str(e)}), 500
+
+
+def almacenar_items_wishlist(ingredientes):
+    """Almacena ingredientes en la lista de deseos del usuario."""
+
+    print(f"🔵 Iniciando almacenar_items_wishlist con ingredientes: {ingredientes}")
+
+    try:
+        # 🛑 Verificar sesión del usuario
+        if "provider_id" not in session or "selected_domain" not in session:
+            return jsonify({"error": "Usuario no autenticado o dominio no seleccionado"}), 401
+
+        user_q = User.query.filter_by(provider_id=session["provider_id"]).first()
+        domain_q = Domain.query.filter_by(domain_name=session["selected_domain"]).first()
+
+        if not user_q or not domain_q:
+            return jsonify({"error": "Usuario o dominio no encontrado"}), 404
+
+        # Intentar obtener los items de wishlist desde Redis primero
+        redis_key_wishlist = f"user:{user_q.id}:domain:{domain_q.id}:wish_list"
+        wishlist_json = redis_client.get(redis_key_wishlist)
+
+        if wishlist_json:
+            # Si los items están en Redis, los cargamos
+            wishlist = json.loads(wishlist_json)  # Convertir el JSON almacenado en lista
+            print("Cargando wishlist desde Redis:", wishlist)
+        else:
+            # Si no están en Redis, los consultamos en la base de datos
+            wishlist_record = WishList.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
+            wishlist = wishlist_record.wish_items if wishlist_record else []
+
+            # Guardamos en Redis para futuras consultas
+            redis_client.set(redis_key_wishlist, json.dumps(wishlist))
+            print("Cargando wishlist desde MySQL y guardando en Redis:", wishlist)
+
+        # 📦 Agregar los nuevos ingredientes a la wishlist y eliminar duplicados
+        wishlist.extend(ingredientes)
+        wishlist = list(set(wishlist))  # Eliminar duplicados
+
+        # Guardar la lista actualizada en Redis
+        redis_client.set(redis_key_wishlist, json.dumps(wishlist))
+        print("✅ Wishlist actualizada guardada en Redis:", wishlist)
+
+        # 🔍 Buscar si el usuario ya tiene una wishlist
+        wishlist_record = WishList.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
+
+        if wishlist_record:
+            # ✅ Verificar si "wish_items" es una cadena JSON y convertirla a lista
+            if isinstance(wishlist_record.wish_items, str):
+                try:
+                    current_items = json.loads(wishlist_record.wish_items)  # Convertir JSON a lista
+                except json.JSONDecodeError:
+                    current_items = []  # En caso de error, inicializar lista vacía
+            else:
+                current_items = wishlist_record.wish_items if wishlist_record.wish_items else []
+
+            # 📦 Agregar nuevos ingredientes sin duplicados
+            current_items.extend(ingredientes)
+            wishlist_record.wish_items = list(set(current_items))  # Convertir lista a JSON
+
+        else:
+            # 🆕 Crear nueva wishlist
+            new_wishlist = WishList(
+                user_id=user_q.id,
+                domain_id=domain_q.id,
+                wish_items=ingredientes  # Guardar como JSON
+            )
+            db.session.add(new_wishlist)
+
+        # 💾 Guardar cambios en la base de datos
+        db.session.commit()
+
+        return wishlist
+    except Exception as e:
+        print(f"❌ Error en almacenar_items_wishlist: {e}")
+        return jsonify({"error": "Error al almacenar la lista de deseos"}), 500
