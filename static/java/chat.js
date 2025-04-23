@@ -227,14 +227,7 @@ const domain = urlParams.get('domain');
                       </div>`;
                 recommendationsList.appendChild(listItem);
             });
-        }else if (typeof data.recipes === "string" && !responseType.includes("inventory") ) {
-    // CASO 3: Solo una URL (string)
-    const listItem = document.createElement("li");
-    listItem.innerHTML = `<div>
-                            <a href="${data.recipes}" target="_blank" rel="noopener noreferrer">${data.recipes}</a>
-                          </div>`;
-    recommendationsList.appendChild(listItem);
-}
+        }
 
         })
         .catch(error => console.error('Error:', error));
