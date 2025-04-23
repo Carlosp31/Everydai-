@@ -15,9 +15,5 @@ clean_redis.py
 jsn_excel.py
 output.xlsx
 logs/
-<<<<<<< HEAD
-
-.qodo
-=======
 augmented_experience2.js
->>>>>>> ebe241403eeee1c07c1b4526b4b472a18326a439
+borrar_redis.py
