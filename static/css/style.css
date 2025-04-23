@@ -543,6 +543,30 @@ textarea#input-text:focus {
     text-overflow: ellipsis; /* Mostrar puntos suspensivos si el texto es demasiado largo */
     max-width: 100%; /* Limitar el ancho al contenedor padre */
 }
+.image-preview {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .image-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .thumbnail {
+    display: inline-block;
+    max-width: 150px;
+    max-height: 150px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    border-radius: 8px;
+  }
+
+  .thumbnail:hover {
+    transform: scale(1.1);
+  }
 #status-indicator {
     position: relative;
     top: 60px;       /* Ajusta este valor según la altura de los botones */

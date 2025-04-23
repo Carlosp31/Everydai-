@@ -169,7 +169,7 @@ const domain = urlParams.get('domain');
                 speakResponse(data.text_response);
                 logResponse(interaction, responseType);  // Registrar el tiempo de respuesta
     
-        if (Array.isArray(data.recipes)) {
+        if (Array.isArray(data.recipes) && !responseType.includes("inventory")) {
             data.recipes.forEach(item => {
                 const listItem = document.createElement("li");
 
@@ -211,6 +211,7 @@ const domain = urlParams.get('domain');
         }else if (
             typeof data.recipes === "object" &&
             data.recipes !== null &&
+            !responseType.includes("inventory") &&
             Object.entries(data.recipes).every(([key, value]) => 
                 typeof key === "string" && typeof value === "string"
             )
@@ -218,19 +219,22 @@ const domain = urlParams.get('domain');
             // CASO 2: Diccionario válido { nombre: link }
             Object.entries(data.recipes).forEach(([nombre, link]) => {
                 const listItem = document.createElement("li");
-                listItem.innerHTML = `<div>
-                                        <a href="${link}" target="_blank" rel="noopener noreferrer">${nombre}</a>
-                                      </div>`;
+                listItem.innerHTML = `<div class="image-preview">
+                        <p class="image-title">${nombre}</p>
+                        <a href="${link}" target="_blank" rel="noopener noreferrer">
+                            <img src="${link}" alt="${nombre}" class="thumbnail">
+                        </a>
+                      </div>`;
                 recommendationsList.appendChild(listItem);
             });
-        }else if (typeof data.recipes === "string") {
-            // CASO 3: Solo una URL (string)
-            const listItem = document.createElement("li");
-            listItem.innerHTML = `<div>
-                                    <a href="${data.recipes}" target="_blank" rel="noopener noreferrer">${data.recipes}</a>
-                                  </div>`;
-            recommendationsList.appendChild(listItem);
-        }
+        }else if (typeof data.recipes === "string" && !responseType.includes("inventory") ) {
+    // CASO 3: Solo una URL (string)
+    const listItem = document.createElement("li");
+    listItem.innerHTML = `<div>
+                            <a href="${data.recipes}" target="_blank" rel="noopener noreferrer">${data.recipes}</a>
+                          </div>`;
+    recommendationsList.appendChild(listItem);
+}
 
         })
         .catch(error => console.error('Error:', error));
