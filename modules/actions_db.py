@@ -90,7 +90,7 @@ def add_to_cart():
         return jsonify({"error": "Error interno del servidor"}), 500
     
 def remove_from_wish_list():
-    """Elimina un producto de la lista de deseos en Redis y MySQL."""
+    """Elimina un ítem (string) de la lista de deseos en Redis y MySQL."""
 
     print("🔴 Iniciando remove_from_wish_list...")
 
@@ -117,52 +117,50 @@ def remove_from_wish_list():
         # 🔑 Clave en Redis
         redis_key = f"user:{user_q.id}:domain:{domain_q.id}:wish_list"
 
-        # 📜 Obtener la lista de deseos desde Redis
+        # 📜 Obtener la lista desde Redis
         wish_list_json = redis_client.get(redis_key)
         wish_list = json.loads(wish_list_json) if wish_list_json else []
 
-        # 🔍 Buscar y eliminar el elemento
-        updated_wish_list = [item for item in wish_list if item["name"] != item_name]
+        # 🔍 Eliminar el ítem de la lista
+        updated_wish_list = [item for item in wish_list if item != item_name]
 
-        # 📝 Actualizar Redis
+        # 📝 Guardar lista actualizada en Redis
         redis_client.set(redis_key, json.dumps(updated_wish_list))
         print(f"🗑️ Elemento '{item_name}' eliminado de Redis.")
 
-        # ❌ Eliminar de MySQL
+        # 🔍 Eliminar también en MySQL
         wishlist_entry = WishList.query.filter_by(user_id=user_q.id, domain_id=domain_q.id).first()
 
         if not wishlist_entry:
             return jsonify({"error": "Lista de deseos no encontrada"}), 404
 
-        # ✅ Verificar si wish_items es una lista o una cadena JSON
+        # Asegurarse de tener una lista válida desde la BD
         if isinstance(wishlist_entry.wish_items, str):
             try:
                 wish_items = json.loads(wishlist_entry.wish_items)
             except json.JSONDecodeError:
                 return jsonify({"error": "Error al decodificar la lista de deseos"}), 500
         elif isinstance(wishlist_entry.wish_items, list):
-            wish_items = wishlist_entry.wish_items  # Ya es una lista, no hacer json.loads()
+            wish_items = wishlist_entry.wish_items
         else:
             return jsonify({"error": "Formato inválido en wish_items"}), 500
 
-        # ✅ Filtrar la lista y eliminar el ítem
-        updated_wish_items = [item for item in wish_items if item["name"] != item_name]
+        # Eliminar el ítem si existe
+        updated_wish_items = [item for item in wish_items if item != item_name]
 
         if len(updated_wish_items) == len(wish_items):
             return jsonify({"error": "El ítem no se encontró en la lista"}), 404
 
-        # ✅ Guardar la lista actualizada en la base de datos
-        wishlist_entry.wish_items = (updated_wish_items)  # Guardar como JSON en la BD
+        # Guardar en MySQL
+        wishlist_entry.wish_items = updated_wish_items
         db.session.commit()
         print(f"🗑️ Elemento '{item_name}' eliminado de MySQL.")
 
         return jsonify({"message": "Elemento eliminado correctamente"}), 200
 
-
     except Exception as e:
         print(f"❌ Error en remove_from_wish_list: {e}")
         return jsonify({"error": "Error interno del servidor"}), 500
-
 
 
 def remove_from_inventory():
