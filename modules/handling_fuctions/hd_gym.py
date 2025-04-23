@@ -4,7 +4,8 @@ import json
 import modules.Function_calling.busquedas as busquedas
 import modules.Function_calling.webscrp as webscrp
 import modules.Function_calling.act_bd as action_db
-from modules.get_inventory import get_inventory_from_redis 
+from modules.get_inventory import get_inventory_from_redis
+from app import send_wish_list_email  
 
 def hd_gym(user_input, client, thread_idf, assistant_idf, run):
     response_2= None
@@ -181,7 +182,7 @@ def hd_gym(user_input, client, thread_idf, assistant_idf, run):
             })
         elif tool.function.name == "add_to_wishlist":
             print("📝 Añadiendo ingredientes a la wishlist...")
-
+            send_wish_list_email()
             # Obtener los argumentos del tool_call
             tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
             arguments_str = tool_call.function.arguments
