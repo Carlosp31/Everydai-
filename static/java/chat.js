@@ -208,7 +208,16 @@ const domain = urlParams.get('domain');
                 // Añadir cada item a la lista de recomendaciones
                 recommendationsList.appendChild(listItem);
             });
-        }
+        }else if (typeof data.recipes === "object" && data.recipes !== null) {
+    // CASO 2: Es un diccionario tipo { nombre: link }
+    Object.entries(data.recipes).forEach(([nombre, link]) => {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `<div>
+                                <a href="${link}" target="_blank" rel="noopener noreferrer">${nombre}</a>
+                              </div>`;
+        recommendationsList.appendChild(listItem);
+    });
+}
 
         })
         .catch(error => console.error('Error:', error));
