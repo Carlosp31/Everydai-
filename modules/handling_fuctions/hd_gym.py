@@ -14,33 +14,7 @@ def hd_gym(user_input, client, thread_idf, assistant_idf, run):
     # Loop through each tool in the required action section
     for tool in run.required_action.submit_tool_outputs.tool_calls:
         print("He entrado a Loop")
-        # if tool.function.name == "buscar_resultados_en_serpapi_gym":
-        #     print("✅ Entrando a función: buscar_resultados_en_serpapi_gym")
 
-        #     # Acceder al tool_call
-        #     tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
-
-        #     # Extraer argumentos
-        #     arguments_str = tool_call.function.arguments
-        #     arguments_dict = json.loads(arguments_str)
-
-        #     # Obtener parámetros
-        #     ejercicios = arguments_dict.get("ejercicios", [])
-        #     model = arguments_dict.get("model", "modelo_no_encontrado")
-
-        #     # Depuración
-        #     print(f"🔍 Lista de ejercicios a buscar: {ejercicios}")
-        #     print(f"🧠 Dominio: {model}")
-
-        #     # Llamar a la función con la lista de ejercicios
-        #     response_2 = busquedas.buscar_resultados_en_serpapi_gym(ejercicios, model)
-        #     response_3 = "busqueda_serp_gym"
-
-        #     # Agregar al output para el modelo
-        #     tool_outputs.append({
-        #         "tool_call_id": tool.id,
-        #         "output": f"Resultados de búsqueda para los ejercicios: {', '.join(ejercicios)}"
-        #     })
 
         if tool.function.name == "buscar_resultados_en_serpapi_gym":
             print("✅ Entrando a función: buscar_resultados_en_serpapi_gym")
@@ -79,9 +53,9 @@ def hd_gym(user_input, client, thread_idf, assistant_idf, run):
             arguments_dict = json.loads(arguments_str)
 
             # Ejemplo: Si quieres extraer el valor del 'query'
-            producto = arguments_dict.get("producto", "Valor no encontrado")
-            print (f"producto a buscar: {producto}")
-            response_2  = webscrp.web_fitness_decathlon(producto)
+            productos = arguments_dict.get("lista_de_compra", "Valor no encontrado")
+            print (f"producto a buscar: {productos}")
+            response_2  = webscrp.web_fitness_decathlon(productos)
             response_3 = "Busqueda_prod_fitness"
             tool_outputs.append({
                 "tool_call_id": tool.id,
@@ -164,7 +138,7 @@ def hd_gym(user_input, client, thread_idf, assistant_idf, run):
 
             # 📦 Depuración: Verificar lo que se enviará a la función
             print(f"implementos necesarios para la rutina: {items_receta}")
-
+            action_db.almacenar_rutina_gym(arguments_dict)
             # Llamar a la función con la lista de ingredientes
             response_3 = "Preparando rutina"
             inv = get_inventory_from_redis()
@@ -205,7 +179,30 @@ def hd_gym(user_input, client, thread_idf, assistant_idf, run):
                 "tool_call_id": tool.id,
                 "output": nombre_rutina
             })
-    
+        elif tool.function.name == "add_to_wishlist":
+            print("📝 Añadiendo ingredientes a la wishlist...")
+
+            # Obtener los argumentos del tool_call
+            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+            arguments_str = tool_call.function.arguments
+            arguments_dict = json.loads(arguments_str)
+
+            # 📥 Depuración: Verificar los datos recibidos
+            print(f"📥 JSON recibido en agregar_a_wishlist: {arguments_dict}")
+
+            items_faltantes = arguments_dict.get("items_a_agregar", [])
+            action_db.almacenar_items_wishlist(items_faltantes)
+            print(f"🛒 Ingredientes a añadir: {items_faltantes}")
+            
+            # Aquí se llama a la función de base de datos que añade a wishlist
+            # resultado = action_db.agregar_a_wishlist(ingredientes_faltantes)
+            # print(f"✅ Resultado de la operación: {resultado}")
+            
+            response_3 = "📝 Elementos añadidos a tu wishlist."
+            tool_outputs.append({
+                "tool_call_id": tool.id,
+                "output": "Ya añadido los ingredientes faltantes a tu lista. Lo he enviado a tu correo para que lo recuerdas cuando vayas de compras."
+            })
         elif tool.function.name == "query_rutinas":
             print("🔍 Buscando rutinas guardadas...")
 
