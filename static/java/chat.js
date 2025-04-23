@@ -208,16 +208,29 @@ const domain = urlParams.get('domain');
                 // Añadir cada item a la lista de recomendaciones
                 recommendationsList.appendChild(listItem);
             });
-        }else if (typeof data.recipes === "object" && data.recipes !== null) {
-    // CASO 2: Es un diccionario tipo { nombre: link }
-    Object.entries(data.recipes).forEach(([nombre, link]) => {
-        const listItem = document.createElement("li");
-        listItem.innerHTML = `<div>
-                                <a href="${link}" target="_blank" rel="noopener noreferrer">${nombre}</a>
-                              </div>`;
-        recommendationsList.appendChild(listItem);
-    });
-}
+        }else if (
+            typeof data.recipes === "object" &&
+            data.recipes !== null &&
+            Object.entries(data.recipes).every(([key, value]) => 
+                typeof key === "string" && typeof value === "string"
+            )
+        ) {
+            // CASO 2: Diccionario válido { nombre: link }
+            Object.entries(data.recipes).forEach(([nombre, link]) => {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `<div>
+                                        <a href="${link}" target="_blank" rel="noopener noreferrer">${nombre}</a>
+                                      </div>`;
+                recommendationsList.appendChild(listItem);
+            });
+        }else if (typeof data.recipes === "string") {
+            // CASO 3: Solo una URL (string)
+            const listItem = document.createElement("li");
+            listItem.innerHTML = `<div>
+                                    <a href="${data.recipes}" target="_blank" rel="noopener noreferrer">${data.recipes}</a>
+                                  </div>`;
+            recommendationsList.appendChild(listItem);
+        }
 
         })
         .catch(error => console.error('Error:', error));
