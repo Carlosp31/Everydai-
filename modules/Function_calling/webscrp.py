@@ -125,54 +125,60 @@ def web_fashion_HM(lista, gender):
         return []
 
 
-def web_fitness_decathlon(query):
+def web_fitness_decathlon(lista):
+
+    ###IMPLEMENTAR QUERY PARA LISTA DE PRODUCTOS!!!!!!!!!!!!!!!!!
+    productos_lista = []
     try:
-        search_query = f"{query} - Decatlhon"
+        for query in lista:
+            search_query = f"{query}"
+            print(f"Producto a buscar: {query}")
 
-        # Definir los parámetros de búsqueda
-        params = {
-            "q": search_query,
-            "engine": "google_shopping",
-            "hl": "es",
-            "gl": "us",
-            # "location_requested": "Atlantico,Colombia",
-            # "location_used": "Atlantico,Colombia",
-            "api_key": SERPAPI_KEY
-        }
-
-
-        # Ejecutar la búsqueda
-        search = GoogleSearch(params)
-        results = search.get_dict()
-
-        # Obtener los resultados de shopping
-        shopping_results = results.get("shopping_results", [])
-
-        productos_lista = []
-        for item in shopping_results:
-            title = item.get("title", "N/A")
-            price = item.get("extracted_price", "N/A")
-            image_url = item.get("thumbnail", "N/A")
-            link = item.get("product_link", "N/A")
-
-            producto_info = {
-                "nombre": title,
-                "precio": f"${price}",
-                "imagen_url": image_url,
-                "enlace": link if link != "N/A" else "N/A"
+            # Definir los parámetros de búsqueda
+            params = {
+                "q": search_query,
+                "engine": "google_shopping",
+                "gl": "us",
+                "hl": "es",
+                "google_domain": "google.com",
+                "api_key": SERPAPI_KEY
             }
 
-            productos_lista.append(producto_info)
+            try:
+                # Ejecutar la búsqueda
+                search = GoogleSearch(params)
+                results = search.get_dict()
+                # Obtener los resultados de shopping
+                shopping_results = results.get("shopping_results", [])
+                
+                for item in results.get("shopping_results", [])[:5]:
+                    title = item.get("title", "N/A")
+                    price = item.get("extracted_price", "N/A")
+                    image_url = item.get("thumbnail", "N/A")
+                    link = item.get("product_link", "N/A")
 
-        # Guardar en un archivo JSON
-        with open("productos.json", "w", encoding="utf-8") as file:
-            json.dump(productos_lista, file, ensure_ascii=False, indent=4)
-        print(f"productos: {productos_lista}")
+                    producto_info = {
+                        "nombre": title,
+                        "precio": f"${price}",
+                        "imagen_url": image_url,
+                        "enlace": link if link != "N/A" else "N/A"
+                    }
+                    productos_lista.append(producto_info)
+                time.sleep(0.5)
 
+
+            except Exception as e:
+                print(f"❌ Error con la búsqueda '{query}': {e}")
+                traceback.print_exc()
+                return f"Error al buscar '{query}' en SerpAPI: {e}"
+
+                        # Guardar en un archivo JSON
+            with open("productos.json", "w", encoding="utf-8") as file:
+                json.dump(productos_lista, file, ensure_ascii=False, indent=4)
+            print(f"productos: {productos_lista}")
         return productos_lista
 
 
     except Exception as e:
         print(f"Error: {e}")
         return []
-
