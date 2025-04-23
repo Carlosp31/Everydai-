@@ -247,7 +247,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             # Aquí se llama a la función de base de datos que añade a wishlist
             # resultado = action_db.agregar_a_wishlist(ingredientes_faltantes)
             # print(f"✅ Resultado de la operación: {resultado}")
-            
+            send_wish_list_email()
             response_3 = "📝 Ingredientes añadidos a tu wishlist."
             tool_outputs.append({
                 "tool_call_id": tool.id,
