@@ -8,7 +8,8 @@ load_dotenv()
 RUNWARE_API_KEY = os.getenv("RUNWARE_API_KEY")
 
 # Función asincrónica para una sola receta
-async def generate_recipe_image(nombre_receta: str) -> str:
+# Función asincrónica para una sola receta, retornando en formato de diccionario
+async def generate_recipe_image(nombre_receta: str) -> dict:
     runware = Runware(api_key=RUNWARE_API_KEY)
     await runware.connect()
 
@@ -26,12 +27,11 @@ async def generate_recipe_image(nombre_receta: str) -> str:
     if images:
         image_url = images[0].imageURL
         print(f"✅ Imagen generada para '{nombre_receta}': {image_url}")
-        return image_url
+        return {nombre_receta: image_url}
     else:
         print(f"⚠️ No se pudo generar imagen para '{nombre_receta}'")
-        return ""
+        return {nombre_receta: ""}
 
-# Función asincrónica para múltiples recetas
 async def generate_multiple_images(nombres_recetas: list[str]) -> dict:
     runware = Runware(api_key=RUNWARE_API_KEY)
     await runware.connect()
@@ -58,8 +58,9 @@ async def generate_multiple_images(nombres_recetas: list[str]) -> dict:
     return result
 
 # Wrappers síncronos
-def generate(nombre_receta: str) -> str:
+def generate(nombre_receta: str) -> dict:
     return asyncio.run(generate_recipe_image(nombre_receta))
+
 
 def generate_multiple(nombres_recetas: list[str]) -> dict:
     return asyncio.run(generate_multiple_images(nombres_recetas))
@@ -72,8 +73,8 @@ from runware import Runware, IImageInference
 load_dotenv()
 RUNWARE_API_KEY = os.getenv("RUNWARE_API_KEY")
 
-# Función asincrónica para un solo outfit
-async def generate_outfit_image(nombre_outfit: str, genero: str) -> str:
+# Función asincrónica para un solo outfit, retornando en formato de diccionario
+async def generate_outfit_image(nombre_outfit: str, genero: str) -> dict:
     runware = Runware(api_key=RUNWARE_API_KEY)
     await runware.connect()
 
@@ -93,10 +94,10 @@ async def generate_outfit_image(nombre_outfit: str, genero: str) -> str:
     if images:
         image_url = images[0].imageURL
         print(f"✅ Imagen generada para '{prompt}': {image_url}")
-        return image_url
+        return {nombre_outfit: image_url}
     else:
         print(f"⚠️ No se pudo generar imagen para '{prompt}'")
-        return ""
+        return {nombre_outfit: ""}
 
 # Función asincrónica para múltiples outfits
 async def generate_multiple_outfit_images(outfits: list[dict]) -> dict:
@@ -129,7 +130,7 @@ async def generate_multiple_outfit_images(outfits: list[dict]) -> dict:
     return result
 
 # Wrappers síncronos
-def generate_outfit(nombre_outfit: str, genero: str) -> str:
+def generate_outfit(nombre_outfit: str, genero: str) -> dict:
     return asyncio.run(generate_outfit_image(nombre_outfit, genero))
 
 def generate_multiple_outfits(outfits: list[dict]) -> dict:
