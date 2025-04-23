@@ -155,7 +155,7 @@ def hd_fashion(user_input, client, thread_idf, assistant_idf, run):
             tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
             arguments_str = tool_call.function.arguments
             arguments_dict = json.loads(arguments_str)
-
+            print(f"response:{response_2}")
             response_3 = "🧵 Generando visualización del outfit..."
             print(f"📥 JSON recibido en ejemplos_outfits: {arguments_dict}")
 
@@ -173,7 +173,7 @@ def hd_fashion(user_input, client, thread_idf, assistant_idf, run):
                 url_imagen = generation.generate(prompt)
                 response_2 = url_imagen
                 print(f"✅ Imagen generada: {url_imagen}")
-
+            print(f"response_2: {response_2}")    
             tool_outputs.append({
                 "tool_call_id": tool.id,
                 "output": "Aquí tienes unas posibles combinaciones que visualizan el outfit propuesto."
@@ -187,7 +187,7 @@ def hd_fashion(user_input, client, thread_idf, assistant_idf, run):
             arguments_dict = json.loads(arguments_str)
 
             print(f"📥 JSON recibido en ejemplos_outfits_evento: {arguments_dict}")
-
+            
             nombres_outfits = arguments_dict.get("nombres_outfits", [])
             genero = arguments_dict.get("genero", "").strip().lower()
 
@@ -209,7 +209,7 @@ def hd_fashion(user_input, client, thread_idf, assistant_idf, run):
 
                 # Podrías aquí almacenar/visualizar los resultados de alguna forma en tu interfaz.
                 response_2 = result
-
+            print(f"response:{response_2}")
             tool_outputs.append({
                 "tool_call_id": tool.id,
                 "output": "Aquí tienes las visualizaciones para los looks sugeridos según la ocasión."
@@ -218,15 +218,12 @@ def hd_fashion(user_input, client, thread_idf, assistant_idf, run):
     
         elif tool.function.name == "add_to_wishlist":
             print("📝 Añadiendo ingredientes a la wishlist...")
-
             # Obtener los argumentos del tool_call
             tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
             arguments_str = tool_call.function.arguments
             arguments_dict = json.loads(arguments_str)
-
             # 📥 Depuración: Verificar los datos recibidos
             print(f"📥 JSON recibido en agregar_a_wishlist: {arguments_dict}")
-
             prendas_necesarias_faltantes = arguments_dict.get("items_a_agregar", [])
             action_db.almacenar_items_wishlist(prendas_necesarias_faltantes)
             print(f"🛒 prendas a añadir: {prendas_necesarias_faltantes}")
