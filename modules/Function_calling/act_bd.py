@@ -292,7 +292,7 @@ def almacenar_outfit(data):
 
         # ✅ Extraer datos del JSON recibido
         ocasion = data.get("ocasion", "").strip().lower()
-        prendas = data.get("prendas", [])
+        prendas = data.get("prendas_outfit", [])
 
         if not ocasion:
             print("⚠️ Ocasión vacía o no proporcionada.")
