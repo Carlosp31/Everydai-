@@ -14,7 +14,7 @@ function fetchWishList() {
                 return;
             }
             wishList.length = 0;
-            wishList.push(...data.items);
+            wishList.push(...data.items);  // Ahora es una lista de strings
             updateWishDropdown();
         })
         .catch(error => console.error("Error al obtener la lista de deseos:", error));
@@ -25,24 +25,21 @@ function updateWishDropdown() {
 
     wishList.forEach((item) => {
         const listItem = document.createElement("li");
-        
-        const name = item.name || 'Nombre no disponible';
-        const price = item.price || 'Precio no disponible';
-        
-        listItem.textContent = `${name} - ${price} `;
+
+        listItem.textContent = item;  // item es un string directamente, como "salsa"
 
         // Botón para eliminar el elemento
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "❌";
+
         // Botón para mover al inventario
         const moveButton = document.createElement("button");
-        moveButton.textContent = "➕ ";
-        moveButton.onclick = () => addToInventory(name);
+        moveButton.textContent = "➕";
+        moveButton.onclick = () => addToInventory(item);
 
-        
         deleteButton.onclick = () => {
-            console.log("🛑 Botón clickeado para eliminar:", name); // Verificar si el botón detecta el clic
-            removeFromWishList(name);
+            console.log("🛑 Botón clickeado para eliminar:", item);
+            removeFromWishList(item);
         };
 
         listItem.appendChild(deleteButton);
@@ -52,22 +49,25 @@ function updateWishDropdown() {
 }
 
 
+
 function removeFromWishList(itemName) {
-    console.log(`🛑 Intentando eliminar: ${itemName} del dominio: ${domain}`);
+    console.log(`🛑 Eliminando: ${itemName} del dominio: ${domain}`);
 
     fetch('/remove_from_wish_list', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ domain_name: domain, item_name: itemName }) 
+        body: JSON.stringify({
+            domain_name: domain,
+            item_name: itemName
+        })
     })
     .then(response => response.json())
     .then(data => {
         console.log("✅ Respuesta del backend:", data);
-        fetchWishList(); // Recargar la lista después de eliminar
+        fetchWishList();
     })
-    .catch(error => console.error("❌ Error en la petición:", error));
+    .catch(error => console.error("❌ Error al eliminar de la lista de deseos:", error));
 }
-
 
 
 
