@@ -172,6 +172,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
                 print("⚠️ No se recibió un nombre válido de receta.")
             url_imagen = generation.generate(nombre_receta)
             response_2= url_imagen
+            print(f"response 2: {response_2}")
             tool_outputs.append({
                 "tool_call_id": tool.id,
                 "output": f"Aquí tienes unas posibles recetas"
