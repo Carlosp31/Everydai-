@@ -173,12 +173,15 @@ const domain = urlParams.get('domain');
             data.recipes.forEach(item => {
                 const listItem = document.createElement("li");
 
-                // Verificamos si el objeto tiene las llaves 'nombre' y 'precio'
                 if (item.nombre && item.precio) {
+                    // Generar el nombre del producto, opcionalmente con enlace
+                    const nombreProducto = item.enlace
+                        ? `<a href="${item.enlace}" target="_blank" rel="noopener noreferrer">${item.nombre}</a>`
+                        : item.nombre;
+        
                     listItem.innerHTML = `<div class="producto">
-                            <span class="producto-nombre">${item.nombre}</span> - 
+                            <span class="producto-nombre">${nombreProducto}</span> - 
                             <span class="producto-precio">${item.precio}</span>
-                            <button onclick="addToCart('${selectedModel}', {nombre: '${item.nombre}', precio: '${item.precio}'})">Add to list</button>
                         </div>`;
 
                     // Verificamos si también tiene la URL de la imagen

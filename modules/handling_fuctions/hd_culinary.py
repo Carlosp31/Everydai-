@@ -57,7 +57,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             response_3 = "Busqueda_prod_cooking"
             tool_outputs.append({
                 "tool_call_id": tool.id,
-                "output": "He encontrado algunos productos relacionados con tus busquedas. " #json.dumps(response_2)
+                "output": f"He notado que te faltan algunos ingredientes para tu receta:{productos}" #json.dumps(response_2)
             })
 
         elif tool.function.name == "almacenar_ingredientes":
@@ -134,7 +134,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
 
             # 📦 Depuración: Verificar lo que se enviará a la función
             print(f"🍽 Ingredientes extraídos: {items_receta}")
-
+            action_db.almacenar_receta(arguments_dict)
             # Llamar a la función con la lista de ingredientes
             response_3 = "Sugierendo receta tardía cooking"
             inv = get_inventory_from_redis()
@@ -174,7 +174,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             response_2= url_imagen
             tool_outputs.append({
                 "tool_call_id": tool.id,
-                "output": f"se ha generado una imagen: {response_2}"
+                "output": f"Aquí tienes unas posibles recetass"
             })
         elif tool.function.name == "ejemplos_recetas_tardia":
             print("FUNCTION: Ejemplos Recetas Tardía")
@@ -229,7 +229,31 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
                 "tool_call_id": tool.id,
                 "output": nombre_receta
             })
-    
+        elif tool.function.name == "add_to_wishlist":
+            print("📝 Añadiendo ingredientes a la wishlist...")
+
+            # Obtener los argumentos del tool_call
+            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+            arguments_str = tool_call.function.arguments
+            arguments_dict = json.loads(arguments_str)
+
+            # 📥 Depuración: Verificar los datos recibidos
+            print(f"📥 JSON recibido en agregar_a_wishlist: {arguments_dict}")
+
+            ingredientes_faltantes = arguments_dict.get("ingredientes_a_agregar", [])
+            action_db.almacenar_items_wishlist(ingredientes_faltantes)
+            print(f"🛒 Ingredientes a añadir: {ingredientes_faltantes}")
+            
+            # Aquí se llama a la función de base de datos que añade a wishlist
+            # resultado = action_db.agregar_a_wishlist(ingredientes_faltantes)
+            # print(f"✅ Resultado de la operación: {resultado}")
+            
+            response_3 = "📝 Ingredientes añadidos a tu wishlist."
+            tool_outputs.append({
+                "tool_call_id": tool.id,
+                "output": "Ya añadido los ingredientes faltantes a tu lista. Lo he enviado a tu correo para que lo recuerdas cuando vayas de compras."
+            })
+
         elif tool.function.name == "query_recetas":
             print("🔍 Buscando recetas guardadas...")
 
