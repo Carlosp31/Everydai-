@@ -475,9 +475,9 @@ def almacenar_rutina_gym(data):
             return jsonify({"error": "Usuario o dominio no encontrado"}), 404
 
         # ✅ Extraer datos del JSON recibido
-        nombre_rutina = data.get("rutina", "").strip().lower()
-        ejercicios = data.get("ejercicios", [])
-        implementos = data.get("implementos", [])
+        nombre_rutina = data.get("nombre_rutina", "").strip().lower()
+        ejercicios = data.get("ejercicios_sugeridos", [])
+        implementos = data.get("implementos_necesarios", [])
 
         if not nombre_rutina:
             print("⚠️ Nombre de rutina vacío o no proporcionado.")
@@ -647,10 +647,10 @@ def borrar_rutina(nombre_rutina):
         return jsonify({"error": str(e)}), 500
 
 
-def almacenar_items_wishlist(ingredientes):
+def almacenar_items_wishlist(elemts):
     """Almacena ingredientes en la lista de deseos del usuario."""
 
-    print(f"🔵 Iniciando almacenar_items_wishlist con ingredientes: {ingredientes}")
+    print(f"🔵 Iniciando almacenar_items_wishlist con ingredientes: {elemts}")
 
     try:
         # 🛑 Verificar sesión del usuario
@@ -681,7 +681,7 @@ def almacenar_items_wishlist(ingredientes):
             print("Cargando wishlist desde MySQL y guardando en Redis:", wishlist)
 
         # 📦 Agregar los nuevos ingredientes a la wishlist y eliminar duplicados
-        wishlist.extend(ingredientes)
+        wishlist.extend(elemts)
         wishlist = list(set(wishlist))  # Eliminar duplicados
 
         # Guardar la lista actualizada en Redis
@@ -702,7 +702,7 @@ def almacenar_items_wishlist(ingredientes):
                 current_items = wishlist_record.wish_items if wishlist_record.wish_items else []
 
             # 📦 Agregar nuevos ingredientes sin duplicados
-            current_items.extend(ingredientes)
+            current_items.extend(elemts)
             wishlist_record.wish_items = list(set(current_items))  # Convertir lista a JSON
 
         else:
@@ -710,7 +710,7 @@ def almacenar_items_wishlist(ingredientes):
             new_wishlist = WishList(
                 user_id=user_q.id,
                 domain_id=domain_q.id,
-                wish_items=ingredientes  # Guardar como JSON
+                wish_items=elemts  # Guardar como JSON
             )
             db.session.add(new_wishlist)
 

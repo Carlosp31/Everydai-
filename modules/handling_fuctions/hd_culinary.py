@@ -174,7 +174,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             response_2= url_imagen
             tool_outputs.append({
                 "tool_call_id": tool.id,
-                "output": f"Aquí tienes unas posibles recetass"
+                "output": f"Aquí tienes unas posibles recetas"
             })
         elif tool.function.name == "ejemplos_recetas_tardia":
             print("FUNCTION: Ejemplos Recetas Tardía")
@@ -204,7 +204,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
 
                 tool_outputs.append({
                     "tool_call_id": tool.id,
-                    "output": f"Se han generado imágenes para las recetas: {urls_imagenes}"
+                    "output": f"Aquí tienes unas sugerencias de recetas"
                 })
             else:
                 print("⚠️ No se recibió una lista válida de recetas.")
@@ -240,7 +240,7 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             # 📥 Depuración: Verificar los datos recibidos
             print(f"📥 JSON recibido en agregar_a_wishlist: {arguments_dict}")
 
-            ingredientes_faltantes = arguments_dict.get("ingredientes_a_agregar", [])
+            ingredientes_faltantes = arguments_dict.get("items_a_agregar", [])
             action_db.almacenar_items_wishlist(ingredientes_faltantes)
             print(f"🛒 Ingredientes a añadir: {ingredientes_faltantes}")
             
