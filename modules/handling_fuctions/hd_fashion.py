@@ -210,6 +210,7 @@ def hd_fashion(user_input, client, thread_idf, assistant_idf, run):
                 # Podrías aquí almacenar/visualizar los resultados de alguna forma en tu interfaz.
                 response_2 = result
             print(f"response:{response_2}")
+            response_3 = "🧵 Generando visualización de outfits..."
             tool_outputs.append({
                 "tool_call_id": tool.id,
                 "output": "Aquí tienes las visualizaciones para los looks sugeridos según la ocasión."
