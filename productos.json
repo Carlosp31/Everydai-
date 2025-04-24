@@ -1,1 +1,246 @@
+<<<<<<< HEAD
 []
+=======
+[
+    {
+        "nombre": "Pasta Penne Rigate Barilla 500g",
+        "precio": "$10500.0",
+        "imagen_url": "https://serpapi.com/searches/6809a77871de539cf716de8e/images/8f3f032602d190434d4d0c6774198db2a4935e79011000f6aaee288804cc8737.webp",
+        "enlace": "https://www.google.com/shopping/product/1733857890490034604?gl=co"
+    },
+    {
+        "nombre": "El Dorado Pasta Arroz Integral Fusilli",
+        "precio": "$10025.0",
+        "imagen_url": "https://serpapi.com/searches/6809a77871de539cf716de8e/images/8f3f032602d190434d4d0c6774198db2f1dbace00f0981e466dd706825fc5689.webp",
+        "enlace": "https://www.google.com/shopping/product/8564030788312928156?gl=co"
+    },
+    {
+        "nombre": "Pasta Felicetti Spaghettii 500g",
+        "precio": "$7833.2",
+        "imagen_url": "https://serpapi.com/searches/6809a77871de539cf716de8e/images/8f3f032602d190434d4d0c6774198db2bb4f38b60834fb48d894fd223fe8f611.webp",
+        "enlace": "https://www.google.com/shopping/product/1686713140798286735?gl=co"
+    },
+    {
+        "nombre": "La Coruña Pasta de Tomate",
+        "precio": "$5970.0",
+        "imagen_url": "https://serpapi.com/searches/6809a77871de539cf716de8e/images/8f3f032602d190434d4d0c6774198db22c25c57463aae5c037944a8bcfb59eaa.webp",
+        "enlace": "https://www.google.com/shopping/product/13972057801001342229?gl=co"
+    },
+    {
+        "nombre": "Marcato Máquina De Pasta Atlas 150 Mm",
+        "precio": "$827000.0",
+        "imagen_url": "https://serpapi.com/searches/6809a77871de539cf716de8e/images/8f3f032602d190434d4d0c6774198db2af87e31318683e0733a9ac0b98889459.webp",
+        "enlace": "https://www.google.com/shopping/product/15287325904675462046?gl=co"
+    },
+    {
+        "nombre": "VEGGIES Tomate cherry x 500gr",
+        "precio": "$8890.0",
+        "imagen_url": "https://serpapi.com/searches/6809a785b840a5c71299008c/images/4a25572883c0b691a5c7c65b52d5064c3db165102a0f733b985dc84578d2db07.webp",
+        "enlace": "https://www.google.com/shopping/product/1355816457538949503?gl=co"
+    },
+    {
+        "nombre": "Pomodorini de Cecco",
+        "precio": "$6800.0",
+        "imagen_url": "https://serpapi.com/searches/6809a785b840a5c71299008c/images/4a25572883c0b691a5c7c65b52d5064ca5d4d9b7ea45d25f2cf1af80b9dcf155.webp",
+        "enlace": "https://www.google.com/shopping/product/7780374182306345954?gl=co"
+    },
+    {
+        "nombre": "Tomate Cherry Racimo 400 gr",
+        "precio": "$9954.0",
+        "imagen_url": "https://serpapi.com/searches/6809a785b840a5c71299008c/images/4a25572883c0b691a5c7c65b52d5064ceee1cc494473dd8cab5c810e729c901f.webp",
+        "enlace": "https://www.google.com/shopping/product/5414092527575608410?gl=co"
+    },
+    {
+        "nombre": "Tomate cherry del sol x 500gr",
+        "precio": "$10980.0",
+        "imagen_url": "https://serpapi.com/searches/6809a785b840a5c71299008c/images/4a25572883c0b691a5c7c65b52d5064cdae05dba32612780d441a18c96719fe4.webp",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:1474549982383632422"
+    },
+    {
+        "nombre": "Tomate cherry Frescocampo kosher x 500 gr",
+        "precio": "$7680.0",
+        "imagen_url": "https://serpapi.com/searches/6809a785b840a5c71299008c/images/4a25572883c0b691a5c7c65b52d5064cea2b6adb4b1b2dada0b2b05e739a67ca.webp",
+        "enlace": "https://www.google.com/shopping/product/1968813335196783942?gl=co"
+    },
+    {
+        "nombre": "Pepino de res o tableado fresco",
+        "precio": "$21640.0",
+        "imagen_url": "https://serpapi.com/searches/6809a7877f56ac14201bd43d/images/936be6f65ddb9a5e9cd80797de489cd73cf9b7355d0144a5929cfe4552ebf11e.webp",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:2969889996481394674"
+    },
+    {
+        "nombre": "Pepino Cohombro Económico X Kg Pepino Cohombro Economico X Kg",
+        "precio": "$4784.0",
+        "imagen_url": "https://serpapi.com/searches/6809a7877f56ac14201bd43d/images/936be6f65ddb9a5e9cd80797de489cd79711a74c4a9a4c73cbe7136fe1d83977.webp",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3760516379054827033"
+    },
+    {
+        "nombre": "Pepino sin semilla x 1000g",
+        "precio": "$10980.0",
+        "imagen_url": "https://serpapi.com/searches/6809a7877f56ac14201bd43d/images/936be6f65ddb9a5e9cd80797de489cd7aac7f65c6608a2a6c0744416249b35cb.webp",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13669701844961933298"
+    },
+    {
+        "nombre": "PEPINO PEPITA (300 gr)",
+        "precio": "$16300.0",
+        "imagen_url": "https://serpapi.com/searches/6809a7877f56ac14201bd43d/images/936be6f65ddb9a5e9cd80797de489cd7273aa41a7e00dfc191d75f54c786eb51.webp",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6889888394522798498"
+    },
+    {
+        "nombre": "Pepino Europeo X Kg",
+        "precio": "$7192.0",
+        "imagen_url": "https://serpapi.com/searches/6809a7877f56ac14201bd43d/images/936be6f65ddb9a5e9cd80797de489cd7dcfba1a6fe53a66588cc2b2f2d0997ce.webp",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:8038174907476651579"
+    },
+    {
+        "nombre": "Aceituna La Coruña Deshuesadas",
+        "precio": "$4710.0",
+        "imagen_url": "https://serpapi.com/searches/6809a789cfb8c19af14cc8e6/images/4444306364297237c9a4a864a13f0f16483bceb9c4d31e1f4853d9a653db3079.webp",
+        "enlace": "https://www.google.com/shopping/product/13296621231555113564?gl=co"
+    },
+    {
+        "nombre": "Carbonell Aceitunas Verdes Deshuesadas *350GR",
+        "precio": "$12350.0",
+        "imagen_url": "https://serpapi.com/searches/6809a789cfb8c19af14cc8e6/images/4444306364297237c9a4a864a13f0f16f4358688fb64438c53eb415df47bbb83.webp",
+        "enlace": "https://www.google.com/shopping/product/16311982675549724268?gl=co"
+    },
+    {
+        "nombre": "Floresur Aceitunas Verdes Deshuesadas",
+        "precio": "$18900.0",
+        "imagen_url": "https://serpapi.com/searches/6809a789cfb8c19af14cc8e6/images/4444306364297237c9a4a864a13f0f160216573872679b3ce86da5e79fde12d0.webp",
+        "enlace": "https://www.google.com/shopping/product/7602832845720724899?gl=co"
+    },
+    {
+        "nombre": "Aceitunas Cuisine&co verdes hueso",
+        "precio": "$29990.0",
+        "imagen_url": "https://serpapi.com/searches/6809a789cfb8c19af14cc8e6/images/4444306364297237c9a4a864a13f0f1622e1e1da5c7ad3ef8181fd339c5b2683.webp",
+        "enlace": "https://www.google.com/shopping/product/9560044240918739693?gl=co"
+    },
+    {
+        "nombre": "Aceitunas Al Fresco",
+        "precio": "$7350.0",
+        "imagen_url": "https://serpapi.com/searches/6809a789cfb8c19af14cc8e6/images/4444306364297237c9a4a864a13f0f16633f7fb8de427f677cddf742af2a484c.webp",
+        "enlace": "https://www.google.com/shopping/product/14724254290674357477?gl=co"
+    },
+    {
+        "nombre": "Centurion Queso Feta",
+        "precio": "$20900.0",
+        "imagen_url": "https://serpapi.com/searches/6809a78e8600f01672506a48/images/1770322ec372b70d8ac7de8bc4a6a4d2315d765d4245d8b03b6e21fbd64f45d8.webp",
+        "enlace": "https://www.google.com/shopping/product/2878510168623060331?gl=co"
+    },
+    {
+        "nombre": "President Queso Feta Crumbles",
+        "precio": "$59990.0",
+        "imagen_url": "https://serpapi.com/searches/6809a78e8600f01672506a48/images/1770322ec372b70d8ac7de8bc4a6a4d2b47ebd17bd929ce7a3ebba1a31eca1bb.webp",
+        "enlace": "https://www.google.com/shopping/product/10148987537969948501?gl=co"
+    },
+    {
+        "nombre": "Qso Feta Centurion 250gr",
+        "precio": "$19900.0",
+        "imagen_url": "https://serpapi.com/searches/6809a78e8600f01672506a48/images/1770322ec372b70d8ac7de8bc4a6a4d2d79f9f9fb85be240d11914c9aae9d62b.webp",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:2318011254836974638"
+    },
+    {
+        "nombre": "Queso Semimaduro Feta Cheese Trozo x210g",
+        "precio": "$28641.0",
+        "imagen_url": "https://serpapi.com/searches/6809a78e8600f01672506a48/images/1770322ec372b70d8ac7de8bc4a6a4d2f9673816c86c76aabb30f2ba2e24f5e5.webp",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13373675677858777752"
+    },
+    {
+        "nombre": "La Fromagerie Queso Feta Pimienta",
+        "precio": "$18500.0",
+        "imagen_url": "https://serpapi.com/searches/6809a78e8600f01672506a48/images/1770322ec372b70d8ac7de8bc4a6a4d253572f79ab3bccc9215b9d25d70aaaa7.webp",
+        "enlace": "https://www.google.com/shopping/product/10296270293421478137?gl=co"
+    },
+    {
+        "nombre": "Frescampo Aceite de oliva virgen",
+        "precio": "$19050.0",
+        "imagen_url": "https://serpapi.com/searches/6809a792ed8456bd9826875d/images/3f3cd4184518c79883093c65d3794fcb59065a4acf8853b8911495b9769aa2c0.webp",
+        "enlace": "https://www.google.com/shopping/product/9241601009152237683?gl=co"
+    },
+    {
+        "nombre": "Aceite de Oliva Sublime",
+        "precio": "$14200.0",
+        "imagen_url": "https://serpapi.com/searches/6809a792ed8456bd9826875d/images/3f3cd4184518c79883093c65d3794fcb923bbd35f0171cd449da8e9818121272.webp",
+        "enlace": "https://www.google.com/shopping/product/2226828214335184925?gl=co"
+    },
+    {
+        "nombre": "Aceite de oliva FRESCAMPO extra Virgen",
+        "precio": "$30900.0",
+        "imagen_url": "https://serpapi.com/searches/6809a792ed8456bd9826875d/images/3f3cd4184518c79883093c65d3794fcbf2a42a1d0e517d16ff5e51bbce27c3c6.webp",
+        "enlace": "https://www.google.com/shopping/product/17610075414256532175?gl=co"
+    },
+    {
+        "nombre": "Aceite de oliva Premier extra virgen",
+        "precio": "$24140.0",
+        "imagen_url": "https://serpapi.com/searches/6809a792ed8456bd9826875d/images/3f3cd4184518c79883093c65d3794fcb182bd1cae7ee98b686a73e431ea2f83b.webp",
+        "enlace": "https://www.google.com/shopping/product/1305679622446547729?gl=co"
+    },
+    {
+        "nombre": "Aceite De Oliva Monticello Litro",
+        "precio": "$91035.0",
+        "imagen_url": "https://serpapi.com/searches/6809a792ed8456bd9826875d/images/3f3cd4184518c79883093c65d3794fcbc7d72572852793d07e814f1a47f796fb.webp",
+        "enlace": "https://www.google.com/shopping/product/15906415508384473514?gl=co"
+    },
+    {
+        "nombre": "Sal Refisal x1000g",
+        "precio": "$2400.0",
+        "imagen_url": "https://serpapi.com/searches/68099fa51f7ecaca2d4e8404/images/4b92fc18e0a199023a1ef0bb85bac4f7ffe29f6f532ac2b3e0eedbc8ce06b3cc.webp",
+        "enlace": "https://www.google.com/shopping/product/10815885520164962703?gl=co"
+    },
+    {
+        "nombre": "Refisal Sal Alta Pureza",
+        "precio": "$952.0",
+        "imagen_url": "https://serpapi.com/searches/68099fa51f7ecaca2d4e8404/images/4b92fc18e0a199023a1ef0bb85bac4f703e8f82b3a0329b1c148e75cb6387263.webp",
+        "enlace": "https://www.google.com/shopping/product/4456639390133494420?gl=co"
+    },
+    {
+        "nombre": "Sal Refisal x3000g",
+        "precio": "$7680.0",
+        "imagen_url": "https://serpapi.com/searches/68099fa51f7ecaca2d4e8404/images/4b92fc18e0a199023a1ef0bb85bac4f7aef6c08ca6ce0f3e7dce0aa71a74f18d.webp",
+        "enlace": "https://www.google.com/shopping/product/9176163599445228498?gl=co"
+    },
+    {
+        "nombre": "Sal Refisal Caja 100 Sobres",
+        "precio": "$6650.0",
+        "imagen_url": "https://serpapi.com/searches/68099fa51f7ecaca2d4e8404/images/4b92fc18e0a199023a1ef0bb85bac4f7db47e171f11ea43ba30545dfb1b4e694.webp",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:8701969150609636460"
+    },
+    {
+        "nombre": "Sal Refisal Rosada del Himalaya",
+        "precio": "$13600.0",
+        "imagen_url": "https://serpapi.com/searches/68099fa51f7ecaca2d4e8404/images/4b92fc18e0a199023a1ef0bb85bac4f7ef9045325fd76e20da9ba8c7e63463eb.webp",
+        "enlace": "https://www.google.com/shopping/product/3820610545771104002?gl=co"
+    },
+    {
+        "nombre": "BADIA Pimienta Negra Molida",
+        "precio": "$7200.0",
+        "imagen_url": "https://serpapi.com/searches/68099fa8ca3b9f0e01678764/images/7e58280b47343e68eee6ac50dad3dba0a8ff28acef2d8a9da71c01f75063f019.webp",
+        "enlace": "https://www.google.com/shopping/product/5977395122275239632?gl=co"
+    },
+    {
+        "nombre": "Pimienta Roja Triturada Mccormick",
+        "precio": "$10590.0",
+        "imagen_url": "https://serpapi.com/searches/68099fa8ca3b9f0e01678764/images/7e58280b47343e68eee6ac50dad3dba0dce1514be46b7f86ace563afab4d1fcd.webp",
+        "enlace": "https://www.google.com/shopping/product/2006497407868172635?gl=co"
+    },
+    {
+        "nombre": "Pimienta P & I GOURMET",
+        "precio": "$3780.0",
+        "imagen_url": "https://serpapi.com/searches/68099fa8ca3b9f0e01678764/images/7e58280b47343e68eee6ac50dad3dba095761613d7e8cbf605364c17d8c94a06.webp",
+        "enlace": "https://www.google.com/shopping/product/9028158850494622280?gl=co"
+    },
+    {
+        "nombre": "Pure Indian Foods Pimienta negra Malabar orgánica`` 226 g",
+        "precio": "$64094.31",
+        "imagen_url": "https://serpapi.com/searches/68099fa8ca3b9f0e01678764/images/7e58280b47343e68eee6ac50dad3dba0fb938b3e7b89c9c92959a24b31f6e140.webp",
+        "enlace": "https://www.google.com/shopping/product/13140583576850605751?gl=co"
+    },
+    {
+        "nombre": "Badia Pimienta Negra Entera",
+        "precio": "$23800.0",
+        "imagen_url": "https://serpapi.com/searches/68099fa8ca3b9f0e01678764/images/7e58280b47343e68eee6ac50dad3dba07c3b6fd974a2723c1c6f411c506ab94b.webp",
+        "enlace": "https://www.google.com/shopping/product/18037621695769818039?gl=co"
+    }
+]
+>>>>>>> 8c2f537747334468f5a54d5200dd03e2d56ac37c
