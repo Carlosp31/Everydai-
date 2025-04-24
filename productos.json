@@ -1,5 +1,6 @@
 [
     {
+<<<<<<< HEAD
         "nombre": "RiceSelect Arborio Rice",
         "precio": "$7.63",
         "imagen_url": "https://serpapi.com/searches/68097cda6279642ba2015721/images/8630adb59812f159d6389ef7b865ec619324ba075f79a1b97446e131b4c669a1.webp",
@@ -208,5 +209,35 @@
         "precio": "$1.33",
         "imagen_url": "https://serpapi.com/searches/68097d01fb6ddc05303ee007/images/9923043b5fe444f6ee58cebfe51c44e9d19b15a0cc8fb3ddf0fba9103fa0bab1.webp",
         "enlace": "https://www.google.com/shopping/product/9011184349548448109?gl=us"
+=======
+        "nombre": "Set De Bandas Tubulares De Resistencia Sportfitness",
+        "precio": "$36600.0",
+        "imagen_url": "https://serpapi.com/searches/680974cb1b26bc28f09660ed/images/0ee18173d8b42848f3b0e8e63bf594ac883273f2ffd3b5a4c5621d8aa55fc49a.webp",
+        "enlace": "https://www.google.com/shopping/product/3259603068178295704?gl=co"
+    },
+    {
+        "nombre": "Kit Bandas Elásticas Cerradas X5",
+        "precio": "$9770.0",
+        "imagen_url": "https://serpapi.com/searches/680974cb1b26bc28f09660ed/images/0ee18173d8b42848f3b0e8e63bf594acffc7e8eb15a3148e0a6df40589202835.webp",
+        "enlace": "https://www.google.com/shopping/product/11026866298208056549?gl=co"
+    },
+    {
+        "nombre": "Bandas Elasticas Resistencia Tela Fitnics Ejercicio Set X 4",
+        "precio": "$56990.0",
+        "imagen_url": "https://serpapi.com/searches/680974cb1b26bc28f09660ed/images/0ee18173d8b42848f3b0e8e63bf594acd9fb1c4441da06cf20d3b947fa5d73c5.webp",
+        "enlace": "https://www.google.com/shopping/product/1878832192768461801?gl=co"
+    },
+    {
+        "nombre": "Sportfitness Bandas Elásticas de Resistencia",
+        "precio": "$23307.0",
+        "imagen_url": "https://serpapi.com/searches/680974cb1b26bc28f09660ed/images/0ee18173d8b42848f3b0e8e63bf594ac686126152adc36fd41d46cf6af92e2ef.webp",
+        "enlace": "https://www.google.com/shopping/product/12999218129839216406?gl=co"
+    },
+    {
+        "nombre": "Banda Elastica Cerrada Ltbr001 Sportfitness",
+        "precio": "$6900.0",
+        "imagen_url": "https://serpapi.com/searches/680974cb1b26bc28f09660ed/images/0ee18173d8b42848f3b0e8e63bf594acb8d50cddf815c3451bb6e167cf9856bf.webp",
+        "enlace": "https://www.google.com/shopping/product/17875013734410285995?gl=co"
+>>>>>>> a1bd54f08d012c29093daedcbd91eae188f8739d
     }
 ]
