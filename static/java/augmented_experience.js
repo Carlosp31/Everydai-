@@ -5,7 +5,7 @@ let sending = false;
 let lastFrameBase64 = null;
 
 async function sendFrameToRoboflow(frameBase64) {
-    const apiKey = "ASM9d0x59Igg7FJzi6fu";
+    const apiKey = "GFa4x5EJFItHkYSBt8Bq";
     let model, version;
 
     if (domain === "Cooking") {
