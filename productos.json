@@ -1,5 +1,215 @@
 [
     {
+<<<<<<< HEAD
+        "nombre": "RiceSelect Arborio Rice",
+        "precio": "$7.63",
+        "imagen_url": "https://serpapi.com/searches/68097cda6279642ba2015721/images/8630adb59812f159d6389ef7b865ec619324ba075f79a1b97446e131b4c669a1.webp",
+        "enlace": "https://www.google.com/shopping/product/6127134716572581264?gl=us"
+    },
+    {
+        "nombre": "Sclafani Genuine Superfino Arborio Rice Risotto",
+        "precio": "$3.79",
+        "imagen_url": "https://serpapi.com/searches/68097cda6279642ba2015721/images/8630adb59812f159d6389ef7b865ec61c82d3213e2395fc87c0c3ca0f51df0de.webp",
+        "enlace": "https://www.google.com/shopping/product/4381478690135867392?gl=us"
+    },
+    {
+        "nombre": "Lundberg Arborio White Rice",
+        "precio": "$10.99",
+        "imagen_url": "https://serpapi.com/searches/68097cda6279642ba2015721/images/8630adb59812f159d6389ef7b865ec6179fdde9b36ce12f4d919dd3c7ae469a2.webp",
+        "enlace": "https://www.google.com/shopping/product/2973581988201062059?gl=us"
+    },
+    {
+        "nombre": "Royal Arborio Rice",
+        "precio": "$23.69",
+        "imagen_url": "https://serpapi.com/searches/68097cda6279642ba2015721/images/8630adb59812f159d6389ef7b865ec611df7d71da8b04137f62c784c6b756601.webp",
+        "enlace": "https://www.google.com/shopping/product/3709511017175443911?gl=us"
+    },
+    {
+        "nombre": "Roland Arborio Rice",
+        "precio": "$10.3",
+        "imagen_url": "https://serpapi.com/searches/68097cda6279642ba2015721/images/8630adb59812f159d6389ef7b865ec611a70b77996e552fea0f16ab11444f359.webp",
+        "enlace": "https://www.google.com/shopping/product/3098444609366493515?gl=us"
+    },
+    {
+        "nombre": "ONETANG Dried Mushroom Slices 24.03Oz New Crop Premium Grade Extra Thick Mushrooms slice No Fumigation Sulfur 681G",
+        "precio": "$35.99",
+        "imagen_url": "https://serpapi.com/searches/68097cdc703bc2f54d053485/images/0b14b496a45de9cc53cddf0194c3f31e8ac66ca2e0ae775d4c0de9d99afc2a46.jpeg",
+        "enlace": "https://www.google.com/shopping/product/12749651395565684674?gl=us"
+    },
+    {
+        "nombre": "Hongos Trompeta Negros Secos",
+        "precio": "$75.0",
+        "imagen_url": "https://serpapi.com/searches/68097cdc703bc2f54d053485/images/0b14b496a45de9cc53cddf0194c3f31e72b5d88a6f751cbd7c9042bff027b73e.jpeg",
+        "enlace": "https://www.google.com/shopping/product/2759363518856541508?gl=us"
+    },
+    {
+        "nombre": "Rebanadas de Hongos Secos (Boletus Luteus) por It's Delish, Recipiente Reutilizable Jumbo de 8 Oz / Champiñones Chilenos Secados al Sol Deshidratados",
+        "precio": "$44.99",
+        "imagen_url": "https://serpapi.com/searches/68097cdc703bc2f54d053485/images/0b14b496a45de9cc53cddf0194c3f31e735aeca4b7861bd3409d1c69b0bd1c6a.jpeg",
+        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:5172225618228900067"
+    },
+    {
+        "nombre": "Champiñones Enteros con Pizzaiola 550 g - La Cerignola di una volta",
+        "precio": "$5.69",
+        "imagen_url": "https://serpapi.com/searches/68097cdc703bc2f54d053485/images/0b14b496a45de9cc53cddf0194c3f31ea4954fdcef88a28fa264389b5388dd9c.jpeg",
+        "enlace": "https://www.google.com/shopping/product/9735214917979401537?gl=us"
+    },
+    {
+        "nombre": "Ka'me Premium Champiñones salteados, paquete de 12 - 15 oz",
+        "precio": "$62.89",
+        "imagen_url": "https://serpapi.com/searches/68097cdc703bc2f54d053485/images/0b14b496a45de9cc53cddf0194c3f31e98190c0e05ba77dc77a54c8de53c7425.jpeg",
+        "enlace": "https://www.google.com/shopping/product/304776465096906861?gl=us"
+    },
+    {
+        "nombre": "Knorr Bouillon Granulated Chicken",
+        "precio": "$3.99",
+        "imagen_url": "https://serpapi.com/searches/68097ce53929350ac49b00a1/images/681be33145b77a7fe2fc3538e43fc33078dc1583ddffb3dc317325d37805b3d2.webp",
+        "enlace": "https://www.google.com/shopping/product/10900357236179695734?gl=us"
+    },
+    {
+        "nombre": "Swanson Broth Chicken",
+        "precio": "$2.49",
+        "imagen_url": "https://serpapi.com/searches/68097ce53929350ac49b00a1/images/681be33145b77a7fe2fc3538e43fc3304aab822eee11c80a010b66408b1d8927.webp",
+        "enlace": "https://www.google.com/shopping/product/9906935410296360176?gl=us"
+    },
+    {
+        "nombre": "Swanson Natural Goodness Chicken Broth Carton",
+        "precio": "$2.0",
+        "imagen_url": "https://serpapi.com/searches/68097ce53929350ac49b00a1/images/681be33145b77a7fe2fc3538e43fc330eec4a2b04e2ead6341c8429adb74bde0.webp",
+        "enlace": "https://www.google.com/shopping/product/2624990901826008599?gl=us"
+    },
+    {
+        "nombre": "Knorr Bouillon Caldo Con Sabor De Pollo Chicken Flavor Bouillon 7.9 Ounces",
+        "precio": "$78.11",
+        "imagen_url": "https://serpapi.com/searches/68097ce53929350ac49b00a1/images/681be33145b77a7fe2fc3538e43fc330d8d96fd126e4f1d4ad5920c8f415b6df.webp",
+        "enlace": "https://www.google.com/shopping/product/4455312349242162877?gl=us"
+    },
+    {
+        "nombre": "Tabatchnick New York Style Chicken Broth with Noodles and Vegetables",
+        "precio": "$2.59",
+        "imagen_url": "https://serpapi.com/searches/68097ce53929350ac49b00a1/images/681be33145b77a7fe2fc3538e43fc3309e503b88a87d2a040941e31400f689bd.webp",
+        "enlace": "https://www.google.com/shopping/product/4048966334959896213?gl=us"
+    },
+    {
+        "nombre": "Josh Cellars Sauvignon Blanc",
+        "precio": "$10.97",
+        "imagen_url": "https://serpapi.com/searches/68097ce8b1cad97f982d2d5a/images/942f7cc2344fe8a963e45d91a2c22cd4a8f17501832256d4049e5f7d9ed5b943.webp",
+        "enlace": "https://www.google.com/shopping/product/11530727782167753858?gl=us"
+    },
+    {
+        "nombre": "Barefoot Pinot Grigio",
+        "precio": "$7.99",
+        "imagen_url": "https://serpapi.com/searches/68097ce8b1cad97f982d2d5a/images/942f7cc2344fe8a963e45d91a2c22cd403a94eb15392540ca58e9e4c9ece17ee.webp",
+        "enlace": "https://www.google.com/shopping/product/11246333290976553485?gl=us"
+    },
+    {
+        "nombre": "Barefoot Moscato",
+        "precio": "$6.5",
+        "imagen_url": "https://serpapi.com/searches/68097ce8b1cad97f982d2d5a/images/942f7cc2344fe8a963e45d91a2c22cd478da5e458a98b677a3872813c79bf35f.webp",
+        "enlace": "https://www.google.com/shopping/product/4897201745227638885?gl=us"
+    },
+    {
+        "nombre": "Oyster Bay Sauvignon Blanc",
+        "precio": "$10.99",
+        "imagen_url": "https://serpapi.com/searches/68097ce8b1cad97f982d2d5a/images/942f7cc2344fe8a963e45d91a2c22cd40173da700ec311e37efed91c11a9849a.webp",
+        "enlace": "https://www.google.com/shopping/product/18381891753460562872?gl=us"
+    },
+    {
+        "nombre": "Trump Blanc De Blanc",
+        "precio": "$29.99",
+        "imagen_url": "https://serpapi.com/searches/68097ce8b1cad97f982d2d5a/images/942f7cc2344fe8a963e45d91a2c22cd4b78c2e2372333663925c34ff1662f358.webp",
+        "enlace": "https://www.google.com/shopping/product/18420579095782645898?gl=us"
+    },
+    {
+        "nombre": "Kraft Parmesan Cheese Grated",
+        "precio": "$4.79",
+        "imagen_url": "https://serpapi.com/searches/68097cebc8e2848c3ac805e4/images/7fe842ea5983091f7bbca950110fd5264dfe21ab782da9d69592fa6aab4ede96.webp",
+        "enlace": "https://www.google.com/shopping/product/12546794913794406882?gl=us"
+    },
+    {
+        "nombre": "BelGioioso Parmesan Cheese Wedge",
+        "precio": "$5.29",
+        "imagen_url": "https://serpapi.com/searches/68097cebc8e2848c3ac805e4/images/7fe842ea5983091f7bbca950110fd526a646800f74a67d24ae1ade9d136b9b25.webp",
+        "enlace": "https://www.google.com/shopping/product/2329396456839504505?gl=us"
+    },
+    {
+        "nombre": "Kraft Shredded Parmesan Cheese",
+        "precio": "$4.49",
+        "imagen_url": "https://serpapi.com/searches/68097cebc8e2848c3ac805e4/images/7fe842ea5983091f7bbca950110fd526e7c4050696783477b413ee646c2f3fbe.webp",
+        "enlace": "https://www.google.com/shopping/product/9461948411526246265?gl=us"
+    },
+    {
+        "nombre": "Wheel of Parmigiano Reggiano",
+        "precio": "$2999.95",
+        "imagen_url": "https://serpapi.com/searches/68097cebc8e2848c3ac805e4/images/7fe842ea5983091f7bbca950110fd5264ed072f8da0cd9b93d8012a907d55d5a.webp",
+        "enlace": "https://www.google.com/shopping/product/4910656789637854053?gl=us"
+    },
+    {
+        "nombre": "Kraft Parmesan Shredded Cheese",
+        "precio": "$3.88",
+        "imagen_url": "https://serpapi.com/searches/68097cebc8e2848c3ac805e4/images/7fe842ea5983091f7bbca950110fd526d1a788c8060e54fa893c71b77e92265e.webp",
+        "enlace": "https://www.google.com/shopping/product/13648702980930161382?gl=us"
+    },
+    {
+        "nombre": "Country Crock Original Vegetable Oil Spread",
+        "precio": "$3.49",
+        "imagen_url": "https://serpapi.com/searches/68097cf85dbb40130458d9c7/images/c586de9d513df1efbb467404bc58c5f1c2bc758299f0e06c6b398ac5e650b01f.webp",
+        "enlace": "https://www.google.com/shopping/product/9761169905558610921?gl=us"
+    },
+    {
+        "nombre": "Land O Lakes Salted Butter",
+        "precio": "$5.39",
+        "imagen_url": "https://serpapi.com/searches/68097cf85dbb40130458d9c7/images/c586de9d513df1efbb467404bc58c5f1a9375e96cd6b8f9ca73058e696d6fbed.webp",
+        "enlace": "https://www.google.com/shopping/product/7264951843956112609?gl=us"
+    },
+    {
+        "nombre": "Land O'Lakes Salted Butter",
+        "precio": "$12.99",
+        "imagen_url": "https://serpapi.com/searches/68097cf85dbb40130458d9c7/images/c586de9d513df1efbb467404bc58c5f1930e51f042da8914c0bba49ef356f51b.webp",
+        "enlace": "https://www.google.com/shopping/product/6827360538085536355?gl=us"
+    },
+    {
+        "nombre": "Imperial Vegetable Oil Spread",
+        "precio": "$1.35",
+        "imagen_url": "https://serpapi.com/searches/68097cf85dbb40130458d9c7/images/c586de9d513df1efbb467404bc58c5f17177ae0a72b87d7a128f6154ef68f818.webp",
+        "enlace": "https://www.google.com/shopping/product/16862179576086938028?gl=us"
+    },
+    {
+        "nombre": "Kerrygold Pure Irish Butter Sticks",
+        "precio": "$9.24",
+        "imagen_url": "https://serpapi.com/searches/68097cf85dbb40130458d9c7/images/c586de9d513df1efbb467404bc58c5f10b81112a8dfb5d6065b9996b149b9dc6.webp",
+        "enlace": "https://www.google.com/shopping/product/14821033539208865500?gl=us"
+    },
+    {
+        "nombre": "Morton Natural Sea Salt",
+        "precio": "$3.16",
+        "imagen_url": "https://serpapi.com/searches/68097d01fb6ddc05303ee007/images/9923043b5fe444f6ee58cebfe51c44e9a77aca175064b11bc675786ac918ed6d.webp",
+        "enlace": "https://www.google.com/shopping/product/6608276771623585616?gl=us"
+    },
+    {
+        "nombre": "Sal Kosher Morton, 3 libras",
+        "precio": "$3.67",
+        "imagen_url": "https://serpapi.com/searches/68097d01fb6ddc05303ee007/images/9923043b5fe444f6ee58cebfe51c44e9ae0f58629f9eb5c90e78af958d5f9ec8.webp",
+        "enlace": "https://www.google.com/shopping/product/14472952813534549398?gl=us"
+    },
+    {
+        "nombre": "Cisne Sal Refinado 1kg",
+        "precio": "$1.99",
+        "imagen_url": "https://serpapi.com/searches/68097d01fb6ddc05303ee007/images/9923043b5fe444f6ee58cebfe51c44e91d177609e7dfe9f6c62452f832bfd6b7.webp",
+        "enlace": "https://www.google.com/shopping/product/7176268131232905151?gl=us"
+    },
+    {
+        "nombre": "Sal Natural La Fina 1 Kg",
+        "precio": "$10.0",
+        "imagen_url": "https://serpapi.com/searches/68097d01fb6ddc05303ee007/images/9923043b5fe444f6ee58cebfe51c44e9dd9c8d5c66797ed68132ae12653570aa.webp",
+        "enlace": "https://www.google.com/shopping/product/1?gl=us&prds=pid:1255026075598738620"
+    },
+    {
+        "nombre": "Morton Fine Sea Salt",
+        "precio": "$1.33",
+        "imagen_url": "https://serpapi.com/searches/68097d01fb6ddc05303ee007/images/9923043b5fe444f6ee58cebfe51c44e9d19b15a0cc8fb3ddf0fba9103fa0bab1.webp",
+        "enlace": "https://www.google.com/shopping/product/9011184349548448109?gl=us"
+=======
         "nombre": "Set De Bandas Tubulares De Resistencia Sportfitness",
         "precio": "$36600.0",
         "imagen_url": "https://serpapi.com/searches/680974cb1b26bc28f09660ed/images/0ee18173d8b42848f3b0e8e63bf594ac883273f2ffd3b5a4c5621d8aa55fc49a.webp",
@@ -28,5 +238,6 @@
         "precio": "$6900.0",
         "imagen_url": "https://serpapi.com/searches/680974cb1b26bc28f09660ed/images/0ee18173d8b42848f3b0e8e63bf594acb8d50cddf815c3451bb6e167cf9856bf.webp",
         "enlace": "https://www.google.com/shopping/product/17875013734410285995?gl=co"
+>>>>>>> a1bd54f08d012c29093daedcbd91eae188f8739d
     }
 ]
