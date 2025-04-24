@@ -21,7 +21,7 @@ def web_culinary(lista):
             params = {
                 "q": search_query,
                 "engine": "google_shopping",
-                "gl": "us",
+                "gl": "co",
                 "hl": "es",
                 "google_domain": "google.com",
                 "api_key": SERPAPI_KEY
@@ -83,7 +83,7 @@ def web_fashion_HM(lista, gender):
                 "q": search_query,
                 "engine": "google_shopping",
                 "hl": "es",
-                "gl": "us",
+                "gl": "co",
                 # "location_requested": "Atlantico,Colombia",
                 # "location_used": "Atlantico,Colombia",
                 "api_key": SERPAPI_KEY
@@ -138,7 +138,7 @@ def web_fitness_decathlon(lista):
             params = {
                 "q": search_query,
                 "engine": "google_shopping",
-                "gl": "us",
+                "gl": "co",
                 "hl": "es",
                 "google_domain": "google.com",
                 "api_key": SERPAPI_KEY
