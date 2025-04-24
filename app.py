@@ -475,6 +475,7 @@ def handle_image():
     return images.upload_image()
 
 
+
 # Detectar sistema operativo
 if platform.system() == "Linux":
     LOG_DIR = "/"  # Guardar en la raíz del sistema en Linux
