@@ -61,7 +61,7 @@ function drawBoundingBoxes(predictions) {
         ctx.strokeStyle = 'blue';
         ctx.lineWidth = 3;
         ctx.stroke();
-        ctx.font = '16px Arial';
+        ctx.font = '22px Arial';
         ctx.fillStyle = 'blue';
         ctx.fillText(pred.class, x, y - 10);
     });
