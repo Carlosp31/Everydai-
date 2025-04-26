@@ -151,7 +151,7 @@ FASHION_MODEL = os.getenv('FASHION_MODEL')
 GYM_MODEL = os.getenv('GYM_MODEL')
 IMG_MODEL = os.getenv('IMG_MODEL')
 ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY')
-
+app.secret_key = os.getenv('SECRET_KEY', 'supersecretkey')
 # Configurar la clave API de SerpAPI
 # Inicializar los modelos generativos con las variables de entorno
 model_culinary = genai.GenerativeModel(model_name=CULINARY_MODEL)
@@ -453,7 +453,7 @@ def add_to_inventory_from_wl():
 # Actualización: mensaje inicial en el chat
 @app.route('/chat', methods=['POST'])
 def chat_function():
-   return chats.chat_post()
+    return chats.chat_post()
 
 
 @app.route('/synthesize-audio', methods=['POST'])
@@ -472,7 +472,8 @@ def synthesize_audio():
 
 @app.route('/upload-image', methods=['POST'])
 def handle_image():
-    return images.upload_image()
+    session_cookie = request.cookies.get('session')  # <-- aquí agarras la cookie de session
+    return images.upload_image(app, model_img, session_cookie)
 
 
 
