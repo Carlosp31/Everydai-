@@ -393,9 +393,9 @@ recommendationsList.innerHTML = '';  // Limpiar la lista existente
                     const formData = new FormData();
                     formData.append('image', blob, 'captured-image.png');
                     formData.append('model', selectedModel);
-
                     fetch('/upload-image', {
                         method: 'POST',
+                        credentials: 'include',  // 👈 SUPER importante
                         body: formData,
                     })
                     .then(response => response.json())
@@ -431,6 +431,7 @@ recommendationsList.innerHTML = '';  // Limpiar la lista existente
                     window.dispatchEvent(event_pensar_imagen);
                     fetch('/upload-image', {
                         method: 'POST',
+                        credentials: 'include',  // 👈 SUPER importante
                         body: formData,
                     })
                     .then(response => response.json())
