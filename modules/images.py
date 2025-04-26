@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
 from werkzeug.utils import secure_filename
 from PIL import Image
 from dotenv import load_dotenv
@@ -9,9 +9,6 @@ import google.generativeai as genai
 # Cargar las variables de entorno del archivo .env
 load_dotenv()
 
-app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY', 'supersecretkey')
-
 # Cargar las variables de entorno
 IMG_MODEL = os.getenv('IMG_MODEL')
 
@@ -20,11 +17,11 @@ IMG_MODEL = os.getenv('IMG_MODEL')
 model_img = genai.GenerativeModel(IMG_MODEL)
 
 # Configura la carpeta para almacenar las imágenes
-UPLOAD_FOLDER = 'uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 ##################################################33
 
-def upload_image():
+def upload_image(app, model_img, session_cookie):
+
     if 'image' not in request.files:
         return jsonify({'response': 'No image uploaded.'}), 400
 
@@ -82,11 +79,13 @@ def upload_image():
                         url = 'https://everydai.ddns.net:443/chat'
                     else:
                         raise OSError(f"Sistema operativo no soportado: {os_type}")
-                    chat_response = requests.post(
+                    session_requests = requests.Session()
+                    session_requests.cookies.set('session', session_cookie)
+                    chat_response = session_requests.post(
                         url,
                         json=chat_payload,
                         timeout=60
-                    )
+                            )
                     chat_response_json = chat_response.json()
 
                     if chat_response.status_code == 200:

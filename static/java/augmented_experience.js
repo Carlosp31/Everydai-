@@ -142,7 +142,7 @@ function stopDetection() {
         ...Array.from(detectedClasses).map(item => ({ type: "text", text: item }))
     ];
 
-    if (domain === "fashion") {
+    if (domain === "fashion" || domain === "Fitness")  {
         const dots = document.getElementById("dots");
         dots.style.opacity = 1; // Mostrar los puntos
         const event_detection = new CustomEvent('Detección', { detail: { currentStatus: "Processing detections" } });
@@ -157,6 +157,7 @@ function stopDetection() {
         formData.append("model", domain);
         fetch('/upload-image', {
             method: 'POST',
+            credentials: 'include',  
             body: formData,
         })
         .then(response => response.json())
