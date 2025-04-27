@@ -16,5 +16,9 @@ jsn_excel.py
 output.xlsx
 logs/
 augmented_experience2.js
+<<<<<<< HEAD
 borrar_redis.pyclient_secret_deskptop.json
 client_secret_deskptop.json
+=======
+borrar_redis.py
+>>>>>>> ebcb5609b7995b4afdc056bc334cdd5db1c103ce
