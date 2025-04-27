@@ -9,7 +9,7 @@ ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY')
 
 # Configurar la clave API de SerpAPI
 # Configurar la carpeta para almacenar las imágenes
-##################################################33
+##############  ####################################33
 
 
 
