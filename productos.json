@@ -1,8 +1,6 @@
-<<<<<<< HEAD
-[]
-=======
 [
     {
+<<<<<<< HEAD
         "nombre": "Arroz Roland Arborio Superfino",
         "precio": "$21315.0",
         "imagen_url": "https://serpapi.com/searches/680a4a7f7f56acb8a951c204/images/4f8549b3e6e9d59689941282481f2c936250180f4564d811d07df4d9cd2bf56d.webp",
@@ -301,6 +299,35 @@
         "precio": "$16750.0",
         "imagen_url": "https://serpapi.com/searches/680a47c6b3483e12d7c739d0/images/7e58280b47343e68eee6ac50dad3dba07c3b6fd974a2723c1c6f411c506ab94b.webp",
         "enlace": "https://www.google.com/shopping/product/4896010241791311564?gl=co"
+=======
+        "nombre": "Camiseta de fitness manga corta para Hombre Domyos 500 Color Variante",
+        "precio": "$49000.0",
+        "imagen_url": "https://serpapi.com/searches/680e60f5245c118f10830ebf/images/738cf4887cab4b3bd40b7652d4820c30b4d20ebda71c40ef6cc2c2f64e216f1e.webp",
+        "enlace": "https://www.google.com/shopping/product/10080905249708136444?gl=co"
+    },
+    {
+        "nombre": "Hombre Zara Camiseta Básica Slim Fit",
+        "precio": "$69900.0",
+        "imagen_url": "https://serpapi.com/searches/680e60f5245c118f10830ebf/images/738cf4887cab4b3bd40b7652d4820c30354b6dd6d3d76fd5186aee1289232dcb.webp",
+        "enlace": "https://www.google.com/shopping/product/10988549020857149985?gl=co"
+    },
+    {
+        "nombre": "Camiseta de cuello redondo y manga corta Hombre Talla L. Color Blanco",
+        "precio": "$34900.0",
+        "imagen_url": "https://serpapi.com/searches/680e60f5245c118f10830ebf/images/738cf4887cab4b3bd40b7652d4820c305b5110a3819fbb2b27f70d3f4d91df70.webp",
+        "enlace": "https://www.google.com/shopping/product/6476365326612511870?gl=co"
+    },
+    {
+        "nombre": "Seven Seven Camiseta Hombre Básica",
+        "precio": "$39900.0",
+        "imagen_url": "https://serpapi.com/searches/680e60f5245c118f10830ebf/images/738cf4887cab4b3bd40b7652d4820c308afd5e222897b53d075de8becfd55888.webp",
+        "enlace": "https://www.google.com/shopping/product/11250860347651054239?gl=co"
+    },
+    {
+        "nombre": "hombre Camiseta Talla Rifle",
+        "precio": "$69900.0",
+        "imagen_url": "https://serpapi.com/searches/680e60f5245c118f10830ebf/images/738cf4887cab4b3bd40b7652d4820c308b3957babe7dca09f572bf5764d8ee98.webp",
+        "enlace": "https://www.google.com/shopping/product/1354233480256856569?gl=co"
+>>>>>>> ffec2bc1 (better flow of iteractions)
     }
 ]
->>>>>>> 8c2f537747334468f5a54d5200dd03e2d56ac37c
