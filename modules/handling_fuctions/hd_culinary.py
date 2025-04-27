@@ -55,6 +55,13 @@ def hd_culinary(user_input, client, thread_idf, assistant_idf, run):
             print (f"producto a buscar: {productos}")
             response_2  = webscrp.web_culinary(productos)
             response_3 = "Busqueda_prod_cooking"
+            action_db.almacenar_items_wishlist(productos )
+            print(f"🛒 Ingredientes a añadir: {productos }")
+            
+            # Aquí se llama a la función de base de datos que añade a wishlist
+            # resultado = action_db.agregar_a_wishlist(ingredientes_faltantes)
+            # print(f"✅ Resultado de la operación: {resultado}")
+            send_wish_list_email()
             tool_outputs.append({
                 "tool_call_id": tool.id,
                 "output": f"He notado que te faltan algunos ingredientes para tu receta:{productos}" #json.dumps(response_2)
