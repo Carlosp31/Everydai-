@@ -466,7 +466,7 @@ recommendationsList.innerHTML = '';  // Limpiar la lista existente
             window.startTimer = function(type) {
                 return { type: type, startTime: Date.now() };
             }
-            window.sendMessage("Hello")
+            window.sendMessage("Hola")
             // Función para registrar el tiempo de respuesta
             window.logResponse = function(interaction, responseType) {
                 interaction.endTime = Date.now();

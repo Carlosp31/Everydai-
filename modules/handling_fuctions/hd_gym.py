@@ -62,6 +62,9 @@ def hd_gym(user_input, client, thread_idf, assistant_idf, run):
                 "tool_call_id": tool.id,
                 "output": "He encontrado algunos productos relacionados con tus busquedas. " #json.dumps(response_2)
             })
+            action_db.almacenar_items_wishlist(productos)
+            print(f"🛒 Ingredientes a añadir: {productos}")
+            send_wish_list_email()
         elif tool.function.name == "almacenar_items_fitness":
             # Obtener los argumentos del tool_call
             tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
