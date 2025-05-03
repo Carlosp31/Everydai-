@@ -113,7 +113,7 @@ const domain = urlParams.get('domain');
             microphoneButton.onclick = function() {
                 if (!isListening) {
                     isListening = true;
-                    microphoneButton.innerText = "Stop Conversation";
+                    document.getElementById("mic-icon").style.color = "green";
                     startVoiceRecognition();
                     if (!isBotSpeaking) {
                         const event_listening = new CustomEvent('Listening', { detail: { currentStatus: "Listening" } });
@@ -121,7 +121,7 @@ const domain = urlParams.get('domain');
                     }
                 } else {
                     isListening = false;
-                    microphoneButton.innerText = "Start Conversation";
+                    document.getElementById("mic-icon").style.color = "white";
                     if (recognition) {
                         recognition.stop();
                     }
@@ -332,28 +332,8 @@ recommendationsList.innerHTML = '';  // Limpiar la lista existente
             }
 
 
-            // Evento al hacer clic en el botón de enviar texto manualmente
-            document.getElementById("send-button").onclick = function() {
-    const userInput = document.getElementById("user-input").value.trim().toLowerCase(); // Elimina espacios en blanco
-    if (userInput) { // Si el input no está vacío
-        sendMessage(userInput);
-        let eventToDispatch = event_thinking;
 
-        if (userInput.includes("internet") || userInput.includes("web")) {
-            eventToDispatch = new CustomEvent('WebSearching', { detail: { currentStatus: "Web Searching" } });
-        } else if (userInput.includes("comprar") || userInput.includes("buy") || userInput.includes("purchase")) {
-            eventToDispatch = new CustomEvent('SearchingProducts', { detail: { currentStatus: "Searching Products" } });
-        } else if (userInput.includes("inventario") || userInput.includes("inventory") || userInput.includes("stock")) {
-            eventToDispatch = new CustomEvent('UpdatingInventory', { detail: { currentStatus: "Updating Inventory" } });
-        }
-        
-        window.dispatchEvent(eventToDispatch);
-        const dots = document.getElementById("dots");
-        dots.style.opacity = 1; // Mostrar los puntos
-    } else {
-        alert("Please enter a message before sending.");
-    }
-};
+
             // Funcionalidad para abrir la cámara
             document.getElementById("camera-button").onclick = function() {
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {

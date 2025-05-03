@@ -1,488 +1,62 @@
-<<<<<<< HEAD
 [
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        "nombre": "Arroz Roland Arborio Superfino",
-        "precio": "$21315.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a7f7f56acb8a951c204/images/4f8549b3e6e9d59689941282481f2c936250180f4564d811d07df4d9cd2bf56d.webp",
-        "enlace": "https://www.google.com/shopping/product/273130468964654929?gl=co"
-    },
-    {
-        "nombre": "Arroz arborio X 1 Kg Colavita",
-        "precio": "$24500.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a7f7f56acb8a951c204/images/4f8549b3e6e9d59689941282481f2c93e73e2dd2fb31d7d0635db6388ef90c65.webp",
-        "enlace": "https://www.google.com/shopping/product/15989104203107786422?gl=co"
-    },
-    {
-        "nombre": "Scotti Arroz Risotto Arborio",
-        "precio": "$19990.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a7f7f56acb8a951c204/images/4f8549b3e6e9d59689941282481f2c93f968cb31deda08bef41f2fa738478287.webp",
-        "enlace": "https://www.google.com/shopping/product/7281587189169053832?gl=co"
-    },
-    {
-        "nombre": "ARROZ ARBORIO X 500 GR",
-        "precio": "$20300.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a7f7f56acb8a951c204/images/4f8549b3e6e9d59689941282481f2c93459fe99d473e90f2835aa49862ca018b.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6116834607034288202"
-    },
-    {
-        "nombre": "ARROZ ARBÓREO RISOTTO GR",
-        "precio": "$62600.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a7f7f56acb8a951c204/images/4f8549b3e6e9d59689941282481f2c936798cfde1aa286bd2c3c85ac048d2486.webp",
-        "enlace": "https://www.google.com/shopping/product/2892489801365032207?gl=co"
-    },
-    {
-        "nombre": "La Giralda Champiñón Blanco Entero",
-        "precio": "$8500.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a89f934f4bfb7e4beca/images/1ad27301b28b98c49ee3a4a3c2fa21355eb2d095292927b43aea6ef504143c60.webp",
-        "enlace": "https://www.google.com/shopping/product/3900004559386992437?gl=co"
-    },
-    {
-        "nombre": "Champiñón Entero Bandeja x 1000 gr",
-        "precio": "$30690.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a89f934f4bfb7e4beca/images/1ad27301b28b98c49ee3a4a3c2fa213572d64c69020b2b5a1adfd1402d2298d3.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:7772956442074964021"
-    },
-    {
-        "nombre": "Champiñones Enteros Frescos caja 500gr",
-        "precio": "$17800.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a89f934f4bfb7e4beca/images/1ad27301b28b98c49ee3a4a3c2fa213541562338bd07590dedd9771330aca6d3.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6460641864913515828"
-    },
-    {
-        "nombre": "Champiñones Frescampo tajados",
-        "precio": "$5190.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a89f934f4bfb7e4beca/images/1ad27301b28b98c49ee3a4a3c2fa2135b124a4c4a3dfb382f640a3403be0cf02.webp",
-        "enlace": "https://www.google.com/shopping/product/11241134059931746813?gl=co"
-    },
-    {
-        "nombre": "Champiñones x kilo",
-        "precio": "$35409.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a89f934f4bfb7e4beca/images/1ad27301b28b98c49ee3a4a3c2fa2135e0e974f10fdd9223c7dbcdfda340f322.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:9540160943241438387"
-    },
-    {
-        "nombre": "Caldo Casero de Verduras Gallina Blanca",
-        "precio": "$20300.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a8b75d080caecf6034a/images/23a83764b27928c84d67c052a65bde04ea05246558fd2538d3f5553b0143d68d.webp",
-        "enlace": "https://www.google.com/shopping/product/7181462465804349194?gl=co"
-    },
-    {
-        "nombre": "Amandin Caldo de Verduras Eco Sin Gluten 1 litro",
-        "precio": "$19338.04",
-        "imagen_url": "https://serpapi.com/searches/680a4a8b75d080caecf6034a/images/23a83764b27928c84d67c052a65bde0487f8dface67d9dfb91ca0c33750fd603.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:3668420646370460618"
-    },
-    {
-        "nombre": "Caldo Don Gustico Deshidratado Verduras",
-        "precio": "$2180.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a8b75d080caecf6034a/images/23a83764b27928c84d67c052a65bde04e0884004d38ab29c6b3253ae3a75c34f.webp",
-        "enlace": "https://www.google.com/shopping/product/9161837602273577941?gl=co"
-    },
-    {
-        "nombre": "Bote De Caldo De Verduras Knorr",
-        "precio": "$20048.48",
-        "imagen_url": "https://serpapi.com/searches/680a4a8b75d080caecf6034a/images/23a83764b27928c84d67c052a65bde04865733751994fdcb51ca77aff1bfa09c.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:14920142817231000083"
-    },
-    {
-        "nombre": "Sopa de verduras",
-        "precio": "$11980.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a8b75d080caecf6034a/images/23a83764b27928c84d67c052a65bde04d4290208bdf7be418e705450a0ca4e77.webp",
-        "enlace": "https://www.google.com/shopping/product/18369957917740283834?gl=co"
-    },
-    {
-        "nombre": "Cebolla Blanca 1 und",
-        "precio": "$561.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a8efca1202447284aac/images/5652702c4e1dd4c6bf154bdd3ec299b62737beaaa4415f36fd559c28ef5566ef.webp",
-        "enlace": "https://www.google.com/shopping/product/13011781801207778158?gl=co"
-    },
-    {
-        "nombre": "Cebolla Blanca",
-        "precio": "$4900.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a8efca1202447284aac/images/5652702c4e1dd4c6bf154bdd3ec299b6670617e2cbdee9c9ec44b379d2504b77.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:13654654560049292237"
-    },
-    {
-        "nombre": "Cebolla Cabezona",
-        "precio": "$2990.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a8efca1202447284aac/images/5652702c4e1dd4c6bf154bdd3ec299b6511b8cd70e05803e1aee6d9e252a1517.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:10730545480878399989"
-    },
-    {
-        "nombre": "Cebolla Cabezona Blanca Económica Cebolla Cabezona Blanca Economica X Kg",
-        "precio": "$2500.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a8efca1202447284aac/images/5652702c4e1dd4c6bf154bdd3ec299b622b74195d2fd4aebffdc3ee1ccb4962e.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:4893860538866952602"
-    },
-    {
-        "nombre": "SM Cebolla Junca 300 gr",
-        "precio": "$6800.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a8efca1202447284aac/images/5652702c4e1dd4c6bf154bdd3ec299b64da266576c2c98c6deace761d88c8201.webp",
-        "enlace": "https://www.google.com/shopping/product/15477114782775308632?gl=co"
-    },
-    {
-        "nombre": "Ajo X Kg",
-        "precio": "$15980.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a91ea7867e0b754d81b/images/fe54164ac7b9401e9c0b24ff445826bafc10e80b6cdf8df9e07ed9548c4e54bd.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:9659478162783099958"
-    },
-    {
-        "nombre": "Ajo entero pelado Alimentos Listos Diana x80gr",
-        "precio": "$3448.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a91ea7867e0b754d81b/images/fe54164ac7b9401e9c0b24ff445826ba4bc032c26c485953eaf51602a90ea73a.webp",
-        "enlace": "https://www.google.com/shopping/product/1565597650433941443?gl=co"
-    },
-    {
-        "nombre": "Ajo Jumbo importado en malla x450gr",
-        "precio": "$9990.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a91ea7867e0b754d81b/images/fe54164ac7b9401e9c0b24ff445826ba5b230f707c027aef17ff85911a41b6f0.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:4027676784382719606"
-    },
-    {
-        "nombre": "Ajo importado malla x 3 un",
-        "precio": "$1850.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a91ea7867e0b754d81b/images/fe54164ac7b9401e9c0b24ff445826ba0221235abc5904599ddb10a9ebfb525f.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:11920189661634939626"
-    },
-    {
-        "nombre": "Ajo colombiano fresco por unidad",
-        "precio": "$3200.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a91ea7867e0b754d81b/images/fe54164ac7b9401e9c0b24ff445826ba42ed538ceb860848139376554f07cca2.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:10851813488490844915"
-    },
-    {
-        "nombre": "Vino Don Simón Selección 750 ml Blanco",
-        "precio": "$22790.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a94d372233f7405d02f/images/e41d841f7e564053f339d99972aee5c60161086109496d06b78f4ee7ecd56f13.webp",
-        "enlace": "https://www.google.com/shopping/product/11510749423010928571?gl=co"
-    },
-    {
-        "nombre": "Alma Negra Vino blanco blend",
-        "precio": "$91600.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a94d372233f7405d02f/images/e41d841f7e564053f339d99972aee5c6e2854f0bc7ed759676d10e1e17bcf1d1.webp",
-        "enlace": "https://www.google.com/shopping/product/6089996117014177156?gl=co"
-    },
-    {
-        "nombre": "Vino Blanco Castillo De Molina Sauvignon Blanc Reserva 750 ml",
-        "precio": "$97400.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a94d372233f7405d02f/images/e41d841f7e564053f339d99972aee5c6e23cb325d94f9eb52d33c76867f926a2.webp",
-        "enlace": "https://www.google.com/shopping/product/10280655980651952057?gl=co"
-    },
-    {
-        "nombre": "Reservado Blanco Vino Sauvignon Blanc",
-        "precio": "$30000.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a94d372233f7405d02f/images/e41d841f7e564053f339d99972aee5c662b586365ca46bb48741d99ed1c9404e.webp",
-        "enlace": "https://www.google.com/shopping/product/3768533991116473299?gl=co"
-    },
-    {
-        "nombre": "Vino Blanco Santiago 1541 Sauvignon*750M",
-        "precio": "$49550.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a94d372233f7405d02f/images/e41d841f7e564053f339d99972aee5c61cb7820e9539e431045a3a8cd87efbde.webp",
-        "enlace": "https://www.google.com/shopping/product/14624538177374682323?gl=co"
-    },
-    {
-        "nombre": "Alpina Queso Parmesano Rallado",
-        "precio": "$11990.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a974a851d2f1cae5b43/images/5098b11d9a83c392f5bca7123311fd1385fe9a2245f665b1b2f7c8cbe3f4338b.webp",
-        "enlace": "https://www.google.com/shopping/product/17449327716418411032?gl=co"
-    },
-    {
-        "nombre": "Queso Kraft Parmesano",
-        "precio": "$11850.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a974a851d2f1cae5b43/images/5098b11d9a83c392f5bca7123311fd136a5491a57178f4f912802d777ec64ac8.webp",
-        "enlace": "https://www.google.com/shopping/product/5062108072685439569?gl=co"
-    },
-    {
-        "nombre": "Queso Parmesano Colanta Rallado",
-        "precio": "$21800.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a974a851d2f1cae5b43/images/5098b11d9a83c392f5bca7123311fd13e83607fe8a5df054b3ca27b717b4d9ed.webp",
-        "enlace": "https://www.google.com/shopping/product/8044038122789187862?gl=co"
-    },
-    {
-        "nombre": "FORMA PARMIGIANO REGGIANO 30 MESI AL KG",
-        "precio": "$134240.3",
-        "imagen_url": "https://serpapi.com/searches/680a4a974a851d2f1cae5b43/images/5098b11d9a83c392f5bca7123311fd13a4fe86831e8dabd64ca7c49c6c736ab5.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:15739092359056377211"
-    },
-    {
-        "nombre": "Frescampo Queso Parmesano",
-        "precio": "$10480.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a974a851d2f1cae5b43/images/5098b11d9a83c392f5bca7123311fd13c2649727334a28a1d055583057b41d06.webp",
-        "enlace": "https://www.google.com/shopping/product/15734574623211931553?gl=co"
-    },
-    {
-        "nombre": "Colanta Mantequilla Sin Sal",
-        "precio": "$14300.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a9a676bd1619c919c3b/images/d4c044d73f3f253e3e63b9dae326144956103b2f5ad2750d4fb259f10eef879d.webp",
-        "enlace": "https://www.google.com/shopping/product/13519240622945458112?gl=co"
-    },
-    {
-        "nombre": "Alpina Mantequilla Sin Sal",
-        "precio": "$9600.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a9a676bd1619c919c3b/images/d4c044d73f3f253e3e63b9dae326144994a195dba1986495039d9976d2983160.webp",
-        "enlace": "https://www.google.com/shopping/product/8646659360071313695?gl=co"
-    },
-    {
-        "nombre": "Mantequilla Con Sal ALPINA 250 gr",
-        "precio": "$17900.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a9a676bd1619c919c3b/images/d4c044d73f3f253e3e63b9dae32614492040afd10d9a2cbdb4315bfe7ef59359.webp",
-        "enlace": "https://www.google.com/shopping/product/8638136146620635413?gl=co"
-    },
-    {
-        "nombre": "Mantequilla sin Sal San Martin*480 gr",
-        "precio": "$29100.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a9a676bd1619c919c3b/images/d4c044d73f3f253e3e63b9dae3261449e1be02a586da440bdf08e5d4353f0844.webp",
-        "enlace": "https://www.google.com/shopping/product/8276613085531088228?gl=co"
-    },
-    {
-        "nombre": "Mantequilla Colanta con Sal X 250 g",
-        "precio": "$14300.0",
-        "imagen_url": "https://serpapi.com/searches/680a4a9a676bd1619c919c3b/images/d4c044d73f3f253e3e63b9dae3261449e61fa1b75bd563a1b431440182ad23ee.webp",
-        "enlace": "https://www.google.com/shopping/product/2922967783443513039?gl=co"
-    },
-    {
-        "nombre": "Sal Refisal x1000g",
-        "precio": "$2300.0",
-        "imagen_url": "https://serpapi.com/searches/680a47c0873093024a650d36/images/4b92fc18e0a199023a1ef0bb85bac4f7ffe29f6f532ac2b3e0eedbc8ce06b3cc.webp",
-        "enlace": "https://www.google.com/shopping/product/10815885520164962703?gl=co"
-    },
-    {
-        "nombre": "Ambiente Gourmet Moledor de sal y pimienta blanco madera",
-        "precio": "$59950.0",
-        "imagen_url": "https://serpapi.com/searches/680a47c0873093024a650d36/images/4b92fc18e0a199023a1ef0bb85bac4f703e8f82b3a0329b1c148e75cb6387263.webp",
-        "enlace": "https://www.google.com/shopping/product/14061904772998350246?gl=co"
-    },
-    {
-        "nombre": "Sal Refisal x3000g",
-        "precio": "$6550.0",
-        "imagen_url": "https://serpapi.com/searches/680a47c0873093024a650d36/images/4b92fc18e0a199023a1ef0bb85bac4f7aef6c08ca6ce0f3e7dce0aa71a74f18d.webp",
-        "enlace": "https://www.google.com/shopping/product/9176163599445228498?gl=co"
-    },
-    {
-        "nombre": "Instrucciones Para Dominar El Mundo (Más O Menos)/ Cómo Sal... - Ebook:",
+        "nombre": "Esterrilla de Playa 90x180cm Café",
         "precio": "$29900.0",
-        "imagen_url": "https://serpapi.com/searches/680a47c0873093024a650d36/images/4b92fc18e0a199023a1ef0bb85bac4f7db47e171f11ea43ba30545dfb1b4e694.webp",
-        "enlace": "https://www.google.com/shopping/product/7571796164865566242?gl=co"
+        "imagen_url": "https://serpapi.com/searches/6814dd358a28b09c583b56a2/images/68f6b0e56c7d5ca897ffe6e6052aac307cf0e237d5982ac1df1e6dffbc858b0c.webp",
+        "enlace": "https://www.google.com/shopping/product/9292222602131772206?gl=co"
     },
     {
-        "nombre": "Alter Eco Trufas de chocolate negro orgánico Sal marina",
-        "precio": "$41198.91",
-        "imagen_url": "https://serpapi.com/searches/680a47c0873093024a650d36/images/4b92fc18e0a199023a1ef0bb85bac4f7ef9045325fd76e20da9ba8c7e63463eb.webp",
-        "enlace": "https://www.google.com/shopping/product/14321723265074840922?gl=co"
+        "nombre": "Esterilla de Bambú",
+        "precio": "$7550.0",
+        "imagen_url": "https://serpapi.com/searches/6814dd358a28b09c583b56a2/images/68f6b0e56c7d5ca897ffe6e6052aac30dd6a077fceb4508f48c74c2d4dae6968.webp",
+        "enlace": "https://www.google.com/shopping/product/1718831848242573942?gl=co"
     },
     {
-        "nombre": "Mccormick Pimienta Negra",
-        "precio": "$15490.0",
-        "imagen_url": "https://serpapi.com/searches/680a47c6b3483e12d7c739d0/images/7e58280b47343e68eee6ac50dad3dba0a8ff28acef2d8a9da71c01f75063f019.webp",
-        "enlace": "https://www.google.com/shopping/product/9585874351362872145?gl=co"
+        "nombre": "Colchoneta Deportiva Adidas 7 mm",
+        "precio": "$132930.0",
+        "imagen_url": "https://serpapi.com/searches/6814dd358a28b09c583b56a2/images/68f6b0e56c7d5ca897ffe6e6052aac30151b57e83012092305130e40ba611ad3.webp",
+        "enlace": "https://www.google.com/shopping/product/6718955726206996212?gl=co"
     },
     {
-        "nombre": "BADIA Pimienta Negra Molida",
-        "precio": "$41100.0",
-        "imagen_url": "https://serpapi.com/searches/680a47c6b3483e12d7c739d0/images/7e58280b47343e68eee6ac50dad3dba0dce1514be46b7f86ace563afab4d1fcd.webp",
-        "enlace": "https://www.google.com/shopping/product/17810715793617519008?gl=co"
+        "nombre": "Esterrilla de Playa 90x180cm Celeste",
+        "precio": "$29900.0",
+        "imagen_url": "https://serpapi.com/searches/6814dd358a28b09c583b56a2/images/68f6b0e56c7d5ca897ffe6e6052aac30b51cb1fc80d3992e0151939f7502b862.webp",
+        "enlace": "https://www.google.com/shopping/product/7273237526670129179?gl=co"
     },
     {
-        "nombre": "Pimienta Comarrico",
-        "precio": "$1540.0",
-        "imagen_url": "https://serpapi.com/searches/680a47c6b3483e12d7c739d0/images/7e58280b47343e68eee6ac50dad3dba095761613d7e8cbf605364c17d8c94a06.webp",
-        "enlace": "https://www.google.com/shopping/product/15923008778332181331?gl=co"
+        "nombre": "Esterillas Best Choice Bambu 20X20 Esterilla Best Choice Bambu 20X20",
+        "precio": "$7250.0",
+        "imagen_url": "https://serpapi.com/searches/6814dd358a28b09c583b56a2/images/68f6b0e56c7d5ca897ffe6e6052aac3037c8261b99b042f3cfd4a5c5d2269381.webp",
+        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:2658056309050712827"
     },
     {
-        "nombre": "Badia Pimienta Negra Entera",
-        "precio": "$23800.0",
-        "imagen_url": "https://serpapi.com/searches/680a47c6b3483e12d7c739d0/images/7e58280b47343e68eee6ac50dad3dba0fb938b3e7b89c9c92959a24b31f6e140.webp",
-        "enlace": "https://www.google.com/shopping/product/18037621695769818039?gl=co"
+        "nombre": "Barras Paralelas Supremacy",
+        "precio": "$209900.0",
+        "imagen_url": "https://serpapi.com/searches/6814dd38095749d7a3a9d7ed/images/dba0450e2f5050ae640ff129fc50585f0a9c20edda5d230cc8a139b79fbffa9b.webp",
+        "enlace": "https://www.google.com/shopping/product/7436108147380594146?gl=co"
     },
     {
-        "nombre": "Mc Cormick Pimienta Negra de Grano en Molinillo",
-        "precio": "$16750.0",
-        "imagen_url": "https://serpapi.com/searches/680a47c6b3483e12d7c739d0/images/7e58280b47343e68eee6ac50dad3dba07c3b6fd974a2723c1c6f411c506ab94b.webp",
-        "enlace": "https://www.google.com/shopping/product/4896010241791311564?gl=co"
-=======
-        "nombre": "Camiseta de fitness manga corta para Hombre Domyos 500 Color Variante",
-        "precio": "$49000.0",
-        "imagen_url": "https://serpapi.com/searches/680e60f5245c118f10830ebf/images/738cf4887cab4b3bd40b7652d4820c30b4d20ebda71c40ef6cc2c2f64e216f1e.webp",
-        "enlace": "https://www.google.com/shopping/product/10080905249708136444?gl=co"
+        "nombre": "Paralelas Graduables Sportfitness",
+        "precio": "$305600.0",
+        "imagen_url": "https://serpapi.com/searches/6814dd38095749d7a3a9d7ed/images/dba0450e2f5050ae640ff129fc50585f2dda88f737d380b481916dac1eebb519.webp",
+        "enlace": "https://www.google.com/shopping/product/9026143259449401642?gl=co"
     },
     {
-        "nombre": "Hombre Zara Camiseta Básica Slim Fit",
-        "precio": "$69900.0",
-        "imagen_url": "https://serpapi.com/searches/680e60f5245c118f10830ebf/images/738cf4887cab4b3bd40b7652d4820c30354b6dd6d3d76fd5186aee1289232dcb.webp",
-        "enlace": "https://www.google.com/shopping/product/10988549020857149985?gl=co"
+        "nombre": "Barras paralelas para calistenia de 36mm Corength 100 Color 8882305 Variante 254@Talla única",
+        "precio": "$349000.0",
+        "imagen_url": "https://serpapi.com/searches/6814dd38095749d7a3a9d7ed/images/dba0450e2f5050ae640ff129fc50585ffa04a1ea2c6bbbeb5a70eaf9ae97ff68.webp",
+        "enlace": "https://www.google.com/shopping/product/15290168250768623707?gl=co"
     },
     {
-        "nombre": "Camiseta de cuello redondo y manga corta Hombre Talla L. Color Blanco",
-        "precio": "$34900.0",
-        "imagen_url": "https://serpapi.com/searches/680e60f5245c118f10830ebf/images/738cf4887cab4b3bd40b7652d4820c305b5110a3819fbb2b27f70d3f4d91df70.webp",
-        "enlace": "https://www.google.com/shopping/product/6476365326612511870?gl=co"
+        "nombre": "Barras Paralelas de Acero, Agarre Extra Ancho y Antideslizante",
+        "precio": "$234020.63",
+        "imagen_url": "https://serpapi.com/searches/6814dd38095749d7a3a9d7ed/images/dba0450e2f5050ae640ff129fc50585f82c409179b45d26d26095fad0a956d1a.webp",
+        "enlace": "https://www.google.com/shopping/product/10023098855012009270?gl=co"
     },
     {
-        "nombre": "Seven Seven Camiseta Hombre Básica",
-        "precio": "$39900.0",
-        "imagen_url": "https://serpapi.com/searches/680e60f5245c118f10830ebf/images/738cf4887cab4b3bd40b7652d4820c308afd5e222897b53d075de8becfd55888.webp",
-        "enlace": "https://www.google.com/shopping/product/11250860347651054239?gl=co"
-    },
-    {
-        "nombre": "hombre Camiseta Talla Rifle",
-        "precio": "$69900.0",
-        "imagen_url": "https://serpapi.com/searches/680e60f5245c118f10830ebf/images/738cf4887cab4b3bd40b7652d4820c308b3957babe7dca09f572bf5764d8ee98.webp",
-        "enlace": "https://www.google.com/shopping/product/1354233480256856569?gl=co"
->>>>>>> ffec2bc1 (better flow of iteractions)
-=======
-        "nombre": "Pan De Centeno 300g",
-        "precio": "$5960.0",
-        "imagen_url": "https://serpapi.com/searches/680be6718db215b23d07189b/images/1766def25d296d5d056f3bf330c62172e5d8c01a74c931fb17c32b5de51b7721.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:1624498180628234784"
-    },
-    {
-        "nombre": "Mestemacher Pan centeno línea ligera",
-        "precio": "$18390.0",
-        "imagen_url": "https://serpapi.com/searches/680be6718db215b23d07189b/images/1766def25d296d5d056f3bf330c621727368165ddfbf2bd101265cc591aaf4ac.webp",
-        "enlace": "https://www.google.com/shopping/product/15724102675100097719?gl=co"
-    },
-    {
-        "nombre": "El Country Pan",
-        "precio": "$4370.0",
-        "imagen_url": "https://serpapi.com/searches/680be6718db215b23d07189b/images/1766def25d296d5d056f3bf330c62172b19845e038bd17419da9c3c4ea5c82d1.webp",
-        "enlace": "https://www.google.com/shopping/product/124529893212406747?gl=co"
-    },
-    {
-        "nombre": "Trillos Mestiza Comun",
-        "precio": "$4100.0",
-        "imagen_url": "https://serpapi.com/searches/680be6718db215b23d07189b/images/1766def25d296d5d056f3bf330c62172e781d454726b4f7bc3d608ffaa6bbcce.webp",
-        "enlace": "https://www.google.com/shopping/product/2172288010306342655?gl=co"
-    },
-    {
-        "nombre": "Pan Bimbo Perro",
-        "precio": "$3600.0",
-        "imagen_url": "https://serpapi.com/searches/680be6718db215b23d07189b/images/1766def25d296d5d056f3bf330c6217222dc7eef98cb808965865485dd3da6c3.webp",
-        "enlace": "https://www.google.com/shopping/product/15809532626035825004?gl=co"
-    },
-    {
-        "nombre": "Filete de Pechuga de pollo Pollocoa finas hierbas",
-        "precio": "$39200.0",
-        "imagen_url": "https://serpapi.com/searches/680be675f6e08e9616870e22/images/81f04e7b32593759135593985cecd58cc7c59e92c94bdc5d3d71e547a068aaa8.webp",
-        "enlace": "https://www.google.com/shopping/product/8027043961324072618?gl=co"
-    },
-    {
-        "nombre": "Pechuga De Pollo Mercapollo Pollo Pechuga Mercapollo",
-        "precio": "$17000.0",
-        "imagen_url": "https://serpapi.com/searches/680be675f6e08e9616870e22/images/81f04e7b32593759135593985cecd58c8bbd448ec8cf1ad7329ff0aa2ef75d5a.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:6579029568417321772"
-    },
-    {
-        "nombre": "Pechuga De Pollo Deshuesada Asada Y Marinada 500g",
-        "precio": "$97328.0",
-        "imagen_url": "https://serpapi.com/searches/680be675f6e08e9616870e22/images/81f04e7b32593759135593985cecd58c8b223dd65776d7fa051fbf5e4ceb03aa.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:10886563360977836002"
-    },
-    {
-        "nombre": "Filete de pechuga de pollo FRESCAMPO congelada",
-        "precio": "$28900.0",
-        "imagen_url": "https://serpapi.com/searches/680be675f6e08e9616870e22/images/81f04e7b32593759135593985cecd58c03fe3ae9ac7a2c683c808fa34253c28c.webp",
-        "enlace": "https://www.google.com/shopping/product/1?gl=co&prds=pid:16184873030945350270"
-    },
-    {
-        "nombre": "Compra Pechuga De Pollo Asada Adobada De 200G",
-        "precio": "$13500.0",
-        "imagen_url": "https://serpapi.com/searches/680be675f6e08e9616870e22/images/81f04e7b32593759135593985cecd58c56083c8ae609babd1e36faf061a6832d.webp",
-        "enlace": "https://www.google.com/shopping/product/12537662250025049215?gl=co"
-    },
-    {
-        "nombre": "Salsa Pesto Barilla x190g",
-        "precio": "$19900.0",
-        "imagen_url": "https://serpapi.com/searches/680be678a603e894fefad555/images/121fcb4d8f81378076c758218bc7d79513950389b5e9b9cfa4ba2326c4f2c9de.webp",
-        "enlace": "https://www.google.com/shopping/product/7614433192656674995?gl=co"
-    },
-    {
-        "nombre": "Salsa Monticello Pesto Genovese",
-        "precio": "$19450.0",
-        "imagen_url": "https://serpapi.com/searches/680be678a603e894fefad555/images/121fcb4d8f81378076c758218bc7d79503ed2c31ba326133896d953a056f5bd3.webp",
-        "enlace": "https://www.google.com/shopping/product/3788725286105338474?gl=co"
-    },
-    {
-        "nombre": "Pesto Alla Genovese de Cecco",
-        "precio": "$21000.0",
-        "imagen_url": "https://serpapi.com/searches/680be678a603e894fefad555/images/121fcb4d8f81378076c758218bc7d7957715a6c79d77ec7753a0fe306bdfe830.webp",
-        "enlace": "https://www.google.com/shopping/product/7870231774092097772?gl=co"
-    },
-    {
-        "nombre": "Colavita Pesto Verde",
-        "precio": "$25990.0",
-        "imagen_url": "https://serpapi.com/searches/680be678a603e894fefad555/images/121fcb4d8f81378076c758218bc7d795f1a53f4b95d4451a7021c498805831bd.webp",
-        "enlace": "https://www.google.com/shopping/product/3455794655089667256?gl=co"
-    },
-    {
-        "nombre": "Salsa Pesto To Eat Marca Exclusiva 190 Gr",
-        "precio": "$7980.0",
-        "imagen_url": "https://serpapi.com/searches/680be678a603e894fefad555/images/121fcb4d8f81378076c758218bc7d795fec361e1138a0edcb691f4d0d29e3ec3.webp",
-        "enlace": "https://www.google.com/shopping/product/5017054331468794805?gl=co"
-    },
-    {
-        "nombre": "Queso Mozzarella Colanta",
-        "precio": "$10550.0",
-        "imagen_url": "https://serpapi.com/searches/680be67ae388793ee7cb7e85/images/3bfbbb9bef5209f45ee23e013b5b6733b99a59a8d03d18cd2d06a86a287fa7c4.webp",
-        "enlace": "https://www.google.com/shopping/product/7692702635872294921?gl=co"
-    },
-    {
-        "nombre": "Betania Queso Campesino",
-        "precio": "$17200.0",
-        "imagen_url": "https://serpapi.com/searches/680be67ae388793ee7cb7e85/images/3bfbbb9bef5209f45ee23e013b5b6733f3a1c724b49891cb79c6563186880239.webp",
-        "enlace": "https://www.google.com/shopping/product/731140609318225812?gl=co"
-    },
-    {
-        "nombre": "President Queso Emmental Tajado",
-        "precio": "$9400.0",
-        "imagen_url": "https://serpapi.com/searches/680be67ae388793ee7cb7e85/images/3bfbbb9bef5209f45ee23e013b5b6733b777130c920b802946844003ea80d282.webp",
-        "enlace": "https://www.google.com/shopping/product/10884204379574495695?gl=co"
-    },
-    {
-        "nombre": "Queso Cottage Natural Sketos",
-        "precio": "$18400.0",
-        "imagen_url": "https://serpapi.com/searches/680be67ae388793ee7cb7e85/images/3bfbbb9bef5209f45ee23e013b5b6733fafb3e4c13694e404cfc814860e15cda.webp",
-        "enlace": "https://www.google.com/shopping/product/12545825630442499939?gl=co"
-    },
-    {
-        "nombre": "Queso Colanta Monterey x 250 g Jack",
-        "precio": "$20100.0",
-        "imagen_url": "https://serpapi.com/searches/680be67ae388793ee7cb7e85/images/3bfbbb9bef5209f45ee23e013b5b67338c6c83e2bfb1b308ab646e0860472653.webp",
-        "enlace": "https://www.google.com/shopping/product/5726803832906953166?gl=co"
-    },
-    {
-        "nombre": "Lechuga Lisa Orgánica Taeq 120 gr",
-        "precio": "$6288.0",
-        "imagen_url": "https://serpapi.com/searches/680be680226705f5c348d814/images/6493adba1523f2aaf4648e4d9810dfba940112898ed3f2df82e7ffd8956d9cc1.webp",
-        "enlace": "https://www.google.com/shopping/product/17943721585553273330?gl=co"
-    },
-    {
-        "nombre": "Verduras Lechuga Romana",
-        "precio": "$3528.0",
-        "imagen_url": "https://serpapi.com/searches/680be680226705f5c348d814/images/6493adba1523f2aaf4648e4d9810dfbafebba05f51d1b655126df5e5f7ca4691.webp",
-        "enlace": "https://www.google.com/shopping/product/10051370860114356833?gl=co"
-    },
-    {
-        "nombre": "Lechuga Romana x 250gr",
-        "precio": "$3990.0",
-        "imagen_url": "https://serpapi.com/searches/680be680226705f5c348d814/images/6493adba1523f2aaf4648e4d9810dfbac29840778db91e348b8ea6c8fc66f223.webp",
-        "enlace": "https://www.google.com/shopping/product/14523210976049813419?gl=co"
-    },
-    {
-        "nombre": "Hortifresco Ensalada Baby Mix",
-        "precio": "$6800.0",
-        "imagen_url": "https://serpapi.com/searches/680be680226705f5c348d814/images/6493adba1523f2aaf4648e4d9810dfbaf22c92f056eb57760bd3904194805a76.webp",
-        "enlace": "https://www.google.com/shopping/product/12119529187226755723?gl=co"
-    },
-    {
-        "nombre": "Lechuga Crespa Verde Hortifresco x 130 g",
-        "precio": "$5040.0",
-        "imagen_url": "https://serpapi.com/searches/680be680226705f5c348d814/images/6493adba1523f2aaf4648e4d9810dfbac60794ebe533693e684434bc05a869eb.webp",
-        "enlace": "https://www.google.com/shopping/product/15514529130811585026?gl=co"
->>>>>>> ebcb5609b7995b4afdc056bc334cdd5db1c103ce
+        "nombre": "Barras Paralelas De Piso Fijas Indoor",
+        "precio": "$405200.0",
+        "imagen_url": "https://serpapi.com/searches/6814dd38095749d7a3a9d7ed/images/dba0450e2f5050ae640ff129fc50585f5cd691081a86e471e6cffbabb45c4a53.webp",
+        "enlace": "https://www.google.com/shopping/product/858448196857125514?gl=co"
     }
 ]
-=======
-[]
->>>>>>> 673c9e823659816eed4a38f7d6fcb757263ab1e4

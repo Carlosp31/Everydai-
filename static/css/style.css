@@ -8,6 +8,8 @@ html, body {
     animation: gradient 10s ease infinite;
 }
 #container-pro {
+    display: flex;
+    align-items: center; /* Alinea los elementos verticalmente */
     position: absolute;
     top: 0;
     left: 0;
@@ -115,7 +117,6 @@ html, body {
     margin: 10px auto;
     color: black;
     font-weight: bold;
-    width: 90%;
     overflow-y: auto;
     border: 2px solid black;
     padding: 10px;
@@ -449,7 +450,7 @@ textarea#input-text:focus {
     vertical-align: middle;
 }
 .arrow.down {
-    transform: rotate(45deg); /* Flecha hacia abajo */
+    transform: rotate(45deg); 
 }
 
 .arrow.up {
@@ -569,8 +570,6 @@ textarea#input-text:focus {
   }
 #status-indicator {
     position: relative;
-    top: 60px;       /* Ajusta este valor según la altura de los botones */
-    left: 110px;
     background-color: #00cc52;
     color: white;
     font-size: 32px;
@@ -592,6 +591,7 @@ button, .controls button, .sidebar a {
     border-radius: 5px;
     font-size: 13px;
     transition: background-color 0.2s ease, transform 0.2s ease;  /* Transición suave de color y tamaño */
+    margin-right: 10px; /* Espacio entre los botones */
 }
 
 /* Hover Animation: Cambia el tamaño y el color cuando el usuario pasa el mouse */
@@ -638,7 +638,20 @@ button:active, .controls button:active, .sidebar a:active {
         margin-top: 20px;
     }
 }
-
+#image-input-label {
+    display: inline-block;
+    background-color: transparent;
+    color: white;
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  #image-input-label:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 .control-container {
     display: flex; /* Por defecto, los elementos estarán en fila */
     gap: 10px;
@@ -650,20 +663,6 @@ button:active, .controls button:active, .sidebar a:active {
     flex-wrap: wrap; /* Permite que los elementos bajen si no hay espacio */
 }
 
-/* En pantallas pequeñas (menos de 768px), activar el grid con 2 columnas */
-@media screen and (max-width: 768px) {
-    .control-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); /* 2 columnas en responsive */
-    }
-}
-
-/* En móviles muy pequeños, cambiar a 1 columna */
-@media screen and (max-width: 400px) {
-    .control-container {
-        grid-template-columns: repeat(1, 1fr); /* 1 sola columna */
-    }
-}
 
 
 #subtitulos-container {

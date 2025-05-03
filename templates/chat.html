@@ -3,6 +3,8 @@
 <head>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}?v=2">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -34,16 +36,22 @@
         <ul id="recommendations-list"></ul>
     </div>
         <div id="container-pro">
-        <button id="download-button">Download Conversation</button>
-        <button id="wish-button">Wish List</button>
+            <button id="download-button" title="Click to download the conversation">
+                <i class="fas fa-download"></i> 
+              </button>
+        <button id="wish-button" class="icon-button" title="Wish List">
+            <i class="fas fa-list"></i>
+          </button>
         <div id="wish-dropdown" style="display:none;">
             <ul id="wish-items"></ul>
         </div>
-        <button id="inventory-button">Inventory</button>
+        <button id="inventory-button" class="icon-button" title="Inventory">
+            <i class="fas fa-box-open"></i>
+          </button>
         <div id="inventory-dropdown" style="display:none;">
             <ul id="inventory-items"></ul>
         </div>
-        <div id="status-indicator">Listening...</div>
+        <div id="status-indicator"></div>
     </div>
     <script src="../static/java/inventories.js"></script>
     <script src="../static/java/cartshop.js"></script>
@@ -86,11 +94,22 @@
         </div>
     </div>
     <div class="control-container">
-        <button id="microphone-button">Start Conversation</button>
-        <label for="image-input" id="image-input-label">Select Image</label>
-        <button id="camera-button">Open Camera</button>
-        <button id="send-button">Send</button>
-        <button id="capture-button" style="display:none;">Capture</button>
+        <button id="microphone-button" class="mic-button" title="Mic">
+            <i id="mic-icon" class="fas fa-microphone"></i>
+          </button>
+          
+          <label for="image-input" id="image-input-label" title="Select Image">
+            <i class="fas fa-image"></i>
+          </label>
+          <input type="file" id="image-input" style="display: none;">
+          
+          <button id="camera-button" class="icon-button" title="Open Camera">
+            <i class="fas fa-camera"></i>
+          </button>
+          
+          <button id="capture-button" class="icon-button" style="display:none;" title="Send Message">
+            <i class="fas fa-paper-plane"></i>
+          </button>
     </div>
 
 
