@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dash_mobile.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}?v=2">
     <title>Welcome to EverydAI</title>
-
 </head>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <body>
@@ -16,10 +15,19 @@
     <div class="title">WELCOME TO EVERYDAI</div>
     <div class="subtitle">CHOOSE A DOMAIN TO CONTINUE</div>
 
+    <!-- Dropdown for Language Selection -->
+    <div>
+        <label for="languageSelect">Choose Language:</label>
+        <select id="languageSelect" class="language-selector">
+            <option value="es-ES">Spanish</option>
+            <option value="en-US">English</option>
+        </select>
+    </div>
+
     <div class="options">
-        <a href="{{ url_for('chat', domain='Cooking') }}" class="option"><i>🍽️</i> Cooking</a>
-        <a href="{{ url_for('chat', domain='fashion') }}" class="option"><i>👔</i> Fashion</a>
-        <a href="{{ url_for('chat', domain='Fitness') }}" class="option"><i>🏃</i> Fitness</a>
+        <a href="{{ url_for('chat', domain='Cooking', lang=request.args.get('lang', 'en')) }}" class="option"><i>🍽️</i> Cooking</a>
+        <a href="{{ url_for('chat', domain='fashion', lang=request.args.get('lang', 'en')) }}" class="option"><i>👔</i> Fashion</a>
+        <a href="{{ url_for('chat', domain='Fitness', lang=request.args.get('lang', 'en')) }}" class="option"><i>🏃</i> Fitness</a>
     </div>
 
 </body>
@@ -39,5 +47,15 @@
             confirmButtonText: 'Close'
         });
     });
+
+    document.getElementById('languageSelect').addEventListener('change', function () {
+    const lang = this.value;
+    const links = document.querySelectorAll('.option');
+    links.forEach(link => {
+        const url = new URL(link.href);
+        url.searchParams.set('lang', lang);
+        link.href = url.toString();
+    });
+});
 </script>
 </html>

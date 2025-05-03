@@ -21,9 +21,14 @@ function fetchWishList() {
 }
 
 function updateWishDropdown() {
+    
     wishItemsList.innerHTML = ''; // Limpiar la lista
-
+    const title = document.createElement("h3");
+    title.textContent = "Wish List";
+    title.style.textAlign = "center";
+    wishItemsList.appendChild(title);
     wishList.forEach((item) => {
+        
         const listItem = document.createElement("li");
 
         listItem.textContent = item;  // item es un string directamente, como "salsa"

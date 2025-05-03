@@ -1,4 +1,5 @@
 const urlParams = new URLSearchParams(window.location.search);
+const lang = urlParams.get("lang") || "es-ES";
 const domain = urlParams.get('domain');
 
            window.onload = function() {
@@ -10,7 +11,16 @@ const domain = urlParams.get('domain');
                     document.getElementById("content").style.display = "block";
                 }, 500);
         };
-
+        function redirectToRealidad() {
+            document.getElementById("content").style.display = "none";
+    
+            document.getElementById("detection-container").style.display = "block";
+    }
+    function hideDetection() {
+                document.getElementById("detection-container").style.display = "none";
+                document.getElementById("content").style.display = "block";
+                
+            }
         document.addEventListener("DOMContentLoaded", function() {
             
             const microphoneButton = document.getElementById("microphone-button");
@@ -55,21 +65,25 @@ const domain = urlParams.get('domain');
 
             
             const chatContainer = document.querySelector('.chat-container');
-
+            const h1 = document.getElementById("title");
+            const display = document.getElementById("selected-model-display");
             // Verificar el valor de `domain` y cambiar el fondo dinámicamente
             if (domain === "Cooking") {
-                chatContainer.style.backgroundImage = "url('static/css/kitchen.jpg')";
+                h1.style.color = "black";
+                display.style.color = "black";
+                chatContainer.style.backgroundImage = "url('static/css/backgrounds/kitchen.jpg')";
             } else if (domain === "fashion") {
-                chatContainer.style.backgroundImage = "url('static/css/clothes.jpg')";
+                chatContainer.style.backgroundImage = "url('static/css/backgrounds/clothes.jpg')";
             } else if (domain === "Fitness") {
-                chatContainer.style.backgroundImage = "url('static/css/gym.png')";
+                display.style.color = "white";
+                chatContainer.style.backgroundImage = "url('static/css/backgrounds/gym.png')";
             }
             let audioDetected = false; // Variable para verificar si hubo audio reconocido
             // Función para iniciar el reconocimiento de voz y el espectro de frecuencias
             function startVoiceRecognition() {
                 if (!recognition) {
-                    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-                    recognition.lang = 'es-ES';
+                    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();     
+                    recognition.lang = lang;
                     recognition.continuous = false;
                     recognition.interimResults = false;
                 }
@@ -206,7 +220,7 @@ const domain = urlParams.get('domain');
                                         </div>`;
                 } 
                 // Añadir cada item a la lista de recomendaciones
-                recommendationsList.appendChild(listItem);
+                recommendationsList.prepend(listItem);
             });
         }else if (
             typeof data.recipes === "object" &&
@@ -225,7 +239,7 @@ const domain = urlParams.get('domain');
                             <img src="${link}" alt="${nombre}" class="thumbnail">
                         </a>
                       </div>`;
-                recommendationsList.appendChild(listItem);
+                      recommendationsList.prepend(listItem);
             });
         }
 
@@ -334,17 +348,31 @@ recommendationsList.innerHTML = '';  // Limpiar la lista existente
 
 
 
-            // Funcionalidad para abrir la cámara
-            document.getElementById("camera-button").onclick = function() {
+            let stream = null;
+
+            document.getElementById("camera-button").onclick = function () {
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                    navigator.mediaDevices.getUserMedia({ video: true }).then(function (mediaStream) {
+                        stream = mediaStream;
                         videoPreview.srcObject = stream;
                         videoPreview.style.display = "block";
                         document.getElementById("capture-button").style.display = "block";
-                    }).catch(function(error) {
+                        document.getElementById("stop-btn").style.display = "block";
+                    }).catch(function (error) {
                         console.error("Error al acceder a la cámara: ", error);
                     });
                 }
+            };
+            
+            document.getElementById("stop-btn").onclick = function () {
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop()); // Apagar la cámara
+                    videoPreview.srcObject = null;
+                }
+                videoPreview.style.display = "none";
+                imagePreview.style.display = "none"; // Ocultar la imagen capturada
+                document.getElementById("stop-btn").style.display = "none";
+                document.getElementById("capture-button").style.display = "none";
             };
 
             // Funcionalidad para capturar imagen de la cámara
@@ -398,8 +426,9 @@ recommendationsList.innerHTML = '';  // Limpiar la lista existente
             // Evento al hacer clic en el botón de cargar imagen
             document.getElementById("image-input").addEventListener("change", function() {
                 const file = this.files[0];  // Obtener el archivo seleccionado
-        
+                
                 if (file) {
+                    document.getElementById("stop-btn").style.display = "block";
                     let interaction = startTimer("image1");
                     const formData = new FormData();
                     formData.append('image', file);
@@ -426,6 +455,8 @@ recommendationsList.innerHTML = '';  // Limpiar la lista existente
                         document.getElementById("chat-box").innerHTML += `<div>Modelo: ${data.response}</div>`;
                         speakResponse(data.response);
                         logResponse(interaction);  // Registrar el tiempo de respuesta
+                        document.getElementById("image-input").value = ""; // Reinicia el input
+
                     })
                     .catch(error => console.error('Error:', error));
                 }
@@ -441,12 +472,23 @@ recommendationsList.innerHTML = '';  // Limpiar la lista existente
                 };
                 reader.readAsDataURL(file);
             };
-
+                 
             // Función para guardar el tiempo de inicio
             window.startTimer = function(type) {
                 return { type: type, startTime: Date.now() };
             }
-            window.sendMessage("Hola")
+            
+            let mensaje_inicial;
+
+            if (lang === "es-ES") {
+              mensaje_inicial = "Hola";
+            } else if (lang === "en-US") {
+              mensaje_inicial = "Hello";
+            } else {
+              mensaje_inicial = "Hola"; // idioma por defecto si llega algo inesperado
+            }
+            
+            window.sendMessage(mensaje_inicial);
             // Función para registrar el tiempo de respuesta
             window.logResponse = function(interaction, responseType) {
                 interaction.endTime = Date.now();
