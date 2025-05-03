@@ -1,0 +1,40 @@
+#inventory-dropdown {
+    position: relative;
+    background-color: #ffffff;
+    min-width: 260px;
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    padding: 10px 0;
+    color: #333;
+    z-index: 10;
+    margin-left: 60px;
+    padding-left: 10px;
+    background-clip: padding-box;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+/* Elemento individual */
+#inventory-dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#inventory-dropdown ul li {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s ease;
+}
+
+/* Último item sin borde */
+#inventory-dropdown ul li:last-child {
+    border-bottom: none;
+}

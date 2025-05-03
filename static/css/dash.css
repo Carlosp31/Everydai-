@@ -1,0 +1,268 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(45deg, #1a73e8, #6a5acd);
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.header-sidebar-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  background: rgba(0, 0, 0, 0.4);
+  border-right: 2px solid #0ff;
+  backdrop-filter: blur(8px);
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+  padding: 20px;
+  height: 100vh;              /* ✅ Altura fija igual al viewport */
+  overflow-y: auto;           /* ✅ Scroll vertical propio */
+}
+
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  color: #ffffff;
+  text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.6);
+}
+
+button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(90deg, #0ff, #00f, #0ff);
+  color: white;
+  border: 2px solid #0ff;
+  border-radius: 12px;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 0 20px #0ff, inset 0 0 10px #00f;
+  transition: all 0.3s ease;
+  animation: neonPulse 1.5s infinite alternate;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #00f, #0ff, #00f);
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #0ff, 0 0 50px #00f, inset 0 0 20px #0ff;
+}
+
+@keyframes neonPulse {
+  from {
+    box-shadow: 0 0 15px #0ff, inset 0 0 5px #00f;
+  }
+  to {
+    box-shadow: 0 0 25px #0ff, inset 0 0 15px #00f;
+  }
+}
+
+.details-box {
+  border: 3px solid #1a73e8;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 15px rgba(26, 115, 232, 0.8);
+  background: rgba(0, 0, 0, 0.4);
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 5px rgba(26, 115, 232, 0.8), 0 0 20px rgba(26, 115, 232, 0.5); }
+  100% { box-shadow: 0 0 20px rgba(26, 115, 232, 1), 0 0 50px rgba(26, 115, 232, 0.7); }
+}
+
+details summary {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #00ffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  list-style: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+}
+
+details[open] .arrow {
+  transform: rotate(180deg);
+}
+
+details .content {
+  margin-top: 15px;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  padding: 40px;
+  flex-wrap: wrap;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.card {
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid #00ffff;
+  border-radius: 20px;
+  width: 300px; /* Aumentado de 260px a 300px */
+  height: 600px; /* Aumentado de 480px a 560px */
+  box-shadow: 0 0 20px #00ffff88, 0 0 60px #6a5acd44;
+  transition: transform 0.4s ease, box-shadow 0.3s ease;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.card .content {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #6a5acd;
+  border-radius: 12px;
+  padding: 20px; /* Aumentado el padding para más espacio */
+  font-size: 1rem;
+  color: #ffffffdd;
+  box-shadow: inset 0 0 10px #6a5acd66;
+  overflow-y: auto;
+  text-align: left;
+  height: 180px; /* Aumentado de 120px a 150px */
+}
+
+
+.card:hover {
+  transform: scale(1.05) rotateY(5deg);
+  box-shadow: 0 0 30px #00ffffcc, 0 0 60px #6a5acdcc, 0 0 100px #ffffff33;
+}
+
+
+.card img {
+  width: 80%;
+  border-radius: 12px;
+  margin-top: 5px; /* Reducir el espacio superior de la imagen */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 15px #0ff;
+}
+
+.card:hover img {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px #0ff, 0 0 40px #6a5acd;
+}
+
+.card .text {
+  margin-top: 5px; /* Reducir el margen superior entre el texto y la imagen */
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff;
+}
+
+
+.card .content {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #6a5acd;
+  border-radius: 12px;
+  padding: 20px; /* Aumentar el padding para más espacio dentro */
+  font-size: 1.0rem; /* Aumentar el tamaño de la fuente para hacerlo más legible */
+  color: #ffffffdd; /* Mantener el color blanco suave */
+  box-shadow: inset 0 0 15px #6a5acd66, 0 0 15px #00ffff; /* Añadir sombra para más enfoque */
+  overflow-y: auto;
+  text-align: left;
+  min-height: 180px; /* Usar min-height para que el contenido crezca solo si es necesario */
+  transition: all 0.3s ease; /* Añadir transición suave para interactividad */
+}
+
+
+
+.card .content:hover {
+  box-shadow: inset 0 0 25px #6a5acd99, 0 0 25px #00ffff99; /* Cambiar sombra al pasar el ratón */
+  color: #ffffff; /* Cambiar color de texto a blanco puro en hover */
+}
+
+.card .content p {
+  font-family: 'Arial', sans-serif; /* Puedes cambiar a una fuente más llamativa si lo prefieres */
+  font-weight: bold; /* Hacer el texto más grueso */
+  line-height: 1.5;
+}
+
+
+@media screen and (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .header-sidebar-wrapper {
+    width: 100%;
+    border-right: none;
+    border-bottom: 2px solid #0ff;
+  }
+
+  .card-container {
+    justify-content: center;
+  }
+}
+.language-selector {
+  margin: 20px;
+  padding: 10px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #001F4D, #003366);
+  color: #00ffff;
+  border: 2px solid #00ccff;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 16px;
+  box-shadow: 0 0 10px #00ccff;
+  transition: 0.3s ease-in-out;
+}
+
+.language-selector:hover {
+  box-shadow: 0 0 15px #00e6ff;
+}
+.language-selector select:focus {
+  background-color: #1e293b;
+  color: #00ffff;
+}
+
+.language-selector select {
+  background: transparent;
+  background-color: linear-gradient(145deg, #001F4D, #003366);
+  color: #00ffff;
+  border: none;
+  font-size: 16px;
+  outline: none;
+}
+
+.language-selector label {
+  margin-right: 10px;
+}

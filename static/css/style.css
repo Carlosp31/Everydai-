@@ -8,30 +8,39 @@ html, body {
     animation: gradient 10s ease infinite;
 }
 #container-pro {
-    display: flex;
     align-items: center; /* Alinea los elementos verticalmente */
     position: absolute;
     top: 0;
-    left: 0;
+    left: 3%;
     padding: 10px;
     border-radius: 5px;
 }
-@media (max-width: 600px) {
+@media (max-width: 1300px) {
     #container-pro {
+        align-items: center; /* Alinea los elementos verticalmente */
         position: relative;
         width: 100%;
         max-width: none;
         padding: 15px;
         border-radius: 0;
     }}
-    @media (max-width: 1024px) {
-        #container-pro {
-            position: relative;
-            width: 100%;
-            max-width: none;
-            padding: 15px;
-            border-radius: 0;
-        }}
+#status-indicator {
+    position: absolute;
+    background-color: #00cc52;
+    color: white;
+    align-items: center; /* Alinea los elementos verticalmente */
+    font-size: 32px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: fit-content;
+    top: 7%;
+    left: 6%;
+}
+@media (max-width: 1300px) {
+    #status-indicator {
+        position: relative;
+    }}
 @keyframes gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -74,117 +83,6 @@ html, body {
 }
 .emoji {
     font-size: 3rem; /* Ajusta el tamaño según lo necesites */
-}
-#detection-container {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    background: linear-gradient(-45deg, #cccccc, #0077cc, #0099ff, #0077cc);
-    background-size: 200% 200%;
-    animation: gradient 10s ease infinite;
-}
-#video-container {
-    position: relative;
-    width: 90%;
-    max-width: 640px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px auto;
-    border: 2px solid black;
-    background-color: #000;
-}
-#video, #canvas {
-    width: 100%;
-    display: block;
-}
-#canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-#detections-log {
-    position: relative;
-    width: 90%;
-    max-width: 640px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px auto;
-    color: black;
-    font-weight: bold;
-    overflow-y: auto;
-    border: 2px solid black;
-    padding: 10px;
-    background-color: #f9f9f9;
-    margin-top: 20px;
-    box-sizing: border-box;
-}
-
-/* Ajuste para pantallas más pequeñas */
-@media (max-width: 600px) {
-    #detections-log {
-        width: 95%;
-        max-height: 40vh;
-        font-size: 14px;
-        padding: 8px;
-    }
-}
-
-/* Ajuste para pantallas muy grandes */
-@media (min-width: 1200px) {
-    #detections-log {
-        max-width: 400px;
-        max-height: 60vh;
-    }
-}
-.buttons-container {
-    position: relative;
-    width: 90%;
-    max-width: 640px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px auto;
-    flex-wrap: wrap;
-    justify-content: space-between; /* Distribuye los elementos de manera uniforme */
-    align-items: center; /* Alinea verticalmente */
-    gap: 20px; /* Espaciado entre elementos */
-    width: 90%;
-    max-width: 800px; /* Para evitar que se extienda demasiado en pantallas grandes */
-    margin-top: 20px;
-}
-
-.button-detection {
-    background-color: rgba(0, 122, 204, 0.8);
-    color: white;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 30px;
-    border: none;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 200px;
-    text-align: center;
-}
-.button-detection:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
-}
-@media (max-width: 768px) {
-    .buttons-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    #detections-log {
-        width: 100%;
-    }
 }
 
 
@@ -294,172 +192,11 @@ textarea#input-text:focus {
     border: 1px solid #333;
     margin-top: 10px;
 }
-/* Sidebar */
-.sidebar {
-    background-color: #2d2d2d;  /* Gris oscuro */
-    padding: 20px;
-    color: #c9c9c9;
-    box-shadow: none;
-    width: 200px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-}
-
-.sidebar p {
-    font-size: 16px;
-    font-weight: bold;
-}
-
-/* Botones en la barra lateral con animaciones */
-.sidebar a {
-    background-color: #007acc;
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    display: block;
-    text-align: center;
-    transition: background-color 0.2s ease, transform 0.2s ease;  /* Transición suave de color y tamaño */
-    width: 80%;
-    font-size: 16px;
-}
-
-/* Hover Animation: Cambia el tamaño y el color cuando el usuario pasa el mouse */
-.sidebar a:hover {
-    background-color: #005f99;
-    transform: scale(1.05);  /* Aumenta el tamaño en 5% */
-}
-
-/* Animación de "rebote" al hacer clic */
-.sidebar a:active {
-    animation: bounce 0.3s ease;  /* Aplica la animación "bounce" al hacer clic */
-}
-
-@keyframes bounce {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.15);  /* Aumenta el tamaño en 15% */
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* RECOMMENDATION BOX /////////////////////////////
-/* Estilos para el cuadro de recomendaciones */
-.recommendations-box {
-    position: absolute;
-    top: 20px;
-    right: 15px;
-    width: 300px;
-    height: 150px;
-    background-color: #f2f2f2;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: none;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    color: #333;
-    transition: height 0.3s ease;
-    overflow: hidden;
-}
-
-/* Responsive: Tablets y móviles */
-@media screen and (max-width: 1024px) {
-    .recommendations-box {
-        position: relative;
-        top: auto;
-        right: auto;
-        width: 90%; /* Para que se adapte mejor */
-        margin: 10px auto; /* Centrado con margen */
-    }
-}
-#detection-container {
-    display: none; /* Inicialmente oculto */
-}
-/* Estilo para cuando el cuadro está expandido */
-.recommendations-box.expanded {
-    height: 600px;  /* Ajusta el tamaño cuando está expandido */
-}
-
-/* Estilo para el encabezado */
-.recommendations-box h3 {
-    text-align: center;
-    color: #333;
-    font-weight: bold;
-}
-
-/* Estilo para la lista de recomendaciones */
-.recommendations-box ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px; /* Añadir espacio para que las recomendaciones no toquen el título */
-    height: 100%; /* Usamos todo el espacio disponible en el contenedor */
-    overflow-y: auto; /* Permitimos desplazamiento si la lista es más larga */
-}
-
-/* Estilo de los elementos de la lista */
-.recommendations-box ul li {
-    margin-bottom: 10px;
-    font-size: 14px;
-    color: #555;
-    display: flex; /* Usamos flexbox para organizar la imagen y el texto */
-    align-items: center; /* Alinea la imagen y el texto */
-    padding: 8px;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-}
-
-/* Estilo de los productos con nombre y precio */
-.producto-con-precio {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Asegura que la imagen y el texto se distribuyan bien */
-}
-
-/* Estilo de las imágenes dentro de los productos */
-.producto-imagen {
-    width: 50px; /* Tamaño pequeño de la imagen */
-    height: 50px;
-    object-fit: contain;
-    margin-right: 10px; /* Separación entre la imagen y el texto */
-}
-
-/* Estilo para el contenedor de la flecha */
-.arrow-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-/* Estilo de la flecha */
-.arrow {
-    border: solid black; /* Cambia 'white' por 'black' */
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 4px;
-    margin: -7px 0 0px 7px;
-    vertical-align: middle;
-}
-.arrow.down {
-    transform: rotate(45deg); 
-}
-
-.arrow.up {
-    transform: rotate(-135deg); /* Flecha hacia arriba cuando se expande */
-}
 
 
-/*//////////////////////////// /////////////////////////////
- ///////////////////////////// /////////////////////////////
+
+
+
 /* Estilo del popup */
 .popup {
     position: fixed;
@@ -530,7 +267,6 @@ textarea#input-text:focus {
     top: 0; /* Reiniciar la posicón */
     right: 0; /* Reiniciar la posición */
     background-color: transparent;
-    color: #d4d4d4;
     font-size: 2rem;
     font-weight: bold;
     text-transform: capitalize;
@@ -544,44 +280,11 @@ textarea#input-text:focus {
     text-overflow: ellipsis; /* Mostrar puntos suspensivos si el texto es demasiado largo */
     max-width: 100%; /* Limitar el ancho al contenedor padre */
 }
-.image-preview {
-    text-align: center;
-    margin-bottom: 16px;
-  }
 
-  .image-title {
-    font-weight: bold;
-    margin-bottom: 8px;
-    font-size: 14px;
-    text-align: center;
-  }
 
-  .thumbnail {
-    display: inline-block;
-    max-width: 150px;
-    max-height: 150px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    border-radius: 8px;
-  }
-
-  .thumbnail:hover {
-    transform: scale(1.1);
-  }
-#status-indicator {
-    position: relative;
-    background-color: #00cc52;
-    color: white;
-    font-size: 32px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    text-align: center;
-    width: fit-content;
-    z-index: 1000;
-}
 
 /* Botones azules (sidebar y otros botones) con animaciones */
-button, .controls button, .sidebar a {
+button {
     background-color: #007acc;  /* Azul VSCode */
     color: white;
     border: none;
@@ -595,13 +298,13 @@ button, .controls button, .sidebar a {
 }
 
 /* Hover Animation: Cambia el tamaño y el color cuando el usuario pasa el mouse */
-button:hover, .controls button:hover, .sidebar a:hover {
+button:hover {
     background-color: #005f99;  /* Azul más oscuro al hover */
     transform: scale(1.05);  /* Aumenta el tamaño en 5% */
 }
 
 /* Animación de "rebote" al hacer clic */
-button:active, .controls button:active, .sidebar a:active {
+button:active {
     animation: bounce 0.3s ease;  /* Aplica la animación "bounce" al hacer clic */
 }
 /* Definición de la animación de "bounce" (rebote) */
@@ -628,11 +331,6 @@ button:active, .controls button:active, .sidebar a:active {
         width: calc(100% - 90px);
     }
 
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
     .recommendations-box {
         position: static;
         margin-top: 20px;
@@ -647,6 +345,7 @@ button:active, .controls button:active, .sidebar a:active {
     border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    margin-right: 10px; /* Espacio entre los botones */
   }
   
   #image-input-label:hover {
@@ -731,120 +430,3 @@ button:active, .controls button:active, .sidebar a:active {
 #subtitulos-container.animate {
     animation: blink 1s infinite, scale 1s infinite; /* Parpadeo + escala */
 }
-
-/* INVENTARIO */
-
-/* INVENTARIO */
-#inventory-dropdown {
-    position: relative;
-    background-color: #ffffff;
-    min-width: 260px;
-    max-height: 400px;
-    overflow-y: auto;
-    border-radius: 8px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-    padding: 10px 0;
-    color: #333;
-    z-index: 10;
-    margin-left: 60px;
-    padding-left: 10px;
-    background-clip: padding-box;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    border-radius: 10px;
-}
-
-/* Elemento individual */
-#inventory-dropdown ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-#inventory-dropdown ul li {
-    padding: 10px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-    color: #333;
-    border-bottom: 1px solid #eee;
-    transition: background 0.2s ease;
-}
-
-/* Último item sin borde */
-#inventory-dropdown ul li:last-child {
-    border-bottom: none;
-}
-
-
-/* LISTA DE DESEOS */
-
-/* LISTA DE DESEOS */
-#wish-dropdown {
-    position: relative;
-    background-color: #ffffff;
-    min-width: 260px;
-    max-height: 400px;
-    overflow-y: auto;
-    border-radius: 8px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-    padding: 10px 0;
-    z-index: 10;
-    margin-left: 60px;
-    padding-left: 10px;
-    background-clip: padding-box;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    border-radius: 10px;
-  }
-  
-  #wish-dropdown ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  #wish-dropdown li {
-    padding: 10px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-    color: #333;
-    border-bottom: 1px solid #eee;
-    transition: background 0.2s ease;
-  }
-  
-  #wish-dropdown li:last-child {
-    border-bottom: none;
-  }
-  
-  #wish-dropdown li:hover {
-    background-color: #f5f5f5;
-  }
-  
-  .wish-actions {
-    display: flex;
-    gap: 8px;
-  }
-  
-  .wish-actions button {
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 14px;
-    padding: 0;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .wish-actions button.remove {
-    background-color: #dc3545;
-  }
-
