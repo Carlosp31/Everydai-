@@ -266,3 +266,25 @@ details .content {
 .language-selector label {
   margin-right: 10px;
 }
+.slogan {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #b2faff;
+  text-shadow: 0 0 8px #00f0ff;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  animation: pulseGlow 3s infinite ease-in-out;
+  text-align: center;
+}
+
+@keyframes pulseGlow {
+  0% {
+    text-shadow: 0 0 8px #00f0ff, 0 0 15px #00f0ff;
+  }
+  50% {
+    text-shadow: 0 0 4px #00f0ff, 0 0 8px #00f0ff;
+  }
+  100% {
+    text-shadow: 0 0 8px #00f0ff, 0 0 15px #00f0ff;
+  }
+}
