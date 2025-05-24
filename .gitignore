@@ -17,3 +17,4 @@ output.xlsx
 logs/
 augmented_experience2.js
 borrar_redis.py
+encuesta/
